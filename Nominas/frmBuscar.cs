@@ -43,51 +43,6 @@ namespace Nominas
         private void frmBuscar_Load(object sender, EventArgs e)
         {
             dgvCatalogo.RowHeadersVisible = false;
-
-            cnx = new SqlConnection();
-            cmd = new SqlCommand();
-            cnx.ConnectionString = cdn;
-            cmd.Connection = cnx;
-
-            if (_catalogo == GLOBALES.EMPLEADOS)
-            {
-                eh = new Empleados.Core.EmpleadosHelper();
-                eh.Command = cmd;
-
-                Empleados.Core.Empleados em = new Empleados.Core.Empleados();
-                em.idempresa = GLOBALES.IDEMPRESA;
-
-                if (_tipoNomina == GLOBALES.NORMAL)
-                    em.estatus = GLOBALES.ACTIVO;
-
-                try
-                {
-                    cnx.Open();
-                    if(_busqueda == GLOBALES.NOMINA)
-                        lstEmpleados = eh.obtenerEmpleados(em, _periodo);
-                    if (_busqueda == GLOBALES.FORMULARIOS)
-                        lstEmpleados = eh.obtenerEmpleados(em);
-                    cnx.Close();
-                    cnx.Dispose();
-
-                    dgvCatalogo.Columns["idtrabajador"].DataPropertyName = "idtrabajador";
-                    dgvCatalogo.Columns["noempleado"].DataPropertyName = "noempleado";
-                    dgvCatalogo.Columns["nombre"].DataPropertyName = "nombrecompleto";
-
-                    var empleados = from a in lstEmpleados select new { a.idtrabajador, a.noempleado, a.nombrecompleto };
-                    dgvCatalogo.DataSource = empleados.ToList();
-
-                    for (int i = 0; i < dgvCatalogo.Columns.Count; i++)
-                    {
-                        dgvCatalogo.AutoResizeColumn(i);
-                    }
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
-                }
-            }
-
             txtBuscar.Select();
         }
 
@@ -112,36 +67,49 @@ namespace Nominas
 
         private void txtBuscar_KeyPress(object sender, KeyPressEventArgs e)
         {
+            cnx = new SqlConnection();
+            cmd = new SqlCommand();
+            cnx.ConnectionString = cdn;
+            cmd.Connection = cnx;
+
             if (e.KeyChar == (char)Keys.Enter)
             {
-                if (string.IsNullOrEmpty(txtBuscar.Text) || string.IsNullOrWhiteSpace(txtBuscar.Text))
+                eh = new Empleados.Core.EmpleadosHelper();
+                eh.Command = cmd;
+
+                Empleados.Core.Empleados em = new Empleados.Core.Empleados();
+                em.idempresa = GLOBALES.IDEMPRESA;
+                em.noempleado = txtBuscar.Text.Trim();
+
+                if (_tipoNomina == GLOBALES.NORMAL)
+                    em.estatus = GLOBALES.ACTIVO;
+
+                try
                 {
-                    if (_catalogo == GLOBALES.EMPLEADOS)
+                    cnx.Open();
+                    if(_busqueda == GLOBALES.NOMINA)
+                        lstEmpleados = eh.buscarEmpleado(em, _periodo);
+                    if (_busqueda == GLOBALES.FORMULARIOS)
+                        lstEmpleados = eh.buscarEmpleado(em);
+                    cnx.Close();
+                    cnx.Dispose();
+
+                    dgvCatalogo.DataSource = null;
+                    var empleados = from t in lstEmpleados select new { t.idtrabajador, t.noempleado, t.nombrecompleto };
+                    dgvCatalogo.DataSource = empleados.ToList();
+                    dgvCatalogo.Columns[0].Visible = false;
+                    dgvCatalogo.Columns[1].HeaderText = "No. Empleado";
+                    dgvCatalogo.Columns[2].HeaderText = "Empleado";
+
+                    for (int i = 0; i < dgvCatalogo.Columns.Count; i++)
                     {
-                        var empleado = from em in lstEmpleados
-                                       select new
-                                       {
-                                           em.idtrabajador,
-                                           em.noempleado,
-                                           em.nombrecompleto
-                                       };
-                        dgvCatalogo.DataSource = empleado.ToList();
+                        dgvCatalogo.AutoResizeColumn(i);
                     }
+
                 }
-                else
+                catch (Exception error)
                 {
-                    if (_catalogo == GLOBALES.EMPLEADOS)
-                    {
-                        var busqueda = from b in lstEmpleados
-                                       where b.nombrecompleto.Contains(txtBuscar.Text.ToUpper()) || b.noempleado.Contains(txtBuscar.Text)
-                                       select new
-                                       {
-                                           b.idtrabajador,
-                                           b.noempleado,
-                                           b.nombrecompleto
-                                       };
-                        dgvCatalogo.DataSource = busqueda.ToList();
-                    }
+                    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
                 }
             }
         }
@@ -160,9 +128,17 @@ namespace Nominas
         {
             if (OnBuscar != null)
             {
-                int fila = dgvCatalogo.CurrentCell.RowIndex;
-                OnBuscar(int.Parse(dgvCatalogo.Rows[fila].Cells[0].Value.ToString()), dgvCatalogo.Rows[fila].Cells[2].Value.ToString());
-                this.Dispose();
+                try
+                {
+                    int fila = dgvCatalogo.CurrentCell.RowIndex;
+                    OnBuscar(int.Parse(dgvCatalogo.Rows[fila].Cells[0].Value.ToString()), dgvCatalogo.Rows[fila].Cells[2].Value.ToString());
+                    this.Dispose();
+                }
+                catch
+                {
+                    MessageBox.Show("Por favor selecciona el registro.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
             }
         }
 

@@ -69,6 +69,35 @@ namespace Empleados.Core
             return lstEmpleados;
         }
 
+        public List<Empleados> buscarEmpleado(Empleados e, int periodo = 0)
+        {
+            DataTable dtEmpleados = new DataTable();
+            List<Empleados> lstEmpleados = new List<Empleados>();
+            if (periodo.Equals(0))
+                Command.CommandText = @"select idtrabajador, noempleado, nombrecompleto from trabajadores where idempresa = @idempresa and noempleado like '%' + @noempleado + '%'";
+            else
+            {
+                Command.CommandText = @"select idtrabajador, noempleado, nombrecompleto from trabajadores where idempresa = @idempresa and noempleado like '%' + @noempleado + '%' and
+                                        idperiodo in (select idperiodo from periodos where idempresa = @idempresa and dias = @dias)";
+                Command.Parameters.AddWithValue("dias", periodo);
+            }
+                
+            Command.Parameters.AddWithValue("idempresa", e.idempresa);
+            Command.Parameters.AddWithValue("noempleado", e.noempleado);
+            dtEmpleados = SelectData(Command);
+
+            for (int i = 0; i < dtEmpleados.Rows.Count; i++)
+            {
+                Empleados empleado = new Empleados();
+                empleado.idtrabajador = int.Parse(dtEmpleados.Rows[i]["idtrabajador"].ToString());
+                empleado.noempleado = dtEmpleados.Rows[i]["noempleado"].ToString();
+                empleado.nombrecompleto = dtEmpleados.Rows[i]["nombrecompleto"].ToString();
+                lstEmpleados.Add(empleado);
+            }
+
+            return lstEmpleados;
+        }
+
         public List<Empleados> obtenerEmpleadosBaja(Empleados e)
         {
             DataTable dtEmpleados = new DataTable();

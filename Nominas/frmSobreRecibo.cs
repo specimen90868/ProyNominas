@@ -1573,6 +1573,7 @@ namespace Nominas
             frmBuscar b = new frmBuscar();
             b.OnBuscar += b_OnBuscar;
             b._catalogo = GLOBALES.EMPLEADOS;
+            b._busqueda = GLOBALES.NOMINA;
             b._tipoNomina = _tipoNormalEspecial;
             b._periodo = _periodo;
             b.Show();
@@ -2156,7 +2157,7 @@ namespace Nominas
 
         private void btnGuardarVP_Click(object sender, EventArgs e)
         {
-            cnx = new SqlConnection(cdn);
+             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
 
@@ -2192,7 +2193,7 @@ namespace Nominas
             }
 
             Vacaciones.Core.DiasDerecho dd = new Vacaciones.Core.DiasDerecho();
-            dd.anio = lstEmpleado[0].antiguedadmod;
+            dd.anio = lstEmpleado[0].antiguedad;
 
             int dias = 0;
             try

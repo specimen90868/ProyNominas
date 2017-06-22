@@ -213,7 +213,7 @@ namespace Nominas
                 }
 
                 Vacaciones.Core.DiasDerecho dd = new Vacaciones.Core.DiasDerecho();
-                dd.anio = lstEmpleado[0].antiguedadmod;
+                dd.anio = lstEmpleado[0].antiguedad;
 
                 int dias = 0;
                 try
