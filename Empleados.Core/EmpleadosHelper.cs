@@ -217,6 +217,44 @@ namespace Empleados.Core
             return lstEmpleados;
         }
 
+        public List<CatalogoEmpleado> obtenerEmpleados(int idEmpresa, string criterio, string tipocriterio)
+        {
+            DataTable dtEmpleados = new DataTable();
+            List<CatalogoEmpleado> lstEmpleados = new List<CatalogoEmpleado>();
+            Command.CommandText = @"exec stp_Empleados @idempresa, @criterio, @tipocriterio";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("tipocriterio", tipocriterio);
+            Command.Parameters.AddWithValue("criterio", criterio);
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            dtEmpleados = SelectData(Command);
+
+            for (int i = 0; i < dtEmpleados.Rows.Count; i++)
+            {
+                CatalogoEmpleado empleado = new CatalogoEmpleado();
+                empleado.rownumber = int.Parse(dtEmpleados.Rows[i]["EmpleadosRowNumber"].ToString());
+                empleado.idtrabajador = int.Parse(dtEmpleados.Rows[i]["idtrabajador"].ToString());
+                empleado.noempleado = dtEmpleados.Rows[i]["noempleado"].ToString();
+                empleado.paterno = dtEmpleados.Rows[i]["paterno"].ToString();
+                empleado.materno = dtEmpleados.Rows[i]["materno"].ToString();
+                empleado.nombres = dtEmpleados.Rows[i]["nombres"].ToString();
+                empleado.nombrecompleto = dtEmpleados.Rows[i]["nombrecompleto"].ToString();
+                empleado.curp = dtEmpleados.Rows[i]["curp"].ToString();
+                empleado.fechaingreso = DateTime.Parse(dtEmpleados.Rows[i]["fechaingreso"].ToString());
+                empleado.antiguedad = int.Parse(dtEmpleados.Rows[i]["antiguedad"].ToString());
+                empleado.sdi = decimal.Parse(dtEmpleados.Rows[i]["sdi"].ToString());
+                empleado.sd = decimal.Parse(dtEmpleados.Rows[i]["sd"].ToString());
+                empleado.sueldo = decimal.Parse(dtEmpleados.Rows[i]["sueldo"].ToString());
+                empleado.cuenta = dtEmpleados.Rows[i]["cuenta"].ToString();
+                empleado.estatus = dtEmpleados.Rows[i]["estatus"].ToString();
+                empleado.departamento = dtEmpleados.Rows[i]["departamento"].ToString();
+                empleado.puesto = dtEmpleados.Rows[i]["puesto"].ToString();
+                empleado.fechabaja = dtEmpleados.Rows[i]["fechabaja"].ToString();
+                lstEmpleados.Add(empleado);
+            }
+
+            return lstEmpleados;
+        }
+
         public List<EmpleadosEstatus> obtenerEmpleadosEstatus(int idEmpresa)
         {
             DataTable dtEmpleados = new DataTable();
