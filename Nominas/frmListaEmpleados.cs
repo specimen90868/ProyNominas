@@ -174,8 +174,8 @@ namespace Nominas
             frmIncrementoSalarial isal = new frmIncrementoSalarial();
             isal.OnIncrementoSalarial += isal_OnIncrementoSalarial;
             isal.MdiParent = this.MdiParent;
-            isal._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[2].Value.ToString();
-            isal._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+            isal._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[3].Value.ToString();
+            isal._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
             isal.Show();
         }
 
@@ -192,7 +192,7 @@ namespace Nominas
            int fila = dgvEmpleados.CurrentCell.RowIndex;
            frmListaHistorial lh = new frmListaHistorial();
            //lh.MdiParent = this.MdiParent;
-           lh._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+           lh._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
            lh.Show();            
         }
 
@@ -201,7 +201,7 @@ namespace Nominas
             //int estatus = 0;
             string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
             int fila = dgvEmpleados.CurrentCell.RowIndex;
-            int idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+            int idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
 
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
@@ -299,7 +299,7 @@ namespace Nominas
             int fila = dgvEmpleados.CurrentCell.RowIndex;
             frmDeptoPuesto dp = new frmDeptoPuesto();
             dp._deptopuesto = 0;
-            dp._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+            dp._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
             dp.Show();
         }
 
@@ -311,7 +311,7 @@ namespace Nominas
             int fila = dgvEmpleados.CurrentCell.RowIndex;
             frmDeptoPuesto dp = new frmDeptoPuesto();
             dp._deptopuesto = 1;
-            dp._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+            dp._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
             dp.Show();
         }
 
@@ -321,7 +321,7 @@ namespace Nominas
                 return;
             int fila = dgvEmpleados.CurrentCell.RowIndex;
             frmPeriodoTrabajador pt = new frmPeriodoTrabajador();
-            pt._idEmpleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+            pt._idEmpleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
             pt.Show();
         }
 
@@ -334,7 +334,7 @@ namespace Nominas
         {
             int fila = dgvEmpleados.CurrentCell.RowIndex;
             frmTrabajadorNominaDigital tnd = new frmTrabajadorNominaDigital();
-            tnd._idEmpleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+            tnd._idEmpleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
             tnd.Show();
         }
 
@@ -368,7 +368,7 @@ namespace Nominas
             eh.Command = cmd;
 
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
-            empleado.idtrabajador = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+            empleado.idtrabajador = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
 
             int estatus = 0;
             try
@@ -390,8 +390,8 @@ namespace Nominas
                 frmBaja b = new frmBaja();
                 b.OnBajaEmpleado += b_OnBajaEmpleado;
                 //b.MdiParent = this.MdiParent;
-                b._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
-                b._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[2].Value.ToString();
+                b._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
+                b._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[3].Value.ToString();
                 b.Show();
             }
             else
@@ -414,7 +414,7 @@ namespace Nominas
             eh.Command = cmd;
 
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
-            empleado.idtrabajador = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+            empleado.idtrabajador = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
 
             int estatus = 0;
             try
@@ -435,7 +435,7 @@ namespace Nominas
             {
                 frmReingresoEmpleado r = new frmReingresoEmpleado();
                 r.OnReingreso += r_OnReingreso;
-                r._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+                r._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
                 r._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[2].Value.ToString();
                 r.Show();
             }

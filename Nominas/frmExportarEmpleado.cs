@@ -162,9 +162,9 @@ namespace Nominas
                         case "Sexo": campos += "(select descripcion from Catalogo where id = c.sexo) as sexo,"; break;
                         case "Escolaridad": campos += "(select descripcion from Catalogo where id = c.escolaridad) as escolaridad,"; break;
                         case "Nacionalidad": campos += "c.nacionalidad,"; tablaComplemento = complemento(true); break;
-                        case "Credito": campos += "i.credito,"; tablaInfonavit = infonavit(true); break;
-                        case "Descuento": campos += "i.descuento,"; infonavit(true); break;
-                        case "TipoDescuento": campos += "i.valordescuento,"; infonavit(true); break;
+                        case "Credito": campos += "i.credito,"; break;
+                        case "Descuento": campos += "i.descuento,"; break;
+                        case "TipoDescuento": campos += "i.valordescuento,"; break;
                         case "NoEmpleado": campos += "t.noempleado,"; break;
                         case "Periodo": campos += "t.idperiodo,"; break;
                         case "FechaBaja": campos += "b.fecha,"; break;
