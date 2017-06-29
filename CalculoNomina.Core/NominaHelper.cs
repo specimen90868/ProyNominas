@@ -848,6 +848,19 @@ namespace CalculoNomina.Core
             return lstFechas;
         }
 
+        public int eliminarCfdiMasterDetalle(int idempresa, DateTime inicio, DateTime fin, int tiponomina)
+        {
+            Command.CommandText = @"delete from cfdiMaster where idempresa = @idempresa and periodoinicio = @periodoinicio and periodofin = @periodofin
+                                    and tiponomina = @tiponomina";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("periodoinicio", inicio);
+            Command.Parameters.AddWithValue("periodofin", fin);
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            Command.Parameters.AddWithValue("tiponomina", tiponomina);
+            int dato = (int)Select(Command);
+            return dato;
+        }
+
         public int insertaCFDiMaster(int idempresa, DateTime inicio, DateTime fin)
         {
             Command.CommandText = @"exec stp_CfdiMaster @idempresa, @fechainicio, @fechafin";
@@ -1041,7 +1054,7 @@ namespace CalculoNomina.Core
             List<CodigoBidimensional> lstDatos = new List<CodigoBidimensional>();
             Command.CommandText = @"select cfdi.rfc as Empresa, cfdi.idtrabajador, cfdi.rfc as Trabajador, cfdi.total, cfdi.uuid from 
                                     cfdimaster cfdi where cfdi.idempresa = @idempresa and 
-                                    cfdi.periodoinicio = @fechainicio and cfdi.periodofin = @fechafin";
+                                    cfdi.periodoinicio = @fechainicio and cfdi.periodofin = @fechafin and qr is null";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idempresa);
             Command.Parameters.AddWithValue("fechainicio", inicio);

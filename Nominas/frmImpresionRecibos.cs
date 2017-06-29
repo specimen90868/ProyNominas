@@ -76,40 +76,54 @@ namespace Nominas
 
             List<CalculoNomina.Core.tmpPagoNomina> lstPeriodos = new List<CalculoNomina.Core.tmpPagoNomina>();
 
-            switch (_tiponomina)
+            try
             {
-                case 0:
-                    try
-                    {
-                        cnx.Open();
-                        lstPeriodos = nh.obtenerPeriodosNomina(GLOBALES.IDEMPRESA, _tiponomina, _periodo);
-                        cnx.Close();
-                        cnx.Dispose();
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Error: Al obtener los periodos de la empresa.", "Error");
-                        cnx.Dispose();
-                        return;
-                    }
-                    break;
-
-                case 2:
-                    try
-                    {
-                        cnx.Open();
-                        lstPeriodos = nh.obtenerPeriodosNomina(GLOBALES.IDEMPRESA, _tiponomina, _periodo);
-                        cnx.Close();
-                        cnx.Dispose();
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Error: Al obtener los periodos de la empresa.", "Error");
-                        cnx.Dispose();
-                        return;
-                    }
-                    break;
+                cnx.Open();
+                lstPeriodos = nh.obtenerPeriodosNomina(GLOBALES.IDEMPRESA, _tiponomina, _periodo);
+                cnx.Close();
+                cnx.Dispose();
             }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al obtener los periodos de la empresa.", "Error");
+                cnx.Dispose();
+                return;
+            }
+
+            //switch (_tiponomina)
+            //{
+            //    case 0:
+            //        try
+            //        {
+            //            cnx.Open();
+            //            lstPeriodos = nh.obtenerPeriodosNomina(GLOBALES.IDEMPRESA, _tiponomina, _periodo);
+            //            cnx.Close();
+            //            cnx.Dispose();
+            //        }
+            //        catch (Exception)
+            //        {
+            //            MessageBox.Show("Error: Al obtener los periodos de la empresa.", "Error");
+            //            cnx.Dispose();
+            //            return;
+            //        }
+            //        break;
+
+            //    case 2:
+            //        try
+            //        {
+            //            cnx.Open();
+            //            lstPeriodos = nh.obtenerPeriodosNomina(GLOBALES.IDEMPRESA, _tiponomina, _periodo);
+            //            cnx.Close();
+            //            cnx.Dispose();
+            //        }
+            //        catch (Exception)
+            //        {
+            //            MessageBox.Show("Error: Al obtener los periodos de la empresa.", "Error");
+            //            cnx.Dispose();
+            //            return;
+            //        }
+            //        break;
+            //}
 
             for (int i = 0; i < lstPeriodos.Count; i++)
             {
@@ -242,6 +256,7 @@ namespace Nominas
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            #region CODIGO QR
             int existeNullCodeQR = 0;
             fecha = "";
             fechafin = "";
@@ -326,6 +341,7 @@ namespace Nominas
                     }
                 }
             }
+            #endregion
 
             if (todos) 
             {
@@ -415,48 +431,52 @@ namespace Nominas
             {
                 MessageBox.Show("ADVERTENCIA:\r\n\r\n" +
                                 "El periodo seleccionado aun tiene recibos pendientes de timbrar.\r\n" +
-                                "Por favor timbre los recibos pendientes o eliga otro periodo.", "Información",
-                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                "Se actualizaran los datos de los recibos.\r\n " + 
+                                "NOTA: Se podrán generar solo aquellos que han sido timbrados.", "Información",
+                                MessageBoxButtons.OK, 
+                                MessageBoxIcon.Exclamation);
+                cnx.Open();
+                nh.eliminarCfdiMasterDetalle(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date, _tiponomina);
+                cnx.Close();
+            }
+
+            List<CalculoNomina.Core.PagoNomina> lstFechas = new List<CalculoNomina.Core.PagoNomina>();
+            try
+            {
+
+                cnx.Open();
+                lstFechas = nh.existeFechaCabecera(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date, _periodo);
+                cnx.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("ERROR:\r\n\r\n" +
+                            "Ocurrió una excepción al obtener el periodo la tabla Master del CFDi.\r\n" +
+                            "Por favor contacte a su administrador.", "Información",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            else {
-                List<CalculoNomina.Core.PagoNomina> lstFechas = new List<CalculoNomina.Core.PagoNomina>();
-                try
-                {
-                    
-                    cnx.Open();
-                    lstFechas = nh.existeFechaCabecera(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date, _periodo);
-                    cnx.Close();
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("ERROR:\r\n\r\n" +
-                                "Ocurrió una excepción al obtener el periodo la tabla Master del CFDi.\r\n" +
-                                "Por favor contacte a su administrador.", "Información",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
 
-                if (lstFechas.Count.Equals(0))
-                {
-                    int resultadoExec = 0;
-                    pbxLoad.Visible = true;
-                    pbxLoad.BringToFront();
-                    MessageBox.Show("INFORMACIÓN:\r\n\r\n" +
-                                "Por favor espere a que el proceso del CFDi termine.\r\n" +
-                                "Este proceso se ejecuta solo una vez.",
-                                "Información",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    cnx.Open();
-                    resultadoExec = nh.insertaCFDiMaster(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date);
-                    cnx.Close();
+            if (lstFechas.Count.Equals(0))
+            {
+                int resultadoExec = 0;
+                pbxLoad.Visible = true;
+                pbxLoad.BringToFront();
+                MessageBox.Show("INFORMACIÓN:\r\n\r\n" +
+                            "Por favor espere a que el proceso del CFDi termine.\r\n" +
+                            "Este proceso se ejecuta solo una vez o cuando existen pendientes de timbrar.",
+                            "Información",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cnx.Open();
+                resultadoExec = nh.insertaCFDiMaster(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date);
+                cnx.Close();
 
-                    cnx.Open();
-                    nh.insertaCFDiDetalle(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date);
-                    cnx.Close();
-                    pbxLoad.Visible = false;
-                }
+                cnx.Open();
+                nh.insertaCFDiDetalle(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date);
+                cnx.Close();
+                pbxLoad.Visible = false;
             }
+            
             #endregion
 
             lstvDepartamentos.Items.Clear();

@@ -191,7 +191,12 @@ namespace Nominas
                     }
                     catch (Exception error)
                     {
-                        MessageBox.Show("Error: Obtener ID del concepto. \r\n \r\n" + error.Message, "Error");
+                        MessageBox.Show("Error: \r\n" +
+                                        "No se pudo obtener el ID del empleado: " + fila.Cells["noempleado"].Value.ToString() + ".\r\n\r\n" + 
+                                        "Mensaje: " + error.Message + "\r\n" +
+                                        "Se cerrará la conexión.", "Error", 
+                                        MessageBoxButtons.OK, 
+                                        MessageBoxIcon.Error);
                         cnx.Dispose();
                         this.Dispose();
                     }
@@ -284,17 +289,6 @@ namespace Nominas
                         return;
                     }
 
-                    int diasPagoReales = int.Parse(fila.Cells["diaspago"].Value.ToString()) + existeFaltas;
-                    if (diasPagoReales >= diasPeriodo)
-                    {
-                        diasPagoReales = diasPeriodo - existeFaltas;
-                        MessageBox.Show("Existen faltas del trabajador, se ajustarán las vacaciones.", "Información");
-                    }
-                    else
-                    {
-                        diasPagoReales = int.Parse(fila.Cells["diaspago"].Value.ToString());
-                    }
-
                     Vacaciones.Core.VacacionesPrima vp = new Vacaciones.Core.VacacionesPrima();
                     vp.idtrabajador = idEmpleado;
                     vp.idempresa = GLOBALES.IDEMPRESA;
@@ -304,15 +298,27 @@ namespace Nominas
                     vp.fechapago = DateTime.Now.Date;
                     vp.vacacionesprima = fila.Cells["concepto"].Value.ToString() == "Prima Vacacional" ? "P" : "V";
 
-                    if (fila.Cells["concepto"].Value.ToString() == "Prima Vacacional")
+                    if (fila.Cells["concepto"].Value.ToString().Equals("Prima Vacacional"))
                     {
-                        vp.diaspago = diasPagoReales;
-                        vp.diaspendientes = dias - diasPagoReales;
+                        vp.diaspago = dias;
+                        vp.diaspendientes = 0;
                         vp.fechainicio = DateTime.Now.Date;
                         vp.fechafin = DateTime.Now.Date;
                     }
                     else
                     {
+                        int diasPagoReales = int.Parse(fila.Cells["diaspago"].Value.ToString()) + existeFaltas;
+                        
+                        if (diasPagoReales > diasPeriodo)
+                        {
+                            diasPagoReales = diasPeriodo - existeFaltas;
+                            MessageBox.Show("Existen faltas del trabajador, se ajustarán las vacaciones.", "Información");
+                        }
+                        else
+                        {
+                            diasPagoReales = int.Parse(fila.Cells["diaspago"].Value.ToString());
+                        }
+
                         vp.diaspago = diasPagoReales;
                         vp.diaspendientes = dias - diasPagoReales;
                         vp.fechainicio = DateTime.Parse(fila.Cells["fechaaplicacion"].Value.ToString());
