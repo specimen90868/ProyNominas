@@ -857,8 +857,7 @@ namespace CalculoNomina.Core
             Command.Parameters.AddWithValue("periodofin", fin);
             Command.Parameters.AddWithValue("idempresa", idempresa);
             Command.Parameters.AddWithValue("tiponomina", tiponomina);
-            int dato = (int)Select(Command);
-            return dato;
+            return Command.ExecuteNonQuery();
         }
 
         public int insertaCFDiMaster(int idempresa, DateTime inicio, DateTime fin)
