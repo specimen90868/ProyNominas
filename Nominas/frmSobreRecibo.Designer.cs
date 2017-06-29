@@ -306,7 +306,7 @@
             this.TabPrincipal.Controls.Add(this.tabVacaciones);
             this.TabPrincipal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabPrincipal.Location = new System.Drawing.Point(0, 0);
-            this.TabPrincipal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TabPrincipal.Margin = new System.Windows.Forms.Padding(4);
             this.TabPrincipal.Name = "TabPrincipal";
             this.TabPrincipal.SelectedIndex = 0;
             this.TabPrincipal.Size = new System.Drawing.Size(949, 453);
@@ -326,9 +326,9 @@
             this.tabPercepcionesDeducciones.Controls.Add(this.label6);
             this.tabPercepcionesDeducciones.Controls.Add(this.label5);
             this.tabPercepcionesDeducciones.Location = new System.Drawing.Point(4, 4);
-            this.tabPercepcionesDeducciones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPercepcionesDeducciones.Margin = new System.Windows.Forms.Padding(4);
             this.tabPercepcionesDeducciones.Name = "tabPercepcionesDeducciones";
-            this.tabPercepcionesDeducciones.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPercepcionesDeducciones.Padding = new System.Windows.Forms.Padding(4);
             this.tabPercepcionesDeducciones.Size = new System.Drawing.Size(941, 424);
             this.tabPercepcionesDeducciones.TabIndex = 0;
             this.tabPercepcionesDeducciones.Text = "Percepciones y deducciones";
@@ -359,7 +359,7 @@
             // 
             this.txtNeto.BackColor = System.Drawing.SystemColors.Control;
             this.txtNeto.Location = new System.Drawing.Point(795, 380);
-            this.txtNeto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtNeto.Margin = new System.Windows.Forms.Padding(4);
             this.txtNeto.Name = "txtNeto";
             this.txtNeto.Size = new System.Drawing.Size(132, 22);
             this.txtNeto.TabIndex = 18;
@@ -370,7 +370,7 @@
             // 
             this.txtDeducciones.BackColor = System.Drawing.SystemColors.Control;
             this.txtDeducciones.Location = new System.Drawing.Point(795, 357);
-            this.txtDeducciones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtDeducciones.Margin = new System.Windows.Forms.Padding(4);
             this.txtDeducciones.Name = "txtDeducciones";
             this.txtDeducciones.Size = new System.Drawing.Size(132, 22);
             this.txtDeducciones.TabIndex = 17;
@@ -392,7 +392,7 @@
             // 
             this.txtPercepciones.BackColor = System.Drawing.SystemColors.Control;
             this.txtPercepciones.Location = new System.Drawing.Point(323, 357);
-            this.txtPercepciones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPercepciones.Margin = new System.Windows.Forms.Padding(4);
             this.txtPercepciones.Name = "txtPercepciones";
             this.txtPercepciones.Size = new System.Drawing.Size(147, 22);
             this.txtPercepciones.TabIndex = 15;
@@ -406,7 +406,7 @@
             this.dgvDeducciones.BackgroundColor = System.Drawing.Color.White;
             this.dgvDeducciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDeducciones.Location = new System.Drawing.Point(469, 36);
-            this.dgvDeducciones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvDeducciones.Margin = new System.Windows.Forms.Padding(4);
             this.dgvDeducciones.Name = "dgvDeducciones";
             this.dgvDeducciones.ReadOnly = true;
             this.dgvDeducciones.Size = new System.Drawing.Size(459, 315);
@@ -419,7 +419,7 @@
             this.dgvPercepciones.BackgroundColor = System.Drawing.Color.White;
             this.dgvPercepciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPercepciones.Location = new System.Drawing.Point(12, 36);
-            this.dgvPercepciones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvPercepciones.Margin = new System.Windows.Forms.Padding(4);
             this.dgvPercepciones.Name = "dgvPercepciones";
             this.dgvPercepciones.ReadOnly = true;
             this.dgvPercepciones.Size = new System.Drawing.Size(459, 315);
@@ -456,9 +456,9 @@
             this.tabFaltas.BackColor = System.Drawing.SystemColors.Control;
             this.tabFaltas.Controls.Add(this.ContenedorFaltas);
             this.tabFaltas.Location = new System.Drawing.Point(4, 4);
-            this.tabFaltas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabFaltas.Margin = new System.Windows.Forms.Padding(4);
             this.tabFaltas.Name = "tabFaltas";
-            this.tabFaltas.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabFaltas.Padding = new System.Windows.Forms.Padding(4);
             this.tabFaltas.Size = new System.Drawing.Size(941, 424);
             this.tabFaltas.TabIndex = 1;
             this.tabFaltas.Text = "Faltas";
@@ -467,7 +467,7 @@
             // 
             this.ContenedorFaltas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ContenedorFaltas.Location = new System.Drawing.Point(4, 4);
-            this.ContenedorFaltas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ContenedorFaltas.Margin = new System.Windows.Forms.Padding(4);
             this.ContenedorFaltas.Name = "ContenedorFaltas";
             // 
             // ContenedorFaltas.Panel1
@@ -492,7 +492,7 @@
             this.lstvFechasFalta.ContextMenuStrip = this.contextFaltas;
             this.lstvFechasFalta.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstvFechasFalta.Location = new System.Drawing.Point(0, 0);
-            this.lstvFechasFalta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lstvFechasFalta.Margin = new System.Windows.Forms.Padding(4);
             this.lstvFechasFalta.Name = "lstvFechasFalta";
             this.lstvFechasFalta.Size = new System.Drawing.Size(135, 416);
             this.lstvFechasFalta.TabIndex = 0;
@@ -518,7 +518,7 @@
             // btnEliminar
             // 
             this.btnEliminar.Location = new System.Drawing.Point(225, 50);
-            this.btnEliminar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnEliminar.Margin = new System.Windows.Forms.Padding(4);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(77, 28);
             this.btnEliminar.TabIndex = 5;
@@ -529,7 +529,7 @@
             // btnGuardar
             // 
             this.btnGuardar.Location = new System.Drawing.Point(225, 15);
-            this.btnGuardar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnGuardar.Margin = new System.Windows.Forms.Padding(4);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(77, 28);
             this.btnGuardar.TabIndex = 4;
@@ -542,7 +542,7 @@
             this.dtpFecha.CalendarMonthBackground = System.Drawing.SystemColors.Control;
             this.dtpFecha.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpFecha.Location = new System.Drawing.Point(89, 15);
-            this.dtpFecha.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpFecha.Margin = new System.Windows.Forms.Padding(4);
             this.dtpFecha.Name = "dtpFecha";
             this.dtpFecha.Size = new System.Drawing.Size(124, 22);
             this.dtpFecha.TabIndex = 3;
@@ -551,7 +551,7 @@
             // 
             this.txtFalta.BackColor = System.Drawing.SystemColors.Control;
             this.txtFalta.Location = new System.Drawing.Point(89, 47);
-            this.txtFalta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtFalta.Margin = new System.Windows.Forms.Padding(4);
             this.txtFalta.Name = "txtFalta";
             this.txtFalta.Size = new System.Drawing.Size(59, 22);
             this.txtFalta.TabIndex = 2;
@@ -587,7 +587,7 @@
             this.tabIncapacidades.Controls.Add(this.ContenedorIncidencias);
             this.tabIncapacidades.Controls.Add(this.dgvIncapacidades);
             this.tabIncapacidades.Location = new System.Drawing.Point(4, 4);
-            this.tabIncapacidades.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabIncapacidades.Margin = new System.Windows.Forms.Padding(4);
             this.tabIncapacidades.Name = "tabIncapacidades";
             this.tabIncapacidades.Size = new System.Drawing.Size(941, 424);
             this.tabIncapacidades.TabIndex = 2;
@@ -597,7 +597,7 @@
             // 
             this.ContenedorIncidencias.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ContenedorIncidencias.Location = new System.Drawing.Point(0, 0);
-            this.ContenedorIncidencias.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ContenedorIncidencias.Margin = new System.Windows.Forms.Padding(4);
             this.ContenedorIncidencias.Name = "ContenedorIncidencias";
             // 
             // ContenedorIncidencias.Panel1
@@ -623,7 +623,7 @@
             // 
             this.lstvIncidencias.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstvIncidencias.Location = new System.Drawing.Point(0, 0);
-            this.lstvIncidencias.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lstvIncidencias.Margin = new System.Windows.Forms.Padding(4);
             this.lstvIncidencias.Name = "lstvIncidencias";
             this.lstvIncidencias.Size = new System.Drawing.Size(152, 424);
             this.lstvIncidencias.TabIndex = 0;
@@ -647,7 +647,7 @@
             this.txtCertificado.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCertificado.Enabled = false;
             this.txtCertificado.Location = new System.Drawing.Point(195, 111);
-            this.txtCertificado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtCertificado.Margin = new System.Windows.Forms.Padding(4);
             this.txtCertificado.Name = "txtCertificado";
             this.txtCertificado.Size = new System.Drawing.Size(120, 22);
             this.txtCertificado.TabIndex = 274;
@@ -668,7 +668,7 @@
             this.txtDiasIncapacidad.BackColor = System.Drawing.SystemColors.Control;
             this.txtDiasIncapacidad.Enabled = false;
             this.txtDiasIncapacidad.Location = new System.Drawing.Point(195, 12);
-            this.txtDiasIncapacidad.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtDiasIncapacidad.Margin = new System.Windows.Forms.Padding(4);
             this.txtDiasIncapacidad.Name = "txtDiasIncapacidad";
             this.txtDiasIncapacidad.Size = new System.Drawing.Size(120, 22);
             this.txtDiasIncapacidad.TabIndex = 267;
@@ -690,7 +690,7 @@
             this.dtpFinInc.Enabled = false;
             this.dtpFinInc.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpFinInc.Location = new System.Drawing.Point(195, 79);
-            this.dtpFinInc.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpFinInc.Margin = new System.Windows.Forms.Padding(4);
             this.dtpFinInc.Name = "dtpFinInc";
             this.dtpFinInc.Size = new System.Drawing.Size(120, 22);
             this.dtpFinInc.TabIndex = 269;
@@ -700,7 +700,7 @@
             this.dtpInicioInc.Enabled = false;
             this.dtpInicioInc.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpInicioInc.Location = new System.Drawing.Point(195, 47);
-            this.dtpInicioInc.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpInicioInc.Margin = new System.Windows.Forms.Padding(4);
             this.dtpInicioInc.Name = "dtpInicioInc";
             this.dtpInicioInc.Size = new System.Drawing.Size(120, 22);
             this.dtpInicioInc.TabIndex = 268;
@@ -724,7 +724,7 @@
             this.dgvIncapacidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvIncapacidades.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvIncapacidades.Location = new System.Drawing.Point(0, 0);
-            this.dgvIncapacidades.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvIncapacidades.Margin = new System.Windows.Forms.Padding(4);
             this.dgvIncapacidades.Name = "dgvIncapacidades";
             this.dgvIncapacidades.ReadOnly = true;
             this.dgvIncapacidades.Size = new System.Drawing.Size(941, 424);
@@ -736,7 +736,7 @@
             this.tabConceptoProgramado.Controls.Add(this.dgvProgramacion);
             this.tabConceptoProgramado.Controls.Add(this.toolStrip1);
             this.tabConceptoProgramado.Location = new System.Drawing.Point(4, 4);
-            this.tabConceptoProgramado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabConceptoProgramado.Margin = new System.Windows.Forms.Padding(4);
             this.tabConceptoProgramado.Name = "tabConceptoProgramado";
             this.tabConceptoProgramado.Size = new System.Drawing.Size(941, 424);
             this.tabConceptoProgramado.TabIndex = 3;
@@ -758,7 +758,7 @@
             this.fechafinpc});
             this.dgvProgramacion.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProgramacion.Location = new System.Drawing.Point(0, 27);
-            this.dgvProgramacion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvProgramacion.Margin = new System.Windows.Forms.Padding(4);
             this.dgvProgramacion.Name = "dgvProgramacion";
             this.dgvProgramacion.ReadOnly = true;
             this.dgvProgramacion.Size = new System.Drawing.Size(941, 397);
@@ -861,7 +861,7 @@
             this.tabOtrasDeducciones.Controls.Add(this.dgvMovimientos);
             this.tabOtrasDeducciones.Controls.Add(this.toolStrip2);
             this.tabOtrasDeducciones.Location = new System.Drawing.Point(4, 4);
-            this.tabOtrasDeducciones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabOtrasDeducciones.Margin = new System.Windows.Forms.Padding(4);
             this.tabOtrasDeducciones.Name = "tabOtrasDeducciones";
             this.tabOtrasDeducciones.Size = new System.Drawing.Size(941, 424);
             this.tabOtrasDeducciones.TabIndex = 4;
@@ -883,7 +883,7 @@
             this.periodofinm});
             this.dgvMovimientos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMovimientos.Location = new System.Drawing.Point(0, 27);
-            this.dgvMovimientos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvMovimientos.Margin = new System.Windows.Forms.Padding(4);
             this.dgvMovimientos.Name = "dgvMovimientos";
             this.dgvMovimientos.ReadOnly = true;
             this.dgvMovimientos.Size = new System.Drawing.Size(941, 397);
@@ -974,7 +974,7 @@
             this.tabInfonavit.BackColor = System.Drawing.SystemColors.Control;
             this.tabInfonavit.Controls.Add(this.ContenedorInfonavit);
             this.tabInfonavit.Location = new System.Drawing.Point(4, 4);
-            this.tabInfonavit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabInfonavit.Margin = new System.Windows.Forms.Padding(4);
             this.tabInfonavit.Name = "tabInfonavit";
             this.tabInfonavit.Size = new System.Drawing.Size(941, 424);
             this.tabInfonavit.TabIndex = 5;
@@ -984,7 +984,7 @@
             // 
             this.ContenedorInfonavit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ContenedorInfonavit.Location = new System.Drawing.Point(0, 0);
-            this.ContenedorInfonavit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ContenedorInfonavit.Margin = new System.Windows.Forms.Padding(4);
             this.ContenedorInfonavit.Name = "ContenedorInfonavit";
             // 
             // ContenedorInfonavit.Panel1
@@ -1014,7 +1014,7 @@
             // 
             this.lstvInfonavit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstvInfonavit.Location = new System.Drawing.Point(0, 0);
-            this.lstvInfonavit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lstvInfonavit.Margin = new System.Windows.Forms.Padding(4);
             this.lstvInfonavit.Name = "lstvInfonavit";
             this.lstvInfonavit.Size = new System.Drawing.Size(165, 424);
             this.lstvInfonavit.TabIndex = 0;
@@ -1036,7 +1036,7 @@
             // 
             this.dtpFechaAplicacion.Enabled = false;
             this.dtpFechaAplicacion.Location = new System.Drawing.Point(117, 214);
-            this.dtpFechaAplicacion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpFechaAplicacion.Margin = new System.Windows.Forms.Padding(4);
             this.dtpFechaAplicacion.Name = "dtpFechaAplicacion";
             this.dtpFechaAplicacion.Size = new System.Drawing.Size(264, 22);
             this.dtpFechaAplicacion.TabIndex = 282;
@@ -1057,7 +1057,7 @@
             this.chkActivo.AutoSize = true;
             this.chkActivo.Enabled = false;
             this.chkActivo.Location = new System.Drawing.Point(112, 18);
-            this.chkActivo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkActivo.Margin = new System.Windows.Forms.Padding(4);
             this.chkActivo.Name = "chkActivo";
             this.chkActivo.Size = new System.Drawing.Size(68, 21);
             this.chkActivo.TabIndex = 280;
@@ -1069,7 +1069,7 @@
             this.rbtnPesos.AutoSize = true;
             this.rbtnPesos.Enabled = false;
             this.rbtnPesos.Location = new System.Drawing.Point(231, 170);
-            this.rbtnPesos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbtnPesos.Margin = new System.Windows.Forms.Padding(4);
             this.rbtnPesos.Name = "rbtnPesos";
             this.rbtnPesos.Size = new System.Drawing.Size(68, 21);
             this.rbtnPesos.TabIndex = 279;
@@ -1082,7 +1082,7 @@
             this.rbtnVsmdf.AutoSize = true;
             this.rbtnVsmdf.Enabled = false;
             this.rbtnVsmdf.Location = new System.Drawing.Point(231, 128);
-            this.rbtnVsmdf.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbtnVsmdf.Margin = new System.Windows.Forms.Padding(4);
             this.rbtnVsmdf.Name = "rbtnVsmdf";
             this.rbtnVsmdf.Size = new System.Drawing.Size(76, 21);
             this.rbtnVsmdf.TabIndex = 274;
@@ -1105,7 +1105,7 @@
             // 
             this.txtValor.Enabled = false;
             this.txtValor.Location = new System.Drawing.Point(20, 166);
-            this.txtValor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtValor.Margin = new System.Windows.Forms.Padding(4);
             this.txtValor.Name = "txtValor";
             this.txtValor.Size = new System.Drawing.Size(100, 22);
             this.txtValor.TabIndex = 278;
@@ -1115,7 +1115,7 @@
             this.rbtnPorcentaje.AutoSize = true;
             this.rbtnPorcentaje.Enabled = false;
             this.rbtnPorcentaje.Location = new System.Drawing.Point(231, 86);
-            this.rbtnPorcentaje.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbtnPorcentaje.Margin = new System.Windows.Forms.Padding(4);
             this.rbtnPorcentaje.Name = "rbtnPorcentaje";
             this.rbtnPorcentaje.Size = new System.Drawing.Size(97, 21);
             this.rbtnPorcentaje.TabIndex = 273;
@@ -1127,7 +1127,7 @@
             // 
             this.txtNumeroCredito.Enabled = false;
             this.txtNumeroCredito.Location = new System.Drawing.Point(20, 87);
-            this.txtNumeroCredito.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtNumeroCredito.Margin = new System.Windows.Forms.Padding(4);
             this.txtNumeroCredito.Name = "txtNumeroCredito";
             this.txtNumeroCredito.Size = new System.Drawing.Size(100, 22);
             this.txtNumeroCredito.TabIndex = 275;
@@ -1159,7 +1159,7 @@
             this.tabVacaciones.BackColor = System.Drawing.SystemColors.Control;
             this.tabVacaciones.Controls.Add(this.ContenedorVacaciones);
             this.tabVacaciones.Location = new System.Drawing.Point(4, 4);
-            this.tabVacaciones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabVacaciones.Margin = new System.Windows.Forms.Padding(4);
             this.tabVacaciones.Name = "tabVacaciones";
             this.tabVacaciones.Size = new System.Drawing.Size(941, 424);
             this.tabVacaciones.TabIndex = 6;
@@ -1169,7 +1169,7 @@
             // 
             this.ContenedorVacaciones.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ContenedorVacaciones.Location = new System.Drawing.Point(0, 0);
-            this.ContenedorVacaciones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ContenedorVacaciones.Margin = new System.Windows.Forms.Padding(4);
             this.ContenedorVacaciones.Name = "ContenedorVacaciones";
             // 
             // ContenedorVacaciones.Panel1
@@ -1202,7 +1202,7 @@
             // 
             this.lstvVacaciones.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstvVacaciones.Location = new System.Drawing.Point(0, 0);
-            this.lstvVacaciones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lstvVacaciones.Margin = new System.Windows.Forms.Padding(4);
             this.lstvVacaciones.Name = "lstvVacaciones";
             this.lstvVacaciones.Size = new System.Drawing.Size(271, 424);
             this.lstvVacaciones.TabIndex = 0;
@@ -1224,7 +1224,7 @@
             // 
             this.txtDiasPagoV.BackColor = System.Drawing.SystemColors.Control;
             this.txtDiasPagoV.Location = new System.Drawing.Point(172, 84);
-            this.txtDiasPagoV.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtDiasPagoV.Margin = new System.Windows.Forms.Padding(4);
             this.txtDiasPagoV.Name = "txtDiasPagoV";
             this.txtDiasPagoV.Size = new System.Drawing.Size(71, 22);
             this.txtDiasPagoV.TabIndex = 13;
@@ -1237,7 +1237,7 @@
             this.dtpFechaInicioVacaciones.Enabled = false;
             this.dtpFechaInicioVacaciones.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpFechaInicioVacaciones.Location = new System.Drawing.Point(325, 84);
-            this.dtpFechaInicioVacaciones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpFechaInicioVacaciones.Margin = new System.Windows.Forms.Padding(4);
             this.dtpFechaInicioVacaciones.Name = "dtpFechaInicioVacaciones";
             this.dtpFechaInicioVacaciones.Size = new System.Drawing.Size(137, 22);
             this.dtpFechaInicioVacaciones.TabIndex = 12;
@@ -1256,7 +1256,7 @@
             // btnGuardarObservaciones
             // 
             this.btnGuardarObservaciones.Location = new System.Drawing.Point(552, 389);
-            this.btnGuardarObservaciones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnGuardarObservaciones.Margin = new System.Windows.Forms.Padding(4);
             this.btnGuardarObservaciones.Name = "btnGuardarObservaciones";
             this.btnGuardarObservaciones.Size = new System.Drawing.Size(100, 28);
             this.btnGuardarObservaciones.TabIndex = 10;
@@ -1278,7 +1278,7 @@
             // txtObservaciones
             // 
             this.txtObservaciones.Location = new System.Drawing.Point(23, 171);
-            this.txtObservaciones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtObservaciones.Margin = new System.Windows.Forms.Padding(4);
             this.txtObservaciones.Multiline = true;
             this.txtObservaciones.Name = "txtObservaciones";
             this.txtObservaciones.Size = new System.Drawing.Size(631, 210);
@@ -1292,7 +1292,7 @@
             "Prima Vacacional y Vacaciones",
             "Prima Vacacional"});
             this.cmbConceptoVacaciones.Location = new System.Drawing.Point(172, 18);
-            this.cmbConceptoVacaciones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbConceptoVacaciones.Margin = new System.Windows.Forms.Padding(4);
             this.cmbConceptoVacaciones.Name = "cmbConceptoVacaciones";
             this.cmbConceptoVacaciones.Size = new System.Drawing.Size(305, 24);
             this.cmbConceptoVacaciones.TabIndex = 1;
@@ -1301,7 +1301,7 @@
             // btnEliminarVP
             // 
             this.btnEliminarVP.Location = new System.Drawing.Point(552, 135);
-            this.btnEliminarVP.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnEliminarVP.Margin = new System.Windows.Forms.Padding(4);
             this.btnEliminarVP.Name = "btnEliminarVP";
             this.btnEliminarVP.Size = new System.Drawing.Size(100, 28);
             this.btnEliminarVP.TabIndex = 7;
@@ -1323,7 +1323,7 @@
             // btnGuardarVP
             // 
             this.btnGuardarVP.Location = new System.Drawing.Point(444, 135);
-            this.btnGuardarVP.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnGuardarVP.Margin = new System.Windows.Forms.Padding(4);
             this.btnGuardarVP.Name = "btnGuardarVP";
             this.btnGuardarVP.Size = new System.Drawing.Size(100, 28);
             this.btnGuardarVP.TabIndex = 6;
@@ -1347,7 +1347,7 @@
             this.txtDiasPendientes.BackColor = System.Drawing.SystemColors.Control;
             this.txtDiasPendientes.Enabled = false;
             this.txtDiasPendientes.Location = new System.Drawing.Point(172, 116);
-            this.txtDiasPendientes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtDiasPendientes.Margin = new System.Windows.Forms.Padding(4);
             this.txtDiasPendientes.Name = "txtDiasPendientes";
             this.txtDiasPendientes.Size = new System.Drawing.Size(132, 22);
             this.txtDiasPendientes.TabIndex = 5;
@@ -1356,7 +1356,7 @@
             // 
             this.txtDiasPagoPV.BackColor = System.Drawing.SystemColors.Control;
             this.txtDiasPagoPV.Location = new System.Drawing.Point(172, 52);
-            this.txtDiasPagoPV.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtDiasPagoPV.Margin = new System.Windows.Forms.Padding(4);
             this.txtDiasPagoPV.Name = "txtDiasPagoPV";
             this.txtDiasPagoPV.Size = new System.Drawing.Size(71, 22);
             this.txtDiasPagoPV.TabIndex = 3;
@@ -1390,7 +1390,7 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 31);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(947, 71);
             this.panel1.TabIndex = 14;
@@ -1399,7 +1399,7 @@
             // 
             this.txtFechaIngreso.BackColor = System.Drawing.SystemColors.Control;
             this.txtFechaIngreso.Location = new System.Drawing.Point(768, 7);
-            this.txtFechaIngreso.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtFechaIngreso.Margin = new System.Windows.Forms.Padding(4);
             this.txtFechaIngreso.Name = "txtFechaIngreso";
             this.txtFechaIngreso.Size = new System.Drawing.Size(167, 22);
             this.txtFechaIngreso.TabIndex = 32;
@@ -1420,7 +1420,7 @@
             // 
             this.txtSueldo.BackColor = System.Drawing.SystemColors.Control;
             this.txtSueldo.Location = new System.Drawing.Point(768, 37);
-            this.txtSueldo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSueldo.Margin = new System.Windows.Forms.Padding(4);
             this.txtSueldo.Name = "txtSueldo";
             this.txtSueldo.Size = new System.Drawing.Size(167, 22);
             this.txtSueldo.TabIndex = 30;
@@ -1441,7 +1441,7 @@
             // 
             this.txtPuesto.BackColor = System.Drawing.SystemColors.Control;
             this.txtPuesto.Location = new System.Drawing.Point(445, 37);
-            this.txtPuesto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPuesto.Margin = new System.Windows.Forms.Padding(4);
             this.txtPuesto.Name = "txtPuesto";
             this.txtPuesto.Size = new System.Drawing.Size(239, 22);
             this.txtPuesto.TabIndex = 28;
@@ -1461,7 +1461,7 @@
             // 
             this.txtDepartamento.BackColor = System.Drawing.SystemColors.Control;
             this.txtDepartamento.Location = new System.Drawing.Point(144, 37);
-            this.txtDepartamento.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtDepartamento.Margin = new System.Windows.Forms.Padding(4);
             this.txtDepartamento.Name = "txtDepartamento";
             this.txtDepartamento.Size = new System.Drawing.Size(217, 22);
             this.txtDepartamento.TabIndex = 26;
@@ -1481,7 +1481,7 @@
             // 
             this.txtNombreCompleto.BackColor = System.Drawing.SystemColors.Control;
             this.txtNombreCompleto.Location = new System.Drawing.Point(196, 9);
-            this.txtNombreCompleto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtNombreCompleto.Margin = new System.Windows.Forms.Padding(4);
             this.txtNombreCompleto.Name = "txtNombreCompleto";
             this.txtNombreCompleto.Size = new System.Drawing.Size(488, 22);
             this.txtNombreCompleto.TabIndex = 24;
@@ -1490,7 +1490,7 @@
             // 
             this.mtxtNoEmpleado.BackColor = System.Drawing.SystemColors.Control;
             this.mtxtNoEmpleado.Location = new System.Drawing.Point(112, 9);
-            this.mtxtNoEmpleado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mtxtNoEmpleado.Margin = new System.Windows.Forms.Padding(4);
             this.mtxtNoEmpleado.Mask = "9999";
             this.mtxtNoEmpleado.Name = "mtxtNoEmpleado";
             this.mtxtNoEmpleado.Size = new System.Drawing.Size(43, 22);
@@ -1500,7 +1500,7 @@
             // 
             this.btnBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBuscar.Location = new System.Drawing.Point(156, 9);
-            this.btnBuscar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnBuscar.Margin = new System.Windows.Forms.Padding(4);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(32, 26);
             this.btnBuscar.TabIndex = 22;
@@ -1524,7 +1524,7 @@
             this.panel2.Controls.Add(this.toolAcciones);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(947, 31);
             this.panel2.TabIndex = 15;
@@ -1533,7 +1533,7 @@
             // 
             this.panel3.Controls.Add(this.TabPrincipal);
             this.panel3.Location = new System.Drawing.Point(0, 100);
-            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(949, 453);
             this.panel3.TabIndex = 16;
@@ -1635,14 +1635,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(947, 544);
+            this.ClientSize = new System.Drawing.Size(947, 558);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel3);
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(965, 591);
+            this.MaximumSize = new System.Drawing.Size(965, 605);
             this.MinimizeBox = false;
             this.Name = "frmSobreRecibo";
             this.Text = "Sobre-recibo";

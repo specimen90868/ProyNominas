@@ -181,143 +181,146 @@ namespace Nominas
 
             foreach (DataGridViewRow fila in dgvCargaVacaciones.Rows)
             {
-                try
+                if (!fila.Cells["noempleado"].Value.ToString().Equals(""))
                 {
-                    cnx.Open();
-                    idEmpleado = (int)emph.obtenerIdTrabajador(fila.Cells["noempleado"].Value.ToString(), idEmpresa);
-                    cnx.Close();
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: Obtener ID del concepto. \r\n \r\n" + error.Message, "Error");
-                    cnx.Dispose();
-                    this.Dispose();
-                }
+                    try
+                    {
+                        cnx.Open();
+                        idEmpleado = (int)emph.obtenerIdTrabajador(fila.Cells["noempleado"].Value.ToString(), idEmpresa);
+                        cnx.Close();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: Obtener ID del concepto. \r\n \r\n" + error.Message, "Error");
+                        cnx.Dispose();
+                        this.Dispose();
+                    }
 
-                Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
-                empleado.idtrabajador = idEmpleado;
+                    Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
+                    empleado.idtrabajador = idEmpleado;
 
-                List<Empleados.Core.Empleados> lstEmpleado = new List<Empleados.Core.Empleados>();
+                    List<Empleados.Core.Empleados> lstEmpleado = new List<Empleados.Core.Empleados>();
 
-                try
-                {
-                    cnx.Open();
-                    lstEmpleado = emph.obtenerEmpleado(empleado);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al obtener la antigüedad del empleado.", "Error");
-                    cnx.Dispose();
-                    this.Dispose();
-                }
+                    try
+                    {
+                        cnx.Open();
+                        lstEmpleado = emph.obtenerEmpleado(empleado);
+                        cnx.Close();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Error: Al obtener la antigüedad del empleado.", "Error");
+                        cnx.Dispose();
+                        this.Dispose();
+                    }
 
-                Vacaciones.Core.DiasDerecho dd = new Vacaciones.Core.DiasDerecho();
-                dd.anio = lstEmpleado[0].antiguedad;
+                    Vacaciones.Core.DiasDerecho dd = new Vacaciones.Core.DiasDerecho();
+                    dd.anio = lstEmpleado[0].antiguedad;
 
-                int dias = 0;
-                try
-                {
-                    cnx.Open();
-                    dias = (int)vh.diasDerecho(dd);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al obtener los dias por derecho del empleado.", "Error");
-                    cnx.Dispose();
-                    return;
-                }
+                    int dias = 0;
+                    try
+                    {
+                        cnx.Open();
+                        dias = (int)vh.diasDerecho(dd);
+                        cnx.Close();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Error: Al obtener los dias por derecho del empleado.", "Error");
+                        cnx.Dispose();
+                        return;
+                    }
 
-                Faltas.Core.FaltasHelper fh = new Faltas.Core.FaltasHelper();
-                fh.Command = cmd;
+                    Faltas.Core.FaltasHelper fh = new Faltas.Core.FaltasHelper();
+                    fh.Command = cmd;
 
-                Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
-                falta.idempresa = GLOBALES.IDEMPRESA;
-                falta.idtrabajador = idEmpleado;
-                falta.fechainicio = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicio"].Value.ToString());
-                falta.fechafin = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["fin"].Value.ToString());
+                    Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
+                    falta.idempresa = GLOBALES.IDEMPRESA;
+                    falta.idtrabajador = idEmpleado;
+                    falta.fechainicio = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicio"].Value.ToString());
+                    falta.fechafin = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["fin"].Value.ToString());
 
-                int existeFaltas = 0;
-                try
-                {
-                    cnx.Open();
-                    existeFaltas = (int)fh.existeFalta(falta);
-                    cnx.Close();
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: Al obtener las faltas del trabajador. \r\n" + error.Message, "Error");
-                    cnx.Dispose();
-                    return;
-                }
+                    int existeFaltas = 0;
+                    try
+                    {
+                        cnx.Open();
+                        existeFaltas = (int)fh.existeFalta(falta);
+                        cnx.Close();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: Al obtener las faltas del trabajador. \r\n" + error.Message, "Error");
+                        cnx.Dispose();
+                        return;
+                    }
 
-                int idperiodo = 0;
-                try
-                {
-                    cnx.Open();
-                    idperiodo = (int)emph.obtenerIdPeriodo(idEmpleado);
-                    cnx.Close();
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: Al obtener el id del periodo. \r\n" + error.Message, "Error");
-                    cnx.Dispose();
-                    return;
-                }
-                Periodos.Core.Periodos p = new Periodos.Core.Periodos();
-                p.idperiodo = idperiodo;
+                    int idperiodo = 0;
+                    try
+                    {
+                        cnx.Open();
+                        idperiodo = (int)emph.obtenerIdPeriodo(idEmpleado);
+                        cnx.Close();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: Al obtener el id del periodo. \r\n" + error.Message, "Error");
+                        cnx.Dispose();
+                        return;
+                    }
+                    Periodos.Core.Periodos p = new Periodos.Core.Periodos();
+                    p.idperiodo = idperiodo;
 
-                int diasPeriodo = 0;
-                try
-                {
-                    cnx.Open();
-                    diasPeriodo = (int)ph.DiasDePago(p);
-                    cnx.Close();
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: Al obtener los dias del periodo. \r\n" + error.Message, "Error");
-                    cnx.Dispose();
-                    return;
-                }
+                    int diasPeriodo = 0;
+                    try
+                    {
+                        cnx.Open();
+                        diasPeriodo = (int)ph.DiasDePago(p);
+                        cnx.Close();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: Al obtener los dias del periodo. \r\n" + error.Message, "Error");
+                        cnx.Dispose();
+                        return;
+                    }
 
-                int diasPagoReales = int.Parse(fila.Cells["diaspago"].Value.ToString()) + existeFaltas;
-                if (diasPagoReales >= diasPeriodo)
-                {
-                    diasPagoReales = diasPeriodo - existeFaltas;
-                    MessageBox.Show("Existen faltas del trabajador, se ajustarán las vacaciones.", "Información");
-                }
-                else
-                {
-                    diasPagoReales = int.Parse(fila.Cells["diaspago"].Value.ToString());
-                }
+                    int diasPagoReales = int.Parse(fila.Cells["diaspago"].Value.ToString()) + existeFaltas;
+                    if (diasPagoReales >= diasPeriodo)
+                    {
+                        diasPagoReales = diasPeriodo - existeFaltas;
+                        MessageBox.Show("Existen faltas del trabajador, se ajustarán las vacaciones.", "Información");
+                    }
+                    else
+                    {
+                        diasPagoReales = int.Parse(fila.Cells["diaspago"].Value.ToString());
+                    }
 
-                Vacaciones.Core.VacacionesPrima vp = new Vacaciones.Core.VacacionesPrima();
-                vp.idtrabajador = idEmpleado;
-                vp.idempresa = GLOBALES.IDEMPRESA;
-                vp.periodoinicio = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicio"].Value.ToString());
-                vp.periodofin = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["fin"].Value.ToString());
-                vp.diasderecho = dias;
-                vp.fechapago = DateTime.Now.Date;
-                vp.vacacionesprima = fila.Cells["concepto"].Value.ToString() == "Prima Vacacional" ? "P" : "V";
+                    Vacaciones.Core.VacacionesPrima vp = new Vacaciones.Core.VacacionesPrima();
+                    vp.idtrabajador = idEmpleado;
+                    vp.idempresa = GLOBALES.IDEMPRESA;
+                    vp.periodoinicio = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicio"].Value.ToString());
+                    vp.periodofin = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["fin"].Value.ToString());
+                    vp.diasderecho = dias;
+                    vp.fechapago = DateTime.Now.Date;
+                    vp.vacacionesprima = fila.Cells["concepto"].Value.ToString() == "Prima Vacacional" ? "P" : "V";
 
-                if (fila.Cells["concepto"].Value.ToString() == "Prima Vacacional")
-                {
-                    vp.diaspago = diasPagoReales;
-                    vp.diaspendientes = dias - diasPagoReales;
-                    vp.fechainicio = DateTime.Now.Date;
-                    vp.fechafin = DateTime.Now.Date;
+                    if (fila.Cells["concepto"].Value.ToString() == "Prima Vacacional")
+                    {
+                        vp.diaspago = diasPagoReales;
+                        vp.diaspendientes = dias - diasPagoReales;
+                        vp.fechainicio = DateTime.Now.Date;
+                        vp.fechafin = DateTime.Now.Date;
+                    }
+                    else
+                    {
+                        vp.diaspago = diasPagoReales;
+                        vp.diaspendientes = dias - diasPagoReales;
+                        vp.fechainicio = DateTime.Parse(fila.Cells["fechaaplicacion"].Value.ToString());
+                        vp.fechafin = DateTime.Parse(fila.Cells["fechaaplicacion"].Value.ToString()).AddDays(diasPagoReales - 1);
+                    }
+
+                    lstMovimientos.Add(vp);
                 }
-                else
-                {
-                    vp.diaspago = diasPagoReales;
-                    vp.diaspendientes = dias - diasPagoReales;
-                    vp.fechainicio = DateTime.Parse(fila.Cells["fechaaplicacion"].Value.ToString());
-                    vp.fechafin = DateTime.Parse(fila.Cells["fechaaplicacion"].Value.ToString()).AddDays(diasPagoReales - 1);
-                }
-                
-                lstMovimientos.Add(vp);
             }
 
             bulk = new SqlBulkCopy(cnx);

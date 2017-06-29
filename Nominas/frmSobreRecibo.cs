@@ -1376,14 +1376,16 @@ namespace Nominas
             comp.idtrabajador = idTrabajador;
  
             List<Vacaciones.Core.VacacionesPrima> lstVacacionesPrima = new List<Vacaciones.Core.VacacionesPrima>();
-
+            object obj;
             try
             {
                 cnx.Open();
                 lstVacacionesPrima = vh.obtenerVacacionesPrimaTrabajador(v);
-                txtObservaciones.Text = comh.obtenerObservacionesTrabajador(comp).ToString();
+                obj = comh.obtenerObservacionesTrabajador(comp);
                 cnx.Close();
                 cnx.Dispose();
+
+                txtObservaciones.Text = (obj == null ? "" : obj.ToString());
             }
             catch (Exception error)
             {
