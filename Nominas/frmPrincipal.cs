@@ -117,8 +117,11 @@ namespace Nominas
                     case "Complementos":
                         mnuComplementos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
-                    case "Empleados en Baja":
+                    case "Registro de Bajas":
                         toolRegistroBajas.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Importar empleados":
+                        toolImportarEmpleados.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Expedientes":
                         mnuExpedientes.Enabled = Convert.ToBoolean(lstMenu[i].accion);
@@ -162,20 +165,38 @@ namespace Nominas
                     case "Bajas Idse":
                         toolBajaIdse.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
-                    case "Calculo de nómina":
+                    case "Cálculo de nómina":
                         toolCalculoNomina.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
-                    case "Normal":
+                    case "Ordinaria":
                         toolNominaNormal.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
-                    case "Impresión de recibos":
+                    case "Extraordinaria":
+                        toolExtraordinario.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Recibos de nómina":
                         toolRecibosNomina.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
-                    case "Envio de recibos":
-                        //toolEnvioRecibos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                    case "Impresión p. ordinario":
+                        toolPeriodoOrdinario.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Impresión p. extraordinario":
+                        toolPeriodoExtraOrdinario.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Envio por E-mail (Ordinario)":
+                        toolEnvioCorreoOrdinario.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Envio por E-mail (Extraordiario)":
+                        toolEnvioCorreoExtraordinario.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Reportes":
                         toolReportes.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Periodo ordinario":
+                        toolReporteOrdinario.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Periodo extraordinario":
+                        toolReporteExtraordinario.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Departamentos":
                         mnuDepartamentos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
@@ -192,7 +213,7 @@ namespace Nominas
                     case "Conceptos - Empleado":
                         toolConceptoEmpleado.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
-                    case "Empresas":
+                    case "Empresa":
                         mnuEmpresa.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Usuarios":
@@ -213,7 +234,7 @@ namespace Nominas
                     case "Factores":
                         mnuFactores.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
-                    case "Salario minimo":
+                    case "Salario mínimo":
                         mnuSalarioMinimo.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "ISR":
@@ -224,6 +245,12 @@ namespace Nominas
                         break;
                     case "IMSS":
                         toolImss.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Factor de descuento":
+                        toolFactorDescuento.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Empresas":
+                        toolEmpresas.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                 }
             }
@@ -451,7 +478,7 @@ namespace Nominas
         private void mnuInfonavit_Click(object sender, EventArgs e)
         {
             frmListaInfonavit li = new frmListaInfonavit();
-            //li.MdiParent = this;
+            li.MdiParent = this;
             li.Show();
         }
 
@@ -585,6 +612,7 @@ namespace Nominas
             frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
             sp._TipoNomina = GLOBALES.EXTRAORDINARIO_NORMAL;
             sp._Ventana = 0; //NOMINAS
+            sp.StartPosition = FormStartPosition.CenterScreen;
             sp.MdiParent = this;
             sp.Show();
         }
@@ -651,6 +679,7 @@ namespace Nominas
         private void toolFactorDescuento_Click(object sender, EventArgs e)
         {
             frmListaFactorDescuento lfd = new frmListaFactorDescuento();
+            lfd.MdiParent = this;
             lfd.Show();
         }
 

@@ -32,6 +32,22 @@ namespace Nominas
         private void frmSeleccionarEmpresa_Load(object sender, EventArgs e)
         {
             cargaGridEmpresa();
+            CargaPerfil();
+        }
+
+        private void CargaPerfil()
+        {
+            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("Empresas");
+
+            for (int i = 0; i < lstEdiciones.Count; i++)
+            {
+                switch (lstEdiciones[i].permiso.ToString())
+                {
+                    case "Crear":
+                        toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);
+                        break;
+                }
+            }
         }
 
         private void cargaGridEmpresa()

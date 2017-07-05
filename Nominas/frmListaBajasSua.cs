@@ -99,7 +99,7 @@ namespace Nominas
         {
             dgvBajasSua.RowHeadersVisible = false;
             ListaEmpleados();
-            CargaPerfil("Empleados en Baja");
+            CargaPerfil("Registro de Bajas");
         }
 
         private void CargaPerfil(string nombre)

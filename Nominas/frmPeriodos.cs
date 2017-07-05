@@ -73,11 +73,10 @@ namespace Nominas
 
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
-                    toolTitulo.Text = "Consulta Periodo";
+                    
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                 }
-                else
-                    toolTitulo.Text = "Edición Periodo";
+               
             }
 
             cmbPago.SelectedIndex = 0;

@@ -36,19 +36,23 @@
             // 
             this.pbImagen.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbImagen.Location = new System.Drawing.Point(0, 0);
+            this.pbImagen.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pbImagen.Name = "pbImagen";
-            this.pbImagen.Size = new System.Drawing.Size(344, 354);
+            this.pbImagen.Size = new System.Drawing.Size(459, 436);
             this.pbImagen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbImagen.TabIndex = 0;
             this.pbImagen.TabStop = false;
             // 
             // frmImagen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(344, 354);
+            this.ClientSize = new System.Drawing.Size(459, 436);
             this.Controls.Add(this.pbImagen);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MaximumSize = new System.Drawing.Size(477, 483);
+            this.MinimumSize = new System.Drawing.Size(477, 483);
             this.Name = "frmImagen";
             this.Text = "Imagen";
             this.Load += new System.EventHandler(this.frmImagen_Load);

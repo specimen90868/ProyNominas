@@ -155,11 +155,9 @@ namespace Nominas
 
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
-                    toolTitulo.Text = "Consulta Departamento";
                     GLOBALES.INHABILITAR(this,typeof(TextBox));
                 }
-                else
-                    toolTitulo.Text = "Edición Departamento";
+                
             }
         }
     }

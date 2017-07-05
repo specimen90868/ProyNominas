@@ -80,7 +80,7 @@ namespace Nominas
             rbtnDeducciones.Checked = true;
             cargaCombo();
             if (_idEmpleado != 0)
-                lblEmpleado.Text = _nombreEmpleado;
+                txtNombre.Text = _nombreEmpleado;
         }
 
         private void cargaCombo()

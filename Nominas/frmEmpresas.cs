@@ -236,14 +236,11 @@ namespace Nominas
             switch (tipoGuardar)
             {
                 case 0:
-                    GLOBALES.LIMPIAR(this,typeof(TextBox));
+                    GLOBALES.LIMPIAR(this, typeof(TextBox));
                     GLOBALES.LIMPIAR(this, typeof(MaskedTextBox));
                     //limpiar(this, typeof(TextBox));
-                    break;
-                case 1:
                     if (OnNuevaEmpresa != null)
                         OnNuevaEmpresa(_tipoOperacion);
-                    this.Dispose();
                     break;
             }
         }
@@ -329,18 +326,14 @@ namespace Nominas
 
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
-                    toolTitulo.Text = "Consulta Empresa";
                     ((Control)this.tabEmpresa).Enabled = false;
                     ((Control)this.tabPeriodo).Enabled = false;
                     ((Control)this.tabDomicilio).Enabled = false;
                     ((Control)this.tabTimbrado).Enabled = false;
                     btnAsignar.Enabled = false;
-                    toolGuardarCerrar.Enabled = false;
                     toolGuardarNuevo.Enabled = false;
                     
                 }
-                else
-                    toolTitulo.Text = "Edición Empresa";
             }
             
                 
@@ -447,22 +440,7 @@ namespace Nominas
 
         private void toolGuardarNuevo_Click(object sender, EventArgs e)
         {
-            if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
-            {
-                guardar(1);
-            }
-            else
-            {
-                guardar(0);
-                //frmInicioPeriodo ip = new frmInicioPeriodo();
-                //ip._periodo = int.Parse(txtDias.Text);
-                //ip.OnNuevoPeriodo += ip_OnNuevoPeriodo;
-                //ip.ShowDialog();
-                //if (capturaFecha)
-                //    guardar(0);
-                //else
-                //    return;
-            }
+            guardar(0);
         }
 
         private void toolCerrar_Click(object sender, EventArgs e)

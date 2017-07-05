@@ -71,7 +71,7 @@ namespace Nominas
             cmd = new SqlCommand();
             cnx.ConnectionString = cdn;
             cmd.Connection = cnx;
-
+            
             if (e.KeyChar == (char)Keys.Enter)
             {
                 eh = new Empleados.Core.EmpleadosHelper();

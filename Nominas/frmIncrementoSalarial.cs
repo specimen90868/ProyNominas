@@ -52,7 +52,7 @@ namespace Nominas
             cmbDepartamento.Enabled = false;
             cmbPuesto.Enabled = false;
 
-            lblEmpleado.Text = _nombreEmpleado;
+            txtNombre.Text = _nombreEmpleado;
             cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
             cmd = new SqlCommand();

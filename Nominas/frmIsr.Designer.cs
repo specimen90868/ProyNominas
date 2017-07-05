@@ -29,13 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmIsr));
-            this.toolTitulo = new System.Windows.Forms.ToolStrip();
-            this.toolVentana = new System.Windows.Forms.ToolStripLabel();
             this.toolAcciones = new System.Windows.Forms.ToolStrip();
-            this.toolGuardarCerrar = new System.Windows.Forms.ToolStripButton();
             this.toolGuardarNuevo = new System.Windows.Forms.ToolStripButton();
             this.toolCerrar = new System.Windows.Forms.ToolStripButton();
-            this.Label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -46,57 +42,28 @@
             this.txtPorcentaje = new System.Windows.Forms.TextBox();
             this.txtDias = new System.Windows.Forms.TextBox();
             this.txtAnio = new System.Windows.Forms.TextBox();
-            this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
             // 
-            // toolTitulo
-            // 
-            this.toolTitulo.BackColor = System.Drawing.Color.DarkGray;
-            this.toolTitulo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolVentana});
-            this.toolTitulo.Location = new System.Drawing.Point(0, 0);
-            this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(406, 27);
-            this.toolTitulo.TabIndex = 5;
-            this.toolTitulo.Text = "toolAcciones";
-            // 
-            // toolVentana
-            // 
-            this.toolVentana.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolVentana.Name = "toolVentana";
-            this.toolVentana.Size = new System.Drawing.Size(109, 24);
-            this.toolVentana.Text = "Nuevo ISR";
-            // 
             // toolAcciones
             // 
+            this.toolAcciones.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolAcciones.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolGuardarCerrar,
             this.toolGuardarNuevo,
             this.toolCerrar});
-            this.toolAcciones.Location = new System.Drawing.Point(0, 27);
+            this.toolAcciones.Location = new System.Drawing.Point(0, 0);
             this.toolAcciones.Name = "toolAcciones";
-            this.toolAcciones.Size = new System.Drawing.Size(406, 25);
+            this.toolAcciones.Size = new System.Drawing.Size(279, 27);
             this.toolAcciones.TabIndex = 6;
             this.toolAcciones.Text = "toolEmpresa";
-            // 
-            // toolGuardarCerrar
-            // 
-            this.toolGuardarCerrar.Image = ((System.Drawing.Image)(resources.GetObject("toolGuardarCerrar.Image")));
-            this.toolGuardarCerrar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolGuardarCerrar.Name = "toolGuardarCerrar";
-            this.toolGuardarCerrar.Size = new System.Drawing.Size(113, 22);
-            this.toolGuardarCerrar.Text = "Guardar y Cerrar";
-            this.toolGuardarCerrar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolGuardarCerrar.Click += new System.EventHandler(this.toolGuardarCerrar_Click);
             // 
             // toolGuardarNuevo
             // 
             this.toolGuardarNuevo.Image = ((System.Drawing.Image)(resources.GetObject("toolGuardarNuevo.Image")));
             this.toolGuardarNuevo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolGuardarNuevo.Name = "toolGuardarNuevo";
-            this.toolGuardarNuevo.Size = new System.Drawing.Size(116, 22);
-            this.toolGuardarNuevo.Text = "Guardar y Nuevo";
+            this.toolGuardarNuevo.Size = new System.Drawing.Size(86, 24);
+            this.toolGuardarNuevo.Text = "Guardar";
             this.toolGuardarNuevo.Click += new System.EventHandler(this.toolGuardarNuevo_Click);
             // 
             // toolCerrar
@@ -104,105 +71,106 @@
             this.toolCerrar.Image = ((System.Drawing.Image)(resources.GetObject("toolCerrar.Image")));
             this.toolCerrar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolCerrar.Name = "toolCerrar";
-            this.toolCerrar.Size = new System.Drawing.Size(59, 22);
+            this.toolCerrar.Size = new System.Drawing.Size(73, 24);
             this.toolCerrar.Text = "Cerrar";
             this.toolCerrar.Click += new System.EventHandler(this.toolCerrar_Click);
-            // 
-            // Label2
-            // 
-            this.Label2.AutoSize = true;
-            this.Label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label2.Location = new System.Drawing.Point(12, 75);
-            this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(187, 18);
-            this.Label2.TabIndex = 107;
-            this.Label2.Text = "Valores del registro ISR";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(28, 121);
+            this.label1.Location = new System.Drawing.Point(29, 48);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 13);
+            this.label1.Size = new System.Drawing.Size(56, 17);
             this.label1.TabIndex = 108;
             this.label1.Text = "Inferior:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(28, 152);
+            this.label3.Location = new System.Drawing.Point(29, 86);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(38, 13);
+            this.label3.Size = new System.Drawing.Size(49, 17);
             this.label3.TabIndex = 109;
             this.label3.Text = "Cuota:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(28, 183);
+            this.label4.Location = new System.Drawing.Point(29, 124);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(61, 13);
+            this.label4.Size = new System.Drawing.Size(80, 17);
             this.label4.TabIndex = 110;
             this.label4.Text = "Porcentaje:";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(28, 214);
+            this.label5.Location = new System.Drawing.Point(29, 162);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(46, 13);
+            this.label5.Size = new System.Drawing.Size(61, 17);
             this.label5.TabIndex = 111;
             this.label5.Text = "Periodo:";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(28, 245);
+            this.label6.Location = new System.Drawing.Point(29, 201);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(29, 13);
+            this.label6.Size = new System.Drawing.Size(37, 17);
             this.label6.TabIndex = 112;
             this.label6.Text = "Año:";
             // 
             // txtInferior
             // 
-            this.txtInferior.Location = new System.Drawing.Point(99, 118);
+            this.txtInferior.Location = new System.Drawing.Point(124, 44);
+            this.txtInferior.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtInferior.Name = "txtInferior";
-            this.txtInferior.Size = new System.Drawing.Size(100, 20);
+            this.txtInferior.Size = new System.Drawing.Size(132, 22);
             this.txtInferior.TabIndex = 113;
             // 
             // txtCuota
             // 
-            this.txtCuota.Location = new System.Drawing.Point(99, 149);
+            this.txtCuota.Location = new System.Drawing.Point(124, 82);
+            this.txtCuota.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtCuota.Name = "txtCuota";
-            this.txtCuota.Size = new System.Drawing.Size(100, 20);
+            this.txtCuota.Size = new System.Drawing.Size(132, 22);
             this.txtCuota.TabIndex = 114;
             // 
             // txtPorcentaje
             // 
-            this.txtPorcentaje.Location = new System.Drawing.Point(99, 180);
+            this.txtPorcentaje.Location = new System.Drawing.Point(124, 121);
+            this.txtPorcentaje.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtPorcentaje.Name = "txtPorcentaje";
-            this.txtPorcentaje.Size = new System.Drawing.Size(100, 20);
+            this.txtPorcentaje.Size = new System.Drawing.Size(132, 22);
             this.txtPorcentaje.TabIndex = 115;
             // 
             // txtDias
             // 
-            this.txtDias.Location = new System.Drawing.Point(99, 211);
+            this.txtDias.Location = new System.Drawing.Point(124, 159);
+            this.txtDias.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtDias.Name = "txtDias";
-            this.txtDias.Size = new System.Drawing.Size(100, 20);
+            this.txtDias.Size = new System.Drawing.Size(132, 22);
             this.txtDias.TabIndex = 118;
             // 
             // txtAnio
             // 
-            this.txtAnio.Location = new System.Drawing.Point(99, 242);
+            this.txtAnio.Location = new System.Drawing.Point(124, 197);
+            this.txtAnio.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtAnio.Name = "txtAnio";
-            this.txtAnio.Size = new System.Drawing.Size(100, 20);
+            this.txtAnio.Size = new System.Drawing.Size(132, 22);
             this.txtAnio.TabIndex = 119;
+            this.txtAnio.Text = "Valor de ISR";
             // 
             // frmIsr
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(406, 504);
+            this.ClientSize = new System.Drawing.Size(279, 250);
             this.Controls.Add(this.txtAnio);
             this.Controls.Add(this.txtDias);
             this.Controls.Add(this.txtPorcentaje);
@@ -213,14 +181,15 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.Label2);
             this.Controls.Add(this.toolAcciones);
-            this.Controls.Add(this.toolTitulo);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(297, 297);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(297, 297);
             this.Name = "frmIsr";
-            this.Text = "Isr";
+            this.Text = "Valor del ISR";
             this.Load += new System.EventHandler(this.frmIsr_Load);
-            this.toolTitulo.ResumeLayout(false);
-            this.toolTitulo.PerformLayout();
             this.toolAcciones.ResumeLayout(false);
             this.toolAcciones.PerformLayout();
             this.ResumeLayout(false);
@@ -230,13 +199,9 @@
 
         #endregion
 
-        internal System.Windows.Forms.ToolStrip toolTitulo;
-        internal System.Windows.Forms.ToolStripLabel toolVentana;
         internal System.Windows.Forms.ToolStrip toolAcciones;
-        internal System.Windows.Forms.ToolStripButton toolGuardarCerrar;
         internal System.Windows.Forms.ToolStripButton toolGuardarNuevo;
         private System.Windows.Forms.ToolStripButton toolCerrar;
-        internal System.Windows.Forms.Label Label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;

@@ -51,7 +51,7 @@
             this.txtBuscar});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(696, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(488, 27);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -88,7 +88,7 @@
             // 
             this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(265, 27);
+            this.txtBuscar.Size = new System.Drawing.Size(200, 27);
             this.txtBuscar.Text = "Buscar por no. de empleado...";
             this.txtBuscar.Leave += new System.EventHandler(this.txtBuscar_Leave);
             this.txtBuscar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBuscar_KeyPress);
@@ -106,7 +106,7 @@
             this.dgvCatalogo.Name = "dgvCatalogo";
             this.dgvCatalogo.ReadOnly = true;
             this.dgvCatalogo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCatalogo.Size = new System.Drawing.Size(696, 339);
+            this.dgvCatalogo.Size = new System.Drawing.Size(488, 190);
             this.dgvCatalogo.TabIndex = 1;
             this.dgvCatalogo.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellDoubleClick);
             // 
@@ -114,14 +114,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(696, 366);
+            this.ClientSize = new System.Drawing.Size(488, 217);
             this.Controls.Add(this.dgvCatalogo);
             this.Controls.Add(this.toolStrip1);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(506, 264);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(506, 264);
             this.Name = "frmBuscar";
-            this.Text = "Buscar";
+            this.Text = "Buscar trabajador";
             this.Load += new System.EventHandler(this.frmBuscar_Load);
             this.Shown += new System.EventHandler(this.frmBuscar_Shown);
             this.toolStrip1.ResumeLayout(false);

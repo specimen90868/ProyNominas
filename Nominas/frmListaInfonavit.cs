@@ -111,7 +111,7 @@ namespace Nominas
         {
             int fila = 0;
             frmInfonavit i = new frmInfonavit();
-            i.MdiParent = this.MdiParent;
+            i.StartPosition = FormStartPosition.CenterScreen;
 
             if (edicion != GLOBALES.NUEVO)
             {

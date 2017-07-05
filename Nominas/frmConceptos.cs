@@ -111,11 +111,8 @@ namespace Nominas
             {
                 case 0:
                     GLOBALES.LIMPIAR(this, typeof(TextBox));
-                    break;
-                case 1:
                     if (OnNuevoConcepto != null)
                         OnNuevoConcepto(_tipoOperacion);
-                    this.Dispose();
                     break;
             }
         }
@@ -133,11 +130,6 @@ namespace Nominas
                 concepto = "SAT DEDUCCIONES";
             }
                 
-        }
-
-        private void toolGuardarCerrar_Click(object sender, EventArgs e)
-        {
-            guardar(1);
         }
 
         private void toolGuardarNuevo_Click(object sender, EventArgs e)
@@ -222,13 +214,11 @@ namespace Nominas
 
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
-                    toolTitulo.Text = "Consulta concepto";
+                    
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                     GLOBALES.INHABILITAR(this, typeof(ComboBox));
                     GLOBALES.INHABILITAR(this, typeof(CheckBox));
                 }
-                else
-                    toolTitulo.Text = "Edición concepto";
             }
         }
 
@@ -301,7 +291,6 @@ namespace Nominas
             {
                 MessageBox.Show("Solo se admiten números.", "Error");
                 txtNoConcepto.Text = "0";
-                toolGuardarCerrar.Enabled = false;
                 toolGuardarNuevo.Enabled = false;
                 return;
             }
@@ -310,13 +299,11 @@ namespace Nominas
             {
                 MessageBox.Show("El número de concepto elegido ya se encuentra asignado.", "Error");
                 txtNoConcepto.Text = "0";
-                toolGuardarCerrar.Enabled = false;
                 toolGuardarNuevo.Enabled = false;
                 return;
             }
             else
             {
-                toolGuardarCerrar.Enabled = true;
                 toolGuardarNuevo.Enabled = true;
             }
         }

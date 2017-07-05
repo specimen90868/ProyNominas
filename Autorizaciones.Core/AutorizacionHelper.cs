@@ -189,23 +189,20 @@ namespace Autorizaciones.Core
             return 1;
         }
 
-        public int insertarPermiso(PermisosOperaciones p)
+        public int  insertarPermiso(PermisosOperaciones p)
         {
-            Command.CommandText = "insert into permisos (idmenu, idcatpermiso, idperfil, accion) values (@idmenu, @idcatpermiso, @idperfil, @accion)";
+            Command.CommandText = "exec stp_InsertaPermisos @idperfil";
             Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("idmenu", p.idmenu);
-            Command.Parameters.AddWithValue("idcatpermiso", p.idcatpermiso);
             Command.Parameters.AddWithValue("idperfil", p.idperfil);
-            Command.Parameters.AddWithValue("accion", p.accion);
             return Command.ExecuteNonQuery();
         }
 
-        public int eliminarPermiso(PermisosOperaciones p)
+        public int actualizaPermiso(PermisosOperaciones p)
         {
-            Command.CommandText = "delete from permisos where id = @id and idperfil = @idperfil";
+            Command.CommandText = "update permisos set accion = @accion where id = @id";
             Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("accion", p.accion);
             Command.Parameters.AddWithValue("id", p.id);
-            Command.Parameters.AddWithValue("idperfil", p.idperfil);
             return Command.ExecuteNonQuery();
         }
     }

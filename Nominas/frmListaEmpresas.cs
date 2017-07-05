@@ -186,7 +186,7 @@ namespace Nominas
         {
             int fila = 0;
             frmEmpresas e = new frmEmpresas();
-            e.MdiParent = this.MdiParent;
+            e.StartPosition = FormStartPosition.CenterScreen;
             e.OnNuevaEmpresa += e_OnNuevaEmpresa;
             e._lista = true;
             if (!edicion.Equals(GLOBALES.NUEVO))

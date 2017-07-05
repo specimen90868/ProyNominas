@@ -177,8 +177,8 @@ namespace Nominas
         {
             dgvDatos.RowHeadersVisible = false;
             ListaEmpleados(_tipoOperacion);
-            toolNombreVentana.Text += " ";
-            toolNombreVentana.Text += (_tipoOperacion == 0) ? "Alta" : (_tipoOperacion == 1) ? "Modificación" : "Baja";
+            //toolNombreVentana.Text += " ";
+            //toolNombreVentana.Text += (_tipoOperacion == 0) ? "Alta" : (_tipoOperacion == 1) ? "Modificación" : "Baja";
         }
 
         private void toolFiltrar_Click(object sender, EventArgs e)

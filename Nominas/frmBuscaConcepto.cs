@@ -37,7 +37,7 @@ namespace Nominas
 
         private void frmBuscaConcepto_Load(object sender, EventArgs e)
         {
-            lblNombreEmpleado.Text = _nombreEmpleado;
+            txtNombre.Text = _nombreEmpleado;
 
             cnx = new SqlConnection();
             cnx.ConnectionString = cdn;

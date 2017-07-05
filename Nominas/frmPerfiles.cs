@@ -37,11 +37,7 @@ namespace Nominas
         public event delOnNuevoPerfil OnNuevoPerfil;
         #endregion
 
-        private void toolGuardarCerrar_Click(object sender, EventArgs e)
-        {
-            Guardar(1);
-        }
-
+        
         private void toolGuardarNuevo_Click(object sender, EventArgs e)
         {
             Guardar(0);
@@ -49,13 +45,13 @@ namespace Nominas
 
         private void Guardar(int tipoGuardar)
         {
-            //SE VALIDA SI TODOS LOS TEXTBOX HAN SIDO LLENADOS.
-            //string control = GLOBALES.VALIDAR(this, typeof(TextBox));
-            //if (!control.Equals(""))
-            //{
-            //    MessageBox.Show("Falta el campo: " + control, "Información");
-            //    return;
-            //}
+            if (txtNombre.Text.Equals("") || txtNombre.Text.Length == 0)
+            {
+                MessageBox.Show("Información: \r\n" + "El nombre del perfil no puede ir vacío.", "Información", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Exclamation);
+                return; 
+            }
 
             int idperfil;
 
@@ -73,6 +69,8 @@ namespace Nominas
             ///ASIGNACION DEL NOMBRE DEL PERFIL A LA CLASE PERFILES
             Perfil.Core.Perfiles p = new Perfil.Core.Perfiles();
             p.nombre = txtNombre.Text;
+
+            Autorizaciones.Core.PermisosOperaciones permisos = new Autorizaciones.Core.PermisosOperaciones();
 
             ///ASIGNACION DE LOS CHECKBOXES A LA CLASE AUTORIZACION
             List<Autorizaciones.Core.Autorizacion> lstAutorizacion = new List<Autorizaciones.Core.Autorizacion>();
@@ -116,6 +114,8 @@ namespace Nominas
                         ph.insertaPerfil(p);
                         idperfil = (int)ph.obtenerIdPerfil(p);
                         auth.insertaAutorizacion(idperfil, lstAutorizacion);
+                        permisos.idperfil = idperfil;
+                        auth.insertarPermiso(permisos);
                         cnx.Close();
                         cnx.Dispose();
 
@@ -175,14 +175,13 @@ namespace Nominas
             {
                 (c as TextBox).Enabled = false;
             }
-            toolGuardarCerrar.Enabled = false;
+            
             toolGuardarNuevo.Enabled = false;
         }
         #endregion
 
         private void frmPerfiles_Load(object sender, EventArgs e)
         {
-            CargaCombos();
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
                 cnx = new SqlConnection();
@@ -238,24 +237,34 @@ namespace Nominas
                         } 
                     }
 
-                    var a = from b in lstPermisos
-                            select new
-                            {
-                                b.id,
-                                b.idperfil,
-                                Nombre = b.nombre,
-                                Permiso = b.permiso,
-                                Accion = (b.accion ? "HABILITADO" : "DESHABILITADO")
-                            };
+                    DataTable dt = new DataTable();
+                    DataRow dtFila;
+                    dt.Columns.Add("id", typeof(Int32));
+                    dt.Columns.Add("idperfil", typeof(Int32));
+                    dt.Columns.Add("nombre", typeof(String));
+                    dt.Columns.Add("permiso", typeof(String));
+                    dt.Columns.Add("accion", typeof(Boolean));
 
-                    dgvPermisos.DataSource = a.ToList();
-                    dgvPermisos.Columns[0].Visible = false;
-                    dgvPermisos.Columns[1].Visible = false;
-
-                    for (int i = 0; i < dgvPermisos.Columns.Count; i++)
+                    for (int i = 0; i < lstPermisos.Count; i++)
                     {
-                        dgvPermisos.AutoResizeColumn(i);
+                        dtFila = dt.NewRow();
+                        dtFila["id"] = lstPermisos[i].id;
+                        dtFila["idperfil"] = lstPermisos[i].idperfil;
+                        dtFila["nombre"] = lstPermisos[i].nombre;
+                        dtFila["permiso"] = lstPermisos[i].permiso;
+                        dtFila["accion"] = lstPermisos[i].accion;
+                        dt.Rows.Add(dtFila);
                     }
+
+                    dgvPermisos.Columns["id"].DataPropertyName = "id";
+                    dgvPermisos.Columns["idperfil"].DataPropertyName = "idperfil";
+                    dgvPermisos.Columns["nombre"].DataPropertyName = "nombre";
+                    dgvPermisos.Columns["permiso"].DataPropertyName = "permiso";
+                    dgvPermisos.Columns["accion"].DataPropertyName = "accion";
+
+                    dgvPermisos.DataSource = dt;
+                    for (int i = 0; i < dgvPermisos.Columns.Count; i++)
+                        dgvPermisos.AutoResizeColumn(i);
                 }
                 catch (Exception error)
                 {
@@ -264,25 +273,14 @@ namespace Nominas
 
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
-                    toolTitulo.Text = "Consulta Perfil";
+                    
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                     GLOBALES.INHABILITAR(this, typeof(ComboBox));
-                    GLOBALES.INHABILITAR(this, typeof(CheckBox));
-                    btnAgregar.Enabled = false;
-                    btnQuitar.Enabled = false;
-                    toolGuardarCerrar.Enabled = false;
+                    GLOBALES.INHABILITAR(this, typeof(CheckBox));                  
                     toolGuardarNuevo.Enabled = false;
+                    dgvPermisos.Enabled = false;
                 }
-                else
-                    toolTitulo.Text = "Edición Perfil";
-            }
-            else
-            {
-                cmbMenus.Enabled = false;
-                cmbPermiso.Enabled = false;
-                chkAccion.Enabled = false;
-                btnAgregar.Enabled = false;
-                btnQuitar.Enabled = false;
+                
             }
         }
 
@@ -291,7 +289,7 @@ namespace Nominas
             this.Dispose();
         }
 
-        private void CargaCombos()
+        private void dgvPermisos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
@@ -300,117 +298,26 @@ namespace Nominas
             Autorizaciones.Core.AutorizacionHelper ah = new Autorizaciones.Core.AutorizacionHelper();
             ah.Command = cmd;
 
-            List<Autorizaciones.Core.CatalogoMenu> lstMenus = new List<Autorizaciones.Core.CatalogoMenu>();
-            List<Autorizaciones.Core.CatalogoPermisos> lstPermisos = new List<Autorizaciones.Core.CatalogoPermisos>();
-            try {
-                cnx.Open();
-                lstMenus = ah.obtenerCatalogoMenu();
-                lstPermisos = ah.obtenerCatalogoPermisos();
-                cnx.Close();
-                cnx.Dispose();
-            }
-            catch (Exception error)
+            Autorizaciones.Core.PermisosOperaciones p = new Autorizaciones.Core.PermisosOperaciones();
+            p.id = int.Parse(dgvPermisos.Rows[e.RowIndex].Cells[0].Value.ToString());
+
+            if (e.ColumnIndex == 4) // 0 is the first column, specify the valid index of ur gridview
             {
-                MessageBox.Show("Error: Al obtener catalogo de menus. \r\n \r\n" + error.Message,"Error");
+                bool value = (bool)dgvPermisos.Rows[e.RowIndex].Cells[e.ColumnIndex].EditedFormattedValue;
+                p.accion = value;
             }
-
-            cmbMenus.DataSource = lstMenus.ToList();
-            cmbMenus.DisplayMember = "nombre";
-            cmbMenus.ValueMember = "idmenu";
-
-            cmbPermiso.DataSource = lstPermisos.ToList();
-            cmbPermiso.DisplayMember = "permiso";
-            cmbPermiso.ValueMember = "id";
-
-        }
-
-        private void btnAgregar_Click(object sender, EventArgs e)
-        {
-            int idperfil = 0;
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            Autorizaciones.Core.AutorizacionHelper ah = new Autorizaciones.Core.AutorizacionHelper();
-            ah.Command = cmd;
-
-            Perfil.Core.PerfilesHelper ph = new Perfil.Core.PerfilesHelper();
-            ph.Command = cmd;
-
-            Perfil.Core.Perfiles p = new Perfil.Core.Perfiles();
-            p.nombre = txtNombre.Text;
-
-            Autorizaciones.Core.PermisosOperaciones permisos = new Autorizaciones.Core.PermisosOperaciones();
-            permisos.idmenu = int.Parse(cmbMenus.SelectedValue.ToString());
-            permisos.idcatpermiso = int.Parse(cmbPermiso.SelectedValue.ToString());
-            permisos.accion = chkAccion.Checked;
-
-            try {
-                cnx.Open();
-                idperfil = (int)ph.obtenerIdPerfil(p);
-                permisos.idperfil = idperfil;
-                ah.insertarPermiso(permisos);
-                cnx.Close();
-            }
-            catch {
-                MessageBox.Show("Error: Al ingresar el permiso.", "Error");
-            }
-
-            List<Autorizaciones.Core.Permisos> lstPermisos = new List<Autorizaciones.Core.Permisos>();
 
             try
             {
                 cnx.Open();
-                lstPermisos = ah.obtenerPermisos(idperfil);
+                ah.actualizaPermiso(p);
                 cnx.Close();
                 cnx.Dispose();
             }
-            catch {
-                MessageBox.Show("Error: Al cargar los permisos en el Grid.", "Error");
-            }
-
-            var a = from b in lstPermisos select new 
-            { 
-                b.id,
-                b.idperfil,
-                Nombre = b.nombre,
-                Permiso = b.permiso,
-                Accion = (b.accion ? "HABILITADO" : "DESHABILITADO")
-            };
-
-            dgvPermisos.DataSource = a.ToList();
-            dgvPermisos.Columns[0].Visible = false;
-            dgvPermisos.Columns[1].Visible = false;
-            
-            for (int i = 0; i < dgvPermisos.Columns.Count; i++)
+            catch (Exception)
             {
-                dgvPermisos.AutoResizeColumn(i);
-            }
-        }
-
-        private void btnQuitar_Click(object sender, EventArgs e)
-        {
-            int fila = dgvPermisos.CurrentCell.RowIndex;
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            Autorizaciones.Core.AutorizacionHelper ah = new Autorizaciones.Core.AutorizacionHelper();
-            ah.Command = cmd;
-
-            Autorizaciones.Core.PermisosOperaciones op = new Autorizaciones.Core.PermisosOperaciones();
-            op.id = int.Parse(dgvPermisos.Rows[fila].Cells["id"].Value.ToString());
-            op.idperfil = int.Parse(dgvPermisos.Rows[fila].Cells["idperfil"].Value.ToString());
-
-            try {
-                cnx.Open();
-                ah.eliminarPermiso(op);
-                cnx.Close();
+                MessageBox.Show("Error: Al actualizar la asignación del concepto", "Error");
                 cnx.Dispose();
-            }
-            catch 
-            {
-                MessageBox.Show("Error: Al eliminar el permiso.", "Error");
             }
         }
     }

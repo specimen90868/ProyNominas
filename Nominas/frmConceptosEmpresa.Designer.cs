@@ -30,8 +30,6 @@
         {
             this.toolAcciones = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.toolTitulo = new System.Windows.Forms.ToolStrip();
-            this.toolVentana = new System.Windows.Forms.ToolStripLabel();
             this.dgvConceptos = new System.Windows.Forms.DataGridView();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.noconcepto = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -42,43 +40,25 @@
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolAcciones.SuspendLayout();
-            this.toolTitulo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConceptos)).BeginInit();
             this.SuspendLayout();
             // 
             // toolAcciones
             // 
+            this.toolAcciones.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolAcciones.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1});
-            this.toolAcciones.Location = new System.Drawing.Point(0, 27);
+            this.toolAcciones.Location = new System.Drawing.Point(0, 0);
             this.toolAcciones.Name = "toolAcciones";
-            this.toolAcciones.Size = new System.Drawing.Size(614, 25);
+            this.toolAcciones.Size = new System.Drawing.Size(794, 25);
             this.toolAcciones.TabIndex = 8;
             this.toolAcciones.Text = "toolEmpresa";
             // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(51, 22);
+            this.toolStripLabel1.Size = new System.Drawing.Size(63, 22);
             this.toolStripLabel1.Text = "Periodo:";
-            // 
-            // toolTitulo
-            // 
-            this.toolTitulo.BackColor = System.Drawing.Color.DarkGray;
-            this.toolTitulo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolVentana});
-            this.toolTitulo.Location = new System.Drawing.Point(0, 0);
-            this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(614, 27);
-            this.toolTitulo.TabIndex = 7;
-            this.toolTitulo.Text = "toolAcciones";
-            // 
-            // toolVentana
-            // 
-            this.toolVentana.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolVentana.Name = "toolVentana";
-            this.toolVentana.Size = new System.Drawing.Size(136, 24);
-            this.toolVentana.Text = "Asignaciones";
             // 
             // dgvConceptos
             // 
@@ -91,10 +71,11 @@
             this.concepto,
             this.asignacion});
             this.dgvConceptos.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvConceptos.Location = new System.Drawing.Point(0, 52);
+            this.dgvConceptos.Location = new System.Drawing.Point(0, 25);
+            this.dgvConceptos.Margin = new System.Windows.Forms.Padding(4);
             this.dgvConceptos.Name = "dgvConceptos";
             this.dgvConceptos.RowHeadersVisible = false;
-            this.dgvConceptos.Size = new System.Drawing.Size(614, 383);
+            this.dgvConceptos.Size = new System.Drawing.Size(794, 510);
             this.dgvConceptos.TabIndex = 9;
             this.dgvConceptos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvConceptos_CellContentClick);
             // 
@@ -122,9 +103,10 @@
             // cmbPeriodo
             // 
             this.cmbPeriodo.FormattingEnabled = true;
-            this.cmbPeriodo.Location = new System.Drawing.Point(66, 29);
+            this.cmbPeriodo.Location = new System.Drawing.Point(75, 1);
+            this.cmbPeriodo.Margin = new System.Windows.Forms.Padding(4);
             this.cmbPeriodo.Name = "cmbPeriodo";
-            this.cmbPeriodo.Size = new System.Drawing.Size(121, 21);
+            this.cmbPeriodo.Size = new System.Drawing.Size(160, 24);
             this.cmbPeriodo.TabIndex = 10;
             this.cmbPeriodo.SelectedIndexChanged += new System.EventHandler(this.cmbPeriodo_SelectedIndexChanged);
             // 
@@ -146,20 +128,18 @@
             // 
             // frmConceptosEmpresa
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(614, 435);
+            this.ClientSize = new System.Drawing.Size(794, 535);
             this.Controls.Add(this.cmbPeriodo);
             this.Controls.Add(this.dgvConceptos);
             this.Controls.Add(this.toolAcciones);
-            this.Controls.Add(this.toolTitulo);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmConceptosEmpresa";
-            this.Text = "Conceptos de la empresa";
+            this.Text = "Asignacion de conceptos al trabajador";
             this.Load += new System.EventHandler(this.frmConceptosEmpresa_Load);
             this.toolAcciones.ResumeLayout(false);
             this.toolAcciones.PerformLayout();
-            this.toolTitulo.ResumeLayout(false);
-            this.toolTitulo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConceptos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -169,8 +149,6 @@
         #endregion
 
         internal System.Windows.Forms.ToolStrip toolAcciones;
-        internal System.Windows.Forms.ToolStrip toolTitulo;
-        internal System.Windows.Forms.ToolStripLabel toolVentana;
         private System.Windows.Forms.DataGridView dgvConceptos;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn noconcepto;

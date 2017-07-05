@@ -446,9 +446,14 @@ namespace Nominas
                     smtp.Dispose();
                     comprimido.Dispose();
                 }
-                catch (Exception msg)
+                catch
                 {
-                    MessageBox.Show("Error al enviar el correo: " + msg.Message, "Error");
+                    MessageBox.Show("Error: Ocurrió un error al enviar el archivo.\r\n\r\n" + 
+                                    "Posibles causas:\r\n" + 
+                                    "1. No hay conexión a internet.\r\n" +
+                                    "2. Usuario y/o contraseña invalida.", "Error",
+                                    MessageBoxButtons.OK, 
+                                    MessageBoxIcon.Error);
                 }
             }
         }
@@ -505,7 +510,7 @@ namespace Nominas
             {
                 MessageBox.Show("ADVERTENCIA:\r\n\r\n" +
                                 "El periodo seleccionado aun tiene recibos pendientes de timbrar.\r\n" +
-                                "Se actualizaran los datos de los recibos.\r\n " +
+                                "Se actualizaran los datos de los recibos.\r\n" +
                                 "NOTA: Se podrán generar solo aquellos que han sido timbrados.", "Información",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Exclamation);

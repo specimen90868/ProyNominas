@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -75,6 +76,15 @@ namespace Nominas
             if (OnInfonavit != null)
                 OnInfonavit(decimal.Parse(txtDias.Text));
             this.Dispose();
+        }
+
+        private void txtDias_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            CultureInfo cc = System.Threading.Thread.CurrentThread.CurrentCulture;
+            if (char.IsNumber(e.KeyChar) || e.KeyChar.ToString() == cc.NumberFormat.NumberDecimalSeparator || e.KeyChar == (char)Keys.Back)
+                e.Handled = false;
+            else
+                e.Handled = true;
         }
     }
 }

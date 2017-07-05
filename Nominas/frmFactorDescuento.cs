@@ -72,18 +72,11 @@ namespace Nominas
 
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
-                    toolTitulo.Text = "Consulta factor de descuento";
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                     GLOBALES.INHABILITAR(this, typeof(DateTimePicker));
                 }
-                else
-                    toolTitulo.Text = "Edición factor de descuento";
-            }
-        }
 
-        private void toolGuardarCerrar_Click(object sender, EventArgs e)
-        {
-            guardar(1);
+            }
         }
 
         private void toolGuardarNuevo_Click(object sender, EventArgs e)
@@ -152,11 +145,8 @@ namespace Nominas
             {
                 case 0:
                     GLOBALES.LIMPIAR(this, typeof(TextBox));
-                    break;
-                case 1:
                     if (OnNuevoFactorDescuento != null)
                         OnNuevoFactorDescuento(_tipoOperacion);
-                    this.Dispose();
                     break;
             }
         }

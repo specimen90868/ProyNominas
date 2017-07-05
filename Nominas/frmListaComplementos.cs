@@ -90,11 +90,11 @@ namespace Nominas
         {
             int fila = 0;
             frmComplementos c = new frmComplementos();
-            c.MdiParent = this.MdiParent;
             fila = dgvComplementos.CurrentCell.RowIndex;
             c._idEmpleado = int.Parse(dgvComplementos.Rows[fila].Cells[0].Value.ToString());
             c._nombreEmpleado = dgvComplementos.Rows[fila].Cells[2].Value.ToString();
             c._tipoOperacion = edicion;
+            c.StartPosition = FormStartPosition.CenterScreen;
             c.Show();
         }
 

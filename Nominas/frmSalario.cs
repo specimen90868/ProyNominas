@@ -36,11 +36,6 @@ namespace Nominas
         public event delOnNuevoSalario OnNuevoSalario;
         #endregion
 
-        private void toolGuardarCerrar_Click(object sender, EventArgs e)
-        {
-            guardar(1);
-        }
-
         private void toolGuardarNuevo_Click(object sender, EventArgs e)
         {
             guardar(0);
@@ -111,11 +106,8 @@ namespace Nominas
                     GLOBALES.REFRESCAR(this, typeof(DateTimePicker));
                     GLOBALES.REFRESCAR(this, typeof(ComboBox));
                     //limpiar(this, typeof(TextBox));
-                    break;
-                case 1:
                     if (OnNuevoSalario != null)
                         OnNuevoSalario(_tipoOperacion);
-                    this.Dispose();
                     break;
             }
         }
@@ -157,13 +149,12 @@ namespace Nominas
 
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
-                    toolTitulo.Text = "Consulta salario mínimo";
+                    
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                     GLOBALES.INHABILITAR(this, typeof(ComboBox));
                     GLOBALES.INHABILITAR(this, typeof(DateTimePicker));
                 }
-                else
-                    toolTitulo.Text = "Edición salario mínimo";
+               
             }
         }
     }

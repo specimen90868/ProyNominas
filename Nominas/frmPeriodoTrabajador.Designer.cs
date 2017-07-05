@@ -44,82 +44,91 @@
             // txtDepartamento
             // 
             this.txtDepartamento.BackColor = System.Drawing.SystemColors.Control;
-            this.txtDepartamento.Location = new System.Drawing.Point(245, 44);
+            this.txtDepartamento.Location = new System.Drawing.Point(327, 54);
+            this.txtDepartamento.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtDepartamento.Name = "txtDepartamento";
-            this.txtDepartamento.Size = new System.Drawing.Size(164, 20);
+            this.txtDepartamento.Size = new System.Drawing.Size(217, 22);
             this.txtDepartamento.TabIndex = 284;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(149, 47);
+            this.label1.Location = new System.Drawing.Point(199, 58);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(90, 13);
+            this.label1.Size = new System.Drawing.Size(115, 17);
             this.label1.TabIndex = 283;
             this.label1.Text = "Departamento:";
             // 
             // mtxtNoEmpleado
             // 
             this.mtxtNoEmpleado.BackColor = System.Drawing.SystemColors.Control;
-            this.mtxtNoEmpleado.Location = new System.Drawing.Point(105, 44);
+            this.mtxtNoEmpleado.Location = new System.Drawing.Point(140, 54);
+            this.mtxtNoEmpleado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mtxtNoEmpleado.Mask = "9999";
             this.mtxtNoEmpleado.Name = "mtxtNoEmpleado";
-            this.mtxtNoEmpleado.Size = new System.Drawing.Size(33, 20);
+            this.mtxtNoEmpleado.Size = new System.Drawing.Size(43, 22);
             this.mtxtNoEmpleado.TabIndex = 282;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(9, 47);
+            this.label4.Location = new System.Drawing.Point(12, 58);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(90, 13);
+            this.label4.Size = new System.Drawing.Size(114, 17);
             this.label4.TabIndex = 281;
             this.label4.Text = "No. Empleado:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 79);
+            this.label2.Location = new System.Drawing.Point(12, 97);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(46, 13);
+            this.label2.Size = new System.Drawing.Size(61, 17);
             this.label2.TabIndex = 285;
             this.label2.Text = "Periodo:";
             // 
             // cmbPeriodo
             // 
             this.cmbPeriodo.FormattingEnabled = true;
-            this.cmbPeriodo.Location = new System.Drawing.Point(84, 76);
+            this.cmbPeriodo.Location = new System.Drawing.Point(112, 94);
+            this.cmbPeriodo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbPeriodo.Name = "cmbPeriodo";
-            this.cmbPeriodo.Size = new System.Drawing.Size(149, 21);
+            this.cmbPeriodo.Size = new System.Drawing.Size(197, 24);
             this.cmbPeriodo.TabIndex = 286;
             // 
             // label23
             // 
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label23.Location = new System.Drawing.Point(9, 16);
+            this.label23.Location = new System.Drawing.Point(12, 20);
+            this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(66, 13);
+            this.label23.Size = new System.Drawing.Size(84, 17);
             this.label23.TabIndex = 279;
             this.label23.Text = "Empleado:";
             // 
             // txtNombre
             // 
             this.txtNombre.BackColor = System.Drawing.SystemColors.Control;
-            this.txtNombre.Location = new System.Drawing.Point(84, 13);
+            this.txtNombre.Location = new System.Drawing.Point(112, 16);
+            this.txtNombre.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(325, 20);
+            this.txtNombre.Size = new System.Drawing.Size(432, 22);
             this.txtNombre.TabIndex = 287;
             // 
             // btnAceptar
             // 
             this.btnAceptar.Image = ((System.Drawing.Image)(resources.GetObject("btnAceptar.Image")));
             this.btnAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAceptar.Location = new System.Drawing.Point(251, 72);
+            this.btnAceptar.Location = new System.Drawing.Point(335, 89);
+            this.btnAceptar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(76, 26);
+            this.btnAceptar.Size = new System.Drawing.Size(101, 32);
             this.btnAceptar.TabIndex = 288;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -130,9 +139,10 @@
             // 
             this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
             this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(333, 72);
+            this.btnCancelar.Location = new System.Drawing.Point(444, 89);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(76, 26);
+            this.btnCancelar.Size = new System.Drawing.Size(101, 32);
             this.btnCancelar.TabIndex = 289;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -141,9 +151,9 @@
             // 
             // frmPeriodoTrabajador
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(422, 111);
+            this.ClientSize = new System.Drawing.Size(563, 137);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.txtNombre);
@@ -154,8 +164,11 @@
             this.Controls.Add(this.mtxtNoEmpleado);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label23);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(581, 184);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(581, 184);
             this.Name = "frmPeriodoTrabajador";
             this.Text = "Cambio de periodo";
             this.Load += new System.EventHandler(this.frmPeriodo_Load);

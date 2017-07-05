@@ -227,7 +227,6 @@ namespace Nominas
 
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
-                    toolTitulo.Text = "Consulta Empleado";
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                     GLOBALES.INHABILITAR(this, typeof(MaskedTextBox));
                     GLOBALES.INHABILITAR(this, typeof(Button));
@@ -235,12 +234,10 @@ namespace Nominas
                     GLOBALES.INHABILITAR(this, typeof(ComboBox));
                     GLOBALES.INHABILITAR(this, typeof(RadioButton));
                     GLOBALES.INHABILITAR(this, typeof(CheckBox));
-                    toolGuardarCerrar.Enabled = false;
                     toolGuardarNuevo.Enabled = false;
                 }
                 else
                 {
-                    toolTitulo.Text = "Edición Empleado";
                     cmbPeriodo.Enabled = false;
                 }
             }
@@ -386,10 +383,6 @@ namespace Nominas
             }
         }
 
-        private void toolGuardarCerrar_Click(object sender, EventArgs e)
-        {
-            guardar(1);
-        }
 
         private void toolGuardarNuevo_Click(object sender, EventArgs e)
         {
@@ -691,11 +684,8 @@ namespace Nominas
                     GLOBALES.LIMPIAR(this, typeof(TextBox));
                     GLOBALES.LIMPIAR(this, typeof(MaskedTextBox));
                     GLOBALES.REFRESCAR(this, typeof(ComboBox));
-                    break;
-                case 1:
                     if (OnNuevoEmpleado != null)
                         OnNuevoEmpleado(_tipoOperacion);
-                    this.Dispose();
                     break;
             }
         }

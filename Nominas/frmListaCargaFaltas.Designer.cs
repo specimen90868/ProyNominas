@@ -33,8 +33,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.toolTitulo = new System.Windows.Forms.ToolStrip();
-            this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
             this.toolBusqueda = new System.Windows.Forms.ToolStrip();
             this.toolCargar = new System.Windows.Forms.ToolStripButton();
             this.toolLimpiar = new System.Windows.Forms.ToolStripButton();
@@ -54,38 +52,20 @@
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolTitulo.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCargaFaltas)).BeginInit();
             this.SuspendLayout();
             // 
-            // toolTitulo
-            // 
-            this.toolTitulo.BackColor = System.Drawing.Color.DarkGray;
-            this.toolTitulo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolEmpleados});
-            this.toolTitulo.Location = new System.Drawing.Point(0, 0);
-            this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(778, 27);
-            this.toolTitulo.TabIndex = 8;
-            this.toolTitulo.Text = "ToolStrip1";
-            // 
-            // toolEmpleados
-            // 
-            this.toolEmpleados.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
-            this.toolEmpleados.Name = "toolEmpleados";
-            this.toolEmpleados.Size = new System.Drawing.Size(148, 24);
-            this.toolEmpleados.Text = "Carga de faltas";
-            // 
             // toolBusqueda
             // 
+            this.toolBusqueda.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolBusqueda.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolCargar,
             this.toolLimpiar,
             this.toolAplicar});
-            this.toolBusqueda.Location = new System.Drawing.Point(0, 27);
+            this.toolBusqueda.Location = new System.Drawing.Point(0, 0);
             this.toolBusqueda.Name = "toolBusqueda";
-            this.toolBusqueda.Size = new System.Drawing.Size(778, 25);
+            this.toolBusqueda.Size = new System.Drawing.Size(1037, 27);
             this.toolBusqueda.TabIndex = 9;
             this.toolBusqueda.Text = "ToolStrip1";
             // 
@@ -94,7 +74,7 @@
             this.toolCargar.Image = ((System.Drawing.Image)(resources.GetObject("toolCargar.Image")));
             this.toolCargar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolCargar.Name = "toolCargar";
-            this.toolCargar.Size = new System.Drawing.Size(62, 22);
+            this.toolCargar.Size = new System.Drawing.Size(77, 24);
             this.toolCargar.Text = "Cargar";
             this.toolCargar.Click += new System.EventHandler(this.toolCargar_Click);
             // 
@@ -103,7 +83,7 @@
             this.toolLimpiar.Image = ((System.Drawing.Image)(resources.GetObject("toolLimpiar.Image")));
             this.toolLimpiar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolLimpiar.Name = "toolLimpiar";
-            this.toolLimpiar.Size = new System.Drawing.Size(67, 22);
+            this.toolLimpiar.Size = new System.Drawing.Size(83, 24);
             this.toolLimpiar.Text = "Limpiar";
             this.toolLimpiar.Click += new System.EventHandler(this.toolLimpiar_Click);
             // 
@@ -112,7 +92,7 @@
             this.toolAplicar.Image = ((System.Drawing.Image)(resources.GetObject("toolAplicar.Image")));
             this.toolAplicar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolAplicar.Name = "toolAplicar";
-            this.toolAplicar.Size = new System.Drawing.Size(64, 22);
+            this.toolAplicar.Size = new System.Drawing.Size(80, 24);
             this.toolAplicar.Text = "Aplicar";
             this.toolAplicar.Click += new System.EventHandler(this.toolAplicar_Click);
             // 
@@ -130,11 +110,12 @@
             this.fechainicio,
             this.fechafin});
             this.dgvCargaFaltas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvCargaFaltas.Location = new System.Drawing.Point(0, 52);
+            this.dgvCargaFaltas.Location = new System.Drawing.Point(0, 27);
+            this.dgvCargaFaltas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvCargaFaltas.MultiSelect = false;
             this.dgvCargaFaltas.Name = "dgvCargaFaltas";
             this.dgvCargaFaltas.ReadOnly = true;
-            this.dgvCargaFaltas.Size = new System.Drawing.Size(778, 540);
+            this.dgvCargaFaltas.Size = new System.Drawing.Size(1037, 702);
             this.dgvCargaFaltas.TabIndex = 10;
             // 
             // noempleado
@@ -225,17 +206,15 @@
             // 
             // frmListaCargaFaltas
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(778, 592);
+            this.ClientSize = new System.Drawing.Size(1037, 729);
             this.Controls.Add(this.dgvCargaFaltas);
             this.Controls.Add(this.toolBusqueda);
-            this.Controls.Add(this.toolTitulo);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmListaCargaFaltas";
             this.Text = "Carga de faltas";
             this.Load += new System.EventHandler(this.frmListaCargaFaltas_Load);
-            this.toolTitulo.ResumeLayout(false);
-            this.toolTitulo.PerformLayout();
             this.toolBusqueda.ResumeLayout(false);
             this.toolBusqueda.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCargaFaltas)).EndInit();
@@ -246,8 +225,6 @@
 
         #endregion
 
-        internal System.Windows.Forms.ToolStrip toolTitulo;
-        internal System.Windows.Forms.ToolStripLabel toolEmpleados;
         internal System.Windows.Forms.ToolStrip toolBusqueda;
         private System.Windows.Forms.DataGridView dgvCargaFaltas;
         private System.Windows.Forms.ToolStripButton toolCargar;

@@ -62,7 +62,7 @@ namespace Nominas
                 throw;
             }
 
-            lblEmpleado.Text = lstEmpleado[0].nombrecompleto;
+            txtNombre.Text = lstEmpleado[0].nombrecompleto;
             mtxtNoEmpleado.Text = lstEmpleado[0].noempleado;
             idperiodo = lstEmpleado[0].idperiodo;
             sdi = lstEmpleado[0].sdi;

@@ -42,7 +42,7 @@ namespace Nominas
 
         private void frmBaja_Load(object sender, EventArgs e)
         {
-            lblNombreEmpleado.Text = _nombreEmpleado;
+            txtNombre.Text = _nombreEmpleado;
 
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();

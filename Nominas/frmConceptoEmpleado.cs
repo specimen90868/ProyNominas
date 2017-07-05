@@ -91,14 +91,14 @@ namespace Nominas
         private void frmConceptoEmpleado_Load(object sender, EventArgs e)
         {
             dgvConceptosEmpleado.RowHeadersVisible = false;
-            toolTitulo.Text += " - " + _nombreEmpleado;
+            this.Text += " - " + _nombreEmpleado;
             ListaConceptosEmpleado();
             CargaPerfil();
         }
 
         private void CargaPerfil()
         {
-            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("Concepto - Empleado");
+            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("Conceptos - Empleado");
 
             for (int i = 0; i < lstEdiciones.Count; i++)
             {

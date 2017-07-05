@@ -99,7 +99,7 @@ namespace Nominas
         {
             int fila = 0;
             frmExpediente e = new frmExpediente();
-            e.MdiParent = this.MdiParent;
+            e.StartPosition = FormStartPosition.CenterScreen;
             e.OnNuevoExpediente += e_OnNuevoExpediente;
             
             if (edicion != GLOBALES.NUEVO)

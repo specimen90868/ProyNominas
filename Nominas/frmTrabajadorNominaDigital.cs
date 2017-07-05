@@ -78,7 +78,7 @@ namespace Nominas
             foreach (var d in dato)
             {
                 mtxtNoEmpleado.Text = d.noempleado;
-                lblEmpleado.Text = d.nombrecompleto;
+                txtNombre.Text = d.nombrecompleto;
                 txtDepartamento.Text = d.descripcion;
             }
 

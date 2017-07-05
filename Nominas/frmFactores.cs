@@ -36,11 +36,6 @@ namespace Nominas
         public event delOnNuevoFactor OnNuevoFactor;
         #endregion
 
-        private void toolGuardarCerrar_Click(object sender, EventArgs e)
-        {
-            guardar(1);
-        }
-
         private void toolGuardarNuevo_Click(object sender, EventArgs e)
         {
             guardar(0);
@@ -107,11 +102,8 @@ namespace Nominas
             {
                 case 0:
                     GLOBALES.LIMPIAR(this, typeof(TextBox));
-                    break;
-                case 1:
                     if (OnNuevoFactor != null)
                         OnNuevoFactor(_tipoOperacion);
-                    this.Dispose();
                     break;
             }
         }
@@ -152,11 +144,10 @@ namespace Nominas
 
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
-                    toolTitulo.Text = "Consulta factor de integración";
+                    
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                 }
-                else
-                    toolTitulo.Text = "Edición factor de integración";
+                
             }
         }
     }

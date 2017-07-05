@@ -103,7 +103,7 @@ namespace Nominas
         {
             frmSubsidio s = new frmSubsidio();
             s.OnNuevoSubsidio += s_OnNuevoSubsidio;
-            s.MdiParent = this.MdiParent;
+            s.StartPosition = FormStartPosition.CenterScreen;
             int fila = 0;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {

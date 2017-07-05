@@ -47,15 +47,12 @@
             this.toolCargar = new System.Windows.Forms.ToolStripButton();
             this.toolLimpiar = new System.Windows.Forms.ToolStripButton();
             this.toolAplicar = new System.Windows.Forms.ToolStripButton();
-            this.toolTitulo = new System.Windows.Forms.ToolStrip();
-            this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
             this.workerImporta = new System.ComponentModel.BackgroundWorker();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblPorcentaje = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCargaEmpleados)).BeginInit();
             this.toolBusqueda.SuspendLayout();
-            this.toolTitulo.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,11 +75,12 @@
             this.dv,
             this.sdi});
             this.dgvCargaEmpleados.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvCargaEmpleados.Location = new System.Drawing.Point(0, 52);
+            this.dgvCargaEmpleados.Location = new System.Drawing.Point(0, 27);
+            this.dgvCargaEmpleados.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvCargaEmpleados.MultiSelect = false;
             this.dgvCargaEmpleados.Name = "dgvCargaEmpleados";
             this.dgvCargaEmpleados.ReadOnly = true;
-            this.dgvCargaEmpleados.Size = new System.Drawing.Size(709, 438);
+            this.dgvCargaEmpleados.Size = new System.Drawing.Size(945, 576);
             this.dgvCargaEmpleados.TabIndex = 13;
             // 
             // noempleado
@@ -161,13 +159,14 @@
             // 
             // toolBusqueda
             // 
+            this.toolBusqueda.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolBusqueda.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolCargar,
             this.toolLimpiar,
             this.toolAplicar});
-            this.toolBusqueda.Location = new System.Drawing.Point(0, 27);
+            this.toolBusqueda.Location = new System.Drawing.Point(0, 0);
             this.toolBusqueda.Name = "toolBusqueda";
-            this.toolBusqueda.Size = new System.Drawing.Size(709, 25);
+            this.toolBusqueda.Size = new System.Drawing.Size(945, 27);
             this.toolBusqueda.TabIndex = 12;
             this.toolBusqueda.Text = "ToolStrip1";
             // 
@@ -176,7 +175,7 @@
             this.toolCargar.Image = ((System.Drawing.Image)(resources.GetObject("toolCargar.Image")));
             this.toolCargar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolCargar.Name = "toolCargar";
-            this.toolCargar.Size = new System.Drawing.Size(62, 22);
+            this.toolCargar.Size = new System.Drawing.Size(77, 24);
             this.toolCargar.Text = "Cargar";
             this.toolCargar.Click += new System.EventHandler(this.toolCargar_Click);
             // 
@@ -185,7 +184,7 @@
             this.toolLimpiar.Image = ((System.Drawing.Image)(resources.GetObject("toolLimpiar.Image")));
             this.toolLimpiar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolLimpiar.Name = "toolLimpiar";
-            this.toolLimpiar.Size = new System.Drawing.Size(67, 22);
+            this.toolLimpiar.Size = new System.Drawing.Size(83, 24);
             this.toolLimpiar.Text = "Limpiar";
             this.toolLimpiar.Click += new System.EventHandler(this.toolLimpiar_Click);
             // 
@@ -194,27 +193,9 @@
             this.toolAplicar.Image = ((System.Drawing.Image)(resources.GetObject("toolAplicar.Image")));
             this.toolAplicar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolAplicar.Name = "toolAplicar";
-            this.toolAplicar.Size = new System.Drawing.Size(64, 22);
+            this.toolAplicar.Size = new System.Drawing.Size(80, 24);
             this.toolAplicar.Text = "Aplicar";
             this.toolAplicar.Click += new System.EventHandler(this.toolAplicar_Click);
-            // 
-            // toolTitulo
-            // 
-            this.toolTitulo.BackColor = System.Drawing.Color.DarkGray;
-            this.toolTitulo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolEmpleados});
-            this.toolTitulo.Location = new System.Drawing.Point(0, 0);
-            this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(709, 27);
-            this.toolTitulo.TabIndex = 11;
-            this.toolTitulo.Text = "ToolStrip1";
-            // 
-            // toolEmpleados
-            // 
-            this.toolEmpleados.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
-            this.toolEmpleados.Name = "toolEmpleados";
-            this.toolEmpleados.Size = new System.Drawing.Size(206, 24);
-            this.toolEmpleados.Text = "Carga de Empleados";
             // 
             // workerImporta
             // 
@@ -225,44 +206,44 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.lblPorcentaje});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 468);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 578);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(709, 22);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(945, 25);
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(84, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(102, 20);
             this.toolStripStatusLabel1.Text = "Importación:...";
             // 
             // lblPorcentaje
             // 
             this.lblPorcentaje.Name = "lblPorcentaje";
-            this.lblPorcentaje.Size = new System.Drawing.Size(23, 17);
+            this.lblPorcentaje.Size = new System.Drawing.Size(29, 20);
             this.lblPorcentaje.Text = "0%";
             // 
             // frmListaCargaEmpleados
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(709, 490);
+            this.ClientSize = new System.Drawing.Size(945, 603);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.dgvCargaEmpleados);
             this.Controls.Add(this.toolBusqueda);
-            this.Controls.Add(this.toolTitulo);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmListaCargaEmpleados";
             this.Text = "Carga de empleados";
             this.Load += new System.EventHandler(this.frmListaCargaEmpleados_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCargaEmpleados)).EndInit();
             this.toolBusqueda.ResumeLayout(false);
             this.toolBusqueda.PerformLayout();
-            this.toolTitulo.ResumeLayout(false);
-            this.toolTitulo.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -277,8 +258,6 @@
         private System.Windows.Forms.ToolStripButton toolCargar;
         private System.Windows.Forms.ToolStripButton toolLimpiar;
         private System.Windows.Forms.ToolStripButton toolAplicar;
-        internal System.Windows.Forms.ToolStrip toolTitulo;
-        internal System.Windows.Forms.ToolStripLabel toolEmpleados;
         private System.ComponentModel.BackgroundWorker workerImporta;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;

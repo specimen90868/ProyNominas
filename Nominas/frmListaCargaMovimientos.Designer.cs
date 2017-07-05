@@ -33,8 +33,6 @@
             this.toolCargar = new System.Windows.Forms.ToolStripButton();
             this.toolLimpiar = new System.Windows.Forms.ToolStripButton();
             this.toolAplicar = new System.Windows.Forms.ToolStripButton();
-            this.toolTitulo = new System.Windows.Forms.ToolStrip();
-            this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
             this.dgvMovimientos = new System.Windows.Forms.DataGridView();
             this.noempleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -43,19 +41,19 @@
             this.fin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.workMovimientos = new System.ComponentModel.BackgroundWorker();
             this.toolBusqueda.SuspendLayout();
-            this.toolTitulo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMovimientos)).BeginInit();
             this.SuspendLayout();
             // 
             // toolBusqueda
             // 
+            this.toolBusqueda.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolBusqueda.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolCargar,
             this.toolLimpiar,
             this.toolAplicar});
-            this.toolBusqueda.Location = new System.Drawing.Point(0, 27);
+            this.toolBusqueda.Location = new System.Drawing.Point(0, 0);
             this.toolBusqueda.Name = "toolBusqueda";
-            this.toolBusqueda.Size = new System.Drawing.Size(769, 25);
+            this.toolBusqueda.Size = new System.Drawing.Size(1025, 27);
             this.toolBusqueda.TabIndex = 12;
             this.toolBusqueda.Text = "ToolStrip1";
             // 
@@ -64,7 +62,7 @@
             this.toolCargar.Image = ((System.Drawing.Image)(resources.GetObject("toolCargar.Image")));
             this.toolCargar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolCargar.Name = "toolCargar";
-            this.toolCargar.Size = new System.Drawing.Size(62, 22);
+            this.toolCargar.Size = new System.Drawing.Size(77, 24);
             this.toolCargar.Text = "Cargar";
             this.toolCargar.Click += new System.EventHandler(this.toolCargar_Click);
             // 
@@ -73,7 +71,7 @@
             this.toolLimpiar.Image = ((System.Drawing.Image)(resources.GetObject("toolLimpiar.Image")));
             this.toolLimpiar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolLimpiar.Name = "toolLimpiar";
-            this.toolLimpiar.Size = new System.Drawing.Size(67, 22);
+            this.toolLimpiar.Size = new System.Drawing.Size(83, 24);
             this.toolLimpiar.Text = "Limpiar";
             this.toolLimpiar.Click += new System.EventHandler(this.toolLimpiar_Click);
             // 
@@ -82,27 +80,9 @@
             this.toolAplicar.Image = ((System.Drawing.Image)(resources.GetObject("toolAplicar.Image")));
             this.toolAplicar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolAplicar.Name = "toolAplicar";
-            this.toolAplicar.Size = new System.Drawing.Size(64, 22);
+            this.toolAplicar.Size = new System.Drawing.Size(80, 24);
             this.toolAplicar.Text = "Aplicar";
             this.toolAplicar.Click += new System.EventHandler(this.toolAplicar_Click);
-            // 
-            // toolTitulo
-            // 
-            this.toolTitulo.BackColor = System.Drawing.Color.DarkGray;
-            this.toolTitulo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolEmpleados});
-            this.toolTitulo.Location = new System.Drawing.Point(0, 0);
-            this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(769, 27);
-            this.toolTitulo.TabIndex = 11;
-            this.toolTitulo.Text = "ToolStrip1";
-            // 
-            // toolEmpleados
-            // 
-            this.toolEmpleados.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
-            this.toolEmpleados.Name = "toolEmpleados";
-            this.toolEmpleados.Size = new System.Drawing.Size(218, 24);
-            this.toolEmpleados.Text = "Carga de movimientos";
             // 
             // dgvMovimientos
             // 
@@ -117,10 +97,11 @@
             this.inicio,
             this.fin});
             this.dgvMovimientos.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvMovimientos.Location = new System.Drawing.Point(0, 52);
+            this.dgvMovimientos.Location = new System.Drawing.Point(0, 27);
+            this.dgvMovimientos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvMovimientos.Name = "dgvMovimientos";
             this.dgvMovimientos.ReadOnly = true;
-            this.dgvMovimientos.Size = new System.Drawing.Size(769, 446);
+            this.dgvMovimientos.Size = new System.Drawing.Size(1025, 586);
             this.dgvMovimientos.TabIndex = 13;
             // 
             // noempleado
@@ -163,19 +144,17 @@
             // 
             // frmListaCargaMovimientos
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(769, 498);
+            this.ClientSize = new System.Drawing.Size(1025, 613);
             this.Controls.Add(this.dgvMovimientos);
             this.Controls.Add(this.toolBusqueda);
-            this.Controls.Add(this.toolTitulo);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmListaCargaMovimientos";
             this.Text = "Carga de movimientos";
             this.Load += new System.EventHandler(this.frmListaCargaMovimientos_Load);
             this.toolBusqueda.ResumeLayout(false);
             this.toolBusqueda.PerformLayout();
-            this.toolTitulo.ResumeLayout(false);
-            this.toolTitulo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMovimientos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -188,8 +167,6 @@
         private System.Windows.Forms.ToolStripButton toolCargar;
         private System.Windows.Forms.ToolStripButton toolLimpiar;
         private System.Windows.Forms.ToolStripButton toolAplicar;
-        internal System.Windows.Forms.ToolStrip toolTitulo;
-        internal System.Windows.Forms.ToolStripLabel toolEmpleados;
         private System.Windows.Forms.DataGridView dgvMovimientos;
         private System.Windows.Forms.DataGridViewTextBoxColumn noempleado;
         private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;

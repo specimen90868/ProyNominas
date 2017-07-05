@@ -153,7 +153,7 @@ namespace Nominas
 
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
-                    toolVentana.Text = "Consulta del Crédito";
+                    
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                     GLOBALES.INHABILITAR(this, typeof(RadioButton));
                     GLOBALES.INHABILITAR(this, typeof(CheckBox));
@@ -165,8 +165,8 @@ namespace Nominas
                 }
                 else
                 {
-                    toolVentana.Text = "Edición del Crédito";
-                    lblEmpleado.Text = _nombreEmpleado;
+                    
+                    txtNombre.Text = _nombreEmpleado;
                     toolBuscar.Enabled = false;
                     //obtenerPeriodoActual();
                 }
@@ -364,7 +364,7 @@ namespace Nominas
         void b_OnBuscar(int id, string nombre)
         {
             _idEmpleado = id;
-            lblEmpleado.Text = nombre;
+            txtNombre.Text = nombre;
 
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();

@@ -89,7 +89,7 @@ namespace Nominas
         private void Seleccion(int edicion)
         {
             frmFactores f = new frmFactores();
-            f.MdiParent = this.MdiParent;
+            f.StartPosition = FormStartPosition.CenterScreen;
             f.OnNuevoFactor += f_OnNuevoFactor;
             int fila = 0;
             if (!edicion.Equals(GLOBALES.NUEVO))

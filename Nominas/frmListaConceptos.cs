@@ -90,6 +90,7 @@ namespace Nominas
                     case "Consultar": toolConsultar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                     case "Editar": toolEditar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                     case "Eliminar": toolBaja.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Asignaciones": toolAsignaciones.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                 }
             }
         }
@@ -98,7 +99,7 @@ namespace Nominas
         {
             frmConceptos c = new frmConceptos();
             c.OnNuevoConcepto += c_OnNuevoConcepto;
-            c.MdiParent = this.MdiParent;
+            c.StartPosition = FormStartPosition.CenterScreen;
             int fila = 0;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {

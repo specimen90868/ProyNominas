@@ -59,11 +59,8 @@
             this.txtMaterno = new System.Windows.Forms.ToolStripTextBox();
             this.txtNombre = new System.Windows.Forms.ToolStripTextBox();
             this.toolMostrarTodos = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolTitulo = new System.Windows.Forms.ToolStrip();
-            this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
             this.dgvEmpleados = new System.Windows.Forms.DataGridView();
             this.toolBusqueda.SuspendLayout();
-            this.toolTitulo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).BeginInit();
             this.SuspendLayout();
             // 
@@ -86,7 +83,7 @@
             this.toolActualizar,
             this.toolStripSeparator2,
             this.toolBuscar});
-            this.toolBusqueda.Location = new System.Drawing.Point(0, 32);
+            this.toolBusqueda.Location = new System.Drawing.Point(0, 0);
             this.toolBusqueda.Name = "toolBusqueda";
             this.toolBusqueda.Size = new System.Drawing.Size(2007, 27);
             this.toolBusqueda.TabIndex = 3;
@@ -365,37 +362,18 @@
             this.toolMostrarTodos.Text = "Mostrar todos...";
             this.toolMostrarTodos.Click += new System.EventHandler(this.toolMostrarTodos_Click);
             // 
-            // toolTitulo
-            // 
-            this.toolTitulo.BackColor = System.Drawing.Color.DarkGray;
-            this.toolTitulo.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolTitulo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolEmpleados});
-            this.toolTitulo.Location = new System.Drawing.Point(0, 0);
-            this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(2007, 32);
-            this.toolTitulo.TabIndex = 4;
-            this.toolTitulo.Text = "ToolStrip1";
-            // 
-            // toolEmpleados
-            // 
-            this.toolEmpleados.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
-            this.toolEmpleados.Name = "toolEmpleados";
-            this.toolEmpleados.Size = new System.Drawing.Size(145, 29);
-            this.toolEmpleados.Text = "Empleados";
-            // 
             // dgvEmpleados
             // 
             this.dgvEmpleados.AllowUserToAddRows = false;
             this.dgvEmpleados.AllowUserToDeleteRows = false;
             this.dgvEmpleados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEmpleados.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvEmpleados.Location = new System.Drawing.Point(0, 59);
+            this.dgvEmpleados.Location = new System.Drawing.Point(0, 27);
             this.dgvEmpleados.Margin = new System.Windows.Forms.Padding(4);
             this.dgvEmpleados.Name = "dgvEmpleados";
             this.dgvEmpleados.ReadOnly = true;
             this.dgvEmpleados.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvEmpleados.Size = new System.Drawing.Size(2007, 832);
+            this.dgvEmpleados.Size = new System.Drawing.Size(2007, 864);
             this.dgvEmpleados.TabIndex = 5;
             this.dgvEmpleados.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellDoubleClick);
             // 
@@ -406,16 +384,13 @@
             this.ClientSize = new System.Drawing.Size(2007, 891);
             this.Controls.Add(this.dgvEmpleados);
             this.Controls.Add(this.toolBusqueda);
-            this.Controls.Add(this.toolTitulo);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmListaEmpleados";
-            this.Text = "Empleados";
+            this.Text = "Empleados de la empresa";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmListaEmpleados_FormClosed);
             this.Load += new System.EventHandler(this.frmListaEmpleados_Load);
             this.toolBusqueda.ResumeLayout(false);
             this.toolBusqueda.PerformLayout();
-            this.toolTitulo.ResumeLayout(false);
-            this.toolTitulo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -426,8 +401,6 @@
 
         internal System.Windows.Forms.ToolStrip toolBusqueda;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        internal System.Windows.Forms.ToolStrip toolTitulo;
-        internal System.Windows.Forms.ToolStripLabel toolEmpleados;
         private System.Windows.Forms.DataGridView dgvEmpleados;
         private System.Windows.Forms.ToolStripButton toolEliminar;
         private System.Windows.Forms.ToolStripButton toolIncrementoSalario;

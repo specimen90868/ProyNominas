@@ -106,10 +106,5 @@ namespace Nominas
             }
 
         }
-
-        private void toolExportar_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

@@ -89,22 +89,7 @@ namespace Nominas
         {
             dgvAusentismoSua.RowHeadersVisible = false;
             ListaEmpleados();
-        }
-
-        private void CargaPerfil()
-        {
-            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("Ausentismos");
-
-            for (int i = 0; i < lstEdiciones.Count; i++)
-            {
-                switch (lstEdiciones[i].permiso.ToString())
-                {
-                    case "Filtrar":
-                        toolFiltrar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);
-                        break;
-                    case "Exportar": toolExportar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
-                }
-            }
+           
         }
 
         private void toolFiltrar_Click(object sender, EventArgs e)

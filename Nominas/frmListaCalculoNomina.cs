@@ -53,6 +53,7 @@ namespace Nominas
             lcm._periodo = _periodo;
             lcm._inicioPeriodo = periodoInicio.Date;
             lcm._finPeriodo = periodoFin.Date;
+            lcm.StartPosition = FormStartPosition.CenterScreen;
             lcm.ShowDialog();
             if (_tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
                 movimientosEspeciales();
@@ -172,9 +173,9 @@ namespace Nominas
             
 
             if (_tipoNomina == GLOBALES.NORMAL)
-                CargaPerfil("Normal");
+                CargaPerfil("Cálculo de nómina");
             if (_tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
-                CargaPerfil("Normal");
+                CargaPerfil("Cálculo de nómina");
             obtenerPeriodoCalculo();
 
             #region DISEÑO EXTRA DEL GRID EMPLEADOS
@@ -607,14 +608,12 @@ namespace Nominas
             {
                 switch (lstEdiciones[i].permiso.ToString())
                 {
-                    case "Prenomina":
-                        //toolPrenomina.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);
-                        break;
                     case "Calcular": toolCalcular.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
-                    case "Cargar Faltas": toolStripButton1.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Importar Faltas": toolCargaFaltas.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Importar Movimientos": toolCargar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Importar Vacaciones": toolCargaVacaciones.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                     case "Autorizar": toolAutorizar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                     case "Reportes": toolReportes.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
-
                 }
             }
         }
@@ -2442,6 +2441,7 @@ namespace Nominas
             sr._finPeriodo = periodoFin.Date;
             sr._periodo = _periodo;
             sr._obracivil = _obracivil;
+            sr.StartPosition = FormStartPosition.CenterScreen;
             sr.Show();
         }
 
@@ -2620,6 +2620,7 @@ namespace Nominas
             lcv._tipoNomina = _tipoNomina;
             lcv._inicioPeriodo = periodoInicio.Date;
             lcv._finPeriodo = periodoFin.Date;
+            lcv.StartPosition = FormStartPosition.CenterScreen;
             lcv.Show();
         }
 
@@ -2629,6 +2630,7 @@ namespace Nominas
             lcf._tipoNomina = _tipoNomina;
             lcf._inicioPeriodo = periodoInicio.Date;
             lcf._finPeriodo = periodoFin.Date;
+            lcf.StartPosition = FormStartPosition.CenterScreen;
             lcf.Show();
         }
 

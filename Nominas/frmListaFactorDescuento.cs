@@ -65,12 +65,31 @@ namespace Nominas
         {
             dgvFactores.RowHeadersVisible = false;
             ListaFactores();
+            CargaPerfil();
+        }
+
+        private void CargaPerfil()
+        {
+            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("Factor de descuento");
+
+            for (int i = 0; i < lstEdiciones.Count; i++)
+            {
+                switch (lstEdiciones[i].permiso.ToString())
+                {
+                    case "Crear":
+                        toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);
+                        break;
+                    case "Consultar": toolConsultar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Editar": toolEditar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Eliminar": toolBaja.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                }
+            }
         }
 
         private void Seleccion(int edicion)
         {
             frmFactorDescuento fd = new frmFactorDescuento();
-            fd.MdiParent = this.MdiParent;
+            fd.StartPosition = FormStartPosition.CenterScreen;
             fd.OnNuevoFactorDescuento += fd_OnNuevoFactorDescuento;
             int fila = 0;
             if (!edicion.Equals(GLOBALES.NUEVO))

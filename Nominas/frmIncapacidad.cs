@@ -59,7 +59,7 @@ namespace Nominas
             _idEmpleado = id;
             _nombreEmpleado = nombre;
 
-            lblEmpleado.Text = nombre;
+            txtNombre.Text = nombre;
 
             cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
@@ -533,6 +533,11 @@ namespace Nominas
         {
             String cert = txtCertificado.Text;
             txtCertificado.Text = cert.ToUpper();
+        }
+
+        private void mtxtNoEmpleado_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+
         } 
     }
 }

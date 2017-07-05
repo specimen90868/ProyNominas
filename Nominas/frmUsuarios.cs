@@ -38,11 +38,6 @@ namespace Nominas
         public int _idusuario;
         #endregion
 
-        private void toolGuardarCerrar_Click(object sender, EventArgs e)
-        {
-            guardar(1);
-        }
-
         private void toolGuardarNuevo_Click(object sender, EventArgs e)
         {
             guardar(0);
@@ -122,11 +117,8 @@ namespace Nominas
                 case 0:
                     GLOBALES.LIMPIAR(this, typeof(TextBox));
                     //limpiar(this, typeof(TextBox));
-                    break;
-                case 1:
                     if (OnNuevoUsuario != null)
                         OnNuevoUsuario(_tipoOperacion);
-                    this.Dispose();
                     break;
             }
         }
@@ -183,12 +175,9 @@ namespace Nominas
 
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
-                    toolNombreVentana.Text = "Consulta Usuario";
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                     GLOBALES.INHABILITAR(this, typeof(DataGridView));
                 }
-                else
-                    toolNombreVentana.Text = "Edición Usuario";
 
                 if (empresas == "0")
                 {

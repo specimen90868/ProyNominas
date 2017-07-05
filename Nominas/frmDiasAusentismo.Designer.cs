@@ -39,37 +39,42 @@
             // lblTexto
             // 
             this.lblTexto.AutoSize = true;
-            this.lblTexto.Location = new System.Drawing.Point(12, 9);
+            this.lblTexto.Location = new System.Drawing.Point(16, 11);
+            this.lblTexto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTexto.Name = "lblTexto";
-            this.lblTexto.Size = new System.Drawing.Size(270, 13);
+            this.lblTexto.Size = new System.Drawing.Size(362, 17);
             this.lblTexto.TabIndex = 0;
             this.lblTexto.Text = "Ingrese el número de días que se ausentó el trabajador.";
             // 
             // lblCantidad
             // 
             this.lblCantidad.AutoSize = true;
-            this.lblCantidad.Location = new System.Drawing.Point(12, 40);
+            this.lblCantidad.Location = new System.Drawing.Point(16, 49);
+            this.lblCantidad.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCantidad.Name = "lblCantidad";
-            this.lblCantidad.Size = new System.Drawing.Size(31, 13);
+            this.lblCantidad.Size = new System.Drawing.Size(40, 17);
             this.lblCantidad.TabIndex = 1;
             this.lblCantidad.Text = "Dias:";
             // 
             // txtDias
             // 
-            this.txtDias.Location = new System.Drawing.Point(49, 37);
+            this.txtDias.Location = new System.Drawing.Point(65, 46);
+            this.txtDias.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtDias.Name = "txtDias";
-            this.txtDias.Size = new System.Drawing.Size(71, 20);
+            this.txtDias.Size = new System.Drawing.Size(93, 22);
             this.txtDias.TabIndex = 2;
             this.txtDias.Text = "0";
             this.txtDias.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtDias.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDias_KeyPress);
             // 
             // btnAceptar
             // 
             this.btnAceptar.Image = ((System.Drawing.Image)(resources.GetObject("btnAceptar.Image")));
             this.btnAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAceptar.Location = new System.Drawing.Point(126, 35);
+            this.btnAceptar.Location = new System.Drawing.Point(168, 43);
+            this.btnAceptar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(75, 23);
+            this.btnAceptar.Size = new System.Drawing.Size(100, 28);
             this.btnAceptar.TabIndex = 3;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -80,9 +85,10 @@
             // 
             this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
             this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(207, 35);
+            this.btnCancelar.Location = new System.Drawing.Point(276, 43);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelar.Size = new System.Drawing.Size(100, 28);
             this.btnCancelar.TabIndex = 4;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -91,15 +97,16 @@
             // 
             // frmDiasAusentismo
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 70);
+            this.ClientSize = new System.Drawing.Size(389, 86);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.txtDias);
             this.Controls.Add(this.lblCantidad);
             this.Controls.Add(this.lblTexto);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmDiasAusentismo";

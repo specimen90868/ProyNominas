@@ -99,7 +99,6 @@ namespace Nominas
 
             txtNombreCompleto.Text = _nombreEmpleado;
             mtxtNoEmpleado.Text = lstEmpleado[0].noempleado;
-            cmbMetodoPago.SelectedIndex = 2;
             mtxtCuentaBancaria.Text = lstEmpleado[0].cuenta;
             mtxtCuentaClabe.Text = lstEmpleado[0].clabe;
             mtxtIdBancario.Text = lstEmpleado[0].idbancario;
@@ -123,14 +122,9 @@ namespace Nominas
             txtAntiguedad.Text = ObtieneEdad(dtpFechaReingreso.Value).ToString();
         }
 
-        private void dtpFechaAntiguedad_Leave(object sender, EventArgs e)
-        {
-            txtAntiguedadMod.Text = ObtieneEdad(dtpFechaAntiguedad.Value).ToString();
-        }
-
         private void btnCalcular_Click(object sender, EventArgs e)
         {
-            if (txtAntiguedadMod.Text.Length == 0)
+            if (txtAntiguedad.Text.Length == 0)
                 return;
 
             if (txtSDI.Text.Length != 0)
@@ -151,7 +145,7 @@ namespace Nominas
                 fh.Command = cmd;
 
                 p.idperiodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
-                f.anio = int.Parse(txtAntiguedadMod.Text);
+                f.anio = int.Parse(txtAntiguedad.Text);
 
                 try
                 {
@@ -365,9 +359,9 @@ namespace Nominas
             empleado.idtrabajador = _idempleado;
             empleado.idempresa = GLOBALES.IDEMPRESA;
             empleado.fechaingreso = dtpFechaReingreso.Value;
-            empleado.fechaantiguedad = dtpFechaAntiguedad.Value;
+            empleado.fechaantiguedad = dtpFechaReingreso.Value;
             empleado.antiguedad = int.Parse(txtAntiguedad.Text);
-            empleado.antiguedadmod = int.Parse(txtAntiguedadMod.Text);
+            empleado.antiguedadmod = int.Parse(txtAntiguedad.Text);
             empleado.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
             empleado.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
             empleado.idperiodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
@@ -379,7 +373,7 @@ namespace Nominas
             empleado.cuenta = mtxtCuentaBancaria.Text;
             empleado.clabe = mtxtCuentaClabe.Text;
             empleado.idbancario = mtxtIdBancario.Text;
-            empleado.metodopago = cmbMetodoPago.Text;
+            empleado.metodopago = "TRANSFERENCIA";
 
             if (chkObraCivil.Checked)
                 empleado.obracivil = true;
@@ -605,11 +599,6 @@ namespace Nominas
                     periodoFin = new DateTime(dt.Year, dt.Month, DateTime.DaysInMonth(dt.Year, dt.Month));
                 }
             }
-        }
-
-        private void txtAntiguedadMod_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

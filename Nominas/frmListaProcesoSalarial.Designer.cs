@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmListaProcesoSalarial));
-            this.toolTitulo = new System.Windows.Forms.ToolStrip();
-            this.toolTituloVentana = new System.Windows.Forms.ToolStripLabel();
             this.toolAcciones = new System.Windows.Forms.ToolStrip();
             this.toolAplicar = new System.Windows.Forms.ToolStripButton();
             this.dgvEmpleados = new System.Windows.Forms.DataGridView();
@@ -51,36 +49,18 @@
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.calendarioColumn1 = new Nominas.CalendarioColumn();
-            this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).BeginInit();
             this.SuspendLayout();
             // 
-            // toolTitulo
-            // 
-            this.toolTitulo.BackColor = System.Drawing.Color.DarkGray;
-            this.toolTitulo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolTituloVentana});
-            this.toolTitulo.Location = new System.Drawing.Point(0, 0);
-            this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(1156, 27);
-            this.toolTitulo.TabIndex = 5;
-            this.toolTitulo.Text = "ToolStrip1";
-            // 
-            // toolTituloVentana
-            // 
-            this.toolTituloVentana.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
-            this.toolTituloVentana.Name = "toolTituloVentana";
-            this.toolTituloVentana.Size = new System.Drawing.Size(372, 24);
-            this.toolTituloVentana.Text = "Incremento salarial por año de servicio";
-            // 
             // toolAcciones
             // 
+            this.toolAcciones.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolAcciones.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolAplicar});
-            this.toolAcciones.Location = new System.Drawing.Point(0, 27);
+            this.toolAcciones.Location = new System.Drawing.Point(0, 0);
             this.toolAcciones.Name = "toolAcciones";
-            this.toolAcciones.Size = new System.Drawing.Size(1156, 25);
+            this.toolAcciones.Size = new System.Drawing.Size(1541, 27);
             this.toolAcciones.TabIndex = 6;
             this.toolAcciones.Text = "ToolStrip1";
             // 
@@ -89,7 +69,7 @@
             this.toolAplicar.Image = ((System.Drawing.Image)(resources.GetObject("toolAplicar.Image")));
             this.toolAplicar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolAplicar.Name = "toolAplicar";
-            this.toolAplicar.Size = new System.Drawing.Size(64, 22);
+            this.toolAplicar.Size = new System.Drawing.Size(80, 24);
             this.toolAplicar.Text = "Aplicar";
             this.toolAplicar.Click += new System.EventHandler(this.toolAplicar_Click);
             // 
@@ -110,10 +90,11 @@
             this.antiguedadmod,
             this.fechaimss});
             this.dgvEmpleados.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvEmpleados.Location = new System.Drawing.Point(0, 52);
+            this.dgvEmpleados.Location = new System.Drawing.Point(0, 27);
+            this.dgvEmpleados.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvEmpleados.MultiSelect = false;
             this.dgvEmpleados.Name = "dgvEmpleados";
-            this.dgvEmpleados.Size = new System.Drawing.Size(1156, 640);
+            this.dgvEmpleados.Size = new System.Drawing.Size(1541, 825);
             this.dgvEmpleados.TabIndex = 7;
             this.dgvEmpleados.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellContentClick);
             // 
@@ -206,17 +187,15 @@
             // 
             // frmListaProcesoSalarial
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1156, 692);
+            this.ClientSize = new System.Drawing.Size(1541, 852);
             this.Controls.Add(this.dgvEmpleados);
             this.Controls.Add(this.toolAcciones);
-            this.Controls.Add(this.toolTitulo);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmListaProcesoSalarial";
             this.Text = "Proceso salarial";
             this.Load += new System.EventHandler(this.frmListaProcesoSalarial_Load);
-            this.toolTitulo.ResumeLayout(false);
-            this.toolTitulo.PerformLayout();
             this.toolAcciones.ResumeLayout(false);
             this.toolAcciones.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).EndInit();
@@ -227,8 +206,6 @@
 
         #endregion
 
-        internal System.Windows.Forms.ToolStrip toolTitulo;
-        internal System.Windows.Forms.ToolStripLabel toolTituloVentana;
         internal System.Windows.Forms.ToolStrip toolAcciones;
         private System.Windows.Forms.ToolStripButton toolAplicar;
         private System.Windows.Forms.DataGridView dgvEmpleados;

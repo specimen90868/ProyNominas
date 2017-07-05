@@ -91,7 +91,7 @@ namespace Nominas
         private void Seleccion(int edicion)
         {
             frmPeriodos p = new frmPeriodos();
-            p.MdiParent = this.MdiParent;
+            p.StartPosition = FormStartPosition.CenterScreen;
             p.OnNuevoPeriodo += p_OnNuevoPeriodo;
             int fila = 0;
             if (!edicion.Equals(GLOBALES.NUEVO))

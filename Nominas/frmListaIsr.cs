@@ -103,7 +103,7 @@ namespace Nominas
         {
             frmIsr i = new frmIsr();
             i.OnNuevoIsr += i_OnNuevoIsr;
-            i.MdiParent = this.MdiParent;
+            i.StartPosition = FormStartPosition.CenterScreen;
             int fila = 0;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {

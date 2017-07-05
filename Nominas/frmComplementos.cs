@@ -105,6 +105,8 @@ namespace Nominas
             CargaComboBox();
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
+                txtNombre.Text = _nombreEmpleado;
+
                 cnx = new SqlConnection();
                 cnx.ConnectionString = cdn;
                 cmd = new SqlCommand();
@@ -172,18 +174,15 @@ namespace Nominas
 
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
-                    toolTitulo.Text = "Consulta del Complemento";
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                     GLOBALES.INHABILITAR(this, typeof(MaskedTextBox));
                     GLOBALES.INHABILITAR(this, typeof(ComboBox));
                     toolGuardar.Enabled = false;
                 }
-                else
-                    toolTitulo.Text = "Edición del Complemento";
             }
             else
             {
-                lblEmpleado.Text = _nombreEmpleado;
+                txtNombre.Text = _nombreEmpleado;
             }
         }
 

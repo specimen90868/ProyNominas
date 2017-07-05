@@ -36,10 +36,6 @@ namespace Nominas
         public event delOnNuevoPuesto OnNuevoPuesto;
         #endregion
 
-        private void toolGuardarCerrar_Click(object sender, EventArgs e)
-        {
-            guardar(1);
-        }
 
         private void toolGuardarNuevo_Click(object sender, EventArgs e)
         {
@@ -110,11 +106,8 @@ namespace Nominas
                 case 0:
                     GLOBALES.LIMPIAR(this, typeof(TextBox));
                     //limpiar(this, typeof(TextBox));
-                    break;
-                case 1:
                     if (OnNuevoPuesto != null)
                         OnNuevoPuesto(_tipoOperacion);
-                    this.Dispose();
                     break;
             }
         }
@@ -155,11 +148,10 @@ namespace Nominas
 
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
-                    toolTitulo.Text = "Consulta Puesto";
+                    
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                 }
-                else
-                    toolTitulo.Text = "Edición Puesto";
+                
             }
         }
     }

@@ -63,7 +63,7 @@ namespace Nominas
 
         private void CargaPerfil()
         {
-            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("Salario minimo");
+            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("Salario mínimo");
 
             for (int i = 0; i < lstEdiciones.Count; i++)
             {
@@ -82,7 +82,7 @@ namespace Nominas
         private void Seleccion(int edicion)
         {
             frmSalario s = new frmSalario();
-            s.MdiParent = this.MdiParent;
+            s.StartPosition = FormStartPosition.CenterScreen;
             s.OnNuevoSalario += s_OnNuevoSalario;
             int fila = 0;
             if (!edicion.Equals(GLOBALES.NUEVO))

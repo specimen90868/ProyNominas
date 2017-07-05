@@ -90,11 +90,10 @@ namespace Nominas
 
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
-                    toolTitulo.Text = "Consulta Subsidio";
+                    
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                 }
-                else
-                    toolTitulo.Text = "Edición Subsidio";
+               
             }
         }
 

@@ -77,7 +77,7 @@ namespace Nominas
 
         private void CargaPerfil()
         {
-            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("Concepto - Empleado");
+            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("Conceptos - Empleado");
 
             for (int i = 0; i < lstEdiciones.Count; i++)
             {
@@ -97,7 +97,7 @@ namespace Nominas
             fila = dgvEmpleados.CurrentCell.RowIndex;
             ce._idEmpleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
             ce._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[2].Value.ToString();
-            ce.MdiParent = this.MdiParent;
+            ce.StartPosition = FormStartPosition.CenterScreen;
             ce.Show();
         }
 

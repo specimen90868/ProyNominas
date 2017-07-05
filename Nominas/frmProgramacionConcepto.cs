@@ -45,7 +45,7 @@ namespace Nominas
             cargaCombo();
             if (_tipoOperacion == GLOBALES.MODIFICAR)
             {
-                lblEmpleado.Text = _nombreEmpleado;
+                txtNombre.Text = _nombreEmpleado;
                 cnx = new SqlConnection();
                 cnx.ConnectionString = cdn;
                 cmd = new SqlCommand();
@@ -76,20 +76,19 @@ namespace Nominas
 
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
-                    toolTitulo.Text = "Consulta programación";
+                    
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                     GLOBALES.INHABILITAR(this, typeof(ComboBox));
                     GLOBALES.INHABILITAR(this, typeof(DateTimePicker));
                     toolGuardar.Enabled = false;
                 }
-                else
-                    toolTitulo.Text = "Edición programación";
+                
             }
             else
             {
                 if (_idEmpleado != 0)
                 {
-                    lblEmpleado.Text = _nombreEmpleado;
+                    txtNombre.Text = _nombreEmpleado;
                 }
             }
         }

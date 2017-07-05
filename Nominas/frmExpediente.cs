@@ -172,7 +172,7 @@ namespace Nominas
 
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
-                    toolVentana.Text = "Consulta del Expediente";
+                    
                     GLOBALES.INHABILITAR(this, typeof(CheckBox));
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                     toolGuardar.Enabled = false;
@@ -180,8 +180,8 @@ namespace Nominas
                 }
                 else
                 {
-                    toolVentana.Text = "Edición del Expediente";
-                    lblEmpleado.Text = _nombreEmpleado;
+                    
+                    txtNombre.Text = _nombreEmpleado;
                     toolBuscar.Enabled = false;
                 }
                 
@@ -200,7 +200,7 @@ namespace Nominas
         void b_OnBuscar(int id, string nombre)
         {
             _idEmpleado = id;
-            lblEmpleado.Text = nombre;
+            txtNombre.Text = nombre;
         }
 
         private int calcularEstatus()

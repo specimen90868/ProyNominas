@@ -137,7 +137,7 @@ namespace Nominas
         {
             int fila = dgvPerfiles.CurrentCell.RowIndex;
             frmPerfiles p = new frmPerfiles();
-            p.MdiParent = this.MdiParent;
+            p.StartPosition = FormStartPosition.CenterScreen;
             p.OnNuevoPerfil += p_OnNuevoPerfil;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {

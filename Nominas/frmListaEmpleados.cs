@@ -116,6 +116,10 @@ namespace Nominas
                     case "Reingreso": toolReingreso.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                     case "Eliminar": toolEliminar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                     case "Incrementar Salario": toolIncrementoSalario.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Depto/Puesto": toolDeptoPuesto.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Periodo": toolCambioPeriodo.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Nomina Digital": toolNominaDigital.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Exportar": toolExportar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                 }
             }
         }
@@ -135,6 +139,7 @@ namespace Nominas
                 empleado._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
             }
             empleado._tipoOperacion = edicion;
+            empleado.StartPosition = FormStartPosition.CenterScreen;
             empleado.Show();
             
         }
@@ -173,7 +178,7 @@ namespace Nominas
             int fila = dgvEmpleados.CurrentCell.RowIndex;
             frmIncrementoSalarial isal = new frmIncrementoSalarial();
             isal.OnIncrementoSalarial += isal_OnIncrementoSalarial;
-            isal.MdiParent = this.MdiParent;
+            isal.StartPosition = FormStartPosition.CenterScreen;
             isal._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[3].Value.ToString();
             isal._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
             isal.Show();
@@ -192,6 +197,7 @@ namespace Nominas
            int fila = dgvEmpleados.CurrentCell.RowIndex;
            frmListaHistorial lh = new frmListaHistorial();
            //lh.MdiParent = this.MdiParent;
+           lh.StartPosition = FormStartPosition.CenterScreen;
            lh._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
            lh.Show();            
         }
@@ -278,6 +284,7 @@ namespace Nominas
                 return;
             frmExportarEmpleado ee = new frmExportarEmpleado();
             ee._tipoReporte = GLOBALES.EXPORTACATALOGO_NOMINA;
+            ee.StartPosition = FormStartPosition.CenterScreen;
             ee.Show();
         }
 
@@ -288,6 +295,7 @@ namespace Nominas
 
             frmExportarEmpleado ee = new frmExportarEmpleado();
             ee._tipoReporte = GLOBALES.EXPORTACATALOGO_GENERAL;
+            ee.StartPosition = FormStartPosition.CenterScreen;
             ee.Show();
         }
 
@@ -299,6 +307,7 @@ namespace Nominas
             int fila = dgvEmpleados.CurrentCell.RowIndex;
             frmDeptoPuesto dp = new frmDeptoPuesto();
             dp._deptopuesto = 0;
+            dp.StartPosition = FormStartPosition.CenterScreen;
             dp._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
             dp.Show();
         }
@@ -311,6 +320,7 @@ namespace Nominas
             int fila = dgvEmpleados.CurrentCell.RowIndex;
             frmDeptoPuesto dp = new frmDeptoPuesto();
             dp._deptopuesto = 1;
+            dp.StartPosition = FormStartPosition.CenterScreen;
             dp._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
             dp.Show();
         }
@@ -321,6 +331,7 @@ namespace Nominas
                 return;
             int fila = dgvEmpleados.CurrentCell.RowIndex;
             frmPeriodoTrabajador pt = new frmPeriodoTrabajador();
+            pt.StartPosition = FormStartPosition.CenterScreen;
             pt._idEmpleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
             pt.Show();
         }
@@ -334,6 +345,7 @@ namespace Nominas
         {
             int fila = dgvEmpleados.CurrentCell.RowIndex;
             frmTrabajadorNominaDigital tnd = new frmTrabajadorNominaDigital();
+            tnd.StartPosition = FormStartPosition.CenterScreen;
             tnd._idEmpleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
             tnd.Show();
         }
@@ -390,6 +402,7 @@ namespace Nominas
                 frmBaja b = new frmBaja();
                 b.OnBajaEmpleado += b_OnBajaEmpleado;
                 //b.MdiParent = this.MdiParent;
+                b.StartPosition = FormStartPosition.CenterScreen;
                 b._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
                 b._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[3].Value.ToString();
                 b.Show();
@@ -435,6 +448,7 @@ namespace Nominas
             {
                 frmReingresoEmpleado r = new frmReingresoEmpleado();
                 r.OnReingreso += r_OnReingreso;
+                r.StartPosition = FormStartPosition.CenterScreen;
                 r._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
                 r._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[2].Value.ToString();
                 r.Show();

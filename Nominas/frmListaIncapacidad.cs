@@ -106,7 +106,7 @@ namespace Nominas
         {
             int fila = 0;
             frmIncapacidad i = new frmIncapacidad();
-            i.MdiParent = this.MdiParent;
+            i.StartPosition = FormStartPosition.CenterScreen;
             i.OnIncapacidad += i_OnIncapacidad;
 
             if (edicion != GLOBALES.NUEVO)

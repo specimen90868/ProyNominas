@@ -29,13 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmIncrementoSalarial));
-            this.toolTitulo = new System.Windows.Forms.ToolStrip();
-            this.toolVentana = new System.Windows.Forms.ToolStripLabel();
             this.toolAcciones = new System.Windows.Forms.ToolStrip();
             this.toolGuardar = new System.Windows.Forms.ToolStripButton();
             this.toolCerrar = new System.Windows.Forms.ToolStripButton();
-            this.lblEmpleado = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
             this.Label2 = new System.Windows.Forms.Label();
             this.dtpFecha = new System.Windows.Forms.DateTimePicker();
             this.Label9 = new System.Windows.Forms.Label();
@@ -44,7 +40,6 @@
             this.txtSD = new System.Windows.Forms.TextBox();
             this.Label10 = new System.Windows.Forms.Label();
             this.Label8 = new System.Windows.Forms.Label();
-            this.Label16 = new System.Windows.Forms.Label();
             this.txtDepartamento = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.mtxtNoEmpleado = new System.Windows.Forms.MaskedTextBox();
@@ -57,36 +52,20 @@
             this.cmbPuesto = new System.Windows.Forms.ComboBox();
             this.chkCambioDeptoPto = new System.Windows.Forms.CheckBox();
             this.chkModificaPuesto = new System.Windows.Forms.CheckBox();
-            this.toolTitulo.SuspendLayout();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtNombre = new System.Windows.Forms.TextBox();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
             // 
-            // toolTitulo
-            // 
-            this.toolTitulo.BackColor = System.Drawing.Color.DarkGray;
-            this.toolTitulo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolVentana});
-            this.toolTitulo.Location = new System.Drawing.Point(0, 0);
-            this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(429, 27);
-            this.toolTitulo.TabIndex = 3;
-            this.toolTitulo.Text = "toolAcciones";
-            // 
-            // toolVentana
-            // 
-            this.toolVentana.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolVentana.Name = "toolVentana";
-            this.toolVentana.Size = new System.Drawing.Size(186, 24);
-            this.toolVentana.Text = "Incremento salarial";
-            // 
             // toolAcciones
             // 
+            this.toolAcciones.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolAcciones.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolGuardar,
             this.toolCerrar});
-            this.toolAcciones.Location = new System.Drawing.Point(0, 27);
+            this.toolAcciones.Location = new System.Drawing.Point(0, 0);
             this.toolAcciones.Name = "toolAcciones";
-            this.toolAcciones.Size = new System.Drawing.Size(429, 25);
+            this.toolAcciones.Size = new System.Drawing.Size(572, 27);
             this.toolAcciones.TabIndex = 4;
             this.toolAcciones.Text = "toolEmpresa";
             // 
@@ -95,7 +74,7 @@
             this.toolGuardar.Image = ((System.Drawing.Image)(resources.GetObject("toolGuardar.Image")));
             this.toolGuardar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolGuardar.Name = "toolGuardar";
-            this.toolGuardar.Size = new System.Drawing.Size(69, 22);
+            this.toolGuardar.Size = new System.Drawing.Size(86, 24);
             this.toolGuardar.Text = "Guardar";
             this.toolGuardar.Click += new System.EventHandler(this.toolGuardar_Click);
             // 
@@ -104,147 +83,128 @@
             this.toolCerrar.Image = ((System.Drawing.Image)(resources.GetObject("toolCerrar.Image")));
             this.toolCerrar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolCerrar.Name = "toolCerrar";
-            this.toolCerrar.Size = new System.Drawing.Size(59, 22);
+            this.toolCerrar.Size = new System.Drawing.Size(73, 24);
             this.toolCerrar.Text = "Cerrar";
             this.toolCerrar.Click += new System.EventHandler(this.toolCerrar_Click);
-            // 
-            // lblEmpleado
-            // 
-            this.lblEmpleado.AutoSize = true;
-            this.lblEmpleado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEmpleado.Location = new System.Drawing.Point(112, 68);
-            this.lblEmpleado.Name = "lblEmpleado";
-            this.lblEmpleado.Size = new System.Drawing.Size(183, 20);
-            this.lblEmpleado.TabIndex = 253;
-            this.lblEmpleado.Text = "Nombre del empleado";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.Location = new System.Drawing.Point(12, 68);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(94, 20);
-            this.label23.TabIndex = 252;
-            this.label23.Text = "Empleado:";
             // 
             // Label2
             // 
             this.Label2.AutoSize = true;
-            this.Label2.Location = new System.Drawing.Point(90, 266);
+            this.Label2.Location = new System.Drawing.Point(118, 280);
+            this.Label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(40, 13);
+            this.Label2.Size = new System.Drawing.Size(51, 17);
             this.Label2.TabIndex = 261;
             this.Label2.Text = "Fecha:";
             // 
             // dtpFecha
             // 
             this.dtpFecha.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFecha.Location = new System.Drawing.Point(136, 264);
+            this.dtpFecha.Location = new System.Drawing.Point(179, 278);
+            this.dtpFecha.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dtpFecha.Name = "dtpFecha";
-            this.dtpFecha.Size = new System.Drawing.Size(92, 20);
+            this.dtpFecha.Size = new System.Drawing.Size(121, 22);
             this.dtpFecha.TabIndex = 260;
             this.dtpFecha.ValueChanged += new System.EventHandler(this.dtpFecha_ValueChanged);
             // 
             // Label9
             // 
             this.Label9.AutoSize = true;
-            this.Label9.Location = new System.Drawing.Point(32, 238);
+            this.Label9.Location = new System.Drawing.Point(41, 246);
+            this.Label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Label9.Name = "Label9";
-            this.Label9.Size = new System.Drawing.Size(98, 13);
+            this.Label9.Size = new System.Drawing.Size(131, 17);
             this.Label9.TabIndex = 259;
             this.Label9.Text = "Sueldo del periodo:";
             // 
             // txtSueldo
             // 
-            this.txtSueldo.Location = new System.Drawing.Point(136, 235);
+            this.txtSueldo.Location = new System.Drawing.Point(179, 242);
+            this.txtSueldo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtSueldo.Name = "txtSueldo";
-            this.txtSueldo.Size = new System.Drawing.Size(92, 20);
+            this.txtSueldo.Size = new System.Drawing.Size(121, 22);
             this.txtSueldo.TabIndex = 258;
             this.txtSueldo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtSueldo.Leave += new System.EventHandler(this.txtSueldo_Leave);
             // 
             // txtSDI
             // 
-            this.txtSDI.Location = new System.Drawing.Point(136, 179);
+            this.txtSDI.Location = new System.Drawing.Point(179, 173);
+            this.txtSDI.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtSDI.Name = "txtSDI";
-            this.txtSDI.Size = new System.Drawing.Size(92, 20);
+            this.txtSDI.Size = new System.Drawing.Size(121, 22);
             this.txtSDI.TabIndex = 255;
             this.txtSDI.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtSDI.Leave += new System.EventHandler(this.txtSDI_Leave);
             // 
             // txtSD
             // 
-            this.txtSD.Location = new System.Drawing.Point(136, 207);
+            this.txtSD.Location = new System.Drawing.Point(179, 208);
+            this.txtSD.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtSD.Name = "txtSD";
             this.txtSD.ReadOnly = true;
-            this.txtSD.Size = new System.Drawing.Size(92, 20);
+            this.txtSD.Size = new System.Drawing.Size(121, 22);
             this.txtSD.TabIndex = 256;
             this.txtSD.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // Label10
             // 
             this.Label10.AutoSize = true;
-            this.Label10.Location = new System.Drawing.Point(13, 182);
+            this.Label10.Location = new System.Drawing.Point(15, 177);
+            this.Label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Label10.Name = "Label10";
-            this.Label10.Size = new System.Drawing.Size(117, 13);
+            this.Label10.Size = new System.Drawing.Size(159, 17);
             this.Label10.TabIndex = 254;
             this.Label10.Text = "Salario diario integrado:";
             // 
             // Label8
             // 
             this.Label8.AutoSize = true;
-            this.Label8.Location = new System.Drawing.Point(60, 210);
+            this.Label8.Location = new System.Drawing.Point(78, 211);
+            this.Label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Label8.Name = "Label8";
-            this.Label8.Size = new System.Drawing.Size(70, 13);
+            this.Label8.Size = new System.Drawing.Size(95, 17);
             this.Label8.TabIndex = 257;
             this.Label8.Text = "Salario diario:";
-            // 
-            // Label16
-            // 
-            this.Label16.AutoSize = true;
-            this.Label16.BackColor = System.Drawing.SystemColors.Control;
-            this.Label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.Label16.Location = new System.Drawing.Point(13, 134);
-            this.Label16.Name = "Label16";
-            this.Label16.Size = new System.Drawing.Size(112, 18);
-            this.Label16.TabIndex = 262;
-            this.Label16.Text = "Nuevo salario";
             // 
             // txtDepartamento
             // 
             this.txtDepartamento.BackColor = System.Drawing.SystemColors.Control;
-            this.txtDepartamento.Location = new System.Drawing.Point(243, 100);
+            this.txtDepartamento.Location = new System.Drawing.Point(322, 76);
+            this.txtDepartamento.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtDepartamento.Name = "txtDepartamento";
-            this.txtDepartamento.Size = new System.Drawing.Size(164, 20);
+            this.txtDepartamento.Size = new System.Drawing.Size(217, 22);
             this.txtDepartamento.TabIndex = 282;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(147, 103);
+            this.label1.Location = new System.Drawing.Point(194, 80);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(90, 13);
+            this.label1.Size = new System.Drawing.Size(115, 17);
             this.label1.TabIndex = 281;
             this.label1.Text = "Departamento:";
             // 
             // mtxtNoEmpleado
             // 
             this.mtxtNoEmpleado.BackColor = System.Drawing.SystemColors.Control;
-            this.mtxtNoEmpleado.Location = new System.Drawing.Point(108, 100);
+            this.mtxtNoEmpleado.Location = new System.Drawing.Point(142, 76);
+            this.mtxtNoEmpleado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mtxtNoEmpleado.Mask = "9999";
             this.mtxtNoEmpleado.Name = "mtxtNoEmpleado";
-            this.mtxtNoEmpleado.Size = new System.Drawing.Size(33, 20);
+            this.mtxtNoEmpleado.Size = new System.Drawing.Size(43, 22);
             this.mtxtNoEmpleado.TabIndex = 280;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(12, 104);
+            this.label4.Location = new System.Drawing.Point(14, 81);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(90, 13);
+            this.label4.Size = new System.Drawing.Size(114, 17);
             this.label4.TabIndex = 279;
             this.label4.Text = "No. Empleado:";
             // 
@@ -252,26 +212,29 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(151, 137);
+            this.label3.Location = new System.Drawing.Point(199, 122);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(50, 13);
+            this.label3.Size = new System.Drawing.Size(63, 17);
             this.label3.TabIndex = 283;
             this.label3.Text = "Puesto:";
             // 
             // txtPuesto
             // 
             this.txtPuesto.BackColor = System.Drawing.SystemColors.Control;
-            this.txtPuesto.Location = new System.Drawing.Point(243, 134);
+            this.txtPuesto.Location = new System.Drawing.Point(322, 118);
+            this.txtPuesto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtPuesto.Name = "txtPuesto";
-            this.txtPuesto.Size = new System.Drawing.Size(164, 20);
+            this.txtPuesto.Size = new System.Drawing.Size(217, 22);
             this.txtPuesto.TabIndex = 284;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(53, 295);
+            this.label5.Location = new System.Drawing.Point(69, 316);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(77, 13);
+            this.label5.Size = new System.Drawing.Size(102, 17);
             this.label5.TabIndex = 285;
             this.label5.Text = "Departamento:";
             this.label5.Visible = false;
@@ -279,9 +242,10 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(87, 324);
+            this.label6.Location = new System.Drawing.Point(114, 352);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(43, 13);
+            this.label6.Size = new System.Drawing.Size(56, 17);
             this.label6.TabIndex = 286;
             this.label6.Text = "Puesto:";
             this.label6.Visible = false;
@@ -289,27 +253,30 @@
             // cmbDepartamento
             // 
             this.cmbDepartamento.FormattingEnabled = true;
-            this.cmbDepartamento.Location = new System.Drawing.Point(136, 292);
+            this.cmbDepartamento.Location = new System.Drawing.Point(179, 312);
+            this.cmbDepartamento.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbDepartamento.Name = "cmbDepartamento";
-            this.cmbDepartamento.Size = new System.Drawing.Size(164, 21);
+            this.cmbDepartamento.Size = new System.Drawing.Size(217, 24);
             this.cmbDepartamento.TabIndex = 287;
             this.cmbDepartamento.Visible = false;
             // 
             // cmbPuesto
             // 
             this.cmbPuesto.FormattingEnabled = true;
-            this.cmbPuesto.Location = new System.Drawing.Point(136, 321);
+            this.cmbPuesto.Location = new System.Drawing.Point(179, 348);
+            this.cmbPuesto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbPuesto.Name = "cmbPuesto";
-            this.cmbPuesto.Size = new System.Drawing.Size(164, 21);
+            this.cmbPuesto.Size = new System.Drawing.Size(217, 24);
             this.cmbPuesto.TabIndex = 288;
             this.cmbPuesto.Visible = false;
             // 
             // chkCambioDeptoPto
             // 
             this.chkCambioDeptoPto.AutoSize = true;
-            this.chkCambioDeptoPto.Location = new System.Drawing.Point(306, 294);
+            this.chkCambioDeptoPto.Location = new System.Drawing.Point(406, 315);
+            this.chkCambioDeptoPto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.chkCambioDeptoPto.Name = "chkCambioDeptoPto";
-            this.chkCambioDeptoPto.Size = new System.Drawing.Size(101, 17);
+            this.chkCambioDeptoPto.Size = new System.Drawing.Size(129, 21);
             this.chkCambioDeptoPto.TabIndex = 289;
             this.chkCambioDeptoPto.Text = "Modificar Depto";
             this.chkCambioDeptoPto.UseVisualStyleBackColor = true;
@@ -319,20 +286,43 @@
             // chkModificaPuesto
             // 
             this.chkModificaPuesto.AutoSize = true;
-            this.chkModificaPuesto.Location = new System.Drawing.Point(306, 323);
+            this.chkModificaPuesto.Location = new System.Drawing.Point(406, 351);
+            this.chkModificaPuesto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.chkModificaPuesto.Name = "chkModificaPuesto";
-            this.chkModificaPuesto.Size = new System.Drawing.Size(105, 17);
+            this.chkModificaPuesto.Size = new System.Drawing.Size(135, 21);
             this.chkModificaPuesto.TabIndex = 290;
             this.chkModificaPuesto.Text = "Modificar Puesto";
             this.chkModificaPuesto.UseVisualStyleBackColor = true;
             this.chkModificaPuesto.Visible = false;
             this.chkModificaPuesto.CheckedChanged += new System.EventHandler(this.chkModificaPuesto_CheckedChanged);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(15, 50);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(69, 17);
+            this.label7.TabIndex = 291;
+            this.label7.Text = "Nombre:";
+            // 
+            // txtNombre
+            // 
+            this.txtNombre.BackColor = System.Drawing.SystemColors.Control;
+            this.txtNombre.Enabled = false;
+            this.txtNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNombre.Location = new System.Drawing.Point(142, 47);
+            this.txtNombre.Name = "txtNombre";
+            this.txtNombre.Size = new System.Drawing.Size(393, 22);
+            this.txtNombre.TabIndex = 292;
+            // 
             // frmIncrementoSalarial
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(429, 421);
+            this.ClientSize = new System.Drawing.Size(572, 394);
+            this.Controls.Add(this.txtNombre);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.chkModificaPuesto);
             this.Controls.Add(this.chkCambioDeptoPto);
             this.Controls.Add(this.cmbPuesto);
@@ -345,7 +335,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.mtxtNoEmpleado);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.Label16);
             this.Controls.Add(this.Label2);
             this.Controls.Add(this.dtpFecha);
             this.Controls.Add(this.Label9);
@@ -354,15 +343,15 @@
             this.Controls.Add(this.txtSD);
             this.Controls.Add(this.Label10);
             this.Controls.Add(this.Label8);
-            this.Controls.Add(this.lblEmpleado);
-            this.Controls.Add(this.label23);
             this.Controls.Add(this.toolAcciones);
-            this.Controls.Add(this.toolTitulo);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(590, 441);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(590, 441);
             this.Name = "frmIncrementoSalarial";
-            this.Text = "Incremento salarial";
+            this.Text = "Incremento salarial del trabajador";
             this.Load += new System.EventHandler(this.frmIncrementoSalarial_Load);
-            this.toolTitulo.ResumeLayout(false);
-            this.toolTitulo.PerformLayout();
             this.toolAcciones.ResumeLayout(false);
             this.toolAcciones.PerformLayout();
             this.ResumeLayout(false);
@@ -372,13 +361,9 @@
 
         #endregion
 
-        internal System.Windows.Forms.ToolStrip toolTitulo;
-        internal System.Windows.Forms.ToolStripLabel toolVentana;
         internal System.Windows.Forms.ToolStrip toolAcciones;
         internal System.Windows.Forms.ToolStripButton toolGuardar;
         private System.Windows.Forms.ToolStripButton toolCerrar;
-        private System.Windows.Forms.Label lblEmpleado;
-        private System.Windows.Forms.Label label23;
         internal System.Windows.Forms.Label Label2;
         internal System.Windows.Forms.DateTimePicker dtpFecha;
         internal System.Windows.Forms.Label Label9;
@@ -387,7 +372,6 @@
         internal System.Windows.Forms.TextBox txtSD;
         internal System.Windows.Forms.Label Label10;
         internal System.Windows.Forms.Label Label8;
-        internal System.Windows.Forms.Label Label16;
         private System.Windows.Forms.TextBox txtDepartamento;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MaskedTextBox mtxtNoEmpleado;
@@ -401,6 +385,8 @@
         private System.Windows.Forms.ComboBox cmbPuesto;
         private System.Windows.Forms.CheckBox chkCambioDeptoPto;
         private System.Windows.Forms.CheckBox chkModificaPuesto;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtNombre;
 
     }
 }

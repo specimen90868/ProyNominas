@@ -63,7 +63,7 @@ namespace Nominas
                             cmd.Connection = con;
                             con.Open();
                             DataTable dtExcelSchema = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                            sheetName = dtExcelSchema.Rows[2]["TABLE_NAME"].ToString();
+                            sheetName = dtExcelSchema.Rows[3]["TABLE_NAME"].ToString();
                             con.Close();
                         }
                     }
@@ -282,7 +282,12 @@ namespace Nominas
                         {
                             if (fecha.AddDays(i).Date < lstAlta[0].fechaingreso.Date)
                             {
-                                MessageBox.Show("Error: Alta del empleado: " + fila.Cells["noempleado"].Value.ToString() + ", Fecha de Ingreso = " + lstAlta[0].fechaingreso.Date.ToShortDateString() + "\r\n Fecha de la falta es menor.", "Error");
+                                MessageBox.Show("Información: Alta del empleado: " + 
+                                    fila.Cells["noempleado"].Value.ToString() + 
+                                    ", Fecha de Ingreso = " + lstAlta[0].fechaingreso.Date.ToShortDateString() + 
+                                    "\r\n Fecha de la falta es menor.", "Información",
+                                    MessageBoxButtons.OK, 
+                                    MessageBoxIcon.Exclamation);
                                 FLAG_FALTAS = true;
                             }
                             else
@@ -293,7 +298,12 @@ namespace Nominas
                         {
                             if (fecha.AddDays(i).Date < lstReingreso[0].fechaingreso.Date)
                             {
-                                MessageBox.Show("Error: Alta del empleado: " + fila.Cells["noempleado"].Value.ToString() + ", Fecha de Reingreso = " + lstReingreso[0].fechaingreso.Date.ToShortDateString() + "\r\n Fecha de la falta es menor.", "Error");
+                                MessageBox.Show("Información: Reingreso del empleado: " + 
+                                    fila.Cells["noempleado"].Value.ToString() + 
+                                    ", Fecha de Reingreso = " + lstReingreso[0].fechaingreso.Date.ToShortDateString() +
+                                    "\r\n Fecha de la falta es menor.", "Información",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Exclamation);
                                 FLAG_FALTAS = true;
                             }
                             else
@@ -304,9 +314,12 @@ namespace Nominas
                         {
                             if (fecha.AddDays(i).Date > lstBaja[0].fecha.Date)
                             {
-                                MessageBox.Show("Error: Alta del empleado " + fila.Cells["noempleado"].Value.ToString() + 
-                                    ", Fecha de Reingreso = " + lstBaja[0].fecha.Date.ToShortDateString() + 
-                                    "\r\n Fecha de la falta es mayor.", "Error");
+                                MessageBox.Show("Información: Baja del empleado " + 
+                                    fila.Cells["noempleado"].Value.ToString() + 
+                                    ", Fecha de Reingreso = " + lstBaja[0].fecha.Date.ToShortDateString() +
+                                    "\r\n Fecha de la falta es mayor.", "Información",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Exclamation);
                                 FLAG_FALTAS = true;
                             }
                             else
@@ -351,7 +364,11 @@ namespace Nominas
                                     cnx.Dispose();
                                 }
                             else
-                                MessageBox.Show("La falta ingresada, se empalma con una incapacidad y/o dia de vacación del trabajador.", "Error");
+                                MessageBox.Show("No. de Empleado: " + fila.Cells["noempleado"].Value.ToString() + 
+                                    "La falta ingresada: " + fecha.AddDays(i).Date.ToShortDateString() + 
+                                    ", se empalma con una incapacidad y/o dia de vacación del trabajador.", "Información", 
+                                    MessageBoxButtons.OK, 
+                                    MessageBoxIcon.Information);
                         }
                     }
                 }

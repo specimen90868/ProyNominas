@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmListaCargaVacaciones));
-            this.toolTitulo = new System.Windows.Forms.ToolStrip();
-            this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
             this.toolBusqueda = new System.Windows.Forms.ToolStrip();
             this.toolNuevo = new System.Windows.Forms.ToolStripButton();
             this.toolCargar = new System.Windows.Forms.ToolStripButton();
@@ -56,29 +54,9 @@
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolTitulo.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCargaVacaciones)).BeginInit();
             this.SuspendLayout();
-            // 
-            // toolTitulo
-            // 
-            this.toolTitulo.BackColor = System.Drawing.Color.DarkGray;
-            this.toolTitulo.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolTitulo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolEmpleados});
-            this.toolTitulo.Location = new System.Drawing.Point(0, 0);
-            this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(1268, 32);
-            this.toolTitulo.TabIndex = 9;
-            this.toolTitulo.Text = "ToolStrip1";
-            // 
-            // toolEmpleados
-            // 
-            this.toolEmpleados.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
-            this.toolEmpleados.Name = "toolEmpleados";
-            this.toolEmpleados.Size = new System.Drawing.Size(257, 29);
-            this.toolEmpleados.Text = "Carga de vacaciones";
             // 
             // toolBusqueda
             // 
@@ -88,7 +66,7 @@
             this.toolCargar,
             this.toolLimpiar,
             this.toolAplicar});
-            this.toolBusqueda.Location = new System.Drawing.Point(0, 32);
+            this.toolBusqueda.Location = new System.Drawing.Point(0, 0);
             this.toolBusqueda.Name = "toolBusqueda";
             this.toolBusqueda.Size = new System.Drawing.Size(1268, 27);
             this.toolBusqueda.TabIndex = 10;
@@ -147,10 +125,10 @@
             this.fin,
             this.fechaaplicacion});
             this.dgvCargaVacaciones.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvCargaVacaciones.Location = new System.Drawing.Point(0, 59);
-            this.dgvCargaVacaciones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvCargaVacaciones.Location = new System.Drawing.Point(0, 27);
+            this.dgvCargaVacaciones.Margin = new System.Windows.Forms.Padding(4);
             this.dgvCargaVacaciones.Name = "dgvCargaVacaciones";
-            this.dgvCargaVacaciones.Size = new System.Drawing.Size(1268, 443);
+            this.dgvCargaVacaciones.Size = new System.Drawing.Size(1268, 475);
             this.dgvCargaVacaciones.TabIndex = 11;
             // 
             // noempleado
@@ -282,13 +260,10 @@
             this.ClientSize = new System.Drawing.Size(1268, 502);
             this.Controls.Add(this.dgvCargaVacaciones);
             this.Controls.Add(this.toolBusqueda);
-            this.Controls.Add(this.toolTitulo);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmListaCargaVacaciones";
             this.Text = "Carga de vacaciones";
             this.Load += new System.EventHandler(this.frmListaCargaVacaciones_Load);
-            this.toolTitulo.ResumeLayout(false);
-            this.toolTitulo.PerformLayout();
             this.toolBusqueda.ResumeLayout(false);
             this.toolBusqueda.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCargaVacaciones)).EndInit();
@@ -299,8 +274,6 @@
 
         #endregion
 
-        internal System.Windows.Forms.ToolStrip toolTitulo;
-        internal System.Windows.Forms.ToolStripLabel toolEmpleados;
         internal System.Windows.Forms.ToolStrip toolBusqueda;
         private System.Windows.Forms.ToolStripButton toolNuevo;
         private System.Windows.Forms.ToolStripButton toolCargar;

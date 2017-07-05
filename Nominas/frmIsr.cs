@@ -76,11 +76,9 @@ namespace Nominas
 
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
-                    toolTitulo.Text = "Consulta ISR";
+                    
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                 }
-                else
-                    toolTitulo.Text = "Edición ISR";
             }
         }
 
@@ -144,18 +142,10 @@ namespace Nominas
                 case 0:
                     GLOBALES.LIMPIAR(this, typeof(TextBox));
                     txtAnio.Text = DateTime.Now.Year.ToString();
-                    break;
-                case 1:
                     if (OnNuevoIsr != null)
                         OnNuevoIsr(_tipoOperacion);
-                    this.Dispose();
                     break;
             }
-        }
-
-        private void toolGuardarCerrar_Click(object sender, EventArgs e)
-        {
-            guardar(1);
         }
 
         private void toolGuardarNuevo_Click(object sender, EventArgs e)
