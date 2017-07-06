@@ -34,12 +34,10 @@
             this.toolLimpiar = new System.Windows.Forms.ToolStripButton();
             this.toolAplicar = new System.Windows.Forms.ToolStripButton();
             this.dgvMovimientos = new System.Windows.Forms.DataGridView();
+            this.workMovimientos = new System.ComponentModel.BackgroundWorker();
             this.noempleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.concepto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.inicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fin = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.workMovimientos = new System.ComponentModel.BackgroundWorker();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMovimientos)).BeginInit();
             this.SuspendLayout();
@@ -93,16 +91,22 @@
             this.dgvMovimientos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.noempleado,
             this.cantidad,
-            this.concepto,
-            this.inicio,
-            this.fin});
+            this.concepto});
             this.dgvMovimientos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMovimientos.Location = new System.Drawing.Point(0, 27);
-            this.dgvMovimientos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvMovimientos.Margin = new System.Windows.Forms.Padding(4);
             this.dgvMovimientos.Name = "dgvMovimientos";
             this.dgvMovimientos.ReadOnly = true;
             this.dgvMovimientos.Size = new System.Drawing.Size(1025, 586);
             this.dgvMovimientos.TabIndex = 13;
+            // 
+            // workMovimientos
+            // 
+            this.workMovimientos.WorkerReportsProgress = true;
+            this.workMovimientos.WorkerSupportsCancellation = true;
+            this.workMovimientos.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workMovimientos_DoWork);
+            this.workMovimientos.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workMovimientos_ProgressChanged);
+            this.workMovimientos.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workMovimientos_RunWorkerCompleted);
             // 
             // noempleado
             // 
@@ -122,26 +126,6 @@
             this.concepto.Name = "concepto";
             this.concepto.ReadOnly = true;
             // 
-            // inicio
-            // 
-            this.inicio.HeaderText = "Fecha Inicio";
-            this.inicio.Name = "inicio";
-            this.inicio.ReadOnly = true;
-            // 
-            // fin
-            // 
-            this.fin.HeaderText = "Fecha Fin";
-            this.fin.Name = "fin";
-            this.fin.ReadOnly = true;
-            // 
-            // workMovimientos
-            // 
-            this.workMovimientos.WorkerReportsProgress = true;
-            this.workMovimientos.WorkerSupportsCancellation = true;
-            this.workMovimientos.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workMovimientos_DoWork);
-            this.workMovimientos.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workMovimientos_ProgressChanged);
-            this.workMovimientos.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workMovimientos_RunWorkerCompleted);
-            // 
             // frmListaCargaMovimientos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -149,7 +133,7 @@
             this.ClientSize = new System.Drawing.Size(1025, 613);
             this.Controls.Add(this.dgvMovimientos);
             this.Controls.Add(this.toolBusqueda);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmListaCargaMovimientos";
             this.Text = "Carga de movimientos";
             this.Load += new System.EventHandler(this.frmListaCargaMovimientos_Load);
@@ -168,11 +152,9 @@
         private System.Windows.Forms.ToolStripButton toolLimpiar;
         private System.Windows.Forms.ToolStripButton toolAplicar;
         private System.Windows.Forms.DataGridView dgvMovimientos;
+        private System.ComponentModel.BackgroundWorker workMovimientos;
         private System.Windows.Forms.DataGridViewTextBoxColumn noempleado;
         private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn concepto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn inicio;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fin;
-        private System.ComponentModel.BackgroundWorker workMovimientos;
     }
 }

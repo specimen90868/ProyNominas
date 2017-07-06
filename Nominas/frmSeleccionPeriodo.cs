@@ -77,6 +77,8 @@ namespace Nominas
         {
             if (_Ventana == 0)
             {
+                if (GLOBALES.FORMISOPEN("frmListaCalculoNomina"))
+                    return;
                 frmListaCalculoNomina lcn = new frmListaCalculoNomina();
                 lcn.MdiParent = this.MdiParent;
                 lcn._tipoNomina = _TipoNomina;
@@ -91,25 +93,34 @@ namespace Nominas
             }
             else if(_Ventana == 1)
             {
+                if (GLOBALES.FORMISOPEN("frmImpresionRecibos"))
+                    return;
                 frmImpresionRecibos ir = new frmImpresionRecibos();
                 ir._tiponomina = _TipoNomina;
                 ir._periodo = periodoSeleccionado;
+                ir.StartPosition = FormStartPosition.CenterScreen;
                 ir.Show();
                 this.Dispose();
             }
             else if(_Ventana == 2)
             {
+                if (GLOBALES.FORMISOPEN("frmEnvioRecibos"))
+                    return;
                 frmEnvioRecibos er = new frmEnvioRecibos();
                 er._tiponomina = _TipoNomina;
                 er._periodo = periodoSeleccionado;
+                er.StartPosition = FormStartPosition.CenterScreen;
                 er.Show();
                 this.Dispose();
             }
             else if (_Ventana == 3)
             {
+                if (GLOBALES.FORMISOPEN("frmReportes"))
+                    return;
                 frmReportes r = new frmReportes();
                 r._tipoNomina = _TipoNomina;
                 r._periodo = periodoSeleccionado;
+                r.StartPosition = FormStartPosition.CenterScreen;
                 r.Show();
                 this.Dispose();
             }

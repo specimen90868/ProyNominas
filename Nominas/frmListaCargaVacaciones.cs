@@ -64,63 +64,74 @@ namespace Nominas
                             cmd.Connection = con;
                             con.Open();
                             DataTable dtExcelSchema = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                            sheetName = dtExcelSchema.Rows[5]["TABLE_NAME"].ToString();
+                            sheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
                             con.Close();
                         }
                     }
 
-                    using (OleDbConnection con = new OleDbConnection(conStr))
+                    if (sheetName == "Vacaciones$")
                     {
-                        using (OleDbCommand cmd = new OleDbCommand())
+                        using (OleDbConnection con = new OleDbConnection(conStr))
                         {
-                            using (OleDbDataAdapter oda = new OleDbDataAdapter())
+                            using (OleDbCommand cmd = new OleDbCommand())
                             {
-                                DataTable dt = new DataTable();
-                                cmd.CommandText = "SELECT * From [" + sheetName + "]";
-                                cmd.Connection = con;
-                                con.Open();
-                                oda.SelectCommand = cmd;
-                                oda.Fill(dt);
-                                con.Close();
-
-                                nombreEmpresa = dt.Columns[1].ColumnName;
-                                idEmpresa = int.Parse(dt.Columns[3].ColumnName.ToString());
-                                inicio = DateTime.Parse(dt.Rows[1][1].ToString());
-                                fin = DateTime.Parse(dt.Rows[2][1].ToString());
-
-                                if (GLOBALES.IDEMPRESA != idEmpresa)
+                                using (OleDbDataAdapter oda = new OleDbDataAdapter())
                                 {
-                                    MessageBox.Show("Los datos a ingresar pertenecen a otra empresa. Verifique. \r\n \r\n La ventana se cerrara.", "Error");
-                                    this.Dispose();
-                                }
+                                    DataTable dt = new DataTable();
+                                    cmd.CommandText = "SELECT * From [" + sheetName + "]";
+                                    cmd.Connection = con;
+                                    con.Open();
+                                    oda.SelectCommand = cmd;
+                                    oda.Fill(dt);
+                                    con.Close();
 
-                                if (inicio != _inicioPeriodo && fin != _finPeriodo)
-                                {
-                                    MessageBox.Show("Los datos a ingresar pertenecen a otro periodo. Verifique. \r\n \r\n La ventana se cerrara.", "Error");
-                                    this.Dispose();
-                                }
+                                    nombreEmpresa = dt.Columns[1].ColumnName;
+                                    idEmpresa = int.Parse(dt.Columns[3].ColumnName.ToString());
+                                    inicio = DateTime.Parse(dt.Rows[1][1].ToString());
+                                    fin = DateTime.Parse(dt.Rows[2][1].ToString());
 
-                                for (int i = 5; i < dt.Rows.Count; i++)
-                                {
-                                    dgvCargaVacaciones.Rows.Add(
-                                        dt.Rows[i][0].ToString(), //NO EMPLEADO
-                                        dt.Rows[i][1].ToString(), //NOMBRE
-                                        dt.Rows[i][2].ToString(), //PATERNO
-                                        dt.Rows[i][3].ToString(), //MATERNO
-                                        dt.Rows[i][4].ToString(), //CONCEPTO
-                                        dt.Rows[i][5].ToString(), //DIAS
-                                        dt.Rows[1][1].ToString(), //FECHA INICIO
-                                        dt.Rows[2][1].ToString(), //FECHA FIN
-                                        dt.Rows[i][6].ToString()); //FECHA INICIO VACACIONES
-                                }
+                                    if (GLOBALES.IDEMPRESA != idEmpresa)
+                                    {
+                                        MessageBox.Show("Los datos a ingresar pertenecen a otra empresa. Verifique. \r\n \r\n La ventana se cerrara.", "Error");
+                                        this.Dispose();
+                                    }
 
-                                for (int i = 0; i < dt.Columns.Count; i++)
-                                {
-                                    dgvCargaVacaciones.AutoResizeColumn(i);
+                                    if (inicio != _inicioPeriodo && fin != _finPeriodo)
+                                    {
+                                        MessageBox.Show("Los datos a ingresar pertenecen a otro periodo. Verifique. \r\n \r\n La ventana se cerrara.", "Error");
+                                        this.Dispose();
+                                    }
+
+                                    for (int i = 5; i < dt.Rows.Count; i++)
+                                    {
+                                        if (dt.Rows[i][0].ToString() != "")
+                                            dgvCargaVacaciones.Rows.Add(
+                                                dt.Rows[i][0].ToString(), //NO EMPLEADO
+                                                dt.Rows[i][1].ToString(), //CONCEPTO
+                                                dt.Rows[i][2].ToString(), //DIAS
+                                                dt.Rows[1][1].ToString(), //FECHA INICIO
+                                                dt.Rows[2][1].ToString(), //FECHA FIN
+                                                dt.Rows[i][3].ToString()); //FECHA INICIO VACACIONES
+                                    }
+
+                                    for (int i = 0; i < dgvCargaVacaciones.Columns.Count; i++)
+                                    {
+                                        dgvCargaVacaciones.AutoResizeColumn(i);
+                                    }
                                 }
                             }
                         }
                     }
+                    else
+                    {
+                        MessageBox.Show("Información:\r\n" +
+                                        "El layout elegido no corresponde al layout de vacaciones.\r\n" +
+                                        "Verifique por favor, la ventana se cerrará", "Información",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Exclamation);
+                        this.Dispose();
+                    }
+                    
                 }
                 catch (Exception error)
                 {
@@ -401,9 +412,6 @@ namespace Nominas
             {
                 switch (lstEdiciones[i].permiso.ToString())
                 {
-                    case "Crear":
-                        toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);
-                        break;
                     case "Cargar": toolCargar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);
                         break;
                     case "Aplicar": toolAplicar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);

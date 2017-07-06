@@ -433,8 +433,8 @@ namespace Nominas
             empresa.MdiParent = this;
             empresa._tipoOperacion = GLOBALES.MODIFICAR;
             empresa._idempresa = GLOBALES.IDEMPRESA;
-            empresa._lista = false;
-            empresa.WindowState = FormWindowState.Maximized;
+            empresa._lista = true;
+            empresa.StartPosition = FormStartPosition.CenterScreen;
             empresa.Show();
         }
 

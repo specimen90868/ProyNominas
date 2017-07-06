@@ -39,18 +39,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(18, 15);
+            this.label1.Location = new System.Drawing.Point(24, 18);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 13);
+            this.label1.Size = new System.Drawing.Size(61, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Periodo:";
             // 
             // cmbPeriodo
             // 
             this.cmbPeriodo.FormattingEnabled = true;
-            this.cmbPeriodo.Location = new System.Drawing.Point(70, 12);
+            this.cmbPeriodo.Location = new System.Drawing.Point(93, 15);
+            this.cmbPeriodo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbPeriodo.Name = "cmbPeriodo";
-            this.cmbPeriodo.Size = new System.Drawing.Size(121, 21);
+            this.cmbPeriodo.Size = new System.Drawing.Size(160, 24);
             this.cmbPeriodo.TabIndex = 1;
             this.cmbPeriodo.SelectedIndexChanged += new System.EventHandler(this.cmbPeriodo_SelectedIndexChanged);
             // 
@@ -58,9 +60,10 @@
             // 
             this.btnAceptar.Image = ((System.Drawing.Image)(resources.GetObject("btnAceptar.Image")));
             this.btnAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAceptar.Location = new System.Drawing.Point(35, 60);
+            this.btnAceptar.Location = new System.Drawing.Point(47, 74);
+            this.btnAceptar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(75, 34);
+            this.btnAceptar.Size = new System.Drawing.Size(100, 42);
             this.btnAceptar.TabIndex = 2;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -71,9 +74,10 @@
             // 
             this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
             this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(116, 60);
+            this.btnCancelar.Location = new System.Drawing.Point(155, 74);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(75, 34);
+            this.btnCancelar.Size = new System.Drawing.Size(100, 42);
             this.btnCancelar.TabIndex = 3;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -83,25 +87,29 @@
             // chkObraCivil
             // 
             this.chkObraCivil.AutoSize = true;
-            this.chkObraCivil.Location = new System.Drawing.Point(70, 39);
+            this.chkObraCivil.Location = new System.Drawing.Point(93, 48);
+            this.chkObraCivil.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.chkObraCivil.Name = "chkObraCivil";
-            this.chkObraCivil.Size = new System.Drawing.Size(99, 17);
+            this.chkObraCivil.Size = new System.Drawing.Size(128, 21);
             this.chkObraCivil.TabIndex = 4;
             this.chkObraCivil.Text = "Pago Obra Civil";
             this.chkObraCivil.UseVisualStyleBackColor = true;
             // 
             // frmSeleccionPeriodo
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(219, 106);
+            this.ClientSize = new System.Drawing.Size(292, 130);
             this.Controls.Add(this.chkObraCivil);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.cmbPeriodo);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(310, 177);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(310, 177);
             this.Name = "frmSeleccionPeriodo";
             this.Text = "Selección del periodo";
             this.Load += new System.EventHandler(this.frmSeleccionPeriodo_Load);

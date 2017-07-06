@@ -67,67 +67,80 @@ namespace Nominas
                             cmdOle.Connection = con;
                             con.Open();
                             DataTable dtExcelSchema = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                            sheetName = dtExcelSchema.Rows[4]["TABLE_NAME"].ToString();
+                            sheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
                             con.Close();
                         }
                     }
 
-                    using (OleDbConnection con = new OleDbConnection(conStr))
+                    if (sheetName == "Movimientos$")
                     {
-                        using (OleDbCommand cmdOle = new OleDbCommand())
+                        using (OleDbConnection con = new OleDbConnection(conStr))
                         {
-                            using (OleDbDataAdapter oda = new OleDbDataAdapter())
+                            using (OleDbCommand cmdOle = new OleDbCommand())
                             {
-                                DataTable dt = new DataTable();
-                                cmdOle.CommandText = "SELECT * From [" + sheetName + "]";
-                                cmdOle.Connection = con;
-                                con.Open();
-                                oda.SelectCommand = cmdOle;
-                                oda.Fill(dt);
-                                con.Close();
-                                cmdOle.Dispose();
-                                con.Dispose();
-
-                                nombreEmpresa = dt.Columns[1].ColumnName;
-                                idEmpresa = int.Parse(dt.Columns[3].ColumnName.ToString());
-                                inicio = DateTime.Parse(dt.Rows[1][1].ToString());
-                                fin = DateTime.Parse(dt.Rows[2][1].ToString());
-
-                                if (GLOBALES.IDEMPRESA != idEmpresa)
+                                using (OleDbDataAdapter oda = new OleDbDataAdapter())
                                 {
-                                    MessageBox.Show("Los datos a ingresar pertenecen a otra empresa. Verifique. \r\n \r\n La ventana se cerrara.", "Error");
-                                    this.Dispose();
-                                }
+                                    DataTable dt = new DataTable();
+                                    cmdOle.CommandText = "SELECT * From [" + sheetName + "]";
+                                    cmdOle.Connection = con;
+                                    con.Open();
+                                    oda.SelectCommand = cmdOle;
+                                    oda.Fill(dt);
+                                    con.Close();
+                                    cmdOle.Dispose();
+                                    con.Dispose();
 
-                                if (inicio != _inicioPeriodo && fin != _finPeriodo)
-                                {
-                                    MessageBox.Show("Los datos a ingresar pertenecen a otro periodo. Verifique. \r\n \r\n La ventana se cerrara.", "Error");
-                                    this.Dispose();
-                                }
+                                    nombreEmpresa = dt.Columns[1].ColumnName;
+                                    idEmpresa = int.Parse(dt.Columns[3].ColumnName.ToString());
+                                    //inicio = DateTime.Parse(dt.Rows[1][1].ToString());
+                                    //fin = DateTime.Parse(dt.Rows[2][1].ToString());
 
-                                for (int i = 6; i < dt.Rows.Count; i++)
-                                {
-                                    for (int j = 1; j < dt.Columns.Count; j++)
+                                    if (GLOBALES.IDEMPRESA != idEmpresa)
                                     {
-                                        if (dt.Rows[i][j].ToString() != "")
+                                        MessageBox.Show("Los datos a ingresar pertenecen a otra empresa. Verifique. \r\n \r\n La ventana se cerrara.", "Error");
+                                        this.Dispose();
+                                    }
+
+                                    //if (inicio != _inicioPeriodo && fin != _finPeriodo)
+                                    //{
+                                    //    MessageBox.Show("Los datos a ingresar pertenecen a otro periodo. Verifique. \r\n \r\n La ventana se cerrara.", "Error");
+                                    //    this.Dispose();
+                                    //}
+
+                                    for (int i = 3; i < dt.Rows.Count; i++)
+                                    {
+                                        for (int j = 1; j <= 11; j++)
                                         {
-                                            dgvMovimientos.Rows.Add(
-                                                dt.Rows[i][0].ToString(), //no empleado
-                                                dt.Rows[i][j].ToString(), //cantidad
-                                                dt.Rows[5][j].ToString(), //concepto
-                                                dt.Rows[1][1].ToString(), //fecha inicio
-                                                dt.Rows[2][1].ToString()); //fecha fin
+                                            if (dt.Rows[i][j].ToString() != "")
+                                            {
+                                                dgvMovimientos.Rows.Add(
+                                                    dt.Rows[i][0].ToString(), //no empleado
+                                                    dt.Rows[i][j].ToString(), //cantidad
+                                                    dt.Rows[2][j].ToString()); //concepto
+                                                    //dt.Rows[1][1].ToString(), //fecha inicio
+                                                    //dt.Rows[2][1].ToString()); //fecha fin
+                                            }
                                         }
                                     }
-                                }
 
-                                for (int i = 0; i < dgvMovimientos.Columns.Count; i++)
-                                {
-                                    dgvMovimientos.AutoResizeColumn(i);
+                                    for (int i = 0; i < dgvMovimientos.Columns.Count; i++)
+                                    {
+                                        dgvMovimientos.AutoResizeColumn(i);
+                                    }
                                 }
                             }
                         }
                     }
+                    else
+                    {
+                        MessageBox.Show("Información:\r\n" +
+                                        "El layout elegido no corresponde al layout de movimientos.\r\n" +
+                                        "Verifique por favor, la ventana se cerrará", "Información",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Exclamation);
+                        this.Dispose();
+                    }
+                    
                 }
                 catch (Exception error)
                 {
@@ -257,8 +270,8 @@ namespace Nominas
                 pn.idconcepto = idConcepto;
                 pn.noconcepto = lstConcepto[0].noconcepto;
                 pn.tipoconcepto = lstConcepto[0].tipoconcepto;
-                pn.fechainicio = DateTime.Parse(dgvMovimientos.Rows[0].Cells["inicio"].Value.ToString());
-                pn.fechafin = DateTime.Parse(dgvMovimientos.Rows[0].Cells["fin"].Value.ToString());
+                pn.fechainicio = _inicioPeriodo;
+                pn.fechafin = _finPeriodo;
                 pn.modificado = true;
                 pn.guardada = false;
                 pn.tiponomina = _tipoNomina;
@@ -401,8 +414,8 @@ namespace Nominas
                             pne = new CalculoNomina.Core.tmpPagoNomina();
                             pne.idempresa = GLOBALES.IDEMPRESA;
                             pne.idtrabajador = idEmpleado;
-                            pne.fechainicio = DateTime.Parse(dgvMovimientos.Rows[0].Cells["inicio"].Value.ToString());
-                            pne.fechafin = DateTime.Parse(dgvMovimientos.Rows[0].Cells["fin"].Value.ToString());
+                            pne.fechainicio = _inicioPeriodo;
+                            pne.fechafin = _finPeriodo;
                             pne.noconcepto = lstConcepto[0].noconcepto;
 
                             try
@@ -447,8 +460,8 @@ namespace Nominas
                             mov.idempresa = GLOBALES.IDEMPRESA;
                             mov.idconcepto = lstConcepto[0].id;
                             mov.cantidad = decimal.Parse(fila.Cells["cantidad"].Value.ToString());
-                            mov.fechainicio = DateTime.Parse(fila.Cells["inicio"].Value.ToString());
-                            mov.fechafin = DateTime.Parse(fila.Cells["fin"].Value.ToString());
+                            mov.fechainicio = _inicioPeriodo;
+                            mov.fechafin = _finPeriodo;
 
                             try
                             {

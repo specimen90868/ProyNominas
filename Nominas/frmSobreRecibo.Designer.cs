@@ -1203,6 +1203,8 @@
             this.lstvVacaciones.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstvVacaciones.Location = new System.Drawing.Point(0, 0);
             this.lstvVacaciones.Margin = new System.Windows.Forms.Padding(4);
+            this.lstvVacaciones.MaximumSize = new System.Drawing.Size(271, 424);
+            this.lstvVacaciones.MinimumSize = new System.Drawing.Size(271, 424);
             this.lstvVacaciones.Name = "lstvVacaciones";
             this.lstvVacaciones.Size = new System.Drawing.Size(271, 424);
             this.lstvVacaciones.TabIndex = 0;
@@ -1644,6 +1646,7 @@
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(965, 605);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(965, 605);
             this.Name = "frmSobreRecibo";
             this.Text = "Sobre-recibo";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmSobreRecibo_FormClosing);

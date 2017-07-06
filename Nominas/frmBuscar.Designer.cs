@@ -51,7 +51,7 @@
             this.txtBuscar});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(488, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(523, 27);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -106,7 +106,7 @@
             this.dgvCatalogo.Name = "dgvCatalogo";
             this.dgvCatalogo.ReadOnly = true;
             this.dgvCatalogo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCatalogo.Size = new System.Drawing.Size(488, 190);
+            this.dgvCatalogo.Size = new System.Drawing.Size(523, 176);
             this.dgvCatalogo.TabIndex = 1;
             this.dgvCatalogo.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellDoubleClick);
             // 
@@ -114,14 +114,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(488, 217);
+            this.ClientSize = new System.Drawing.Size(523, 203);
             this.Controls.Add(this.dgvCatalogo);
             this.Controls.Add(this.toolStrip1);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(506, 264);
+            this.MaximumSize = new System.Drawing.Size(541, 250);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(506, 264);
+            this.MinimumSize = new System.Drawing.Size(541, 250);
             this.Name = "frmBuscar";
             this.Text = "Buscar trabajador";
             this.Load += new System.EventHandler(this.frmBuscar_Load);
