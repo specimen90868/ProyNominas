@@ -7,9 +7,11 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using aExcel = Microsoft.Office.Interop.Excel;
 
 namespace Nominas
 {
@@ -44,8 +46,8 @@ namespace Nominas
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
-            string conStr, sheetName;
-            DateTime inicio, fin;
+            string conStr;
+            //DateTime inicio, fin;
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Title = "Seleccionar Excel";
             ofd.RestoreDirectory = false;
@@ -59,76 +61,55 @@ namespace Nominas
 
                 try
                 {
+                    aExcel.Application xlApp = new aExcel.Application();
+                    aExcel.Workbook xlWorkbook = xlApp.Workbooks.Open(ruta);
+                    aExcel._Worksheet xlWorkSheet = xlWorkbook.Sheets[1];
+                    aExcel.Range xlRange = xlWorkSheet.UsedRange;
+                    String nombreHoja = xlWorkSheet.Name;
 
-                    using (OleDbConnection con = new OleDbConnection(conStr))
+                    if (nombreHoja.Equals("Movimientos"))
                     {
-                        using (OleDbCommand cmdOle = new OleDbCommand())
+                        int rowCount = xlRange.Rows.Count;
+                        int colCount = 12;
+
+                        var ie = xlRange.Cells[1,4].Value2;
+                        idEmpresa = int.Parse(ie.ToString());
+                        if (GLOBALES.IDEMPRESA != idEmpresa)
                         {
-                            cmdOle.Connection = con;
-                            con.Open();
-                            DataTable dtExcelSchema = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                            sheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
-                            con.Close();
+                            MessageBox.Show("Información:\r\n" + 
+                                            "Los datos a ingresar pertenecen a otra empresa. Verifique. \r\n \r\n La ventana se cerrara.", 
+                                            "Información",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Warning);
+                            this.Dispose();
                         }
-                    }
 
-                    if (sheetName == "Movimientos$")
-                    {
-                        using (OleDbConnection con = new OleDbConnection(conStr))
+                        for (int i = 5; i < rowCount; i++)
                         {
-                            using (OleDbCommand cmdOle = new OleDbCommand())
+                            for (int j = 2; j < colCount; j++)
                             {
-                                using (OleDbDataAdapter oda = new OleDbDataAdapter())
+                                if (xlRange.Cells[i, j].Value != null)
                                 {
-                                    DataTable dt = new DataTable();
-                                    cmdOle.CommandText = "SELECT * From [" + sheetName + "]";
-                                    cmdOle.Connection = con;
-                                    con.Open();
-                                    oda.SelectCommand = cmdOle;
-                                    oda.Fill(dt);
-                                    con.Close();
-                                    cmdOle.Dispose();
-                                    con.Dispose();
-
-                                    nombreEmpresa = dt.Columns[1].ColumnName;
-                                    idEmpresa = int.Parse(dt.Columns[3].ColumnName.ToString());
-                                    //inicio = DateTime.Parse(dt.Rows[1][1].ToString());
-                                    //fin = DateTime.Parse(dt.Rows[2][1].ToString());
-
-                                    if (GLOBALES.IDEMPRESA != idEmpresa)
-                                    {
-                                        MessageBox.Show("Los datos a ingresar pertenecen a otra empresa. Verifique. \r\n \r\n La ventana se cerrara.", "Error");
-                                        this.Dispose();
-                                    }
-
-                                    //if (inicio != _inicioPeriodo && fin != _finPeriodo)
-                                    //{
-                                    //    MessageBox.Show("Los datos a ingresar pertenecen a otro periodo. Verifique. \r\n \r\n La ventana se cerrara.", "Error");
-                                    //    this.Dispose();
-                                    //}
-
-                                    for (int i = 3; i < dt.Rows.Count; i++)
-                                    {
-                                        for (int j = 1; j <= 11; j++)
-                                        {
-                                            if (dt.Rows[i][j].ToString() != "")
-                                            {
-                                                dgvMovimientos.Rows.Add(
-                                                    dt.Rows[i][0].ToString(), //no empleado
-                                                    dt.Rows[i][j].ToString(), //cantidad
-                                                    dt.Rows[2][j].ToString()); //concepto
-                                                    //dt.Rows[1][1].ToString(), //fecha inicio
-                                                    //dt.Rows[2][1].ToString()); //fecha fin
-                                            }
-                                        }
-                                    }
-
-                                    for (int i = 0; i < dgvMovimientos.Columns.Count; i++)
-                                    {
-                                        dgvMovimientos.AutoResizeColumn(i);
-                                    }
+                                    dgvMovimientos.Rows.Add(
+                                        xlRange.Cells[i, 1].Value, //no empleado
+                                        xlRange.Cells[i, j].Value, //cantidad
+                                        xlRange.Cells[4, j].Value); //concepto
                                 }
                             }
+                        }
+
+                        Marshal.ReleaseComObject(xlRange);
+                        Marshal.ReleaseComObject(xlWorkSheet);
+
+                        xlWorkbook.Close();
+                        Marshal.ReleaseComObject(xlWorkbook);
+
+                        xlApp.Quit();
+                        Marshal.ReleaseComObject(xlApp);
+
+                        for (int i = 0; i < dgvMovimientos.Columns.Count; i++)
+                        {
+                            dgvMovimientos.AutoResizeColumn(i);
                         }
                     }
                     else
@@ -139,8 +120,7 @@ namespace Nominas
                                         MessageBoxButtons.OK,
                                         MessageBoxIcon.Exclamation);
                         this.Dispose();
-                    }
-                    
+                    } 
                 }
                 catch (Exception error)
                 {
