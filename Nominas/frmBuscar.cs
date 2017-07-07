@@ -60,7 +60,7 @@ namespace Nominas
 
         private void txtBuscar_Leave(object sender, EventArgs e)
         {
-            txtBuscar.Text = "Buscar empleado...";
+            txtBuscar.Text = "No. de empleado...";
             txtBuscar.Font = new Font("Segoe UI", 9, FontStyle.Italic);
             txtBuscar.ForeColor = System.Drawing.Color.Gray;
         }

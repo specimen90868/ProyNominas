@@ -2159,7 +2159,7 @@ namespace Nominas
 
         private void btnGuardarVP_Click(object sender, EventArgs e)
         {
-             cnx = new SqlConnection(cdn);
+            cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
 
@@ -2303,16 +2303,16 @@ namespace Nominas
                         return;
                     }
 
-                    int diasPagoReales = int.Parse(txtDiasPagoPV.Text) + existeFaltas + existeIncapacidad;
-                    if (diasPagoReales > _periodo)
-                    {
-                        diasPagoReales = _periodo - existeFaltas - existeIncapacidad;
-                        MessageBox.Show("Existen faltas del trabajador, se ajustaron las vacaciones a: " + diasPagoReales.ToString() + " dia(s).", "Información");
-                    }
-                    else
-                    {
-                        diasPagoReales = int.Parse(txtDiasPagoPV.Text);
-                    }
+                    //int diasPagoReales = int.Parse(txtDiasPagoPV.Text) + existeFaltas + existeIncapacidad;
+                    //if (diasPagoReales > _periodo)
+                    //{
+                    //    diasPagoReales = _periodo - existeFaltas - existeIncapacidad;
+                    //    MessageBox.Show("Existen faltas del trabajador, se ajustaron las vacaciones a: " + diasPagoReales.ToString() + " dia(s).", "Información");
+                    //}
+                    //else
+                    //{
+                    //    diasPagoReales = int.Parse(txtDiasPagoPV.Text);
+                    //}
 
                     vp = new Vacaciones.Core.VacacionesPrima();
                     vp.idtrabajador = idTrabajador;
@@ -2320,8 +2320,8 @@ namespace Nominas
                     vp.periodoinicio = _inicioPeriodo;
                     vp.periodofin = _finPeriodo;
                     vp.diasderecho = dias;
-                    vp.diaspago = diasPagoReales;
-                    vp.diaspendientes = dias - diasPagoReales;
+                    vp.diaspago = int.Parse(txtDiasPagoPV.Text);
+                    vp.diaspendientes = 0;
                     vp.fechapago = DateTime.Now.Date;
                     vp.fechainicio = DateTime.Now.Date;
                     vp.fechafin = DateTime.Now.Date;
@@ -2340,6 +2340,7 @@ namespace Nominas
                         return;
                     }
 
+                    int diasPagoReales = 0;
                     diasPagoReales = int.Parse(txtDiasPagoV.Text) + existeFaltas + existeIncapacidad;
                     if (diasPagoReales > _periodo)
                     {
@@ -2450,16 +2451,16 @@ namespace Nominas
                         return;
                     }
 
-                    int diasPagoReales = int.Parse(txtDiasPagoPV.Text) + existeFaltas + existeIncapacidad;
-                    if (diasPagoReales > _periodo)
-                    {
-                        diasPagoReales = _periodo - existeFaltas - existeIncapacidad;
-                        MessageBox.Show("Existen faltas del trabajador, se ajustaron las vacaciones a: " + diasPagoReales.ToString() + " dia(s).", "Información");
-                    }
-                    else
-                    {
-                        diasPagoReales = int.Parse(txtDiasPagoPV.Text);
-                    }
+                    //int diasPagoReales = int.Parse(txtDiasPagoPV.Text) + existeFaltas + existeIncapacidad;
+                    //if (diasPagoReales > _periodo)
+                    //{
+                    //    diasPagoReales = _periodo - existeFaltas - existeIncapacidad;
+                    //    MessageBox.Show("Existen faltas del trabajador, se ajustaron las vacaciones a: " + diasPagoReales.ToString() + " dia(s).", "Información");
+                    //}
+                    //else
+                    //{
+                    //    diasPagoReales = int.Parse(txtDiasPagoPV.Text);
+                    //}
 
                     vp = new Vacaciones.Core.VacacionesPrima();
                     vp.idtrabajador = idTrabajador;
@@ -2467,8 +2468,8 @@ namespace Nominas
                     vp.periodoinicio = _inicioPeriodo;
                     vp.periodofin = _finPeriodo;
                     vp.diasderecho = dias;
-                    vp.diaspago = diasPagoReales;
-                    vp.diaspendientes = dias - diasPagoReales;
+                    vp.diaspago = int.Parse(txtDiasPagoPV.Text);
+                    vp.diaspendientes = 0;
                     vp.fechapago = DateTime.Now.Date;
                     vp.fechainicio = DateTime.Now.Date;
                     vp.fechafin = DateTime.Now.Date;
