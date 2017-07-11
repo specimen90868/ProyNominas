@@ -217,14 +217,15 @@ namespace Empleados.Core
             return lstEmpleados;
         }
 
-        public List<CatalogoEmpleado> obtenerEmpleados(int idEmpresa, string criterio, string tipocriterio)
+        public List<CatalogoEmpleado> obtenerEmpleados(int idEmpresa, string nombre, string paterno, string materno)
         {
             DataTable dtEmpleados = new DataTable();
             List<CatalogoEmpleado> lstEmpleados = new List<CatalogoEmpleado>();
-            Command.CommandText = @"exec stp_Empleados @idempresa, @criterio, @tipocriterio";
+            Command.CommandText = @"exec stp_Empleados @idempresa, @nombre, @paterno, @materno";
             Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("tipocriterio", tipocriterio);
-            Command.Parameters.AddWithValue("criterio", criterio);
+            Command.Parameters.AddWithValue("nombre", nombre);
+            Command.Parameters.AddWithValue("paterno", paterno);
+            Command.Parameters.AddWithValue("materno", materno);
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             dtEmpleados = SelectData(Command);
 

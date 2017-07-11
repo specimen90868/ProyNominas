@@ -1442,7 +1442,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(iif(Fields!cfdiTipoConcepto.Value = "P", Fields!cfdiCantidad.Value, 0)) + Sum(Iif(Fields!cfdiNoConcepto.Value=16,Fields!cfdiCantidad.Value,0))</Value>
+                                            <Value>=Sum(iif(Fields!cfdiTipoConcepto.Value = "P", Fields!cfdiCantidad.Value, 0)) + Sum(Iif(Fields!cfdiTipoConcepto.Value = "S",Fields!cfdiCantidad.Value,0))</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
                                               <FontSize>5pt</FontSize>
@@ -1494,6 +1494,9 @@
                             <TablixMembers>
                               <TablixMember />
                             </TablixMembers>
+                            <Visibility>
+                              <Hidden>=Fields!cfdiTipoConcepto.Value = "S"</Hidden>
+                            </Visibility>
                           </TablixMember>
                           <TablixMember>
                             <KeepWithGroup>Before</KeepWithGroup>
@@ -1504,9 +1507,10 @@
                       <Filters>
                         <Filter>
                           <FilterExpression>=Fields!cfdiTipoConcepto.Value</FilterExpression>
-                          <Operator>Equal</Operator>
+                          <Operator>In</Operator>
                           <FilterValues>
                             <FilterValue>P</FilterValue>
+                            <FilterValue>S</FilterValue>
                           </FilterValues>
                         </Filter>
                         <Filter>
@@ -1518,6 +1522,9 @@
                         </Filter>
                       </Filters>
                       <ZIndex>3</ZIndex>
+                      <Visibility>
+                        <Hidden>=Fields!cfdiTipoConcepto.Value = "S"</Hidden>
+                      </Visibility>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -1911,6 +1918,7 @@
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
                                               <FontSize>5pt</FontSize>
+                                              <FontWeight>Bold</FontWeight>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
@@ -2172,7 +2180,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>Neto del recibo$</Value>
+                                            <Value>Neto del recibo $</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
                                               <FontSize>5pt</FontSize>
@@ -5174,7 +5182,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(iif(Fields!cfdiTipoConcepto.Value = "P", Fields!cfdiCantidad.Value, 0)) + Sum(Iif(Fields!cfdiNoConcepto.Value =16,Fields!cfdiCantidad.Value,0))</Value>
+                                            <Value>=Sum(iif(Fields!cfdiTipoConcepto.Value = "P", Fields!cfdiCantidad.Value, 0)) + Sum(Iif(Fields!cfdiTipoConcepto.Value = "S",Fields!cfdiCantidad.Value,0))</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
                                               <FontSize>5pt</FontSize>
@@ -5197,7 +5205,6 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                       <PaddingBottom>2pt</PaddingBottom>
                                     </Style>
                                   </Textbox>
-                                  <rd:Selected>true</rd:Selected>
                                 </CellContents>
                               </TablixCell>
                             </TablixCells>
@@ -5227,6 +5234,9 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TablixMembers>
                               <TablixMember />
                             </TablixMembers>
+                            <Visibility>
+                              <Hidden>=Fields!cfdiTipoConcepto.Value = "S"</Hidden>
+                            </Visibility>
                           </TablixMember>
                           <TablixMember>
                             <KeepWithGroup>Before</KeepWithGroup>
@@ -5237,9 +5247,10 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <Filters>
                         <Filter>
                           <FilterExpression>=Fields!cfdiTipoConcepto.Value</FilterExpression>
-                          <Operator>Equal</Operator>
+                          <Operator>In</Operator>
                           <FilterValues>
                             <FilterValue>P</FilterValue>
+                            <FilterValue>S</FilterValue>
                           </FilterValues>
                         </Filter>
                         <Filter>
@@ -5251,6 +5262,9 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                         </Filter>
                       </Filters>
                       <ZIndex>3</ZIndex>
+                      <Visibility>
+                        <Hidden>=Fields!cfdiTipoConcepto.Value = "S"</Hidden>
+                      </Visibility>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -5644,6 +5658,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
                                               <FontSize>5pt</FontSize>
+                                              <FontWeight>Bold</FontWeight>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
@@ -5905,7 +5920,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>Neto del recibo$</Value>
+                                            <Value>Neto del recibo $</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
                                               <FontSize>5pt</FontSize>

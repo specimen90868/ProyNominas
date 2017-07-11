@@ -498,6 +498,9 @@
           <TablixMembers>
             <TablixMember>
               <Group Name="Details" />
+              <Visibility>
+                <Hidden>=Fields!CaratulaTipoConcepto.Value = "S"</Hidden>
+              </Visibility>
             </TablixMember>
             <TablixMember>
               <KeepWithGroup>Before</KeepWithGroup>
@@ -511,9 +514,10 @@
         <Filters>
           <Filter>
             <FilterExpression>=Fields!CaratulaTipoConcepto.Value</FilterExpression>
-            <Operator>Equal</Operator>
+            <Operator>In</Operator>
             <FilterValues>
               <FilterValue>P</FilterValue>
+              <FilterValue>S</FilterValue>
             </FilterValues>
           </Filter>
           <Filter>
@@ -848,7 +852,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>

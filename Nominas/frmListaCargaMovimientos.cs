@@ -290,8 +290,8 @@ namespace Nominas
                         }
                         else {
                             CalculoFormula cf = new CalculoFormula(idEmpleado,
-                                DateTime.Parse(dgvMovimientos.Rows[0].Cells["inicio"].Value.ToString()),
-                                DateTime.Parse(dgvMovimientos.Rows[0].Cells["fin"].Value.ToString()),
+                                _inicioPeriodo,
+                                _finPeriodo,
                                 formulaexento);
 
                             decimal exento = decimal.Parse(cf.calcularFormula().ToString());
@@ -316,8 +316,8 @@ namespace Nominas
                         pne = new CalculoNomina.Core.tmpPagoNomina();
                         pne.idempresa = GLOBALES.IDEMPRESA;
                         pne.idtrabajador = idEmpleado;
-                        pne.fechainicio = DateTime.Parse(dgvMovimientos.Rows[0].Cells["inicio"].Value.ToString());
-                        pne.fechafin = DateTime.Parse(dgvMovimientos.Rows[0].Cells["fin"].Value.ToString());
+                        pne.fechainicio = _inicioPeriodo;
+                        pne.fechafin = _finPeriodo;
                         pne.noconcepto = lstConcepto[0].noconcepto;
 
                         try

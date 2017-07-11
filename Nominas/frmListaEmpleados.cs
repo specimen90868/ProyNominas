@@ -34,11 +34,11 @@ namespace Nominas
         private void frmListaEmpleados_Load(object sender, EventArgs e) 
         {
             dgvEmpleados.RowHeadersVisible = false;
-            ListaEmpleados("", 0, "T");
+            ListaEmpleados("", 0, "T", "", "", "");
             CargaPerfil(GLOBALES.ACTIVO, "Empleados de nómina");
         }
 
-        private void ListaEmpleados(string criterio, int indice, string tipocriterio)
+        private void ListaEmpleados(string criterio, int indice, string tipocriterio, string nombre, string paterno, string materno)
         {
             string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
             cnx = new SqlConnection(cdn);
@@ -56,7 +56,7 @@ namespace Nominas
                 if (tipocriterio == "T")
                     lstEmpleados = eh.obtenerEmpleados(GLOBALES.IDEMPRESA, criterio, indice);
                 else
-                    lstEmpleados = eh.obtenerEmpleados(GLOBALES.IDEMPRESA, criterio, tipocriterio);
+                    lstEmpleados = eh.obtenerEmpleados(GLOBALES.IDEMPRESA, nombre, paterno, materno);
                 cnx.Close();
                 cnx.Dispose();
 
@@ -147,7 +147,7 @@ namespace Nominas
         void e_OnNuevoEmpleado(int edicion)
         {
             if (edicion == GLOBALES.NUEVO || edicion == GLOBALES.MODIFICAR)
-                ListaEmpleados("", 0, "T");
+                ListaEmpleados("", 0, "T", "", "", "");
         }
 
         private void dgvEmpleados_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -186,7 +186,7 @@ namespace Nominas
 
         void isal_OnIncrementoSalarial()
         {
-            ListaEmpleados("", 0, "T");
+            ListaEmpleados("", 0, "T", "", "", "");
         }
 
         private void toolHistorial_Click(object sender, EventArgs e)
@@ -243,7 +243,7 @@ namespace Nominas
                     eh.eliminarEmpleado(empleado);
                     cnx.Close();
                     cnx.Dispose();
-                    ListaEmpleados("", 0, "T");
+                    ListaEmpleados("", 0, "T", "", "", "");
                 }
                 catch (Exception error)
                 {
@@ -257,13 +257,13 @@ namespace Nominas
         void b_OnBajaEmpleado(int baja)
         {
             _empleadoAltaBaja = baja;
-            ListaEmpleados("", 0, "T");
+            ListaEmpleados("", 0, "T", "", "", "");
         }
 
         void r_OnReingreso(int edicion)
         {
             if (edicion == GLOBALES.NUEVO)
-                ListaEmpleados("", 0, "T");
+                ListaEmpleados("", 0, "T", "", "", "");
         }
 
         private void toolExportar_Click(object sender, EventArgs e)
@@ -275,7 +275,7 @@ namespace Nominas
         {
             dgvEmpleados.DataSource = null;
             dgvEmpleados.RowHeadersVisible = false;
-            ListaEmpleados("", 0, "T");
+            ListaEmpleados("", 0, "T", "", "", "");
         }
 
         private void toolCatNomina_Click(object sender, EventArgs e)
@@ -467,7 +467,7 @@ namespace Nominas
             int indice = int.Parse(dgvEmpleados.Rows[0].Cells[0].Value.ToString());
             if (indice != 1)
             {
-                ListaEmpleados("", (indice - 101), "T");
+                ListaEmpleados("", (indice - 101), "T", "", "", "");
             }
             else
             {
@@ -486,7 +486,7 @@ namespace Nominas
             if (tamGrid == 100)
             {
                 indice = int.Parse(dgvEmpleados.Rows[99].Cells[0].Value.ToString());
-                ListaEmpleados("", indice, "T");
+                ListaEmpleados("", indice, "T", "", "", "");
             }
             else if (tamGrid < 100)
                 toolAdelante.Enabled = false;
@@ -499,29 +499,29 @@ namespace Nominas
 
         private void txtPaterno_Click(object sender, EventArgs e)
         {
-            txtPaterno.Clear();
+            //txtPaterno.Clear();
         }
 
         private void txtMaterno_Click(object sender, EventArgs e)
         {
-            txtMaterno.Clear();
+            //txtMaterno.Clear();
         }
 
         private void txtNombre_Click(object sender, EventArgs e)
         {
-            txtNombre.Clear();
+            //txtNombre.Clear();
         }
 
         private void toolMostrarTodos_Click(object sender, EventArgs e)
         {
-            ListaEmpleados("", 0, "T");
+            ListaEmpleados("", 0, "T", "", "", "");
         }
 
         private void txtNoEmpleado_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)System.Windows.Forms.Keys.Enter)
             {
-                ListaEmpleados(txtNoEmpleado.Text, 0, "T");
+                ListaEmpleados(txtNoEmpleado.Text, 0, "T", "", "", "");
             }
         }
 
@@ -529,7 +529,7 @@ namespace Nominas
         {
             if (e.KeyChar == (char)System.Windows.Forms.Keys.Enter)
             {
-                ListaEmpleados(txtPaterno.Text, 0, "P");
+                ListaEmpleados(txtPaterno.Text, 0, "P", txtNombre.Text, txtPaterno.Text, txtMaterno.Text);
             }
         }
 
@@ -537,7 +537,7 @@ namespace Nominas
         {
             if (e.KeyChar == (char)System.Windows.Forms.Keys.Enter)
             {
-                ListaEmpleados(txtMaterno.Text, 0, "M");
+                ListaEmpleados(txtMaterno.Text, 0, "M", txtNombre.Text, txtPaterno.Text, txtMaterno.Text);
             }
         }
 
@@ -545,7 +545,7 @@ namespace Nominas
         {
             if (e.KeyChar == (char)System.Windows.Forms.Keys.Enter)
             {
-                ListaEmpleados(txtNombre.Text, 0, "N");
+                ListaEmpleados(txtNombre.Text, 0, "N", txtNombre.Text, txtPaterno.Text, txtMaterno.Text);
             }
         }
 
@@ -561,7 +561,8 @@ namespace Nominas
 
         private void txtNoEmpleado_ReadOnlyChanged(object sender, EventArgs e)
         {
-            txtNoEmpleado.Text = "NO. DE EMPLEADO...";
+            
+            //txtNoEmpleado.Text = "NO. DE EMPLEADO...";
         }
 
         private void txtPaterno_MouseEnter(object sender, EventArgs e)
@@ -576,7 +577,7 @@ namespace Nominas
 
         private void txtPaterno_ReadOnlyChanged(object sender, EventArgs e)
         {
-            txtPaterno.Text = "PATERNO...";
+            //txtPaterno.Text = "PATERNO...";
         }
 
         private void txtMaterno_MouseEnter(object sender, EventArgs e)
@@ -591,7 +592,7 @@ namespace Nominas
 
         private void txtMaterno_ReadOnlyChanged(object sender, EventArgs e)
         {
-            txtMaterno.Text = "MATERNO...";
+            //txtMaterno.Text = "MATERNO...";
         }
 
         private void txtNombre_MouseEnter(object sender, EventArgs e)
@@ -606,7 +607,7 @@ namespace Nominas
 
         private void txtNombre_ReadOnlyChanged(object sender, EventArgs e)
         {
-            txtNombre.Text = "NOMBRE(S)...";
+            //txtNombre.Text = "NOMBRE(S)...";
         }
     }
 }

@@ -393,6 +393,9 @@
                         <TablixMembers>
                           <TablixMember>
                             <Group Name="Details" />
+                            <Visibility>
+                              <Hidden>=Fields!tipoconcepto.Value = "S"</Hidden>
+                            </Visibility>
                           </TablixMember>
                           <TablixMember>
                             <KeepWithGroup>Before</KeepWithGroup>
@@ -403,9 +406,10 @@
                       <Filters>
                         <Filter>
                           <FilterExpression>=Fields!tipoconcepto.Value</FilterExpression>
-                          <Operator>Equal</Operator>
+                          <Operator>In</Operator>
                           <FilterValues>
                             <FilterValue>P</FilterValue>
+                            <FilterValue>S</FilterValue>
                           </FilterValues>
                         </Filter>
                         <Filter>
@@ -416,6 +420,9 @@
                           </FilterValues>
                         </Filter>
                       </Filters>
+                      <Visibility>
+                        <Hidden>=Fields!tipoconcepto.Value = "S"</Hidden>
+                      </Visibility>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -1063,7 +1070,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(IIF(Fields!tipoconcepto.Value="P",Fields!cantidad.Value,0)) + Sum(IIF(Fields!noconcepto.Value = 16, Fields!cantidad.Value, 0)) - sum(iif(Fields!tipoconcepto.Value="D",Fields!cantidad.Value,0))</Value>
+                                            <Value>=Sum(IIF(Fields!tipoconcepto.Value="P",Fields!cantidad.Value,0)) + Sum(IIF(Fields!tipoconcepto.Value = "S", Fields!cantidad.Value, 0)) - sum(iif(Fields!tipoconcepto.Value="D",Fields!cantidad.Value,0))</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
@@ -1087,7 +1094,6 @@
                                       <PaddingBottom>2pt</PaddingBottom>
                                     </Style>
                                   </Textbox>
-                                  <rd:Selected>true</rd:Selected>
                                 </CellContents>
                               </TablixCell>
                             </TablixCells>

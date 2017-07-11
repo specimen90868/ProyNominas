@@ -453,7 +453,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(Fields!cantidad.Value) + Sum(IIF(Fields!tipoconcepto.Value = "S", Fields!cantidad.Value,0))</Value>
+                                            <Value>=Sum(iif(Fields!tipoconcepto.Value = "P",Fields!cantidad.Value,0)) + Sum(IIF(Fields!tipoconcepto.Value = "S", Fields!cantidad.Value,0))</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
@@ -494,6 +494,9 @@
                         <TablixMembers>
                           <TablixMember>
                             <Group Name="Details" />
+                            <Visibility>
+                              <Hidden>=Fields!tipoconcepto.Value = "S"</Hidden>
+                            </Visibility>
                           </TablixMember>
                           <TablixMember>
                             <KeepWithGroup>Before</KeepWithGroup>
@@ -507,9 +510,10 @@
                       <Filters>
                         <Filter>
                           <FilterExpression>=Fields!tipoconcepto.Value</FilterExpression>
-                          <Operator>Equal</Operator>
+                          <Operator>In</Operator>
                           <FilterValues>
                             <FilterValue>P</FilterValue>
+                            <FilterValue>S</FilterValue>
                           </FilterValues>
                         </Filter>
                         <Filter>
@@ -520,6 +524,9 @@
                           </FilterValues>
                         </Filter>
                       </Filters>
+                      <Visibility>
+                        <Hidden>=Fields!tipoconcepto.Value = "S"</Hidden>
+                      </Visibility>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -1537,9 +1544,10 @@
                       <Filters>
                         <Filter>
                           <FilterExpression>=Fields!tipoconcepto.Value</FilterExpression>
-                          <Operator>Equal</Operator>
+                          <Operator>In</Operator>
                           <FilterValues>
                             <FilterValue>P</FilterValue>
+                            <FilterValue>S</FilterValue>
                           </FilterValues>
                         </Filter>
                         <Filter>
@@ -1551,6 +1559,9 @@
                         </Filter>
                       </Filters>
                       <ZIndex>8</ZIndex>
+                      <Visibility>
+                        <Hidden>=Fields!tipoconcepto.Value = "S"</Hidden>
+                      </Visibility>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -2098,7 +2109,6 @@
                                       <PaddingBottom>2pt</PaddingBottom>
                                     </Style>
                                   </Textbox>
-                                  <rd:Selected>true</rd:Selected>
                                 </CellContents>
                               </TablixCell>
                             </TablixCells>
@@ -2795,7 +2805,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!CaratulaImporte.Value)</Value>
+                              <Value>=Sum(iif(Fields!CaratulaTipoConcepto.Value = "P",Fields!CaratulaImporte, 0)) + sum(iif(Fields!CaratulaTipoConcepto.Value = "S", Fields!CaratulaImporte,0))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -2836,6 +2846,9 @@
           <TablixMembers>
             <TablixMember>
               <Group Name="Details2" />
+              <Visibility>
+                <Hidden>=Fields!CaratulaTipoConcepto.Value = "S"</Hidden>
+              </Visibility>
             </TablixMember>
             <TablixMember>
               <KeepWithGroup>Before</KeepWithGroup>
@@ -2849,9 +2862,10 @@
         <Filters>
           <Filter>
             <FilterExpression>=Fields!CaratulaTipoConcepto.Value</FilterExpression>
-            <Operator>Equal</Operator>
+            <Operator>In</Operator>
             <FilterValues>
               <FilterValue>P</FilterValue>
+              <FilterValue>S</FilterValue>
             </FilterValues>
           </Filter>
         </Filters>
@@ -2860,6 +2874,9 @@
         <Height>1.8cm</Height>
         <Width>7.81813cm</Width>
         <ZIndex>1</ZIndex>
+        <Visibility>
+          <Hidden>=Fields!CaratulaTipoConcepto.Value = "S"</Hidden>
+        </Visibility>
         <Style>
           <Border>
             <Style>None</Style>
@@ -3155,7 +3172,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!CaratulaImporte.Value) - sum(Iif(Fields!CaratulaNoConcepto.Value = 16, Fields!CaratulaImporte.Value,0))</Value>
+                              <Value>=sum(Iif(Fields!CaratulaTipoConcepto.Value = "D", Fields!CaratulaImporte.Value,0))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -3267,7 +3284,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Sum(IIF(Fields!CaratulaTipoConcepto.Value="P", Fields!CaratulaImporte.Value, 0), "dsReporteNominaGeneral") + Sum(IIF(Fields!CaratulaNoConcepto.Value=16, Fields!CaratulaImporte.Value, 0), "dsReporteNominaGeneral") - (Sum(IIF(Fields!CaratulaTipoConcepto.Value="D", Fields!CaratulaImporte.Value, 0), "dsReporteNominaGeneral") - Sum(IIF(Fields!CaratulaNoConcepto.Value=16, Fields!CaratulaImporte.Value, 0), "dsReporteNominaGeneral"))</Value>
+                <Value>=Sum(IIF(Fields!CaratulaTipoConcepto.Value="P", Fields!CaratulaImporte.Value, 0), "dsReporteNominaGeneral") + Sum(IIF(Fields!CaratulaTipoConcepto.Value = "S", Fields!CaratulaImporte.Value, 0), "dsReporteNominaGeneral") - Sum(IIF(Fields!CaratulaTipoConcepto.Value="D", Fields!CaratulaImporte.Value, 0), "dsReporteNominaGeneral")</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>

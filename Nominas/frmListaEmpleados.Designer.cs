@@ -60,6 +60,10 @@
             this.txtNombre = new System.Windows.Forms.ToolStripTextBox();
             this.toolMostrarTodos = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvEmpleados = new System.Windows.Forms.DataGridView();
+            this.toolNoEmpleado = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolPaterno = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolMaterno = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolNombre = new System.Windows.Forms.ToolStripMenuItem();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).BeginInit();
             this.SuspendLayout();
@@ -85,7 +89,7 @@
             this.toolBuscar});
             this.toolBusqueda.Location = new System.Drawing.Point(0, 0);
             this.toolBusqueda.Name = "toolBusqueda";
-            this.toolBusqueda.Size = new System.Drawing.Size(2007, 27);
+            this.toolBusqueda.Size = new System.Drawing.Size(1914, 27);
             this.toolBusqueda.TabIndex = 3;
             this.toolBusqueda.Text = "ToolStrip1";
             this.toolBusqueda.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolBusqueda_ItemClicked);
@@ -288,9 +292,13 @@
             // toolBuscar
             // 
             this.toolBuscar.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolNoEmpleado,
             this.txtNoEmpleado,
+            this.toolPaterno,
             this.txtPaterno,
+            this.toolMaterno,
             this.txtMaterno,
+            this.toolNombre,
             this.txtNombre,
             this.toolMostrarTodos});
             this.toolBuscar.Image = ((System.Drawing.Image)(resources.GetObject("toolBuscar.Image")));
@@ -306,7 +314,6 @@
             this.txtNoEmpleado.Name = "txtNoEmpleado";
             this.txtNoEmpleado.ReadOnly = true;
             this.txtNoEmpleado.Size = new System.Drawing.Size(150, 27);
-            this.txtNoEmpleado.Text = "NO. DE EMPLEADO...";
             this.txtNoEmpleado.ReadOnlyChanged += new System.EventHandler(this.txtNoEmpleado_ReadOnlyChanged);
             this.txtNoEmpleado.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNoEmpleado_KeyPress);
             this.txtNoEmpleado.Click += new System.EventHandler(this.txtNoEmpleado_Click);
@@ -320,7 +327,6 @@
             this.txtPaterno.Name = "txtPaterno";
             this.txtPaterno.ReadOnly = true;
             this.txtPaterno.Size = new System.Drawing.Size(150, 27);
-            this.txtPaterno.Text = "PATERNO...";
             this.txtPaterno.ReadOnlyChanged += new System.EventHandler(this.txtPaterno_ReadOnlyChanged);
             this.txtPaterno.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPaterno_KeyPress);
             this.txtPaterno.Click += new System.EventHandler(this.txtPaterno_Click);
@@ -334,7 +340,6 @@
             this.txtMaterno.Name = "txtMaterno";
             this.txtMaterno.ReadOnly = true;
             this.txtMaterno.Size = new System.Drawing.Size(150, 27);
-            this.txtMaterno.Text = "MATERNO...";
             this.txtMaterno.ReadOnlyChanged += new System.EventHandler(this.txtMaterno_ReadOnlyChanged);
             this.txtMaterno.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtMaterno_KeyPress);
             this.txtMaterno.Click += new System.EventHandler(this.txtMaterno_Click);
@@ -348,7 +353,6 @@
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.ReadOnly = true;
             this.txtNombre.Size = new System.Drawing.Size(150, 27);
-            this.txtNombre.Text = "NOMBRE(S)...";
             this.txtNombre.ReadOnlyChanged += new System.EventHandler(this.txtNombre_ReadOnlyChanged);
             this.txtNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNombre_KeyPress);
             this.txtNombre.Click += new System.EventHandler(this.txtNombre_Click);
@@ -373,15 +377,39 @@
             this.dgvEmpleados.Name = "dgvEmpleados";
             this.dgvEmpleados.ReadOnly = true;
             this.dgvEmpleados.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvEmpleados.Size = new System.Drawing.Size(2007, 864);
+            this.dgvEmpleados.Size = new System.Drawing.Size(1914, 864);
             this.dgvEmpleados.TabIndex = 5;
             this.dgvEmpleados.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellDoubleClick);
+            // 
+            // toolNoEmpleado
+            // 
+            this.toolNoEmpleado.Name = "toolNoEmpleado";
+            this.toolNoEmpleado.Size = new System.Drawing.Size(216, 26);
+            this.toolNoEmpleado.Text = "No. de empleado:";
+            // 
+            // toolPaterno
+            // 
+            this.toolPaterno.Name = "toolPaterno";
+            this.toolPaterno.Size = new System.Drawing.Size(216, 26);
+            this.toolPaterno.Text = "Ap. paterno:";
+            // 
+            // toolMaterno
+            // 
+            this.toolMaterno.Name = "toolMaterno";
+            this.toolMaterno.Size = new System.Drawing.Size(216, 26);
+            this.toolMaterno.Text = "Ap. Materno:";
+            // 
+            // toolNombre
+            // 
+            this.toolNombre.Name = "toolNombre";
+            this.toolNombre.Size = new System.Drawing.Size(216, 26);
+            this.toolNombre.Text = "Nombre(s):";
             // 
             // frmListaEmpleados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2007, 891);
+            this.ClientSize = new System.Drawing.Size(1914, 891);
             this.Controls.Add(this.dgvEmpleados);
             this.Controls.Add(this.toolBusqueda);
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -430,5 +458,9 @@
         private System.Windows.Forms.ToolStripTextBox txtMaterno;
         private System.Windows.Forms.ToolStripTextBox txtNombre;
         private System.Windows.Forms.ToolStripMenuItem toolMostrarTodos;
+        private System.Windows.Forms.ToolStripMenuItem toolNoEmpleado;
+        private System.Windows.Forms.ToolStripMenuItem toolPaterno;
+        private System.Windows.Forms.ToolStripMenuItem toolMaterno;
+        private System.Windows.Forms.ToolStripMenuItem toolNombre;
     }
 }
