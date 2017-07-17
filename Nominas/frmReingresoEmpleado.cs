@@ -125,7 +125,7 @@ namespace Nominas
         private void btnCalcular_Click(object sender, EventArgs e)
         {
             if (txtAntiguedad.Text.Length == 0)
-                return;
+                txtAntiguedad.Text = ObtieneEdad(dtpFechaReingreso.Value).ToString();
 
             if (txtSDI.Text.Length != 0)
             {

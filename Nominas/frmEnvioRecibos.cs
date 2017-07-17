@@ -17,6 +17,7 @@ using System.Net;
 using Gma.QrCodeNet.Encoding;
 using Gma.QrCodeNet.Encoding.Windows.Render;
 using System.Drawing.Imaging;
+using System.Text.RegularExpressions;
 
 namespace Nominas
 {
@@ -214,9 +215,15 @@ namespace Nominas
 
         private void btnEnviar_Click(object sender, EventArgs e)
         {
-            if (txtCorreoElectronico.Text.Length == 0)
+            Regex reg = new Regex(@"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");
+            if (!reg.IsMatch(txtCorreoElectronico.Text))
             {
-                MessageBox.Show("No es posible enviarlos, falta ingresar el correo.", "Información");
+                MessageBox.Show("Información:\r\n" + 
+                                "No es posible enviarlos, falta ingresar el correo o el correo no es válido.\r\n" +
+                                "Por favor verificar.", 
+                                "Información",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
                 return;
             }
             fecha = "";

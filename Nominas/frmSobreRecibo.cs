@@ -1764,7 +1764,7 @@ namespace Nominas
                     {
                         if (dtpFecha.Value.AddDays(i).Date < lstReingreso[0].fechaingreso.Date)
                         {
-                            MessageBox.Show("Error: Alta del empleado, Fecha de Reingreso = " + lstReingreso[0].fechaingreso.Date.ToShortDateString() + "\r\n Fecha de la falta es menor.", "Error");
+                            MessageBox.Show("Error: Reingreso del empleado, Fecha de Reingreso = " + lstReingreso[0].fechaingreso.Date.ToShortDateString() + "\r\n Fecha de la falta es menor.", "Error");
                             FLAG_FALTAS = true;
                         }
                         else
@@ -1775,7 +1775,7 @@ namespace Nominas
                     {
                         if (dtpFecha.Value.AddDays(i).Date > lstBaja[0].fecha.Date)
                         {
-                            MessageBox.Show("Error: Alta del empleado, Fecha de Reingreso = " + lstBaja[0].fecha.Date.ToShortDateString() + "\r\n Fecha de la falta es mayor.", "Error");
+                            MessageBox.Show("Error: Baja del empleado, Fecha de Baja = " + lstBaja[0].fecha.Date.ToShortDateString() + "\r\n Fecha de la falta es mayor.", "Error");
                             FLAG_FALTAS = true;
                         }
                         else

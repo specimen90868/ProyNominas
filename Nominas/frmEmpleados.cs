@@ -13,6 +13,8 @@ using System.Windows.Forms;
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using System.Globalization;
+using System.Diagnostics;
 
 namespace Nominas
 {
@@ -194,7 +196,6 @@ namespace Nominas
                         
                         dtpFechaNacimiento.Value = DateTime.Parse(lstEmpleado[i].fechanacimiento.ToString());
                         txtAntiguedad.Text = lstEmpleado[i].antiguedad.ToString();
-                        txtEdad.Text = lstEmpleado[i].edad.ToString();
                         
                         txtRFC.Text = lstEmpleado[i].rfc;
                         txtCURP.Text = lstEmpleado[i].curp;
@@ -250,7 +251,6 @@ namespace Nominas
             MessageBox.Show("Al dar Aceptar se calculará el RFC, por favor esperar a que se muestre.\r\n\r\n" +
                             "El calculo del RFC es informativo. La RENAPO es la entidad oficial para otorgar el RFC.","Calculo del RFC");
             txtRFC.Text = await obtieneRFC();
-            txtEdad.Text = ObtieneEdad(dtpFechaNacimiento.Value).ToString();
             //Empleados.Core.RFC rfc = new Empleados.Core.RFC();
             //string _rfc = rfc.ObtieneRFC(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text);
             //string _homo = rfc.ClaveHomonimia(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text);
@@ -297,6 +297,11 @@ namespace Nominas
                 valorRFC = clave.Text;
                 driver.Close();
                 driver.Dispose();
+                Process[] pDriverChrome = Process.GetProcessesByName("chromedriver.exe");
+                for (int i = 0; i < pDriverChrome.Length; i++)
+                {
+                    pDriverChrome[i].Kill();
+                }
                 return valorRFC;
             }
             catch (Selenium.SeleniumException error)
@@ -339,7 +344,9 @@ namespace Nominas
         private void btnCalcular_Click(object sender, EventArgs e)
         {
             if (txtAntiguedad.Text.Length == 0)
-                return;
+            {
+                txtAntiguedad.Text = ObtieneEdad(dtpFechaIngreso.Value).ToString();
+            }
 
             if (txtSDI.Text.Length != 0)
             {
@@ -459,7 +466,7 @@ namespace Nominas
             em.fechaantiguedad = dtpFechaIngreso.Value;
             em.fechanacimiento = dtpFechaNacimiento.Value;
             em.antiguedadmod = 0;
-            em.edad = int.Parse(txtEdad.Text);
+            em.edad = 0;
             em.idempresa = GLOBALES.IDEMPRESA;
             em.rfc = txtRFC.Text;
             em.curp = txtCURP.Text;
@@ -947,6 +954,15 @@ namespace Nominas
             {
                 MessageBox.Show("El No. de Empleado ya existe. Verifique.");
             }
+        }
+
+        private void txtSDI_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            CultureInfo cc = System.Threading.Thread.CurrentThread.CurrentCulture;
+            if (char.IsNumber(e.KeyChar) || e.KeyChar.ToString() == cc.NumberFormat.NumberDecimalSeparator || e.KeyChar == (char)System.Windows.Forms.Keys.Back)
+                e.Handled = false;
+            else
+                e.Handled = true;
         }
     }
 }

@@ -499,17 +499,17 @@ namespace Nominas
 
         private void txtPaterno_Click(object sender, EventArgs e)
         {
-            //txtPaterno.Clear();
+            txtPaterno.Clear();
         }
 
         private void txtMaterno_Click(object sender, EventArgs e)
         {
-            //txtMaterno.Clear();
+            txtMaterno.Clear();
         }
 
         private void txtNombre_Click(object sender, EventArgs e)
         {
-            //txtNombre.Clear();
+            txtNombre.Clear();
         }
 
         private void toolMostrarTodos_Click(object sender, EventArgs e)
@@ -551,12 +551,12 @@ namespace Nominas
 
         private void txtNoEmpleado_MouseEnter(object sender, EventArgs e)
         {
-            txtNoEmpleado.ReadOnly = false;
+            //txtNoEmpleado.ReadOnly = false;
         }
 
         private void txtNoEmpleado_MouseLeave(object sender, EventArgs e)
         {
-            txtNoEmpleado.ReadOnly = true;
+            //txtNoEmpleado.ReadOnly = true;
         }
 
         private void txtNoEmpleado_ReadOnlyChanged(object sender, EventArgs e)
@@ -567,12 +567,12 @@ namespace Nominas
 
         private void txtPaterno_MouseEnter(object sender, EventArgs e)
         {
-            txtPaterno.ReadOnly = false;
+            //txtPaterno.ReadOnly = false;
         }
 
         private void txtPaterno_MouseLeave(object sender, EventArgs e)
         {
-            txtPaterno.ReadOnly = true;
+            //txtPaterno.ReadOnly = true;
         }
 
         private void txtPaterno_ReadOnlyChanged(object sender, EventArgs e)
@@ -582,12 +582,12 @@ namespace Nominas
 
         private void txtMaterno_MouseEnter(object sender, EventArgs e)
         {
-            txtMaterno.ReadOnly = false;
+            //txtMaterno.ReadOnly = false;
         }
 
         private void txtMaterno_MouseLeave(object sender, EventArgs e)
         {
-            txtMaterno.ReadOnly = true;
+            //txtMaterno.ReadOnly = true;
         }
 
         private void txtMaterno_ReadOnlyChanged(object sender, EventArgs e)
@@ -597,12 +597,12 @@ namespace Nominas
 
         private void txtNombre_MouseEnter(object sender, EventArgs e)
         {
-            txtNombre.ReadOnly = false;
+            //txtNombre.ReadOnly = false;
         }
 
         private void txtNombre_MouseLeave(object sender, EventArgs e)
         {
-            txtNombre.ReadOnly = true;
+            //txtNombre.ReadOnly = true;
         }
 
         private void txtNombre_ReadOnlyChanged(object sender, EventArgs e)

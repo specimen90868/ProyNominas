@@ -409,6 +409,19 @@ namespace CalculoNomina.Core
             return dtPagoNomina;
         }
 
+        public DataTable obtenerConceptosDeptos(int idempresa, int periodo, DateTime fechainicio, DateTime fechafin)
+        {
+            DataTable dtPagoNomina = new DataTable();
+            Command.CommandText = "exec stp_rptConceptosDepto @idempresa, @periodo, @fechainicio, @fechafin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            Command.Parameters.AddWithValue("fechainicio", fechainicio);
+            Command.Parameters.AddWithValue("fechafin", fechafin);
+            Command.Parameters.AddWithValue("periodo", periodo);
+            dtPagoNomina = SelectData(Command);
+            return dtPagoNomina;
+        }
+
         public DataTable obtenerPreGravadosExentos(tmpPagoNomina pn, int periodo)
         {
             DataTable dtPagoNomina = new DataTable();

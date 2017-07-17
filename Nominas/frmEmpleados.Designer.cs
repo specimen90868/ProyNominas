@@ -61,7 +61,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtRFC = new System.Windows.Forms.TextBox();
             this.dtpFechaNacimiento = new System.Windows.Forms.DateTimePicker();
-            this.txtEdad = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -159,7 +158,7 @@
             // btnCalcular
             // 
             this.btnCalcular.Location = new System.Drawing.Point(379, 542);
-            this.btnCalcular.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCalcular.Margin = new System.Windows.Forms.Padding(4);
             this.btnCalcular.Name = "btnCalcular";
             this.btnCalcular.Size = new System.Drawing.Size(72, 25);
             this.btnCalcular.TabIndex = 27;
@@ -170,7 +169,7 @@
             // txtNSS
             // 
             this.txtNSS.Location = new System.Drawing.Point(553, 165);
-            this.txtNSS.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtNSS.Margin = new System.Windows.Forms.Padding(4);
             this.txtNSS.Mask = "99999999999";
             this.txtNSS.Name = "txtNSS";
             this.txtNSS.Size = new System.Drawing.Size(200, 22);
@@ -180,7 +179,7 @@
             // 
             this.txtCURP.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCURP.Location = new System.Drawing.Point(553, 133);
-            this.txtCURP.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtCURP.Margin = new System.Windows.Forms.Padding(4);
             this.txtCURP.Name = "txtCURP";
             this.txtCURP.Size = new System.Drawing.Size(200, 22);
             this.txtCURP.TabIndex = 13;
@@ -211,7 +210,7 @@
             this.cmbTipoSalario.Enabled = false;
             this.cmbTipoSalario.FormattingEnabled = true;
             this.cmbTipoSalario.Location = new System.Drawing.Point(168, 444);
-            this.cmbTipoSalario.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbTipoSalario.Margin = new System.Windows.Forms.Padding(4);
             this.cmbTipoSalario.Name = "cmbTipoSalario";
             this.cmbTipoSalario.Size = new System.Drawing.Size(201, 24);
             this.cmbTipoSalario.TabIndex = 23;
@@ -230,7 +229,7 @@
             // 
             this.txtSueldo.Enabled = false;
             this.txtSueldo.Location = new System.Drawing.Point(169, 478);
-            this.txtSueldo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSueldo.Margin = new System.Windows.Forms.Padding(4);
             this.txtSueldo.Name = "txtSueldo";
             this.txtSueldo.ReadOnly = true;
             this.txtSueldo.Size = new System.Drawing.Size(201, 22);
@@ -250,7 +249,7 @@
             // txtSD
             // 
             this.txtSD.Location = new System.Drawing.Point(168, 510);
-            this.txtSD.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSD.Margin = new System.Windows.Forms.Padding(4);
             this.txtSD.Name = "txtSD";
             this.txtSD.ReadOnly = true;
             this.txtSD.Size = new System.Drawing.Size(201, 22);
@@ -270,11 +269,12 @@
             // txtSDI
             // 
             this.txtSDI.Location = new System.Drawing.Point(168, 542);
-            this.txtSDI.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSDI.Margin = new System.Windows.Forms.Padding(4);
             this.txtSDI.Name = "txtSDI";
             this.txtSDI.Size = new System.Drawing.Size(201, 22);
             this.txtSDI.TabIndex = 26;
             this.txtSDI.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtSDI.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSDI_KeyPress);
             // 
             // lblSDI
             // 
@@ -290,7 +290,7 @@
             // 
             this.dtpFechaIngreso.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpFechaIngreso.Location = new System.Drawing.Point(169, 229);
-            this.dtpFechaIngreso.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpFechaIngreso.Margin = new System.Windows.Forms.Padding(4);
             this.dtpFechaIngreso.Name = "dtpFechaIngreso";
             this.dtpFechaIngreso.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dtpFechaIngreso.Size = new System.Drawing.Size(201, 22);
@@ -311,7 +311,7 @@
             // 
             this.cmbPeriodo.FormattingEnabled = true;
             this.cmbPeriodo.Location = new System.Drawing.Point(553, 264);
-            this.cmbPeriodo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbPeriodo.Margin = new System.Windows.Forms.Padding(4);
             this.cmbPeriodo.Name = "cmbPeriodo";
             this.cmbPeriodo.Size = new System.Drawing.Size(200, 24);
             this.cmbPeriodo.TabIndex = 18;
@@ -331,7 +331,7 @@
             // 
             this.txtApMaterno.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtApMaterno.Location = new System.Drawing.Point(169, 165);
-            this.txtApMaterno.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtApMaterno.Margin = new System.Windows.Forms.Padding(4);
             this.txtApMaterno.Name = "txtApMaterno";
             this.txtApMaterno.Size = new System.Drawing.Size(201, 22);
             this.txtApMaterno.TabIndex = 3;
@@ -340,7 +340,7 @@
             // 
             this.txtApPaterno.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtApPaterno.Location = new System.Drawing.Point(169, 133);
-            this.txtApPaterno.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtApPaterno.Margin = new System.Windows.Forms.Padding(4);
             this.txtApPaterno.Name = "txtApPaterno";
             this.txtApPaterno.Size = new System.Drawing.Size(201, 22);
             this.txtApPaterno.TabIndex = 2;
@@ -349,7 +349,7 @@
             // 
             this.txtNombre.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtNombre.Location = new System.Drawing.Point(169, 101);
-            this.txtNombre.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtNombre.Margin = new System.Windows.Forms.Padding(4);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(201, 22);
             this.txtNombre.TabIndex = 1;
@@ -397,7 +397,7 @@
             // txtRFC
             // 
             this.txtRFC.Location = new System.Drawing.Point(553, 101);
-            this.txtRFC.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtRFC.Margin = new System.Windows.Forms.Padding(4);
             this.txtRFC.Name = "txtRFC";
             this.txtRFC.Size = new System.Drawing.Size(200, 22);
             this.txtRFC.TabIndex = 12;
@@ -406,20 +406,11 @@
             // 
             this.dtpFechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpFechaNacimiento.Location = new System.Drawing.Point(169, 261);
-            this.dtpFechaNacimiento.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpFechaNacimiento.Margin = new System.Windows.Forms.Padding(4);
             this.dtpFechaNacimiento.Name = "dtpFechaNacimiento";
             this.dtpFechaNacimiento.Size = new System.Drawing.Size(201, 22);
             this.dtpFechaNacimiento.TabIndex = 7;
             this.dtpFechaNacimiento.Leave += new System.EventHandler(this.dtpFechaNacimiento_Leave);
-            // 
-            // txtEdad
-            // 
-            this.txtEdad.Enabled = false;
-            this.txtEdad.Location = new System.Drawing.Point(379, 261);
-            this.txtEdad.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.txtEdad.Name = "txtEdad";
-            this.txtEdad.Size = new System.Drawing.Size(39, 22);
-            this.txtEdad.TabIndex = 19;
             // 
             // label6
             // 
@@ -455,7 +446,7 @@
             // 
             this.cmbDepartamento.FormattingEnabled = true;
             this.cmbDepartamento.Location = new System.Drawing.Point(553, 197);
-            this.cmbDepartamento.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbDepartamento.Margin = new System.Windows.Forms.Padding(4);
             this.cmbDepartamento.Name = "cmbDepartamento";
             this.cmbDepartamento.Size = new System.Drawing.Size(200, 24);
             this.cmbDepartamento.TabIndex = 16;
@@ -464,7 +455,7 @@
             // 
             this.cmbPuesto.FormattingEnabled = true;
             this.cmbPuesto.Location = new System.Drawing.Point(553, 230);
-            this.cmbPuesto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbPuesto.Margin = new System.Windows.Forms.Padding(4);
             this.cmbPuesto.Name = "cmbPuesto";
             this.cmbPuesto.Size = new System.Drawing.Size(200, 24);
             this.cmbPuesto.TabIndex = 17;
@@ -485,7 +476,7 @@
             this.cmbEstado.FormattingEnabled = true;
             this.cmbEstado.ItemHeight = 16;
             this.cmbEstado.Location = new System.Drawing.Point(169, 324);
-            this.cmbEstado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbEstado.Margin = new System.Windows.Forms.Padding(4);
             this.cmbEstado.Name = "cmbEstado";
             this.cmbEstado.Size = new System.Drawing.Size(200, 24);
             this.cmbEstado.TabIndex = 9;
@@ -494,7 +485,7 @@
             // 
             this.rbtnHombre.AutoSize = true;
             this.rbtnHombre.Location = new System.Drawing.Point(171, 357);
-            this.rbtnHombre.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbtnHombre.Margin = new System.Windows.Forms.Padding(4);
             this.rbtnHombre.Name = "rbtnHombre";
             this.rbtnHombre.Size = new System.Drawing.Size(79, 21);
             this.rbtnHombre.TabIndex = 10;
@@ -506,7 +497,7 @@
             // 
             this.rbtnMujer.AutoSize = true;
             this.rbtnMujer.Location = new System.Drawing.Point(275, 357);
-            this.rbtnMujer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbtnMujer.Margin = new System.Windows.Forms.Padding(4);
             this.rbtnMujer.Name = "rbtnMujer";
             this.rbtnMujer.Size = new System.Drawing.Size(64, 21);
             this.rbtnMujer.TabIndex = 11;
@@ -527,7 +518,7 @@
             // btnObtenerCurp
             // 
             this.btnObtenerCurp.Location = new System.Drawing.Point(763, 133);
-            this.btnObtenerCurp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnObtenerCurp.Margin = new System.Windows.Forms.Padding(4);
             this.btnObtenerCurp.Name = "btnObtenerCurp";
             this.btnObtenerCurp.Size = new System.Drawing.Size(84, 28);
             this.btnObtenerCurp.TabIndex = 14;
@@ -540,7 +531,7 @@
             this.btnVer.Image = ((System.Drawing.Image)(resources.GetObject("btnVer.Image")));
             this.btnVer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnVer.Location = new System.Drawing.Point(553, 298);
-            this.btnVer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnVer.Margin = new System.Windows.Forms.Padding(4);
             this.btnVer.Name = "btnVer";
             this.btnVer.Size = new System.Drawing.Size(89, 43);
             this.btnVer.TabIndex = 21;
@@ -554,7 +545,7 @@
             this.btnAsignar.Image = ((System.Drawing.Image)(resources.GetObject("btnAsignar.Image")));
             this.btnAsignar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAsignar.Location = new System.Drawing.Point(665, 298);
-            this.btnAsignar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAsignar.Margin = new System.Windows.Forms.Padding(4);
             this.btnAsignar.Name = "btnAsignar";
             this.btnAsignar.Size = new System.Drawing.Size(89, 43);
             this.btnAsignar.TabIndex = 22;
@@ -577,7 +568,7 @@
             // 
             this.txtAntiguedad.Enabled = false;
             this.txtAntiguedad.Location = new System.Drawing.Point(379, 230);
-            this.txtAntiguedad.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtAntiguedad.Margin = new System.Windows.Forms.Padding(4);
             this.txtAntiguedad.Name = "txtAntiguedad";
             this.txtAntiguedad.Size = new System.Drawing.Size(39, 22);
             this.txtAntiguedad.TabIndex = 235;
@@ -627,7 +618,7 @@
             // mtxtCuentaBancaria
             // 
             this.mtxtCuentaBancaria.Location = new System.Drawing.Point(562, 443);
-            this.mtxtCuentaBancaria.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mtxtCuentaBancaria.Margin = new System.Windows.Forms.Padding(4);
             this.mtxtCuentaBancaria.Mask = "9999999999";
             this.mtxtCuentaBancaria.Name = "mtxtCuentaBancaria";
             this.mtxtCuentaBancaria.Size = new System.Drawing.Size(201, 22);
@@ -637,7 +628,7 @@
             // mtxtCuentaClabe
             // 
             this.mtxtCuentaClabe.Location = new System.Drawing.Point(562, 475);
-            this.mtxtCuentaClabe.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mtxtCuentaClabe.Margin = new System.Windows.Forms.Padding(4);
             this.mtxtCuentaClabe.Mask = "999 999 99999999999 9";
             this.mtxtCuentaClabe.Name = "mtxtCuentaClabe";
             this.mtxtCuentaClabe.Size = new System.Drawing.Size(201, 22);
@@ -647,7 +638,7 @@
             // mtxtIdBancario
             // 
             this.mtxtIdBancario.Location = new System.Drawing.Point(562, 507);
-            this.mtxtIdBancario.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mtxtIdBancario.Margin = new System.Windows.Forms.Padding(4);
             this.mtxtIdBancario.Mask = "9999";
             this.mtxtIdBancario.Name = "mtxtIdBancario";
             this.mtxtIdBancario.Size = new System.Drawing.Size(201, 22);
@@ -657,7 +648,7 @@
             // mtxtNoEmpleado
             // 
             this.mtxtNoEmpleado.Location = new System.Drawing.Point(168, 197);
-            this.mtxtNoEmpleado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mtxtNoEmpleado.Margin = new System.Windows.Forms.Padding(4);
             this.mtxtNoEmpleado.Mask = "9999";
             this.mtxtNoEmpleado.Name = "mtxtNoEmpleado";
             this.mtxtNoEmpleado.Size = new System.Drawing.Size(201, 22);
@@ -670,7 +661,7 @@
             // 
             this.chkObraCivil.AutoSize = true;
             this.chkObraCivil.Location = new System.Drawing.Point(168, 73);
-            this.chkObraCivil.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkObraCivil.Margin = new System.Windows.Forms.Padding(4);
             this.chkObraCivil.Name = "chkObraCivil";
             this.chkObraCivil.Size = new System.Drawing.Size(111, 21);
             this.chkObraCivil.TabIndex = 32;
@@ -692,7 +683,7 @@
             this.dtpFechaBaja.Enabled = false;
             this.dtpFechaBaja.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpFechaBaja.Location = new System.Drawing.Point(171, 293);
-            this.dtpFechaBaja.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpFechaBaja.Margin = new System.Windows.Forms.Padding(4);
             this.dtpFechaBaja.Name = "dtpFechaBaja";
             this.dtpFechaBaja.Size = new System.Drawing.Size(200, 22);
             this.dtpFechaBaja.TabIndex = 8;
@@ -738,7 +729,6 @@
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.txtEdad);
             this.Controls.Add(this.dtpFechaNacimiento);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtRFC);
@@ -769,7 +759,7 @@
             this.Controls.Add(this.Label2);
             this.Controls.Add(this.Label7);
             this.Controls.Add(this.toolEmpleado);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(880, 640);
             this.MinimizeBox = false;
@@ -817,7 +807,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtRFC;
         private System.Windows.Forms.DateTimePicker dtpFechaNacimiento;
-        private System.Windows.Forms.TextBox txtEdad;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;

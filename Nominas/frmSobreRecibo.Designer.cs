@@ -1241,7 +1241,7 @@
             this.dtpFechaInicioVacaciones.Location = new System.Drawing.Point(325, 84);
             this.dtpFechaInicioVacaciones.Margin = new System.Windows.Forms.Padding(4);
             this.dtpFechaInicioVacaciones.Name = "dtpFechaInicioVacaciones";
-            this.dtpFechaInicioVacaciones.Size = new System.Drawing.Size(137, 22);
+            this.dtpFechaInicioVacaciones.Size = new System.Drawing.Size(151, 22);
             this.dtpFechaInicioVacaciones.TabIndex = 12;
             // 
             // label22
@@ -1257,7 +1257,7 @@
             // 
             // btnGuardarObservaciones
             // 
-            this.btnGuardarObservaciones.Location = new System.Drawing.Point(552, 389);
+            this.btnGuardarObservaciones.Location = new System.Drawing.Point(376, 389);
             this.btnGuardarObservaciones.Margin = new System.Windows.Forms.Padding(4);
             this.btnGuardarObservaciones.Name = "btnGuardarObservaciones";
             this.btnGuardarObservaciones.Size = new System.Drawing.Size(100, 28);
@@ -1283,7 +1283,7 @@
             this.txtObservaciones.Margin = new System.Windows.Forms.Padding(4);
             this.txtObservaciones.Multiline = true;
             this.txtObservaciones.Name = "txtObservaciones";
-            this.txtObservaciones.Size = new System.Drawing.Size(631, 210);
+            this.txtObservaciones.Size = new System.Drawing.Size(454, 210);
             this.txtObservaciones.TabIndex = 8;
             // 
             // cmbConceptoVacaciones
@@ -1302,7 +1302,7 @@
             // 
             // btnEliminarVP
             // 
-            this.btnEliminarVP.Location = new System.Drawing.Point(552, 135);
+            this.btnEliminarVP.Location = new System.Drawing.Point(376, 135);
             this.btnEliminarVP.Margin = new System.Windows.Forms.Padding(4);
             this.btnEliminarVP.Name = "btnEliminarVP";
             this.btnEliminarVP.Size = new System.Drawing.Size(100, 28);
@@ -1324,7 +1324,7 @@
             // 
             // btnGuardarVP
             // 
-            this.btnGuardarVP.Location = new System.Drawing.Point(444, 135);
+            this.btnGuardarVP.Location = new System.Drawing.Point(268, 135);
             this.btnGuardarVP.Margin = new System.Windows.Forms.Padding(4);
             this.btnGuardarVP.Name = "btnGuardarVP";
             this.btnGuardarVP.Size = new System.Drawing.Size(100, 28);
@@ -1351,7 +1351,7 @@
             this.txtDiasPendientes.Location = new System.Drawing.Point(172, 116);
             this.txtDiasPendientes.Margin = new System.Windows.Forms.Padding(4);
             this.txtDiasPendientes.Name = "txtDiasPendientes";
-            this.txtDiasPendientes.Size = new System.Drawing.Size(132, 22);
+            this.txtDiasPendientes.Size = new System.Drawing.Size(71, 22);
             this.txtDiasPendientes.TabIndex = 5;
             // 
             // txtDiasPagoPV

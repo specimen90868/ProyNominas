@@ -225,6 +225,10 @@ namespace Nominas
                 case 9:
                     excelGravadosExentos();
                     break;
+
+                case 12:
+                    excelConceptoDepto();
+                    break;
             }
         }
 
@@ -314,6 +318,16 @@ namespace Nominas
                     chkTodosDeptos.Enabled = false;
                     chkTodosEmpleados.Enabled = false;
                     noReporte = 9;
+                    break;
+
+                case "Conceptos por Depto":
+                    lstvDepartamentos.Enabled = false;
+                    lstvEmpleados.Enabled = false;
+                    cmbOrden.Enabled = false;
+                    cmbNetoCero.Enabled = false;
+                    chkTodosDeptos.Enabled = false;
+                    chkTodosEmpleados.Enabled = false;
+                    noReporte = 12;
                     break;
             }
         }
@@ -880,6 +894,115 @@ namespace Nominas
             excel.Range["A5", "J5"].Font.Bold = true;
             excel.Range["A5", "J5"].Interior.ColorIndex = 36;
             excel.Range["C6", "G" + iFil.ToString()].NumberFormat = "#,##0.00";
+
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Title = "Guardar como";
+            sfd.Filter = "Archivo de excel (*.xlsx)|*.xlsx";
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                workSheet.SaveAs(sfd.FileName);
+                excel.Visible = true;
+            }
+
+            toolPorcentaje.Text = "100%";
+            toolEtapa.Text = "Reporte a Excel";
+        }
+
+        private void excelConceptoDepto()
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+            nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+
+            CalculoNomina.Core.tmpPagoNomina pn = new CalculoNomina.Core.tmpPagoNomina();
+            pn.idempresa = GLOBALES.IDEMPRESA;
+            pn.fechainicio = dtpInicioPeriodo.Value;
+            pn.fechafin = dtpFinPeriodo.Value;
+
+            DataTable dt = new DataTable();
+            try
+            {
+                cnx.Open();
+                dt = nh.obtenerConceptosDeptos(GLOBALES.IDEMPRESA, _periodo, dtpInicioPeriodo.Value.Date, dtpFinPeriodo.Value.Date);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("No es posible generar el reporte. \r\n \r\n Verifique los parametros del reporte.", "Error");
+                return;
+            }
+
+            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
+            excel.Workbooks.Add();
+
+            Microsoft.Office.Interop.Excel._Worksheet workSheet = excel.ActiveSheet;
+
+            excel.Cells[1, 1] = dt.Rows[0][0];
+            excel.Cells[2, 1] = "RFC:";
+            excel.Cells[3, 1] = "REG. PAT:";
+
+            excel.Cells[2, 2] = dt.Rows[0][1];
+            excel.Cells[3, 2] = dt.Rows[0][2];
+
+            //SE COLOCAN LOS TITULOS DE LAS COLUMNAS
+            int iCol = 1;
+            for (int i = 3; i < dt.Columns.Count; i++)
+            {
+                excel.Cells[5, iCol] = dt.Columns[i].ColumnName;
+                iCol++;
+            }
+            //SE COLOCAN LOS DATOS
+            int contadorDt = dt.Rows.Count;
+            int contador = 0;
+            int progreso = 0;
+            iCol = 1;
+            int iFil = 6;
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                progreso = (contador * 100) / contadorDt;
+                toolPorcentaje.Text = progreso.ToString() + "%";
+                toolEtapa.Text = "Reporte a Excel";
+                contador++;
+                if (i != dt.Rows.Count - 1)
+                {
+                    for (int j = 3; j < dt.Columns.Count; j++)
+                    {
+                        excel.Cells[iFil, iCol] = dt.Rows[i][j];
+                        iCol++;
+                    }
+                    iFil++;
+                }
+                else
+                {
+                    for (int j = 3; j < dt.Columns.Count; j++)
+                    {
+                        excel.Cells[iFil, iCol] = dt.Rows[i][j];
+                        iCol++;
+                    }
+                }
+
+                iCol = 1;
+
+            }
+            iFil++;
+
+            //excel.Range["A1", "B3"].Font.Bold = true;
+            //excel.Range["B:J"].EntireColumn.AutoFit();
+            //excel.Range["A6"].Select();
+            //excel.ActiveWindow.FreezePanes = true;
+            //excel.Range["A5", "J5"].Font.Bold = true;
+            //excel.Range["A5", "J5"].Interior.ColorIndex = 36;
+            //excel.Range["C6", "G" + iFil.ToString()].NumberFormat = "#,##0.00";
 
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Title = "Guardar como";
