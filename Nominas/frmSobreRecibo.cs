@@ -2115,6 +2115,7 @@ namespace Nominas
                 }
                     
                 txtDiasPendientes.Text = lstVacacionesPrima[i].diaspendientes.ToString();
+                txtAniversario.Text = lstVacacionesPrima[i].aniversario.ToString();
 
             }
         }
@@ -2195,7 +2196,8 @@ namespace Nominas
             }
 
             Vacaciones.Core.DiasDerecho dd = new Vacaciones.Core.DiasDerecho();
-            dd.anio = lstEmpleado[0].antiguedad;
+            //dd.anio = lstEmpleado[0].antiguedad;
+            dd.anio = int.Parse(txtAniversario.Text);
 
             int dias = 0;
             try
@@ -2326,6 +2328,7 @@ namespace Nominas
                     vp.fechainicio = DateTime.Now.Date;
                     vp.fechafin = DateTime.Now.Date;
                     vp.vacacionesprima = "P";
+                    vp.aniversario = int.Parse(txtAniversario.Text);
 
                     try
                     {
@@ -2364,6 +2367,7 @@ namespace Nominas
                     vp.fechainicio = dtpFechaInicioVacaciones.Value.Date;
                     vp.fechafin = dtpFechaInicioVacaciones.Value.AddDays(diasPagoReales - 1);
                     vp.vacacionesprima = "V";
+                    vp.aniversario = int.Parse(txtAniversario.Text);
 
                     try
                     {
@@ -2474,6 +2478,7 @@ namespace Nominas
                     vp.fechainicio = DateTime.Now.Date;
                     vp.fechafin = DateTime.Now.Date;
                     vp.vacacionesprima = "P";
+                    vp.aniversario = int.Parse(txtAniversario.Text);
 
                     try
                     {

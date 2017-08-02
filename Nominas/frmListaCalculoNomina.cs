@@ -2620,6 +2620,7 @@ namespace Nominas
             lcv._tipoNomina = _tipoNomina;
             lcv._inicioPeriodo = periodoInicio.Date;
             lcv._finPeriodo = periodoFin.Date;
+            lcv._periodo = _periodo;
             lcv.StartPosition = FormStartPosition.CenterScreen;
             lcv.Show();
         }

@@ -137,6 +137,7 @@ namespace Vacaciones.Core
                 vp.diaspendientes = int.Parse(dtPrima.Rows[i]["diaspendientes"].ToString());
                 vp.fechapago = DateTime.Parse(dtPrima.Rows[i]["fechapago"].ToString());
                 vp.vacacionesprima = dtPrima.Rows[i]["vacacionesprima"].ToString();
+                vp.aniversario = int.Parse(dtPrima.Rows[i]["aniversario"].ToString());
                 lstPrima.Add(vp);
             }
             return lstPrima;
@@ -167,6 +168,7 @@ namespace Vacaciones.Core
                 vp.fechapago = DateTime.Parse(dtPrima.Rows[i]["fechapago"].ToString());
                 vp.vacacionesprima = dtPrima.Rows[i]["vacacionesprima"].ToString();
                 vp.fechainicio = DateTime.Parse(dtPrima.Rows[i]["fechainicio"].ToString());
+                vp.aniversario = int.Parse(dtPrima.Rows[i]["aniversario"].ToString());
                 lstPrima.Add(vp);
             }
             return lstPrima;
@@ -240,8 +242,8 @@ namespace Vacaciones.Core
 
         public int insertaVacacion(VacacionesPrima vp)
         {
-            Command.CommandText = @"insert into VacacionesPrima (idtrabajador,idempresa,periodoinicio,periodofin,diasderecho,diaspago,diaspendientes,fechapago,vacacionesprima,fechainicio,fechafin) 
-                                    values (@idtrabajador,@idempresa,@periodoinicio,@periodofin,@diasderecho,@diaspago,@diaspendientes,@fechapago,@vacacionesprima,@fechainicio,@fechafin)";
+            Command.CommandText = @"insert into VacacionesPrima (idtrabajador,idempresa,periodoinicio,periodofin,diasderecho,diaspago,diaspendientes,fechapago,vacacionesprima,fechainicio,fechafin,aniversario) 
+                                    values (@idtrabajador,@idempresa,@periodoinicio,@periodofin,@diasderecho,@diaspago,@diaspendientes,@fechapago,@vacacionesprima,@fechainicio,@fechafin,@aniversario)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", vp.idtrabajador);
             Command.Parameters.AddWithValue("idempresa", vp.idempresa);
@@ -254,6 +256,7 @@ namespace Vacaciones.Core
             Command.Parameters.AddWithValue("vacacionesprima", vp.vacacionesprima);
             Command.Parameters.AddWithValue("fechainicio", vp.fechainicio);
             Command.Parameters.AddWithValue("fechafin", vp.fechafin);
+            Command.Parameters.AddWithValue("aniversario", vp.aniversario);
             return Command.ExecuteNonQuery();
         }
 

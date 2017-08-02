@@ -126,5 +126,17 @@ namespace Complementos.Core
             Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
             return Command.ExecuteNonQuery();
         }
+
+        public DataTable obtenerObservaciones(int idempresa)
+        {
+            DataTable dtObservaciones = new DataTable();
+            Command.CommandText = @"select e.nombre as empresa, e.rfc, e.registro + CAST(e.digitoverificador as varchar(1)) as registro, t.noempleado [No. Empleado], t.nombrecompleto [Nombre], c.observaciones [Obs.] 
+                                from Complementos c inner join Trabajadores t on c.idtrabajador = t.idtrabajador inner join Empresas e on t.idempresa = e.idempresa
+                                where t.idempresa = @idempresa order by t.noempleado asc";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            dtObservaciones = SelectData(Command);
+            return dtObservaciones;
+        }
     }
 }

@@ -96,7 +96,7 @@ namespace Nominas
                         rpvVisor.LocalReport.DataSources.Add(rd2);
 
                         rpvVisor.LocalReport.ReportEmbeddedResource = "rptPreNominaCaratula.rdlc";
-                        rpvVisor.LocalReport.ReportPath = @"rptPreNominaCaratula.rdlc";
+                        rpvVisor.LocalReport.ReportPath = @"Reportes\rptPreNominaCaratula.rdlc";
                         break;
 
                     case 1: //EMPLEADOS PRENOMINA
@@ -154,7 +154,7 @@ namespace Nominas
                         rpvVisor.LocalReport.DataSources.Add(rd3);
 
                         rpvVisor.LocalReport.ReportEmbeddedResource = "rptPreNominaEmpleados.rdlc";
-                        rpvVisor.LocalReport.ReportPath = @"rptPreNominaEmpleados.rdlc";
+                        rpvVisor.LocalReport.ReportPath = @"Reportes\rptPreNominaEmpleados.rdlc";
                         break;
 
                     case 2: //DEPARTAMENTOS PRENOMINA
@@ -212,7 +212,7 @@ namespace Nominas
                         rpvVisor.LocalReport.DataSources.Add(rd3);
 
                         rpvVisor.LocalReport.ReportEmbeddedResource = "rptPreNominaDepto.rdlc";
-                        rpvVisor.LocalReport.ReportPath = @"rptPreNominaDepto.rdlc";
+                        rpvVisor.LocalReport.ReportPath = @"Reportes\rptPreNominaDepto.rdlc";
                         break;
 
                     case 3: //CARATULA NOMINA
@@ -253,7 +253,7 @@ namespace Nominas
                         rpvVisor.LocalReport.DataSources.Add(rd2);
 
                         rpvVisor.LocalReport.ReportEmbeddedResource = "rptPreNominaCaratula.rdlc";
-                        rpvVisor.LocalReport.ReportPath = @"rptPreNominaCaratula.rdlc";
+                        rpvVisor.LocalReport.ReportPath = @"Reportes\rptPreNominaCaratula.rdlc";
                         break;
 
                     case 4: //DEPARTAMENTOS NOMINA
@@ -315,7 +315,7 @@ namespace Nominas
                         rpvVisor.LocalReport.DataSources.Add(rd3);
 
                         rpvVisor.LocalReport.ReportEmbeddedResource = "rptPreNominaDepto.rdlc";
-                        rpvVisor.LocalReport.ReportPath = @"rptPreNominaDepto.rdlc";
+                        rpvVisor.LocalReport.ReportPath = @"Reportes\rptPreNominaDepto.rdlc";
                         break;
 
                     case 5: //EMPLEADOS NOMINA
@@ -377,7 +377,7 @@ namespace Nominas
                         rpvVisor.LocalReport.DataSources.Add(rd3);
 
                         rpvVisor.LocalReport.ReportEmbeddedResource = "rptPreNominaEmpleados.rdlc";
-                        rpvVisor.LocalReport.ReportPath = @"rptPreNominaEmpleados.rdlc";
+                        rpvVisor.LocalReport.ReportPath = @"Reportes\rptPreNominaEmpleados.rdlc";
                         break;
                     case 7:
 
@@ -421,7 +421,7 @@ namespace Nominas
                         rpvVisor.LocalReport.DataSources.Add(rd2);
 
                         rpvVisor.LocalReport.ReportEmbeddedResource = "rptPreNominaRecibo.rdlc";
-                        rpvVisor.LocalReport.ReportPath = @"rptPreNominaRecibo.rdlc";
+                        rpvVisor.LocalReport.ReportPath = @"Reportes\rptPreNominaRecibo.rdlc";
 
                         break;
 
@@ -454,7 +454,7 @@ namespace Nominas
                         rpvVisor.LocalReport.DataSources.Add(rd);
 
                         rpvVisor.LocalReport.ReportEmbeddedResource = "rptNominaRecibos.rdlc";
-                        rpvVisor.LocalReport.ReportPath = @"rptNominaRecibos.rdlc";
+                        rpvVisor.LocalReport.ReportPath = @"Reportes\rptNominaRecibos.rdlc";
 
                         break;
                     case 9:
@@ -495,7 +495,7 @@ namespace Nominas
                         rpvVisor.LocalReport.DataSources.Add(rd2);
 
                         rpvVisor.LocalReport.ReportEmbeddedResource = "rptPreNominaRecibo.rdlc";
-                        rpvVisor.LocalReport.ReportPath = @"rptPreNominaRecibo.rdlc";
+                        rpvVisor.LocalReport.ReportPath = @"Reportes\rptPreNominaRecibo.rdlc";
 
                         break;
                     case 10:
@@ -523,7 +523,7 @@ namespace Nominas
                         rpvVisor.LocalReport.DataSources.Add(rd);
 
                         rpvVisor.LocalReport.ReportEmbeddedResource = "rptNominaRecibos.rdlc";
-                        rpvVisor.LocalReport.ReportPath = @"rptNominaRecibos.rdlc";
+                        rpvVisor.LocalReport.ReportPath = @"Reportes\rptNominaRecibos.rdlc";
                         dtImpresionNomina.Dispose();
                         daImpresionNomina.Dispose();
                         break;
@@ -692,7 +692,7 @@ namespace Nominas
                         rpvVisor.LocalReport.DataSources.Add(rd);
 
                         rpvVisor.LocalReport.ReportEmbeddedResource = "rptNominaDiagnostico.rdlc";
-                        rpvVisor.LocalReport.ReportPath = @"rptNominaDiagnostico.rdlc";
+                        rpvVisor.LocalReport.ReportPath = @"Reportes\rptNominaDiagnostico.rdlc";
                         break;
                 }
             }

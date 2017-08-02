@@ -31,17 +31,19 @@ namespace Nominas
         Empleados.Core.EmpleadosHelper emph;
         Vacaciones.Core.VacacionesHelper vh;
         Periodos.Core.PeriodosHelper ph;
+        Complementos.Core.ComplementoHelper ch;
         #endregion
 
         #region VARIABLES PUBLICA
         public int _tipoNomina;
         public DateTime _inicioPeriodo;
         public DateTime _finPeriodo;
+        public int _periodo;
         #endregion
 
         private void toolCargar_Click(object sender, EventArgs e)
         {
-            string conStr, sheetName;
+             string conStr, sheetName;
             DateTime inicio, fin;
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Title = "Seleccionar Excel";
@@ -111,7 +113,10 @@ namespace Nominas
                                                 dt.Rows[i][2].ToString(), //DIAS
                                                 dt.Rows[1][1].ToString(), //FECHA INICIO
                                                 dt.Rows[2][1].ToString(), //FECHA FIN
-                                                dt.Rows[i][3].ToString()); //FECHA INICIO VACACIONES
+                                                dt.Rows[i][3].ToString(),
+                                                dt.Rows[i][4].ToString(),
+                                                dt.Rows[i][5].ToString(),
+                                                dt.Rows[i][6].ToString()); //FECHA INICIO VACACIONES
                                     }
 
                                     for (int i = 0; i < dgvCargaVacaciones.Columns.Count; i++)
@@ -190,6 +195,13 @@ namespace Nominas
             ph = new Periodos.Core.PeriodosHelper();
             ph.Command = cmd;
 
+            ch = new Complementos.Core.ComplementoHelper();
+            ch.Command = cmd;
+
+            object objObservaciones = null;
+            string observaciones = null;
+            string nuevaObservacion = null;
+
             foreach (DataGridViewRow fila in dgvCargaVacaciones.Rows)
             {
                 if (!fila.Cells["noempleado"].Value.ToString().Equals(""))
@@ -215,23 +227,29 @@ namespace Nominas
                     Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
                     empleado.idtrabajador = idEmpleado;
 
-                    List<Empleados.Core.Empleados> lstEmpleado = new List<Empleados.Core.Empleados>();
+                    Complementos.Core.Complemento complemento = new Complementos.Core.Complemento();
+                    complemento.idtrabajador = idEmpleado;
 
+                    List<Empleados.Core.Empleados> lstEmpleado = new List<Empleados.Core.Empleados>();
+                    
                     try
                     {
                         cnx.Open();
                         lstEmpleado = emph.obtenerEmpleado(empleado);
+                        objObservaciones = ch.obtenerObservacionesTrabajador(complemento);
                         cnx.Close();
+                        observaciones = objObservaciones == null ? "" : objObservaciones.ToString();
                     }
                     catch
                     {
-                        MessageBox.Show("Error: Al obtener la antigüedad del empleado.", "Error");
+                        MessageBox.Show("Error: Al obtener los datos del empleado.", "Error");
                         cnx.Dispose();
                         this.Dispose();
                     }
 
                     Vacaciones.Core.DiasDerecho dd = new Vacaciones.Core.DiasDerecho();
-                    dd.anio = lstEmpleado[0].antiguedad;
+                    //dd.anio = lstEmpleado[0].antiguedad;
+                    dd.anio = int.Parse(fila.Cells["aniversario"].Value.ToString());
 
                     int dias = 0;
                     try
@@ -308,6 +326,7 @@ namespace Nominas
                     vp.diasderecho = dias;
                     vp.fechapago = DateTime.Now.Date;
                     vp.vacacionesprima = fila.Cells["concepto"].Value.ToString() == "Prima Vacacional" ? "P" : "V";
+                    vp.aniversario = int.Parse(fila.Cells["aniversario"].Value.ToString());
 
                     if (fila.Cells["concepto"].Value.ToString().Equals("Prima Vacacional"))
                     {
@@ -315,6 +334,15 @@ namespace Nominas
                         vp.diaspendientes = 0;
                         vp.fechainicio = DateTime.Now.Date;
                         vp.fechafin = DateTime.Now.Date;
+
+                        cnx.Open();
+                        nuevaObservacion = observaciones + "\r\n" + "Pago de Prima Vacacional; " + (_periodo == 7 ? "Semana: " : "Quincena: ") +
+                            fila.Cells["noperiodo"].Value.ToString() + "-" + DateTime.Now.Year.ToString() + "; Aniversario: " + fila.Cells["aniversario"].Value.ToString() + "; " + 
+                            fila.Cells["observaciones"].Value.ToString();
+                        complemento.observaciones = nuevaObservacion;
+                        ch.actualizaObservacionesTrabajador(complemento);
+                        cnx.Close();
+                        
                     }
                     else
                     {
@@ -334,7 +362,19 @@ namespace Nominas
                         vp.diaspendientes = dias - diasPagoReales;
                         vp.fechainicio = DateTime.Parse(fila.Cells["fechaaplicacion"].Value.ToString());
                         vp.fechafin = DateTime.Parse(fila.Cells["fechaaplicacion"].Value.ToString()).AddDays(diasPagoReales - 1);
+
+
+                        cnx.Open();
+                        nuevaObservacion = observaciones + "\r\n" + "Pago de Vacaciones; " + (_periodo == 7 ? "Semana: " : "Quincena: ") +
+                            fila.Cells["noperiodo"].Value.ToString() + "-" + DateTime.Now.Year.ToString() + "; Aniversario: " + fila.Cells["aniversario"].Value.ToString() + "; " +
+                            "Días disfrutados: " + diasPagoReales.ToString() + "; Días pendientes: " + (dias - diasPagoReales).ToString() + "; " + fila.Cells["observaciones"].Value.ToString();
+                        complemento.observaciones = nuevaObservacion;
+                        ch.actualizaObservacionesTrabajador(complemento);
+                        cnx.Close();
+                        
                     }
+
+                    
 
                     lstMovimientos.Add(vp);
                 }
@@ -357,6 +397,7 @@ namespace Nominas
             dt.Columns.Add("vacacionesprima", typeof(String));
             dt.Columns.Add("fechainicio", typeof(DateTime));
             dt.Columns.Add("fechafin", typeof(DateTime));
+            dt.Columns.Add("aniversario", typeof(Int32));
 
             int index = 1;
             for (int i = 0; i < lstMovimientos.Count; i++)
@@ -374,6 +415,7 @@ namespace Nominas
                 dtFila["vacacionesprima"] = lstMovimientos[i].vacacionesprima;
                 dtFila["fechainicio"] = lstMovimientos[i].fechainicio;
                 dtFila["fechafin"] = lstMovimientos[i].fechafin;
+                dtFila["aniversario"] = lstMovimientos[i].aniversario;
                 dt.Rows.Add(dtFila);
                 index++;
             }

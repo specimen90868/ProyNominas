@@ -51,5 +51,6 @@ namespace Vacaciones.Core
         public string vacacionesprima { get; set; }
         public DateTime fechainicio { get; set; }
         public DateTime fechafin { get; set; }
+        public int aniversario { get; set; }
     }
 }

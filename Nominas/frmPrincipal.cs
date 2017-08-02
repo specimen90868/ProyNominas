@@ -750,6 +750,101 @@ namespace Nominas
             sp.StartPosition = FormStartPosition.CenterScreen;
             sp.Show();
         }
+
+        private void toolVacaciones_Click(object sender, EventArgs e)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            Complementos.Core.ComplementoHelper ch = new Complementos.Core.ComplementoHelper();
+            ch.Command = cmd;
+
+            DataTable dt = new DataTable();
+            try
+            {
+                cnx.Open();
+                dt = ch.obtenerObservaciones(GLOBALES.IDEMPRESA);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("No es posible generar el reporte. \r\n \r\n Verifique los parametros del reporte.", "Error");
+                return;
+            }
+
+            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
+            excel.Workbooks.Add();
+
+            Microsoft.Office.Interop.Excel._Worksheet workSheet = excel.ActiveSheet;
+
+            excel.Cells[1, 1] = dt.Rows[0][0];
+            excel.Cells[2, 1] = "RFC:";
+            excel.Cells[3, 1] = "REG. PAT:";
+
+            excel.Cells[2, 2] = dt.Rows[0][1];
+            excel.Cells[3, 2] = dt.Rows[0][2];
+
+            //SE COLOCAN LOS TITULOS DE LAS COLUMNAS
+            int iCol = 1;
+            for (int i = 3; i < dt.Columns.Count; i++)
+            {
+                excel.Cells[5, iCol] = dt.Columns[i].ColumnName;
+                iCol++;
+            }
+            //SE COLOCAN LOS DATOS
+            int contadorDt = dt.Rows.Count;
+            int contador = 0;
+            int progreso = 0;
+            iCol = 1;
+            int iFil = 6;
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                progreso = (contador * 100) / contadorDt;
+                toolPorcentaje.Text = progreso.ToString() + "%";
+                contador++;
+                if (i != dt.Rows.Count - 1)
+                {
+                    for (int j = 3; j < dt.Columns.Count; j++)
+                    {
+                        excel.Cells[iFil, iCol] = dt.Rows[i][j];
+                        iCol++;
+                    }
+                    iFil++;
+                }
+                else
+                {
+                    for (int j = 3; j < dt.Columns.Count; j++)
+                    {
+                        excel.Cells[iFil, iCol] = dt.Rows[i][j];
+                        iCol++;
+                    }
+                }
+
+                iCol = 1;
+
+            }
+
+            excel.Range["B:C"].EntireColumn.AutoFit();
+            excel.Range["B:C"].EntireRow.AutoFit();
+
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Title = "Guardar como";
+            sfd.Filter = "Archivo de excel (*.xlsx)|*.xlsx";
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                workSheet.SaveAs(sfd.FileName);
+                excel.Visible = true;
+            }
+        }
     }
 }
 

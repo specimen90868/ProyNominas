@@ -50,6 +50,9 @@
             this.inicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fechaaplicacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.aniversario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.noperiodo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.observaciones = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCargaVacaciones)).BeginInit();
             this.SuspendLayout();
@@ -63,7 +66,7 @@
             this.toolAplicar});
             this.toolBusqueda.Location = new System.Drawing.Point(0, 0);
             this.toolBusqueda.Name = "toolBusqueda";
-            this.toolBusqueda.Size = new System.Drawing.Size(1268, 27);
+            this.toolBusqueda.Size = new System.Drawing.Size(970, 27);
             this.toolBusqueda.TabIndex = 10;
             this.toolBusqueda.Text = "ToolStrip1";
             // 
@@ -72,7 +75,7 @@
             this.toolCargar.Image = ((System.Drawing.Image)(resources.GetObject("toolCargar.Image")));
             this.toolCargar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolCargar.Name = "toolCargar";
-            this.toolCargar.Size = new System.Drawing.Size(77, 24);
+            this.toolCargar.Size = new System.Drawing.Size(66, 24);
             this.toolCargar.Text = "Cargar";
             this.toolCargar.Click += new System.EventHandler(this.toolCargar_Click);
             // 
@@ -81,7 +84,7 @@
             this.toolLimpiar.Image = ((System.Drawing.Image)(resources.GetObject("toolLimpiar.Image")));
             this.toolLimpiar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolLimpiar.Name = "toolLimpiar";
-            this.toolLimpiar.Size = new System.Drawing.Size(83, 24);
+            this.toolLimpiar.Size = new System.Drawing.Size(71, 24);
             this.toolLimpiar.Text = "Limpiar";
             this.toolLimpiar.Click += new System.EventHandler(this.toolLimpiar_Click);
             // 
@@ -90,7 +93,7 @@
             this.toolAplicar.Image = ((System.Drawing.Image)(resources.GetObject("toolAplicar.Image")));
             this.toolAplicar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolAplicar.Name = "toolAplicar";
-            this.toolAplicar.Size = new System.Drawing.Size(80, 24);
+            this.toolAplicar.Size = new System.Drawing.Size(68, 24);
             this.toolAplicar.Text = "Aplicar";
             this.toolAplicar.Click += new System.EventHandler(this.toolAplicar_Click);
             // 
@@ -105,12 +108,14 @@
             this.diaspago,
             this.inicio,
             this.fin,
-            this.fechaaplicacion});
+            this.fechaaplicacion,
+            this.aniversario,
+            this.noperiodo,
+            this.observaciones});
             this.dgvCargaVacaciones.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCargaVacaciones.Location = new System.Drawing.Point(0, 27);
-            this.dgvCargaVacaciones.Margin = new System.Windows.Forms.Padding(4);
             this.dgvCargaVacaciones.Name = "dgvCargaVacaciones";
-            this.dgvCargaVacaciones.Size = new System.Drawing.Size(1268, 475);
+            this.dgvCargaVacaciones.Size = new System.Drawing.Size(970, 529);
             this.dgvCargaVacaciones.TabIndex = 11;
             // 
             // workVacaciones
@@ -131,6 +136,8 @@
             this.dataGridViewTextBoxColumn2.HeaderText = "Id Trabajador";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.dataGridViewTextBoxColumn2.Visible = false;
             // 
             // dataGridViewTextBoxColumn3
@@ -217,14 +224,28 @@
             this.fechaaplicacion.HeaderText = "Fecha de Inicio";
             this.fechaaplicacion.Name = "fechaaplicacion";
             // 
+            // aniversario
+            // 
+            this.aniversario.HeaderText = "Aniversario";
+            this.aniversario.Name = "aniversario";
+            // 
+            // noperiodo
+            // 
+            this.noperiodo.HeaderText = "No. Periodo";
+            this.noperiodo.Name = "noperiodo";
+            // 
+            // observaciones
+            // 
+            this.observaciones.HeaderText = "Observaciones";
+            this.observaciones.Name = "observaciones";
+            // 
             // frmListaCargaVacaciones
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1268, 502);
+            this.ClientSize = new System.Drawing.Size(970, 556);
             this.Controls.Add(this.dgvCargaVacaciones);
             this.Controls.Add(this.toolBusqueda);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmListaCargaVacaciones";
             this.Text = "Carga de vacaciones";
             this.Load += new System.EventHandler(this.frmListaCargaVacaciones_Load);
@@ -259,5 +280,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn inicio;
         private System.Windows.Forms.DataGridViewTextBoxColumn fin;
         private System.Windows.Forms.DataGridViewTextBoxColumn fechaaplicacion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn aniversario;
+        private System.Windows.Forms.DataGridViewTextBoxColumn noperiodo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn observaciones;
     }
 }
