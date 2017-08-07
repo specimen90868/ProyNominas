@@ -8,9 +8,11 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using aExcel = Microsoft.Office.Interop.Excel;
 
 namespace Nominas
 {
@@ -41,7 +43,7 @@ namespace Nominas
 
         private void toolCargar_Click(object sender, EventArgs e)
         {
-            string conStr, sheetName;
+            string conStr;
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Title = "Seleccionar Excel";
             ofd.RestoreDirectory = false;
@@ -56,68 +58,64 @@ namespace Nominas
 
                 try 
                 {
+                    aExcel.Application xlApp = new aExcel.Application();
+                    aExcel.Workbook xlWorkbook = xlApp.Workbooks.Open(ruta);
+                    aExcel._Worksheet xlWorkSheet = xlWorkbook.Sheets[1];
+                    aExcel.Range xlRange = xlWorkSheet.UsedRange;
+                    String nombreHoja = xlWorkSheet.Name;
 
-                    using (OleDbConnection con = new OleDbConnection(conStr))
+                    if (nombreHoja.Equals("Faltas"))
                     {
-                        using (OleDbCommand cmd = new OleDbCommand())
+                        int rowCount = xlRange.Rows.Count;
+
+                        var ie = xlRange.Cells[1, 4].Value2;
+                        idEmpresa = int.Parse(ie.ToString());
+                        if (GLOBALES.IDEMPRESA != idEmpresa)
                         {
-                            cmd.Connection = con;
-                            con.Open();
-                            DataTable dtExcelSchema = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                            sheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
-                            con.Close();
+                            MessageBox.Show("Información:\r\n" +
+                                            "Los datos a ingresar pertenecen a otra empresa. Verifique. \r\n \r\n La ventana se cerrara.",
+                                            "Información",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Warning);
+                            this.Dispose();
                         }
-                    }
+                        var fi = xlRange.Cells[3, 4].Value2;
+                        var ff = xlRange.Cells[4, 4].Value2;
+                        double dfi = double.Parse(fi.ToString());
+                        double dff = double.Parse(ff.ToString());
+                        inicio = DateTime.FromOADate(dfi);
+                        fin = DateTime.FromOADate(dff);
 
-                    if (sheetName == "Faltas$")
-                    {
-                        using (OleDbConnection con = new OleDbConnection(conStr))
+                        if (inicio != _inicioPeriodo && fin != _finPeriodo)
                         {
-                            using (OleDbCommand cmd = new OleDbCommand())
+                            MessageBox.Show("Los datos a ingresar pertenecen a otro periodo. Verifique. \r\n \r\n La ventana se cerrara.", "Error");
+                            this.Dispose();
+                        }
+
+                        for (int i = 7; i < rowCount; i++)
+                        {
+                            if (xlRange.Cells[i, 1].Value != null)
                             {
-                                using (OleDbDataAdapter oda = new OleDbDataAdapter())
-                                {
-                                    DataTable dt = new DataTable();
-                                    cmd.CommandText = "SELECT * From [" + sheetName + "]";
-                                    cmd.Connection = con;
-                                    con.Open();
-                                    oda.SelectCommand = cmd;
-                                    oda.Fill(dt);
-                                    con.Close();
-
-                                    nombreEmpresa = dt.Columns[1].ColumnName;
-                                    idEmpresa = int.Parse(dt.Columns[3].ColumnName.ToString());
-                                    inicio = DateTime.Parse(dt.Rows[1][3].ToString());
-                                    fin = DateTime.Parse(dt.Rows[2][3].ToString());
-
-                                    if (GLOBALES.IDEMPRESA != idEmpresa)
-                                    {
-                                        MessageBox.Show("Los datos a ingresar pertenecen a otra empresa. Verifique. \r\n \r\n La ventana se cerrara.", "Error");
-                                        this.Dispose();
-                                    }
-
-                                    if (inicio != _inicioPeriodo && fin != _finPeriodo)
-                                    {
-                                        MessageBox.Show("Los datos a ingresar pertenecen a otro periodo. Verifique. \r\n \r\n La ventana se cerrara.", "Error");
-                                        this.Dispose();
-                                    }
-
-                                    for (int i = 5; i < dt.Rows.Count; i++)
-                                    {
-                                        if (dt.Rows[i][0].ToString() != "")
-                                            dgvCargaFaltas.Rows.Add(
-                                                dt.Rows[i][0].ToString(), //NO EMPLEADO
-                                                dt.Rows[i][1].ToString(), //NO. FALTAS
-                                                dt.Rows[1][3].ToString(), //FECHA INICIO
-                                                dt.Rows[2][3].ToString()); //FECHA FIN
-                                    }
-
-                                    for (int i = 0; i < dgvCargaFaltas.Columns.Count; i++)
-                                    {
-                                        dgvCargaFaltas.AutoResizeColumn(i);
-                                    }
-                                }
+                                dgvCargaFaltas.Rows.Add(
+                                    xlRange.Cells[i, 1].Value, //no empleado
+                                    xlRange.Cells[i, 2].Value, //faltas
+                                    xlRange.Cells[3, 4].Value, //fechainicio
+                                    xlRange.Cells[4, 4].Value); //fechafin
                             }
+                        }
+
+                        Marshal.ReleaseComObject(xlRange);
+                        Marshal.ReleaseComObject(xlWorkSheet);
+
+                        xlWorkbook.Close();
+                        Marshal.ReleaseComObject(xlWorkbook);
+
+                        xlApp.Quit();
+                        Marshal.ReleaseComObject(xlApp);
+
+                        for (int i = 0; i < dgvCargaFaltas.Columns.Count; i++)
+                        {
+                            dgvCargaFaltas.AutoResizeColumn(i);
                         }
                     }
                     else {
@@ -359,8 +357,8 @@ namespace Nominas
                                     f.idtrabajador = idEmpleado;
                                     f.periodo = periodo;
                                     f.faltas = 1;
-                                    f.fechainicio = DateTime.Parse(dgvCargaFaltas.Rows[0].Cells["fechainicio"].Value.ToString());
-                                    f.fechafin = DateTime.Parse(dgvCargaFaltas.Rows[0].Cells["fechafin"].Value.ToString());
+                                    f.fechainicio = inicio;
+                                    f.fechafin = fin;
                                     f.fecha = fecha.AddDays(i).Date;
 
                                     cnx.Open();

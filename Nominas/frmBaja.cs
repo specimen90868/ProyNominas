@@ -322,7 +322,7 @@ namespace Nominas
 
                     if (dtpFechaBaja.Value.Date >= fechaInicioVac.Date && dtpFechaBaja.Value.Date <= fechaFinVac.Date)
                     {
-                        MessageBox.Show("No se puede dar de baja. La fecha de baja coninciden con vacaciones.", "Error");
+                        MessageBox.Show("No se puede dar de baja. La fecha de baja coinciden con vacaciones.", "Error");
                         return;
                     }
                     if (dtpFechaBaja.Value.Date <= fechaInicioVac.Date)
@@ -480,10 +480,15 @@ namespace Nominas
                             try
                             {
                                 Bajas.Core.Bajas bajaTrabajador = new Bajas.Core.Bajas();
+                                Empleados.Core.EmpleadosEstatus ee = new Empleados.Core.EmpleadosEstatus();
+                                ee.idtrabajador = _idempleado;
+                                ee.idempresa = GLOBALES.IDEMPRESA;
+                                ee.estatus = 0;
                                 bajaTrabajador.idtrabajador = _idempleado;
                                 cnx.Open();
                                 bh.bajaEmpleado(bajaTrabajador);
                                 nh.eliminaPreNomina(_idempleado, periodo);
+                                eh.bajaEmpleado(ee);
                                 cnx.Close();
                                 baja.fecha = lstNomina[0].fechafin;
                                 baja.diasproporcionales = 1;
