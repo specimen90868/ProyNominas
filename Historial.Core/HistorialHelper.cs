@@ -35,6 +35,16 @@ namespace Historial.Core
             return lstHistorial;
         }
 
+        public object obtenerFechaImss(int idtrabajador, DateTime periodoFin)
+        {
+            Command.CommandText = "select top 1 fecha_imss from MovimientoTrabajador where idtrabajador = @idtrabajador and fecha_imss <= @periodofin and tipomovimiento in (1,2) order by fecha_imss desc";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            Command.Parameters.AddWithValue("periodofin", periodoFin);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public int insertarHistorial(Historial h)
         {
             Command.CommandText = "insert into MovimientoTrabajador (idtrabajador, tipomovimiento, valor, fecha_imss, fecha_sistema, idempresa, motivobaja, iddepartamento, idpuesto) values " +

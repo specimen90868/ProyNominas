@@ -103,36 +103,44 @@ namespace Nominas
 
         private void toolBaja_Click(object sender, EventArgs e)
         {
-            string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-            int fila = dgvUsuarios.CurrentCell.RowIndex;
-            int idusuario = int.Parse(dgvUsuarios.Rows[fila].Cells[0].Value.ToString());
-
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            Usuarios.Core.UsuariosHelper uh = new Usuarios.Core.UsuariosHelper();
-            uh.Command = cmd;
-
-            Usuarios.Core.Usuarios usuario = new Usuarios.Core.Usuarios();
-            usuario.idusuario = idusuario;
-
-            try
+            if (dgvUsuarios.Rows.Count != 0)
             {
-                DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el usuario?", "Confirmación", MessageBoxButtons.YesNo);
-                if (respuesta == DialogResult.Yes)
+                string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+                int fila = dgvUsuarios.CurrentCell.RowIndex;
+                int idusuario = int.Parse(dgvUsuarios.Rows[fila].Cells[0].Value.ToString());
+
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
+                cmd.Connection = cnx;
+
+                Usuarios.Core.UsuariosHelper uh = new Usuarios.Core.UsuariosHelper();
+                uh.Command = cmd;
+
+                Usuarios.Core.Usuarios usuario = new Usuarios.Core.Usuarios();
+                usuario.idusuario = idusuario;
+
+                try
                 {
-                    cnx.Open();
-                    uh.bajaUsuario(usuario);
-                    cnx.Close();
-                    cnx.Dispose();
-                    ListaUsuarios();
+                    DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el usuario?", "Confirmación", MessageBoxButtons.YesNo);
+                    if (respuesta == DialogResult.Yes)
+                    {
+                        cnx.Open();
+                        uh.bajaUsuario(usuario);
+                        cnx.Close();
+                        cnx.Dispose();
+                        ListaUsuarios();
+                    }
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
                 }
             }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+            else {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
+            
         }
 
         private void txtBuscar_Click(object sender, EventArgs e)
@@ -187,8 +195,16 @@ namespace Nominas
             u.OnNuevoUsuario += u_OnNuevoUsuario;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {
-                fila = dgvUsuarios.CurrentCell.RowIndex;
-                u._idusuario = int.Parse(dgvUsuarios.Rows[fila].Cells[0].Value.ToString());
+                if (dgvUsuarios.Rows.Count != 0)
+                {
+                    fila = dgvUsuarios.CurrentCell.RowIndex;
+                    u._idusuario = int.Parse(dgvUsuarios.Rows[fila].Cells[0].Value.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
             }
             u._tipoOperacion = edicion;
             u.Show();

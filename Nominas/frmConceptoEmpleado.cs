@@ -129,34 +129,42 @@ namespace Nominas
 
         private void toolBaja_Click(object sender, EventArgs e)
         {
-            int fila = dgvConceptosEmpleado.CurrentCell.RowIndex;
-            int id = int.Parse(dgvConceptosEmpleado.Rows[fila].Cells[0].Value.ToString());
-
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            ch = new Conceptos.Core.ConceptosHelper();
-            ch.Command = cmd;
-
-            Conceptos.Core.ConceptoTrabajador ct = new Conceptos.Core.ConceptoTrabajador();
-            ct.id = id;
-
-            DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el concepto?", "Confirmación", MessageBoxButtons.YesNo);
-            if (respuesta == DialogResult.Yes)
+            if (dgvConceptosEmpleado.Rows.Count != 0)
             {
-                try
+                int fila = dgvConceptosEmpleado.CurrentCell.RowIndex;
+                int id = int.Parse(dgvConceptosEmpleado.Rows[fila].Cells[0].Value.ToString());
+
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
+                cmd.Connection = cnx;
+
+                ch = new Conceptos.Core.ConceptosHelper();
+                ch.Command = cmd;
+
+                Conceptos.Core.ConceptoTrabajador ct = new Conceptos.Core.ConceptoTrabajador();
+                ct.id = id;
+
+                DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el concepto?", "Confirmación", MessageBoxButtons.YesNo);
+                if (respuesta == DialogResult.Yes)
                 {
-                    cnx.Open();
-                    ch.eliminaConceptoTrabajador(ct);
-                    cnx.Close();
-                    cnx.Dispose();
-                    ListaConceptosEmpleado();
+                    try
+                    {
+                        cnx.Open();
+                        ch.eliminaConceptoTrabajador(ct);
+                        cnx.Close();
+                        cnx.Dispose();
+                        ListaConceptosEmpleado();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+                    }
                 }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
-                }
+            }
+            else
+            {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
         }
     }

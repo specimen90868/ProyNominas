@@ -62,4 +62,18 @@ namespace SatCatalogos.Core
         public string tipopercepcion { get; set; }
         public string descripcion { get; set; }
     }
+
+    public class satTipoOtroPago
+    {
+        public int id { get; set; }
+        public string tipopago { get; set; }
+        public string descripcion { get; set; }
+    }
+
+    public class satTipoIncapacidad
+    {
+        public int id { get; set; }
+        public string tipoincapacidad { get; set; }
+        public string descripcion { get; set; }
+    }
 }

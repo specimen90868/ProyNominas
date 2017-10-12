@@ -107,8 +107,16 @@ namespace Nominas
             int fila = 0;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {
-                fila = dgvSubsidio.CurrentCell.RowIndex;
-                s._idSubsidio = int.Parse(dgvSubsidio.Rows[fila].Cells[0].Value.ToString());
+                if (dgvSubsidio.Rows.Count != 0)
+                {
+                    fila = dgvSubsidio.CurrentCell.RowIndex;
+                    s._idSubsidio = int.Parse(dgvSubsidio.Rows[fila].Cells[0].Value.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
             }
             s._tipoOperacion = edicion;
             s.Show();
@@ -137,32 +145,40 @@ namespace Nominas
 
         private void toolBaja_Click(object sender, EventArgs e)
         {
-            DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el subsidio?", "Confirmación", MessageBoxButtons.YesNo);
-            if (respuesta == DialogResult.Yes)
+            if (dgvSubsidio.Rows.Count != 0)
             {
-                string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-                int fila = dgvSubsidio.CurrentCell.RowIndex;
-                int id = int.Parse(dgvSubsidio.Rows[fila].Cells[0].Value.ToString());
-                cnx = new SqlConnection(cdn);
-                cmd = new SqlCommand();
-                cmd.Connection = cnx;
-                sh = new TablaSubsidio.Core.SubsidioHelper();
-                sh.Command = cmd;
-                TablaSubsidio.Core.TablaSubsidio subsidio = new TablaSubsidio.Core.TablaSubsidio();
-                subsidio.id = id;
+                DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el subsidio?", "Confirmación", MessageBoxButtons.YesNo);
+                if (respuesta == DialogResult.Yes)
+                {
+                    string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+                    int fila = dgvSubsidio.CurrentCell.RowIndex;
+                    int id = int.Parse(dgvSubsidio.Rows[fila].Cells[0].Value.ToString());
+                    cnx = new SqlConnection(cdn);
+                    cmd = new SqlCommand();
+                    cmd.Connection = cnx;
+                    sh = new TablaSubsidio.Core.SubsidioHelper();
+                    sh.Command = cmd;
+                    TablaSubsidio.Core.TablaSubsidio subsidio = new TablaSubsidio.Core.TablaSubsidio();
+                    subsidio.id = id;
 
-                try
-                {
-                    cnx.Open();
-                    sh.eliminaSubsidio(subsidio);
-                    cnx.Close();
-                    cnx.Dispose();
-                    ListaSubsidio();
+                    try
+                    {
+                        cnx.Open();
+                        sh.eliminaSubsidio(subsidio);
+                        cnx.Close();
+                        cnx.Dispose();
+                        ListaSubsidio();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+                    }
                 }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
-                }
+            }
+            else
+            {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
         }
 

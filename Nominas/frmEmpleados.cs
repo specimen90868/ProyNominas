@@ -11,8 +11,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using System.Globalization;
 using System.Diagnostics;
 
@@ -246,95 +244,6 @@ namespace Nominas
                 toolHistorial.Enabled = false;
         }
 
-        private async void dtpFechaNacimiento_Leave(object sender, EventArgs e)
-        {
-            MessageBox.Show("Al dar Aceptar se calculará el RFC, por favor esperar a que se muestre.\r\n\r\n" +
-                            "El calculo del RFC es informativo. La RENAPO es la entidad oficial para otorgar el RFC.","Calculo del RFC");
-            txtRFC.Text = await obtieneRFC();
-            //Empleados.Core.RFC rfc = new Empleados.Core.RFC();
-            //string _rfc = rfc.ObtieneRFC(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text);
-            //string _homo = rfc.ClaveHomonimia(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text);
-            //string _fecha = dtpFechaNacimiento.Value.ToString("yyMMdd");
-            //string _dv = rfc.DigitoVerificador(_rfc + _fecha + _homo);
-            //_rfc = _rfc + _fecha + _homo + _dv;
-            //txtRFC.Text = _rfc;
-        }
-
-        private async Task<string> obtieneRFC()
-        {
-            string seleniumDriver = ConfigurationManager.AppSettings["DriverSelenium"];
-            string valorRFC = "";
-            IWebDriver driver;
-            var chromeDriverService = ChromeDriverService.CreateDefaultService(seleniumDriver);
-            chromeDriverService.HideCommandPromptWindow = true;
-            var options = new ChromeOptions();
-            options.AddArgument("--window-position=-32000,-32000");
-            driver = new ChromeDriver(chromeDriverService, options);
-            try
-            {
-                driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(20));
-                driver.Navigate().GoToUrl("http://www.mi-rfc.com.mx/consulta-rfc-homoclave");
-                IWebElement nombre = driver.FindElement(By.Id("nameInput"));
-                IWebElement paterno = driver.FindElement(By.Id("fatherSurnameInput"));
-                IWebElement materno = driver.FindElement(By.Id("motherSurnameInput"));
-                IWebElement dia = driver.FindElement(By.Name("birth_day"));
-                IWebElement mes = driver.FindElement(By.Name("birth_month"));
-                IWebElement anio = driver.FindElement(By.Name("birth_year"));
-                IWebElement rfc = driver.FindElement(By.XPath(".//div[@class='controls no-bottom']/a"));
-
-                nombre.SendKeys(txtNombre.Text);
-                paterno.SendKeys(txtApPaterno.Text);
-                materno.SendKeys(txtApMaterno.Text);
-                dia.SendKeys(dtpFechaNacimiento.Value.Day.ToString());
-                mes.SendKeys(Mes(dtpFechaNacimiento.Value.Month));
-                anio.SendKeys(dtpFechaNacimiento.Value.Year.ToString());
-
-                rfc.Click();
-
-                driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(5));
-
-                IWebElement clave = driver.FindElement(By.XPath(".//div[@class='text']/span"));
-                valorRFC = clave.Text;
-                driver.Close();
-                driver.Dispose();
-                Process[] pDriverChrome = Process.GetProcessesByName("chromedriver.exe");
-                for (int i = 0; i < pDriverChrome.Length; i++)
-                {
-                    pDriverChrome[i].Kill();
-                }
-                return valorRFC;
-            }
-            catch (Selenium.SeleniumException error)
-            {
-                driver.Close();
-                driver.Dispose();
-                MessageBox.Show("Se encontró un error al obtener el RFC. \r\n\r\n Error: \r\n\r\n " + error.Message);
-                return "";
-            }
-
-        }
-
-        private string Mes(int valor)
-        {
-            string mes = "";
-            switch (valor) {
-
-                case 1: mes = "Enero"; break;
-                case 2: mes = "Febrero"; break;
-                case 3: mes = "Marzo"; break;
-                case 4: mes = "Abril"; break;
-                case 5: mes = "Mayo"; break;
-                case 6: mes = "Junio"; break;
-                case 7: mes = "Julio"; break;
-                case 8: mes = "Agosto"; break;
-                case 9: mes = "Septiembre"; break;
-                case 10: mes = "Octubre"; break;
-                case 11: mes = "Noviembre"; break;
-                case 12: mes = "Diciembre"; break; 
-            }
-            return mes;
-        }
-
         private void cmbPeriodo_SelectedIndexChanged(object sender, EventArgs e)
         {
             cmbTipoSalario.Enabled = true;
@@ -422,6 +331,18 @@ namespace Nominas
             if (txtNSS.Text.Length != 11)
             {
                 MessageBox.Show("El campo NSS es mayor o meno a 11 dígitos.", "Error");
+                return;
+            }
+
+            if (txtRFC.Text.Length != 13)
+            {
+                MessageBox.Show("El campo RFC es mayor o meno a 13 dígitos.", "Error");
+                return;
+            }
+
+            if (txtCURP.Text.Length != 18)
+            {
+                MessageBox.Show("El campo CURP es mayor o meno a 18 dígitos.", "Error");
                 return;
             }
 
@@ -554,7 +475,7 @@ namespace Nominas
                         cnx.Open();
                         eh.insertaEmpleado(em);
                         idtrabajador = (int)eh.obtenerIdTrabajador(em);
-
+                        eh.insertaBitacora(GLOBALES.IDUSUARIO, idtrabajador, GLOBALES.IDEMPRESA, "Trabajadores", "INSERT", "NUEVO REGISTRO");
                         //h.idtrabajador = idtrabajador;
                         //hh.insertarHistorial(h);
 
@@ -662,6 +583,10 @@ namespace Nominas
                         cnx.Open();
                         eh.actualizaEmpleado(em);
 
+                        eh.insertaBitacora(GLOBALES.IDUSUARIO, _idempleado, GLOBALES.IDEMPRESA, "Trabajadores", "UPDATE",
+                            String.Format("NOMBRE:{0},PATERNO:{1},MATERNO:{2},FECHAINGRESO:{3},DEPTO:{4},PUESTO:{5},RFC:{6},CURP:{7},SDI:{8},SD:{9},SUELDO:{10},ESTATUS:{11},CUENTA:{12},CLABE:{13}",
+                                            em.nombres, em.paterno, em.materno, em.fechaingreso, em.iddepartamento, em.idpuesto, em.rfc, em.curp, em.sdi, em.sd, em.sueldo, em.estatus, em.cuenta, em.clabe));
+
                         a.idtrabajador = _idempleado;
                         ah.actualizaAlta(a);
 
@@ -720,78 +645,6 @@ namespace Nominas
             return sexo.ToString();
         }
 
-        private string ObtieneEstado()
-        {
-            switch (cmbEstado.Text)
-            {
-                case "AGUASCALIENTES": estado = "AS";
-                    break;
-                case "BAJA CALIFORNIA": estado = "BC";
-                    break;
-                case "BAJA CALIFORNIA SUR": estado = "BS";
-                    break;
-                case "CAMPECHE": estado = "CC";
-                    break;
-                case "CHIAPAS": estado = "CS";
-                    break;
-                case "CHIHUAHUA": estado = "CH";
-                    break;
-                case "COAHUILA": estado = "CL";
-                    break;
-                case "COLIMA": estado = "CM";
-                    break;
-                case "DISTRITO FEDERAL": estado = "DF";
-                    break;
-                case "DURANGO": estado = "DG";
-                    break;
-                case "GUANAJUATO": estado = "GT";
-                    break;
-                case "GUERRERO": estado = "GR";
-                    break;
-                case "HIDALGO": estado = "HG";
-                    break;
-                case "JALISCO": estado = "JC";
-                    break;
-                case "MEXICO": estado = "MC";
-                    break;
-                case "MICHOACAN": estado = "MN";
-                    break;
-                case "MORELOS": estado = "MS";
-                    break;
-                case "NAYARIT": estado = "NT";
-                    break;
-                case "NUEVO LEON": estado = "NL";
-                    break;
-                case "OAXACA": estado = "OC";
-                    break;
-                case "PUEBLA": estado = "PL";
-                    break;
-                case "QUERETARO": estado = "QT";
-                    break;
-                case "QUINTANA ROO": estado = "QR";
-                    break;
-                case "SAN LUIS POTOSI": estado = "SP";
-                    break;
-                case "SINALOA": estado = "SL";
-                    break;
-                case "SONORA": estado = "SR";
-                    break;
-                case "TABASCO": estado = "TC";
-                    break;
-                case "TAMAULIPAS": estado = "TS";
-                    break;
-                case "TLAXCALA": estado = "TL";
-                    break;
-                case "VERACRUZ": estado = "VZ";
-                    break;
-                case "YUCATAN": estado = "YN";
-                    break;
-                case "ZACATECAS": estado = "ZS";
-                    break;
-            }
-            return estado;
-        }
-
         private int ObtieneEdad(DateTime fecha)
         {
             DateTime fechaNacimiento = fecha;
@@ -801,14 +654,14 @@ namespace Nominas
 
         private void btnObtenerCurp_Click(object sender, EventArgs e)
         {
-            Empleados.Core.CURP curp = new Empleados.Core.CURP();
-            string rfc = curp.ObtieneRFC_CURP(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text);
-            string fecha = dtpFechaNacimiento.Value.Date.ToString("yyMMdd");
-            string _sexo = ObtieneSexo();
-            string estado = curp.TablaEstados(cmbEstado.Text);
-            string consonantes = curp.ConsonantesRFC(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text);
-            string dv = curp.DigitoVerificador(rfc + fecha + _sexo + estado + consonantes);
-            txtCURP.Text = rfc + fecha + _sexo + estado + consonantes + "0" + dv;
+            //Empleados.Core.CURP curp = new Empleados.Core.CURP();
+            //string rfc = curp.ObtieneRFC_CURP(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text);
+            //string fecha = dtpFechaNacimiento.Value.Date.ToString("yyMMdd");
+            //string _sexo = ObtieneSexo();
+            //string estado = curp.TablaEstados(cmbEstado.Text);
+            //string consonantes = curp.ConsonantesRFC(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text);
+            //string dv = curp.DigitoVerificador(rfc + fecha + _sexo + estado + consonantes);
+            //txtCURP.Text = rfc + fecha + _sexo + estado + consonantes + "0" + dv;
         }
 
         private void btnAsignar_Click(object sender, EventArgs e)
@@ -852,78 +705,78 @@ namespace Nominas
 
         private void txtCURP_Leave(object sender, EventArgs e)
         {
-            if (txtCURP.Text.Length == 0 || txtCURP.Text.Length < 18 || txtCURP.Text.Length >= 19)
-            {
-                MessageBox.Show("Verifique el CURP, ya que es menor a 18 digitos o los excede.", "Error");
-                return;
-            }
+            //if (txtCURP.Text.Length == 0 || txtCURP.Text.Length < 18 || txtCURP.Text.Length >= 19)
+            //{
+            //    MessageBox.Show("Verifique el CURP, ya que es menor a 18 digitos o los excede.", "Error");
+            //    return;
+            //}
 
 
-            int numero17 = 0;
-            string posicion17 = txtCURP.Text.Substring(16, 1);
-            string anio = txtCURP.Text.Substring(4, 2);
-            string mes = txtCURP.Text.Substring(6, 2);
-            string dia = txtCURP.Text.Substring(8, 2);
-            string estado = txtCURP.Text.Substring(11, 2);
-            string sexo = txtCURP.Text.Substring(10, 1);
-            DateTime fechaNacimiento;
-            try
-            {
-                numero17 = int.Parse(posicion17);
-                fechaNacimiento = new DateTime(int.Parse("19" + anio), int.Parse(mes), int.Parse(dia));
-                dtpFechaNacimiento.Value = fechaNacimiento;
-            }
-            catch
-            {
-                fechaNacimiento = new DateTime(int.Parse("20" + anio), int.Parse(mes), int.Parse(dia));
-                dtpFechaNacimiento.Value = fechaNacimiento;
-            }
+            //int numero17 = 0;
+            //string posicion17 = txtCURP.Text.Substring(16, 1);
+            //string anio = txtCURP.Text.Substring(4, 2);
+            //string mes = txtCURP.Text.Substring(6, 2);
+            //string dia = txtCURP.Text.Substring(8, 2);
+            //string estado = txtCURP.Text.Substring(11, 2);
+            //string sexo = txtCURP.Text.Substring(10, 1);
+            //DateTime fechaNacimiento;
+            //try
+            //{
+            //    numero17 = int.Parse(posicion17);
+            //    fechaNacimiento = new DateTime(int.Parse("19" + anio), int.Parse(mes), int.Parse(dia));
+            //    dtpFechaNacimiento.Value = fechaNacimiento;
+            //}
+            //catch
+            //{
+            //    fechaNacimiento = new DateTime(int.Parse("20" + anio), int.Parse(mes), int.Parse(dia));
+            //    dtpFechaNacimiento.Value = fechaNacimiento;
+            //}
 
-            switch (estado)
-            {
-                case "AS": estado = "AGUASCALIENTES"; break;
-                case "BC": estado = "BAJA CALIFORNIA"; break;
-                case "BS": estado = "BAJA CALIFORNIA SUR"; break;
-                case "CC": estado = "CAMPECHE"; break;
-                case "CL": estado = "COAHUILA"; break;
-                case "CM": estado = "COLIMA"; break;
-                case "CS": estado = "CHIAPAS"; break;
-                case "CH": estado = "CHIHUAHUA"; break;
-                case "DF": estado = "DISTRITO FEDERAL"; break;
-                case "DG": estado = "DURANGO"; break;
-                case "GT": estado = "GUANAJUATO"; break;
-                case "GR": estado = "GUERRERO"; break;
-                case "HG": estado = "HIDALGO"; break;
-                case "JC": estado = "JALISCO"; break;
-                case "MC": estado = "MEXICO"; break;
-                case "MN": estado = "MICHOACAN"; break;
-                case "MS": estado = "MORELOS"; break;
-                case "NT": estado = "NAYARIT"; break;
-                case "NL": estado = "NUEVO LEON"; break;
-                case "OC": estado = "OAXACA"; break;
-                case "PL": estado = "PUEBLA"; break;
-                case "QT": estado = "QUERETARO"; break;
-                case "QR": estado = "QUINTANA ROO"; break;
-                case "SP": estado = "SAN LUIS POTOSI"; break;
-                case "SL": estado = "SINALOA"; break;
-                case "SR": estado = "SONORA"; break;
-                case "TC": estado = "TABASCO"; break;
-                case "TS": estado = "TAMAULIPAS"; break;
-                case "TL": estado = "TLAXCALA"; break;
-                case "VZ": estado = "VERACRUZ"; break;
-                case "YN": estado = "YUCATAN"; break;
-                case "ZS": estado = "ZACATECAS"; break;
-                default: MessageBox.Show("Verifique el CURP, es incorrecta.", "Error");
-                    return;
-            }
-            cmbEstado.SelectedIndex = cmbEstado.FindString(estado);
+            //switch (estado)
+            //{
+            //    case "AS": estado = "AGUASCALIENTES"; break;
+            //    case "BC": estado = "BAJA CALIFORNIA"; break;
+            //    case "BS": estado = "BAJA CALIFORNIA SUR"; break;
+            //    case "CC": estado = "CAMPECHE"; break;
+            //    case "CL": estado = "COAHUILA"; break;
+            //    case "CM": estado = "COLIMA"; break;
+            //    case "CS": estado = "CHIAPAS"; break;
+            //    case "CH": estado = "CHIHUAHUA"; break;
+            //    case "DF": estado = "DISTRITO FEDERAL"; break;
+            //    case "DG": estado = "DURANGO"; break;
+            //    case "GT": estado = "GUANAJUATO"; break;
+            //    case "GR": estado = "GUERRERO"; break;
+            //    case "HG": estado = "HIDALGO"; break;
+            //    case "JC": estado = "JALISCO"; break;
+            //    case "MC": estado = "MEXICO"; break;
+            //    case "MN": estado = "MICHOACAN"; break;
+            //    case "MS": estado = "MORELOS"; break;
+            //    case "NT": estado = "NAYARIT"; break;
+            //    case "NL": estado = "NUEVO LEON"; break;
+            //    case "OC": estado = "OAXACA"; break;
+            //    case "PL": estado = "PUEBLA"; break;
+            //    case "QT": estado = "QUERETARO"; break;
+            //    case "QR": estado = "QUINTANA ROO"; break;
+            //    case "SP": estado = "SAN LUIS POTOSI"; break;
+            //    case "SL": estado = "SINALOA"; break;
+            //    case "SR": estado = "SONORA"; break;
+            //    case "TC": estado = "TABASCO"; break;
+            //    case "TS": estado = "TAMAULIPAS"; break;
+            //    case "TL": estado = "TLAXCALA"; break;
+            //    case "VZ": estado = "VERACRUZ"; break;
+            //    case "YN": estado = "YUCATAN"; break;
+            //    case "ZS": estado = "ZACATECAS"; break;
+            //    default: MessageBox.Show("Verifique el CURP, es incorrecta.", "Error");
+            //        return;
+            //}
+            //cmbEstado.SelectedIndex = cmbEstado.FindString(estado);
 
-            if (sexo == "H")
-                rbtnHombre.Checked = true;
-            else
-                rbtnMujer.Checked = true;
+            //if (sexo == "H")
+            //    rbtnHombre.Checked = true;
+            //else
+            //    rbtnMujer.Checked = true;
 
-            dtpFechaNacimiento_Leave(sender, e);
+            //dtpFechaNacimiento_Leave(sender, e);
         }
 
         private void mtxtNoEmpleado_Leave(object sender, EventArgs e)
@@ -963,6 +816,16 @@ namespace Nominas
                 e.Handled = false;
             else
                 e.Handled = true;
+        }
+
+        private void dtpFechaIngreso_ValueChanged(object sender, EventArgs e)
+        {
+            SendKeys.Send("{RIGHT}");
+        }
+
+        private void dtpFechaNacimiento_ValueChanged(object sender, EventArgs e)
+        {
+            SendKeys.Send("{RIGHT}");
         }
     }
 }

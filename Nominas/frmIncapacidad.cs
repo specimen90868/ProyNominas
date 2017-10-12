@@ -210,7 +210,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                datoFechas = incidenciah.finIncapacidad(_idEmpleado);              
+                datoFechas = incidenciah.finIncapacidad(_idEmpleado, GLOBALES.IDEMPRESA);              
                 cnx.Close();
             }
             catch {
@@ -341,6 +341,24 @@ namespace Nominas
                         incidencia2.fechainicio = fechaInicioIncapacidad.Date;
                         incidencia2.fechafin = fechaFinIncapacidad.Date;
 
+                        if (int.Parse(cmbTipoIncapacidad.SelectedValue.ToString()) == 44 || int.Parse(cmbTipoIncapacidad.SelectedValue.ToString()) == 47 || int.Parse(cmbTipoIncapacidad.SelectedValue.ToString()) == 48)
+                        {
+                            incidencia2.idcatsat = 1;
+                            incidencia2.valorcatsat = "01";
+                        }
+
+                        if (int.Parse(cmbTipoIncapacidad.SelectedValue.ToString()) == 45 || int.Parse(cmbTipoIncapacidad.SelectedValue.ToString()) == 49)
+                        {
+                            incidencia2.idcatsat = 2;
+                            incidencia2.valorcatsat = "02";
+                        }
+
+                        if (int.Parse(cmbTipoIncapacidad.SelectedValue.ToString()) == 46)
+                        {
+                            incidencia2.idcatsat = 3;
+                            incidencia2.valorcatsat = "03";
+                        }
+
                         lstIncidencias.Add(incidencia2);
                         
                     }
@@ -357,6 +375,24 @@ namespace Nominas
                         incidencia2.periodofin = periodoFin.Date;
                         incidencia2.idcontrol = int.Parse(cmbTipoCaso.SelectedValue.ToString());
                         incidencia2.idincapacidad = int.Parse(cmbTipoIncapacidad.SelectedValue.ToString());
+
+                        if (int.Parse(cmbTipoIncapacidad.SelectedValue.ToString()) == 44 || int.Parse(cmbTipoIncapacidad.SelectedValue.ToString()) == 47 || int.Parse(cmbTipoIncapacidad.SelectedValue.ToString()) == 48)
+                        {
+                            incidencia2.idcatsat = 1;
+                            incidencia2.valorcatsat = "01";
+                        }
+
+                        if (int.Parse(cmbTipoIncapacidad.SelectedValue.ToString()) == 45 || int.Parse(cmbTipoIncapacidad.SelectedValue.ToString()) == 49)
+                        {
+                            incidencia2.idcatsat = 2;
+                            incidencia2.valorcatsat = "02";
+                        }
+
+                        if (int.Parse(cmbTipoIncapacidad.SelectedValue.ToString()) == 46)
+                        {
+                            incidencia2.idcatsat = 3;
+                            incidencia2.valorcatsat = "03";
+                        }
 
                         if (!FLAG)
                         {
@@ -423,7 +459,7 @@ namespace Nominas
             switch (_tipoForma)
             {
                 case 0://ALTA EN BASE DE DATOS
-
+                    
                         DataTable dt = new DataTable();
                         DataRow dtFila;
                         dt.Columns.Add("id", typeof(Int32));
@@ -439,6 +475,8 @@ namespace Nominas
                         dt.Columns.Add("periodofin", typeof(DateTime));
                         dt.Columns.Add("idcontrol", typeof(Int32));
                         dt.Columns.Add("idincapacidad", typeof(Int32));
+                        dt.Columns.Add("idcatsat", typeof(Int32));
+                        dt.Columns.Add("valorcatsat", typeof(String));
 
                         for (int i = 0; i < lstIncidencias.Count; i++)
                         {
@@ -456,15 +494,20 @@ namespace Nominas
                             dtFila["periodofin"] = lstIncidencias[i].periodofin;
                             dtFila["idcontrol"] = lstIncidencias[i].idcontrol;
                             dtFila["idincapacidad"] = lstIncidencias[i].idincapacidad;
+                            dtFila["idcatsat"] = lstIncidencias[i].idcatsat;
+                            dtFila["valorcatsat"] = lstIncidencias[i].valorcatsat;
                             dt.Rows.Add(dtFila);
                         }
 
                         try
                         {
-
+                            eh = new Empleados.Core.EmpleadosHelper();
+                            eh.Command = cmd;
                             cnx.Open();
                             ih.bulkIncidencia(dt, "tmpIncidencias");
                             ih.stpIncidencia(dtpInicioPeriodo.Value.Date, dtpFinPeriodo.Value.Date);
+                            eh.insertaBitacora(GLOBALES.IDUSUARIO, _idEmpleado, GLOBALES.IDEMPRESA, "Incidencias", "INSERT", 
+                                    String.Format("CERTIFICADO: {0}, DIAS: {1}, FECHAINICIO: {2}", txtCertificado.Text, txtDiasIncapacidad.Text, dtpFechaInicio.Value.Date.ToString()));
                             cnx.Close();
                             cnx.Dispose();
 
@@ -538,6 +581,11 @@ namespace Nominas
         private void mtxtNoEmpleado_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
         {
 
+        }
+
+        private void dtpFechaInicio_ValueChanged(object sender, EventArgs e)
+        {
+            SendKeys.Send("{RIGHT}");
         } 
     }
 }

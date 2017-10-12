@@ -88,14 +88,22 @@ namespace Nominas
 
         private void Seleccion(int edicion)
         {
-            int fila = 0;
-            frmComplementos c = new frmComplementos();
-            fila = dgvComplementos.CurrentCell.RowIndex;
-            c._idEmpleado = int.Parse(dgvComplementos.Rows[fila].Cells[0].Value.ToString());
-            c._nombreEmpleado = dgvComplementos.Rows[fila].Cells[2].Value.ToString();
-            c._tipoOperacion = edicion;
-            c.StartPosition = FormStartPosition.CenterScreen;
-            c.Show();
+            if (dgvComplementos.Rows.Count != 0)
+            {
+                int fila = 0;
+                frmComplementos c = new frmComplementos();
+                fila = dgvComplementos.CurrentCell.RowIndex;
+                c._idEmpleado = int.Parse(dgvComplementos.Rows[fila].Cells[0].Value.ToString());
+                c._nombreEmpleado = dgvComplementos.Rows[fila].Cells[2].Value.ToString();
+                c._tipoOperacion = edicion;
+                c.StartPosition = FormStartPosition.CenterScreen;
+                c.Show();
+            }
+            else
+            {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
         }
 
         private void frmListaComplementos_Load(object sender, EventArgs e)

@@ -119,14 +119,15 @@ namespace Incidencias.Core
             return dato;
         }
 
-        public List<Incidencias> finIncapacidad(int idtrabajador)
+        public List<Incidencias> finIncapacidad(int idtrabajador, int idempresa)
         {
             List<Incidencias> lstIncidencias = new List<Incidencias>();
             DataTable dt = new DataTable();
-            Command.CommandText = @"select top 10 inicioincapacidad, finincapacidad from incidencias where idempresa = 2 and idtrabajador = @idtrabajador
+            Command.CommandText = @"select top 10 inicioincapacidad, finincapacidad from incidencias where idempresa = @idempresa and idtrabajador = @idtrabajador
                     group by inicioincapacidad, finincapacidad
                     order by inicioincapacidad desc";
             Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idempresa);
             Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
             dt = SelectData(Command);
             for (int i = 0; i < dt.Rows.Count; i++)

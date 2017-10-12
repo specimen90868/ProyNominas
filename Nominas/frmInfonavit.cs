@@ -279,12 +279,15 @@ namespace Nominas
             Conceptos.Core.ConceptoTrabajador ctSeguroInfonavit = new Conceptos.Core.ConceptoTrabajador();
             ctSeguroInfonavit.idempleado = _idEmpleado;
 
+            object seguro;
+
             try
             {
                 cnx.Open();
                 ctInfonavit.idconcepto = (int)ch.obtenerIdConcepto(9, GLOBALES.IDEMPRESA, Periodo);
-                ctSeguroInfonavit.idconcepto = (int)ch.obtenerIdConcepto(21, GLOBALES.IDEMPRESA, Periodo);
+                seguro = ch.obtenerIdConcepto(21, GLOBALES.IDEMPRESA, Periodo); 
                 cnx.Close();
+                ctSeguroInfonavit.idconcepto = seguro == null ? 0 : (int)seguro;
             }
             catch
             {
@@ -298,6 +301,8 @@ namespace Nominas
                 case 0:
                     try
                     {
+                        eh = new Empleados.Core.EmpleadosHelper();
+                        eh.Command = cmd;
                         int existeCredito = 0;
                         cnx.Open();
                         existeCredito = int.Parse(ih.existeInfonavit(_idEmpleado, txtNumeroCredito.Text.Trim()).ToString());
@@ -310,8 +315,11 @@ namespace Nominas
                         else
                         {
                             ih.insertaInfonavit(i);
+                            eh.insertaBitacora(GLOBALES.IDUSUARIO, _idEmpleado, GLOBALES.IDEMPRESA, "Infonavit", "INSERT", 
+                                String.Format("CREDITO:{0},DESCUENTO:{1},VALOR:{2},FECHA:{3}",i.credito,i.descuento,i.valordescuento,i.fecha));
                             ch.insertaConceptoTrabajador(ctInfonavit);
-                            ch.insertaConceptoTrabajador(ctSeguroInfonavit);
+                            if(!ctSeguroInfonavit.idconcepto.Equals(0))
+                                ch.insertaConceptoTrabajador(ctSeguroInfonavit);
                         }
                         cnx.Close();
                         cnx.Dispose();
@@ -325,16 +333,22 @@ namespace Nominas
                 case 2:
                     try
                     {
+                        eh = new Empleados.Core.EmpleadosHelper();
+                        eh.Command = cmd;
                         cnx.Open();
                         if (_modificar == 0)
                         {
                             i.idinfonavit = IdInfonavit;
                             ih.actualizaInfonavit(i);
+                            eh.insertaBitacora(GLOBALES.IDUSUARIO, _idEmpleado, GLOBALES.IDEMPRESA, "Infonavit", "UPDATE",
+                                String.Format("CREDITO:{0},DESCUENTO:{1},VALOR:{2},FECHA:{3}", i.credito, i.descuento, i.valordescuento, i.fecha));
                         }
                         else if (_modificar == 1)
                         {
                             ih.insertaInfonavit(i);
                             ih.actualizaEstatusInfonavit(IdInfonavit, DateTime.Now, GLOBALES.IDUSUARIO);
+                            eh.insertaBitacora(GLOBALES.IDUSUARIO, _idEmpleado, GLOBALES.IDEMPRESA, "Infonavit", "UPDATE",
+                                String.Format("CREDITO:{0},DESCUENTO:{1},VALOR:{2},FECHA:{3}", i.credito, i.descuento, i.valordescuento, i.fecha));
                         }
                         cnx.Close();
                         cnx.Dispose();

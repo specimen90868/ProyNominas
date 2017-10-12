@@ -36,11 +36,6 @@ namespace Nominas
         public event delOnNuevoDepto OnNuevoDepto;
         #endregion
 
-        private void toolGuardarCerrar_Click(object sender, EventArgs e)
-        {
-            guardar(1);
-        }
-
         private void toolGuardarNuevo_Click(object sender, EventArgs e)
         {
             guardar(0);
@@ -108,13 +103,10 @@ namespace Nominas
             switch (tipoGuardar)
             {
                 case 0:
-                    GLOBALES.LIMPIAR(this, typeof(TextBox));
-                    //limpiar(this, typeof(TextBox));
-                    break;
-                case 1:
+                    MessageBox.Show(String.Format("Departamento: {0} Ingresado con éxito.", txtDescripcion.Text), "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     if (OnNuevoDepto != null)
                         OnNuevoDepto(_tipoOperacion);
-                    this.Dispose();
+                    GLOBALES.LIMPIAR(this, typeof(TextBox));
                     break;
             }
         }

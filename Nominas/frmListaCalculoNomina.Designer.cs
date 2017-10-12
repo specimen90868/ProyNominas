@@ -150,7 +150,7 @@
             this.toolCambiaPeriodo});
             this.toolTitulo.Location = new System.Drawing.Point(0, 0);
             this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(1420, 39);
+            this.toolTitulo.Size = new System.Drawing.Size(1065, 32);
             this.toolTitulo.TabIndex = 9;
             this.toolTitulo.Text = "ToolStrip1";
             // 
@@ -167,7 +167,7 @@
             this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
             this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButton1.Name = "toolStripSplitButton1";
-            this.toolStripSplitButton1.Size = new System.Drawing.Size(125, 36);
+            this.toolStripSplitButton1.Size = new System.Drawing.Size(99, 29);
             this.toolStripSplitButton1.Text = "Nómina";
             this.toolStripSplitButton1.ButtonClick += new System.EventHandler(this.toolStripSplitButton1_ButtonClick);
             // 
@@ -175,27 +175,27 @@
             // 
             this.toolGuardar.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.toolGuardar.Name = "toolGuardar";
-            this.toolGuardar.Size = new System.Drawing.Size(149, 26);
+            this.toolGuardar.Size = new System.Drawing.Size(152, 22);
             this.toolGuardar.Text = "Guardar";
             this.toolGuardar.Click += new System.EventHandler(this.toolGuardar_Click);
             // 
             // toolSeparadorGuardar
             // 
             this.toolSeparadorGuardar.Name = "toolSeparadorGuardar";
-            this.toolSeparadorGuardar.Size = new System.Drawing.Size(146, 6);
+            this.toolSeparadorGuardar.Size = new System.Drawing.Size(149, 6);
             // 
             // toolAutorizar
             // 
             this.toolAutorizar.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.toolAutorizar.Name = "toolAutorizar";
-            this.toolAutorizar.Size = new System.Drawing.Size(149, 26);
+            this.toolAutorizar.Size = new System.Drawing.Size(152, 22);
             this.toolAutorizar.Text = "Autorizar";
             this.toolAutorizar.Click += new System.EventHandler(this.toolAutorizar_Click);
             // 
             // toolSeparadorAutorizar
             // 
             this.toolSeparadorAutorizar.Name = "toolSeparadorAutorizar";
-            this.toolSeparadorAutorizar.Size = new System.Drawing.Size(146, 6);
+            this.toolSeparadorAutorizar.Size = new System.Drawing.Size(149, 6);
             // 
             // toolReportes
             // 
@@ -208,57 +208,58 @@
             this.toolGravadosExentos});
             this.toolReportes.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolReportes.Name = "toolReportes";
-            this.toolReportes.Size = new System.Drawing.Size(149, 26);
+            this.toolReportes.Size = new System.Drawing.Size(152, 22);
             this.toolReportes.Text = "Reportes";
             this.toolReportes.Click += new System.EventHandler(this.toolReportes_Click);
             // 
             // toolCaratula
             // 
             this.toolCaratula.Name = "toolCaratula";
-            this.toolCaratula.Size = new System.Drawing.Size(212, 26);
+            this.toolCaratula.Size = new System.Drawing.Size(175, 22);
             this.toolCaratula.Text = "Caratula";
             this.toolCaratula.Click += new System.EventHandler(this.toolCaratula_Click);
             // 
             // empleadosToolStripMenuItem
             // 
             this.empleadosToolStripMenuItem.Name = "empleadosToolStripMenuItem";
-            this.empleadosToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.empleadosToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.empleadosToolStripMenuItem.Text = "Empleados";
             this.empleadosToolStripMenuItem.Click += new System.EventHandler(this.empleadosToolStripMenuItem_Click);
             // 
             // toolReporteDepto
             // 
             this.toolReporteDepto.Name = "toolReporteDepto";
-            this.toolReporteDepto.Size = new System.Drawing.Size(212, 26);
+            this.toolReporteDepto.Size = new System.Drawing.Size(175, 22);
             this.toolReporteDepto.Text = "Departamentos";
             this.toolReporteDepto.Click += new System.EventHandler(this.toolReporteDepto_Click);
             // 
             // toolTabular
             // 
             this.toolTabular.Name = "toolTabular";
-            this.toolTabular.Size = new System.Drawing.Size(212, 26);
+            this.toolTabular.Size = new System.Drawing.Size(175, 22);
             this.toolTabular.Text = "Tabular";
             this.toolTabular.Click += new System.EventHandler(this.toolTabular_Click);
             // 
             // toolReciboNomina
             // 
             this.toolReciboNomina.Name = "toolReciboNomina";
-            this.toolReciboNomina.Size = new System.Drawing.Size(212, 26);
+            this.toolReciboNomina.Size = new System.Drawing.Size(175, 22);
             this.toolReciboNomina.Text = "Recibo de nomina";
             this.toolReciboNomina.Click += new System.EventHandler(this.toolReciboNomina_Click);
             // 
             // toolGravadosExentos
             // 
             this.toolGravadosExentos.Name = "toolGravadosExentos";
-            this.toolGravadosExentos.Size = new System.Drawing.Size(212, 26);
+            this.toolGravadosExentos.Size = new System.Drawing.Size(175, 22);
             this.toolGravadosExentos.Text = "Gravados y exentos";
+            this.toolGravadosExentos.Visible = false;
             this.toolGravadosExentos.Click += new System.EventHandler(this.toolGravadosExentos_Click);
             // 
             // toolPeriodo
             // 
             this.toolPeriodo.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.toolPeriodo.Name = "toolPeriodo";
-            this.toolPeriodo.Size = new System.Drawing.Size(170, 36);
+            this.toolPeriodo.Size = new System.Drawing.Size(132, 29);
             this.toolPeriodo.Text = "Fecha del periodo";
             // 
             // toolCambiaPeriodo
@@ -266,7 +267,7 @@
             this.toolCambiaPeriodo.Image = ((System.Drawing.Image)(resources.GetObject("toolCambiaPeriodo.Image")));
             this.toolCambiaPeriodo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolCambiaPeriodo.Name = "toolCambiaPeriodo";
-            this.toolCambiaPeriodo.Size = new System.Drawing.Size(89, 36);
+            this.toolCambiaPeriodo.Size = new System.Drawing.Size(76, 29);
             this.toolCambiaPeriodo.Text = "Cambiar";
             this.toolCambiaPeriodo.Click += new System.EventHandler(this.toolCambiaPeriodo_Click);
             // 
@@ -290,9 +291,9 @@
             this.toolStripSeparator1,
             this.toolCerrar,
             this.toolStripSeparator4});
-            this.toolBusqueda.Location = new System.Drawing.Point(0, 39);
+            this.toolBusqueda.Location = new System.Drawing.Point(0, 32);
             this.toolBusqueda.Name = "toolBusqueda";
-            this.toolBusqueda.Size = new System.Drawing.Size(1420, 27);
+            this.toolBusqueda.Size = new System.Drawing.Size(1065, 27);
             this.toolBusqueda.TabIndex = 10;
             this.toolBusqueda.Text = "ToolStrip1";
             this.toolBusqueda.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolBusqueda_ItemClicked);
@@ -307,34 +308,34 @@
             this.toolFiltro.Image = ((System.Drawing.Image)(resources.GetObject("toolFiltro.Image")));
             this.toolFiltro.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolFiltro.Name = "toolFiltro";
-            this.toolFiltro.Size = new System.Drawing.Size(82, 24);
+            this.toolFiltro.Size = new System.Drawing.Size(70, 24);
             this.toolFiltro.Text = "Filtro";
             // 
             // toolTodos
             // 
             this.toolTodos.Name = "toolTodos";
-            this.toolTodos.Size = new System.Drawing.Size(181, 26);
+            this.toolTodos.Size = new System.Drawing.Size(150, 22);
             this.toolTodos.Text = "Todos";
             this.toolTodos.Click += new System.EventHandler(this.toolTodos_Click);
             // 
             // toolDepartamento
             // 
             this.toolDepartamento.Name = "toolDepartamento";
-            this.toolDepartamento.Size = new System.Drawing.Size(181, 26);
+            this.toolDepartamento.Size = new System.Drawing.Size(150, 22);
             this.toolDepartamento.Text = "Departamento";
             this.toolDepartamento.Click += new System.EventHandler(this.toolDepartamento_Click);
             // 
             // toolPuesto
             // 
             this.toolPuesto.Name = "toolPuesto";
-            this.toolPuesto.Size = new System.Drawing.Size(181, 26);
+            this.toolPuesto.Size = new System.Drawing.Size(150, 22);
             this.toolPuesto.Text = "Puesto";
             this.toolPuesto.Click += new System.EventHandler(this.toolPuesto_Click);
             // 
             // toolNoEmpleado
             // 
             this.toolNoEmpleado.Name = "toolNoEmpleado";
-            this.toolNoEmpleado.Size = new System.Drawing.Size(181, 26);
+            this.toolNoEmpleado.Size = new System.Drawing.Size(150, 22);
             this.toolNoEmpleado.Text = "No. Empleado";
             this.toolNoEmpleado.Click += new System.EventHandler(this.toolNoEmpleado_Click);
             // 
@@ -348,34 +349,34 @@
             this.toolOrdenar.Image = ((System.Drawing.Image)(resources.GetObject("toolOrdenar.Image")));
             this.toolOrdenar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolOrdenar.Name = "toolOrdenar";
-            this.toolOrdenar.Size = new System.Drawing.Size(102, 24);
+            this.toolOrdenar.Size = new System.Drawing.Size(86, 24);
             this.toolOrdenar.Text = "Ordenar";
             // 
             // toolOrdenEmpleado
             // 
             this.toolOrdenEmpleado.Name = "toolOrdenEmpleado";
-            this.toolOrdenEmpleado.Size = new System.Drawing.Size(200, 26);
+            this.toolOrdenEmpleado.Size = new System.Drawing.Size(165, 22);
             this.toolOrdenEmpleado.Text = "No. de Empleado";
             this.toolOrdenEmpleado.Click += new System.EventHandler(this.toolOrdenEmpleado_Click);
             // 
             // toolOrdenNombre
             // 
             this.toolOrdenNombre.Name = "toolOrdenNombre";
-            this.toolOrdenNombre.Size = new System.Drawing.Size(200, 26);
+            this.toolOrdenNombre.Size = new System.Drawing.Size(165, 22);
             this.toolOrdenNombre.Text = "Nombre(s)";
             this.toolOrdenNombre.Click += new System.EventHandler(this.toolOrdenNombre_Click);
             // 
             // toolOrdenPaterno
             // 
             this.toolOrdenPaterno.Name = "toolOrdenPaterno";
-            this.toolOrdenPaterno.Size = new System.Drawing.Size(200, 26);
+            this.toolOrdenPaterno.Size = new System.Drawing.Size(165, 22);
             this.toolOrdenPaterno.Text = "Ap. Paterno";
             this.toolOrdenPaterno.Click += new System.EventHandler(this.toolOrdenPaterno_Click);
             // 
             // toolOrdenMaterno
             // 
             this.toolOrdenMaterno.Name = "toolOrdenMaterno";
-            this.toolOrdenMaterno.Size = new System.Drawing.Size(200, 26);
+            this.toolOrdenMaterno.Size = new System.Drawing.Size(165, 22);
             this.toolOrdenMaterno.Text = "Ap. Materno";
             this.toolOrdenMaterno.Click += new System.EventHandler(this.toolOrdenMaterno_Click);
             // 
@@ -390,7 +391,7 @@
             this.toolSobreRecibo.Image = ((System.Drawing.Image)(resources.GetObject("toolSobreRecibo.Image")));
             this.toolSobreRecibo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolSobreRecibo.Name = "toolSobreRecibo";
-            this.toolSobreRecibo.Size = new System.Drawing.Size(112, 24);
+            this.toolSobreRecibo.Size = new System.Drawing.Size(88, 24);
             this.toolSobreRecibo.Text = "Sobre - Recibo";
             this.toolSobreRecibo.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
@@ -404,7 +405,7 @@
             this.toolCalcular.Image = ((System.Drawing.Image)(resources.GetObject("toolCalcular.Image")));
             this.toolCalcular.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolCalcular.Name = "toolCalcular";
-            this.toolCalcular.Size = new System.Drawing.Size(86, 24);
+            this.toolCalcular.Size = new System.Drawing.Size(74, 24);
             this.toolCalcular.Text = "Calcular";
             this.toolCalcular.Click += new System.EventHandler(this.toolCalcular_Click);
             // 
@@ -413,7 +414,7 @@
             this.toolMostrarDatos.Image = ((System.Drawing.Image)(resources.GetObject("toolMostrarDatos.Image")));
             this.toolMostrarDatos.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolMostrarDatos.Name = "toolMostrarDatos";
-            this.toolMostrarDatos.Size = new System.Drawing.Size(125, 24);
+            this.toolMostrarDatos.Size = new System.Drawing.Size(104, 24);
             this.toolMostrarDatos.Text = "Mostrar datos";
             this.toolMostrarDatos.Click += new System.EventHandler(this.toolMostrarDatos_Click);
             // 
@@ -422,7 +423,7 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(95, 24);
+            this.toolStripButton1.Size = new System.Drawing.Size(80, 24);
             this.toolStripButton1.Text = "Ver Faltas";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -436,7 +437,7 @@
             this.toolCargar.Image = ((System.Drawing.Image)(resources.GetObject("toolCargar.Image")));
             this.toolCargar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolCargar.Name = "toolCargar";
-            this.toolCargar.Size = new System.Drawing.Size(181, 24);
+            this.toolCargar.Size = new System.Drawing.Size(150, 24);
             this.toolCargar.Text = "Importar Movimientos";
             this.toolCargar.Click += new System.EventHandler(this.toolCargar_Click);
             // 
@@ -445,7 +446,7 @@
             this.toolCargaVacaciones.Image = ((System.Drawing.Image)(resources.GetObject("toolCargaVacaciones.Image")));
             this.toolCargaVacaciones.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolCargaVacaciones.Name = "toolCargaVacaciones";
-            this.toolCargaVacaciones.Size = new System.Drawing.Size(168, 24);
+            this.toolCargaVacaciones.Size = new System.Drawing.Size(138, 24);
             this.toolCargaVacaciones.Text = "Importar Vacaciones";
             this.toolCargaVacaciones.Click += new System.EventHandler(this.toolCargaVacaciones_Click);
             // 
@@ -454,7 +455,7 @@
             this.toolCargaFaltas.Image = ((System.Drawing.Image)(resources.GetObject("toolCargaFaltas.Image")));
             this.toolCargaFaltas.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolCargaFaltas.Name = "toolCargaFaltas";
-            this.toolCargaFaltas.Size = new System.Drawing.Size(132, 24);
+            this.toolCargaFaltas.Size = new System.Drawing.Size(110, 24);
             this.toolCargaFaltas.Text = "Importar Faltas";
             this.toolCargaFaltas.Click += new System.EventHandler(this.toolCargaFaltas_Click);
             // 
@@ -463,7 +464,7 @@
             this.toolActualizar.Image = ((System.Drawing.Image)(resources.GetObject("toolActualizar.Image")));
             this.toolActualizar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolActualizar.Name = "toolActualizar";
-            this.toolActualizar.Size = new System.Drawing.Size(99, 24);
+            this.toolActualizar.Size = new System.Drawing.Size(83, 24);
             this.toolActualizar.Text = "Actualizar";
             this.toolActualizar.Visible = false;
             this.toolActualizar.Click += new System.EventHandler(this.toolActualizar_Click);
@@ -478,7 +479,7 @@
             this.toolCerrar.Image = ((System.Drawing.Image)(resources.GetObject("toolCerrar.Image")));
             this.toolCerrar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolCerrar.Name = "toolCerrar";
-            this.toolCerrar.Size = new System.Drawing.Size(73, 24);
+            this.toolCerrar.Size = new System.Drawing.Size(63, 24);
             this.toolCerrar.Text = "Cerrar";
             this.toolCerrar.Click += new System.EventHandler(this.toolCerrar_Click);
             // 
@@ -506,12 +507,11 @@
             this.puntualidad,
             this.horas});
             this.dgvEmpleados.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvEmpleados.Location = new System.Drawing.Point(4, 4);
-            this.dgvEmpleados.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvEmpleados.Location = new System.Drawing.Point(3, 3);
             this.dgvEmpleados.Name = "dgvEmpleados";
             this.dgvEmpleados.ReadOnly = true;
             this.dgvEmpleados.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvEmpleados.Size = new System.Drawing.Size(1404, 521);
+            this.dgvEmpleados.Size = new System.Drawing.Size(1051, 416);
             this.dgvEmpleados.TabIndex = 11;
             this.dgvEmpleados.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellValueChanged);
             // 
@@ -617,49 +617,46 @@
             this.toolEstado,
             this.toolPorcentaje,
             this.toolEtapa});
-            this.BarraEstado.Location = new System.Drawing.Point(0, 2);
+            this.BarraEstado.Location = new System.Drawing.Point(0, 0);
             this.BarraEstado.Name = "BarraEstado";
-            this.BarraEstado.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.BarraEstado.Size = new System.Drawing.Size(1420, 25);
+            this.BarraEstado.Size = new System.Drawing.Size(1065, 22);
             this.BarraEstado.TabIndex = 16;
             this.BarraEstado.Text = "statusStrip1";
             // 
             // toolEstado
             // 
             this.toolEstado.Name = "toolEstado";
-            this.toolEstado.Size = new System.Drawing.Size(128, 20);
+            this.toolEstado.Size = new System.Drawing.Size(111, 17);
             this.toolEstado.Text = "Procesando:.............";
             // 
             // toolPorcentaje
             // 
             this.toolPorcentaje.Name = "toolPorcentaje";
-            this.toolPorcentaje.Size = new System.Drawing.Size(29, 20);
+            this.toolPorcentaje.Size = new System.Drawing.Size(23, 17);
             this.toolPorcentaje.Text = "0%";
             // 
             // toolEtapa
             // 
             this.toolEtapa.Name = "toolEtapa";
-            this.toolEtapa.Size = new System.Drawing.Size(47, 20);
+            this.toolEtapa.Size = new System.Drawing.Size(36, 17);
             this.toolEtapa.Text = "Etapa";
             // 
             // PanelBarra
             // 
             this.PanelBarra.Controls.Add(this.BarraEstado);
             this.PanelBarra.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.PanelBarra.Location = new System.Drawing.Point(0, 624);
-            this.PanelBarra.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PanelBarra.Location = new System.Drawing.Point(0, 507);
             this.PanelBarra.Name = "PanelBarra";
-            this.PanelBarra.Size = new System.Drawing.Size(1420, 27);
+            this.PanelBarra.Size = new System.Drawing.Size(1065, 22);
             this.PanelBarra.TabIndex = 17;
             // 
             // PanelGrid
             // 
             this.PanelGrid.Controls.Add(this.tabGrid);
             this.PanelGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PanelGrid.Location = new System.Drawing.Point(0, 66);
-            this.PanelGrid.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PanelGrid.Location = new System.Drawing.Point(0, 59);
             this.PanelGrid.Name = "PanelGrid";
-            this.PanelGrid.Size = new System.Drawing.Size(1420, 558);
+            this.PanelGrid.Size = new System.Drawing.Size(1065, 448);
             this.PanelGrid.TabIndex = 18;
             // 
             // tabGrid
@@ -669,10 +666,9 @@
             this.tabGrid.Controls.Add(this.tabFaltas);
             this.tabGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabGrid.Location = new System.Drawing.Point(0, 0);
-            this.tabGrid.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabGrid.Name = "tabGrid";
             this.tabGrid.SelectedIndex = 0;
-            this.tabGrid.Size = new System.Drawing.Size(1420, 558);
+            this.tabGrid.Size = new System.Drawing.Size(1065, 448);
             this.tabGrid.TabIndex = 12;
             // 
             // tabCalculoNomina
@@ -681,20 +677,18 @@
             this.tabCalculoNomina.Controls.Add(this.txtBitacora);
             this.tabCalculoNomina.Controls.Add(this.dgvEmpleados);
             this.tabCalculoNomina.Location = new System.Drawing.Point(4, 4);
-            this.tabCalculoNomina.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabCalculoNomina.Name = "tabCalculoNomina";
-            this.tabCalculoNomina.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabCalculoNomina.Size = new System.Drawing.Size(1412, 529);
+            this.tabCalculoNomina.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabCalculoNomina.Size = new System.Drawing.Size(1057, 422);
             this.tabCalculoNomina.TabIndex = 0;
             this.tabCalculoNomina.Text = "Percepciones y Deducciones";
             this.tabCalculoNomina.UseVisualStyleBackColor = true;
             // 
             // btnCerrar
             // 
-            this.btnCerrar.Location = new System.Drawing.Point(297, 326);
-            this.btnCerrar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCerrar.Location = new System.Drawing.Point(223, 265);
             this.btnCerrar.Name = "btnCerrar";
-            this.btnCerrar.Size = new System.Drawing.Size(100, 28);
+            this.btnCerrar.Size = new System.Drawing.Size(75, 23);
             this.btnCerrar.TabIndex = 13;
             this.btnCerrar.Text = "Cerrar";
             this.btnCerrar.UseVisualStyleBackColor = true;
@@ -703,12 +697,11 @@
             // 
             // txtBitacora
             // 
-            this.txtBitacora.Location = new System.Drawing.Point(8, 49);
-            this.txtBitacora.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBitacora.Location = new System.Drawing.Point(6, 40);
             this.txtBitacora.Multiline = true;
             this.txtBitacora.Name = "txtBitacora";
             this.txtBitacora.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtBitacora.Size = new System.Drawing.Size(388, 269);
+            this.txtBitacora.Size = new System.Drawing.Size(292, 219);
             this.txtBitacora.TabIndex = 12;
             this.txtBitacora.Visible = false;
             // 
@@ -716,10 +709,9 @@
             // 
             this.tabFaltas.Controls.Add(this.dgvFaltas);
             this.tabFaltas.Location = new System.Drawing.Point(4, 4);
-            this.tabFaltas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabFaltas.Name = "tabFaltas";
-            this.tabFaltas.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabFaltas.Size = new System.Drawing.Size(1412, 525);
+            this.tabFaltas.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabFaltas.Size = new System.Drawing.Size(1057, 427);
             this.tabFaltas.TabIndex = 1;
             this.tabFaltas.Text = "Faltas";
             this.tabFaltas.UseVisualStyleBackColor = true;
@@ -730,10 +722,9 @@
             this.dgvFaltas.AllowUserToDeleteRows = false;
             this.dgvFaltas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvFaltas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvFaltas.Location = new System.Drawing.Point(4, 4);
-            this.dgvFaltas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvFaltas.Location = new System.Drawing.Point(3, 3);
             this.dgvFaltas.Name = "dgvFaltas";
-            this.dgvFaltas.Size = new System.Drawing.Size(1404, 517);
+            this.dgvFaltas.Size = new System.Drawing.Size(1051, 421);
             this.dgvFaltas.TabIndex = 0;
             this.dgvFaltas.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFaltas_CellValueChanged);
             this.dgvFaltas.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvFaltas_KeyDown);
@@ -898,14 +889,13 @@
             // 
             // frmListaCalculoNomina
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1420, 651);
+            this.ClientSize = new System.Drawing.Size(1065, 529);
             this.Controls.Add(this.PanelGrid);
             this.Controls.Add(this.PanelBarra);
             this.Controls.Add(this.toolBusqueda);
             this.Controls.Add(this.toolTitulo);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmListaCalculoNomina";
             this.Text = "Nomina";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmListaCalculoNomina_FormClosed);

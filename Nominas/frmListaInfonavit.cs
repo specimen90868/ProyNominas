@@ -115,10 +115,18 @@ namespace Nominas
 
             if (edicion != GLOBALES.NUEVO)
             {
-                fila = dgvInfonavit.CurrentCell.RowIndex;
-                i._idEmpleado = int.Parse(dgvInfonavit.Rows[fila].Cells[0].Value.ToString());
-                i._nombreEmpleado = dgvInfonavit.Rows[fila].Cells[2].Value.ToString();
-                i._estatusInfonavit = dgvInfonavit.Rows[fila].Cells[6].Value.ToString() == "ACTIVO" ? true : false;
+                if (dgvInfonavit.Rows.Count != 0)
+                {
+                    fila = dgvInfonavit.CurrentCell.RowIndex;
+                    i._idEmpleado = int.Parse(dgvInfonavit.Rows[fila].Cells[0].Value.ToString());
+                    i._nombreEmpleado = dgvInfonavit.Rows[fila].Cells[2].Value.ToString();
+                    i._estatusInfonavit = dgvInfonavit.Rows[fila].Cells[6].Value.ToString() == "ACTIVO" ? true : false;
+                }
+                else
+                {
+                    MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
             }
 
             i.OnNuevoInfonavit += i_OnNuevoInfonavit;
@@ -166,20 +174,25 @@ namespace Nominas
             //mi._activo = dgvInfonavit.Rows[fila].Cells[7].Value.ToString();
             //mi.MdiParent = this.MdiParent;
             //mi.Show();
-
-            int fila = 0;
-            fila = dgvInfonavit.CurrentCell.RowIndex;
-            frmInfonavit i = new frmInfonavit();
-            i._tipoOperacion = GLOBALES.MODIFICAR;
-            i.OnNuevoInfonavit += i_OnNuevoInfonavit;
-            i._idEmpleado = int.Parse(dgvInfonavit.Rows[fila].Cells[0].Value.ToString());
-            i._nombreEmpleado = dgvInfonavit.Rows[fila].Cells[2].Value.ToString();
-            i._estatusInfonavit = dgvInfonavit.Rows[fila].Cells[6].Value.ToString() == "ACTIVO" ? true : false;
-            i._modificar = 1;
-            i.MdiParent = this.MdiParent;
-            i.Show();
-
-            
+            if (dgvInfonavit.Rows.Count != 0)
+            {
+                int fila = 0;
+                fila = dgvInfonavit.CurrentCell.RowIndex;
+                frmInfonavit i = new frmInfonavit();
+                i._tipoOperacion = GLOBALES.MODIFICAR;
+                i.OnNuevoInfonavit += i_OnNuevoInfonavit;
+                i._idEmpleado = int.Parse(dgvInfonavit.Rows[fila].Cells[0].Value.ToString());
+                i._nombreEmpleado = dgvInfonavit.Rows[fila].Cells[2].Value.ToString();
+                i._estatusInfonavit = dgvInfonavit.Rows[fila].Cells[6].Value.ToString() == "ACTIVO" ? true : false;
+                i._modificar = 1;
+                i.MdiParent = this.MdiParent;
+                i.Show();
+            }
+            else
+            {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }            
         }
 
         void mi_OnInfonavit()

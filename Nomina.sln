@@ -89,6 +89,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "satTrabajadorNomina.Core", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactorDescuento.Core", "FactorDescuento.Core\FactorDescuento.Core.csproj", "{9554455A-0C82-4D83-AC5E-41988E85D35D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bitacora.Core", "Bitacora.Core\Bitacora.Core.csproj", "{89F34688-A683-4390-A863-E06B8242979E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xml.Core", "Xml.Core\Xml.Core.csproj", "{03A74FE1-1704-4FCA-88B8-419536A6F51E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -267,6 +271,14 @@ Global
 		{9554455A-0C82-4D83-AC5E-41988E85D35D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9554455A-0C82-4D83-AC5E-41988E85D35D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9554455A-0C82-4D83-AC5E-41988E85D35D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89F34688-A683-4390-A863-E06B8242979E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89F34688-A683-4390-A863-E06B8242979E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89F34688-A683-4390-A863-E06B8242979E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89F34688-A683-4390-A863-E06B8242979E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03A74FE1-1704-4FCA-88B8-419536A6F51E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03A74FE1-1704-4FCA-88B8-419536A6F51E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03A74FE1-1704-4FCA-88B8-419536A6F51E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03A74FE1-1704-4FCA-88B8-419536A6F51E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

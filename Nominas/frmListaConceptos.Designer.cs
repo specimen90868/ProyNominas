@@ -58,7 +58,7 @@
             this.toolStripLabel1});
             this.toolBusqueda.Location = new System.Drawing.Point(0, 0);
             this.toolBusqueda.Name = "toolBusqueda";
-            this.toolBusqueda.Size = new System.Drawing.Size(935, 27);
+            this.toolBusqueda.Size = new System.Drawing.Size(701, 27);
             this.toolBusqueda.TabIndex = 9;
             this.toolBusqueda.Text = "ToolStrip1";
             // 
@@ -67,7 +67,7 @@
             this.toolNuevo.Image = ((System.Drawing.Image)(resources.GetObject("toolNuevo.Image")));
             this.toolNuevo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolNuevo.Name = "toolNuevo";
-            this.toolNuevo.Size = new System.Drawing.Size(76, 24);
+            this.toolNuevo.Size = new System.Drawing.Size(66, 24);
             this.toolNuevo.Text = "Nuevo";
             this.toolNuevo.Click += new System.EventHandler(this.toolNuevo_Click);
             // 
@@ -76,7 +76,7 @@
             this.toolConsultar.Image = ((System.Drawing.Image)(resources.GetObject("toolConsultar.Image")));
             this.toolConsultar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolConsultar.Name = "toolConsultar";
-            this.toolConsultar.Size = new System.Drawing.Size(95, 24);
+            this.toolConsultar.Size = new System.Drawing.Size(82, 24);
             this.toolConsultar.Text = "Consultar";
             this.toolConsultar.Click += new System.EventHandler(this.toolConsultar_Click);
             // 
@@ -85,7 +85,7 @@
             this.toolEditar.Image = ((System.Drawing.Image)(resources.GetObject("toolEditar.Image")));
             this.toolEditar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolEditar.Name = "toolEditar";
-            this.toolEditar.Size = new System.Drawing.Size(72, 24);
+            this.toolEditar.Size = new System.Drawing.Size(61, 24);
             this.toolEditar.Text = "Editar";
             this.toolEditar.Click += new System.EventHandler(this.toolEditar_Click);
             // 
@@ -100,7 +100,7 @@
             this.toolAsignaciones.Image = ((System.Drawing.Image)(resources.GetObject("toolAsignaciones.Image")));
             this.toolAsignaciones.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolAsignaciones.Name = "toolAsignaciones";
-            this.toolAsignaciones.Size = new System.Drawing.Size(100, 24);
+            this.toolAsignaciones.Size = new System.Drawing.Size(81, 24);
             this.toolAsignaciones.Text = "Asignaciones";
             this.toolAsignaciones.Click += new System.EventHandler(this.toolAsignaciones_Click);
             // 
@@ -114,14 +114,14 @@
             this.toolBaja.Image = ((System.Drawing.Image)(resources.GetObject("toolBaja.Image")));
             this.toolBaja.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBaja.Name = "toolBaja";
-            this.toolBaja.Size = new System.Drawing.Size(87, 24);
+            this.toolBaja.Size = new System.Drawing.Size(74, 24);
             this.toolBaja.Text = "Eliminar";
             this.toolBaja.Click += new System.EventHandler(this.toolBaja_Click);
             // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(63, 24);
+            this.toolStripLabel1.Size = new System.Drawing.Size(51, 24);
             this.toolStripLabel1.Text = "Periodo:";
             // 
             // dgvConceptos
@@ -131,32 +131,29 @@
             this.dgvConceptos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvConceptos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvConceptos.Location = new System.Drawing.Point(0, 27);
-            this.dgvConceptos.Margin = new System.Windows.Forms.Padding(4);
             this.dgvConceptos.MultiSelect = false;
             this.dgvConceptos.Name = "dgvConceptos";
             this.dgvConceptos.ReadOnly = true;
-            this.dgvConceptos.Size = new System.Drawing.Size(935, 631);
+            this.dgvConceptos.Size = new System.Drawing.Size(701, 508);
             this.dgvConceptos.TabIndex = 10;
             // 
             // cmbPeriodos
             // 
             this.cmbPeriodos.FormattingEnabled = true;
-            this.cmbPeriodos.Location = new System.Drawing.Point(519, 1);
-            this.cmbPeriodos.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbPeriodos.Location = new System.Drawing.Point(389, 3);
             this.cmbPeriodos.Name = "cmbPeriodos";
-            this.cmbPeriodos.Size = new System.Drawing.Size(160, 24);
+            this.cmbPeriodos.Size = new System.Drawing.Size(121, 21);
             this.cmbPeriodos.TabIndex = 11;
             this.cmbPeriodos.SelectedIndexChanged += new System.EventHandler(this.cmbPeriodos_SelectedIndexChanged);
             // 
             // frmListaConceptos
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(935, 658);
+            this.ClientSize = new System.Drawing.Size(701, 535);
             this.Controls.Add(this.cmbPeriodos);
             this.Controls.Add(this.dgvConceptos);
             this.Controls.Add(this.toolBusqueda);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmListaConceptos";
             this.Text = "Conceptos de la empresa";
             this.Load += new System.EventHandler(this.frmListaConceptos_Load);

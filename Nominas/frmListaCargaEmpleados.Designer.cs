@@ -28,21 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmListaCargaEmpleados));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvCargaEmpleados = new System.Windows.Forms.DataGridView();
-            this.noempleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.paterno = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.materno = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.periodo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.departamento = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.puesto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fechaingreso = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.curp = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nss = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dv = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sdi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolBusqueda = new System.Windows.Forms.ToolStrip();
             this.toolCargar = new System.Windows.Forms.ToolStripButton();
             this.toolLimpiar = new System.Windows.Forms.ToolStripButton();
@@ -51,6 +39,21 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblPorcentaje = new System.Windows.Forms.ToolStripStatusLabel();
+            this.noempleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.paterno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.materno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechaingreso = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechanacimiento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rfc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.curp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nss = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.periodo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sdi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cuenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clabe = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.departamento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.puesto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCargaEmpleados)).BeginInit();
             this.toolBusqueda.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -63,33 +66,113 @@
             this.dgvCargaEmpleados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCargaEmpleados.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.noempleado,
+            this.nombre,
             this.paterno,
             this.materno,
-            this.nombre,
-            this.periodo,
-            this.departamento,
-            this.puesto,
             this.fechaingreso,
+            this.fechanacimiento,
+            this.rfc,
             this.curp,
             this.nss,
-            this.dv,
-            this.sdi});
+            this.periodo,
+            this.sdi,
+            this.cuenta,
+            this.clabe,
+            this.departamento,
+            this.puesto});
             this.dgvCargaEmpleados.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCargaEmpleados.Location = new System.Drawing.Point(0, 27);
-            this.dgvCargaEmpleados.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvCargaEmpleados.MultiSelect = false;
             this.dgvCargaEmpleados.Name = "dgvCargaEmpleados";
             this.dgvCargaEmpleados.ReadOnly = true;
-            this.dgvCargaEmpleados.Size = new System.Drawing.Size(945, 576);
+            this.dgvCargaEmpleados.Size = new System.Drawing.Size(1114, 463);
             this.dgvCargaEmpleados.TabIndex = 13;
+            // 
+            // toolBusqueda
+            // 
+            this.toolBusqueda.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.toolBusqueda.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolCargar,
+            this.toolLimpiar,
+            this.toolAplicar});
+            this.toolBusqueda.Location = new System.Drawing.Point(0, 0);
+            this.toolBusqueda.Name = "toolBusqueda";
+            this.toolBusqueda.Size = new System.Drawing.Size(1114, 27);
+            this.toolBusqueda.TabIndex = 12;
+            this.toolBusqueda.Text = "ToolStrip1";
+            // 
+            // toolCargar
+            // 
+            this.toolCargar.Image = ((System.Drawing.Image)(resources.GetObject("toolCargar.Image")));
+            this.toolCargar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolCargar.Name = "toolCargar";
+            this.toolCargar.Size = new System.Drawing.Size(66, 24);
+            this.toolCargar.Text = "Cargar";
+            this.toolCargar.Click += new System.EventHandler(this.toolCargar_Click);
+            // 
+            // toolLimpiar
+            // 
+            this.toolLimpiar.Image = ((System.Drawing.Image)(resources.GetObject("toolLimpiar.Image")));
+            this.toolLimpiar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolLimpiar.Name = "toolLimpiar";
+            this.toolLimpiar.Size = new System.Drawing.Size(71, 24);
+            this.toolLimpiar.Text = "Limpiar";
+            this.toolLimpiar.Click += new System.EventHandler(this.toolLimpiar_Click);
+            // 
+            // toolAplicar
+            // 
+            this.toolAplicar.Image = ((System.Drawing.Image)(resources.GetObject("toolAplicar.Image")));
+            this.toolAplicar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolAplicar.Name = "toolAplicar";
+            this.toolAplicar.Size = new System.Drawing.Size(68, 24);
+            this.toolAplicar.Text = "Aplicar";
+            this.toolAplicar.Click += new System.EventHandler(this.toolAplicar_Click);
+            // 
+            // workerImporta
+            // 
+            this.workerImporta.WorkerReportsProgress = true;
+            this.workerImporta.WorkerSupportsCancellation = true;
+            this.workerImporta.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerImporta_DoWork);
+            this.workerImporta.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workerImporta_ProgressChanged);
+            this.workerImporta.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerImporta_RunWorkerCompleted);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.lblPorcentaje});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 468);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1114, 22);
+            this.statusStrip1.TabIndex = 14;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(84, 17);
+            this.toolStripStatusLabel1.Text = "Importación:...";
+            // 
+            // lblPorcentaje
+            // 
+            this.lblPorcentaje.Name = "lblPorcentaje";
+            this.lblPorcentaje.Size = new System.Drawing.Size(23, 17);
+            this.lblPorcentaje.Text = "0%";
             // 
             // noempleado
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.noempleado.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.noempleado.DefaultCellStyle = dataGridViewCellStyle2;
             this.noempleado.HeaderText = "No. Empleado";
             this.noempleado.Name = "noempleado";
             this.noempleado.ReadOnly = true;
+            // 
+            // nombre
+            // 
+            this.nombre.HeaderText = "Nombre";
+            this.nombre.Name = "nombre";
+            this.nombre.ReadOnly = true;
             // 
             // paterno
             // 
@@ -103,17 +186,59 @@
             this.materno.Name = "materno";
             this.materno.ReadOnly = true;
             // 
-            // nombre
+            // fechaingreso
             // 
-            this.nombre.HeaderText = "Nombre";
-            this.nombre.Name = "nombre";
-            this.nombre.ReadOnly = true;
+            this.fechaingreso.HeaderText = "Fecha Ingreso";
+            this.fechaingreso.Name = "fechaingreso";
+            this.fechaingreso.ReadOnly = true;
+            // 
+            // fechanacimiento
+            // 
+            this.fechanacimiento.HeaderText = "Fecha Nacimiento";
+            this.fechanacimiento.Name = "fechanacimiento";
+            this.fechanacimiento.ReadOnly = true;
+            // 
+            // rfc
+            // 
+            this.rfc.HeaderText = "RFC";
+            this.rfc.Name = "rfc";
+            this.rfc.ReadOnly = true;
+            // 
+            // curp
+            // 
+            this.curp.HeaderText = "CURP";
+            this.curp.Name = "curp";
+            this.curp.ReadOnly = true;
+            // 
+            // nss
+            // 
+            this.nss.HeaderText = "NSS";
+            this.nss.Name = "nss";
+            this.nss.ReadOnly = true;
             // 
             // periodo
             // 
             this.periodo.HeaderText = "Periodo";
             this.periodo.Name = "periodo";
             this.periodo.ReadOnly = true;
+            // 
+            // sdi
+            // 
+            this.sdi.HeaderText = "SDI";
+            this.sdi.Name = "sdi";
+            this.sdi.ReadOnly = true;
+            // 
+            // cuenta
+            // 
+            this.cuenta.HeaderText = "Cuenta";
+            this.cuenta.Name = "cuenta";
+            this.cuenta.ReadOnly = true;
+            // 
+            // clabe
+            // 
+            this.clabe.HeaderText = "Clabe";
+            this.clabe.Name = "clabe";
+            this.clabe.ReadOnly = true;
             // 
             // departamento
             // 
@@ -127,117 +252,14 @@
             this.puesto.Name = "puesto";
             this.puesto.ReadOnly = true;
             // 
-            // fechaingreso
-            // 
-            this.fechaingreso.HeaderText = "Fecha Ingreso";
-            this.fechaingreso.Name = "fechaingreso";
-            this.fechaingreso.ReadOnly = true;
-            // 
-            // curp
-            // 
-            this.curp.HeaderText = "Curp";
-            this.curp.Name = "curp";
-            this.curp.ReadOnly = true;
-            // 
-            // nss
-            // 
-            this.nss.HeaderText = "Nss";
-            this.nss.Name = "nss";
-            this.nss.ReadOnly = true;
-            // 
-            // dv
-            // 
-            this.dv.HeaderText = "Dig. V.";
-            this.dv.Name = "dv";
-            this.dv.ReadOnly = true;
-            // 
-            // sdi
-            // 
-            this.sdi.HeaderText = "Sueldo Integrado";
-            this.sdi.Name = "sdi";
-            this.sdi.ReadOnly = true;
-            // 
-            // toolBusqueda
-            // 
-            this.toolBusqueda.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolBusqueda.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolCargar,
-            this.toolLimpiar,
-            this.toolAplicar});
-            this.toolBusqueda.Location = new System.Drawing.Point(0, 0);
-            this.toolBusqueda.Name = "toolBusqueda";
-            this.toolBusqueda.Size = new System.Drawing.Size(945, 27);
-            this.toolBusqueda.TabIndex = 12;
-            this.toolBusqueda.Text = "ToolStrip1";
-            // 
-            // toolCargar
-            // 
-            this.toolCargar.Image = ((System.Drawing.Image)(resources.GetObject("toolCargar.Image")));
-            this.toolCargar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolCargar.Name = "toolCargar";
-            this.toolCargar.Size = new System.Drawing.Size(77, 24);
-            this.toolCargar.Text = "Cargar";
-            this.toolCargar.Click += new System.EventHandler(this.toolCargar_Click);
-            // 
-            // toolLimpiar
-            // 
-            this.toolLimpiar.Image = ((System.Drawing.Image)(resources.GetObject("toolLimpiar.Image")));
-            this.toolLimpiar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolLimpiar.Name = "toolLimpiar";
-            this.toolLimpiar.Size = new System.Drawing.Size(83, 24);
-            this.toolLimpiar.Text = "Limpiar";
-            this.toolLimpiar.Click += new System.EventHandler(this.toolLimpiar_Click);
-            // 
-            // toolAplicar
-            // 
-            this.toolAplicar.Image = ((System.Drawing.Image)(resources.GetObject("toolAplicar.Image")));
-            this.toolAplicar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolAplicar.Name = "toolAplicar";
-            this.toolAplicar.Size = new System.Drawing.Size(80, 24);
-            this.toolAplicar.Text = "Aplicar";
-            this.toolAplicar.Click += new System.EventHandler(this.toolAplicar_Click);
-            // 
-            // workerImporta
-            // 
-            this.workerImporta.WorkerReportsProgress = true;
-            this.workerImporta.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerImporta_DoWork);
-            this.workerImporta.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workerImporta_ProgressChanged);
-            this.workerImporta.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerImporta_RunWorkerCompleted);
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.lblPorcentaje});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 578);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(945, 25);
-            this.statusStrip1.TabIndex = 14;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(102, 20);
-            this.toolStripStatusLabel1.Text = "Importación:...";
-            // 
-            // lblPorcentaje
-            // 
-            this.lblPorcentaje.Name = "lblPorcentaje";
-            this.lblPorcentaje.Size = new System.Drawing.Size(29, 20);
-            this.lblPorcentaje.Text = "0%";
-            // 
             // frmListaCargaEmpleados
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(945, 603);
+            this.ClientSize = new System.Drawing.Size(1114, 490);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.dgvCargaEmpleados);
             this.Controls.Add(this.toolBusqueda);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmListaCargaEmpleados";
             this.Text = "Carga de empleados";
             this.Load += new System.EventHandler(this.frmListaCargaEmpleados_Load);
@@ -263,16 +285,19 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel lblPorcentaje;
         private System.Windows.Forms.DataGridViewTextBoxColumn noempleado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
         private System.Windows.Forms.DataGridViewTextBoxColumn paterno;
         private System.Windows.Forms.DataGridViewTextBoxColumn materno;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn periodo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn departamento;
-        private System.Windows.Forms.DataGridViewTextBoxColumn puesto;
         private System.Windows.Forms.DataGridViewTextBoxColumn fechaingreso;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fechanacimiento;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rfc;
         private System.Windows.Forms.DataGridViewTextBoxColumn curp;
         private System.Windows.Forms.DataGridViewTextBoxColumn nss;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dv;
+        private System.Windows.Forms.DataGridViewTextBoxColumn periodo;
         private System.Windows.Forms.DataGridViewTextBoxColumn sdi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cuenta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clabe;
+        private System.Windows.Forms.DataGridViewTextBoxColumn departamento;
+        private System.Windows.Forms.DataGridViewTextBoxColumn puesto;
     }
 }

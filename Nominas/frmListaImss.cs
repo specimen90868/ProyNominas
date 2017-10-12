@@ -105,8 +105,16 @@ namespace Nominas
             int fila = 0;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {
-                fila = dgvImss.CurrentCell.RowIndex;
-                i._idImss = int.Parse(dgvImss.Rows[fila].Cells[0].Value.ToString());
+                if (dgvImss.Rows.Count != 0)
+                {
+                    fila = dgvImss.CurrentCell.RowIndex;
+                    i._idImss = int.Parse(dgvImss.Rows[fila].Cells[0].Value.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
             }
             i._tipoOperacion = edicion;
             i.Show();
@@ -135,31 +143,39 @@ namespace Nominas
 
         private void toolBaja_Click(object sender, EventArgs e)
         {
-            DialogResult respuesta = MessageBox.Show("¿Quiere eliminar la prestación?", "Confirmación", MessageBoxButtons.YesNo);
-            if (respuesta == DialogResult.Yes)
+            if (dgvImss.Rows.Count != 0)
             {
-                int fila = dgvImss.CurrentCell.RowIndex;
-                int id = int.Parse(dgvImss.Rows[fila].Cells[0].Value.ToString());
-                cnx = new SqlConnection(cdn);
-                cmd = new SqlCommand();
-                cmd.Connection = cnx;
-                ih = new Imss.Core.ImssHelper();
-                ih.Command = cmd;
-                Imss.Core.Imss imss = new Imss.Core.Imss();
-                imss.id = id;
+                DialogResult respuesta = MessageBox.Show("¿Quiere eliminar la prestación?", "Confirmación", MessageBoxButtons.YesNo);
+                if (respuesta == DialogResult.Yes)
+                {
+                    int fila = dgvImss.CurrentCell.RowIndex;
+                    int id = int.Parse(dgvImss.Rows[fila].Cells[0].Value.ToString());
+                    cnx = new SqlConnection(cdn);
+                    cmd = new SqlCommand();
+                    cmd.Connection = cnx;
+                    ih = new Imss.Core.ImssHelper();
+                    ih.Command = cmd;
+                    Imss.Core.Imss imss = new Imss.Core.Imss();
+                    imss.id = id;
 
-                try
-                {
-                    cnx.Open();
-                    ih.eliminarImss(imss);
-                    cnx.Close();
-                    cnx.Dispose();
-                    ListaImss();
+                    try
+                    {
+                        cnx.Open();
+                        ih.eliminarImss(imss);
+                        cnx.Close();
+                        cnx.Dispose();
+                        ListaImss();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+                    }
                 }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
-                }
+            }
+            else
+            {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
         }
     }

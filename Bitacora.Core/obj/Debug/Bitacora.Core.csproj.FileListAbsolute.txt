@@ -1,0 +1,6 @@
+C:\Git\ProyNominas\Bitacora.Core\bin\Debug\Bitacora.Core.dll
+C:\Git\ProyNominas\Bitacora.Core\bin\Debug\Bitacora.Core.pdb
+C:\Git\ProyNominas\Bitacora.Core\bin\Debug\Data.Obj.dll
+C:\Git\ProyNominas\Bitacora.Core\bin\Debug\Data.Obj.pdb
+C:\Git\ProyNominas\Bitacora.Core\obj\Debug\Bitacora.Core.dll
+C:\Git\ProyNominas\Bitacora.Core\obj\Debug\Bitacora.Core.pdb

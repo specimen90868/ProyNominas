@@ -45,7 +45,7 @@
             this.toolCerrar});
             this.toolAcciones.Location = new System.Drawing.Point(0, 0);
             this.toolAcciones.Name = "toolAcciones";
-            this.toolAcciones.Size = new System.Drawing.Size(488, 27);
+            this.toolAcciones.Size = new System.Drawing.Size(368, 27);
             this.toolAcciones.TabIndex = 4;
             this.toolAcciones.Text = "toolEmpresa";
             // 
@@ -54,7 +54,7 @@
             this.toolGuardarNuevo.Image = ((System.Drawing.Image)(resources.GetObject("toolGuardarNuevo.Image")));
             this.toolGuardarNuevo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolGuardarNuevo.Name = "toolGuardarNuevo";
-            this.toolGuardarNuevo.Size = new System.Drawing.Size(86, 24);
+            this.toolGuardarNuevo.Size = new System.Drawing.Size(73, 24);
             this.toolGuardarNuevo.Text = "Guardar";
             this.toolGuardarNuevo.Click += new System.EventHandler(this.toolGuardarNuevo_Click);
             // 
@@ -63,41 +63,39 @@
             this.toolCerrar.Image = ((System.Drawing.Image)(resources.GetObject("toolCerrar.Image")));
             this.toolCerrar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolCerrar.Name = "toolCerrar";
-            this.toolCerrar.Size = new System.Drawing.Size(73, 24);
+            this.toolCerrar.Size = new System.Drawing.Size(63, 24);
             this.toolCerrar.Text = "Cerrar";
             this.toolCerrar.Click += new System.EventHandler(this.toolCerrar_Click);
             // 
             // txtDescripcion
             // 
-            this.txtDescripcion.Location = new System.Drawing.Point(86, 40);
-            this.txtDescripcion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtDescripcion.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtDescripcion.Location = new System.Drawing.Point(64, 36);
             this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.Size = new System.Drawing.Size(384, 22);
+            this.txtDescripcion.Size = new System.Drawing.Size(289, 20);
             this.txtDescripcion.TabIndex = 99;
             // 
             // lblDeptoPuesto
             // 
             this.lblDeptoPuesto.AutoSize = true;
-            this.lblDeptoPuesto.Location = new System.Drawing.Point(21, 43);
-            this.lblDeptoPuesto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDeptoPuesto.Location = new System.Drawing.Point(16, 39);
             this.lblDeptoPuesto.Name = "lblDeptoPuesto";
-            this.lblDeptoPuesto.Size = new System.Drawing.Size(56, 17);
+            this.lblDeptoPuesto.Size = new System.Drawing.Size(43, 13);
             this.lblDeptoPuesto.TabIndex = 98;
             this.lblDeptoPuesto.Text = "Puesto:";
             // 
             // frmPuestos
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(488, 87);
+            this.ClientSize = new System.Drawing.Size(368, 77);
             this.Controls.Add(this.txtDescripcion);
             this.Controls.Add(this.lblDeptoPuesto);
             this.Controls.Add(this.toolAcciones);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(506, 134);
+            this.MaximumSize = new System.Drawing.Size(384, 116);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(506, 134);
+            this.MinimumSize = new System.Drawing.Size(384, 116);
             this.Name = "frmPuestos";
             this.Text = "Puesto de la empresa";
             this.Load += new System.EventHandler(this.frmPuestos_Load);

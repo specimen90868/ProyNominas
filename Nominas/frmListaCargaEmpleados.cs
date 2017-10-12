@@ -7,9 +7,11 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using aExcel = Microsoft.Office.Interop.Excel;
 
 namespace Nominas
 {
@@ -19,21 +21,15 @@ namespace Nominas
         SqlConnection cnx;
         SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-        string ruta, nombreEmpresa;
+        string ruta;
         string ExcelConString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 12.0;'";
         int idEmpresa;
-        //Empresas.Core.EmpresasHelper eh;
-        Empleados.Core.EmpleadosHelper emph;
         Periodos.Core.PeriodosHelper ph;
+        Factores.Core.FactoresHelper fh;
+        Empleados.Core.EmpleadosHelper emph;
         Departamento.Core.DeptoHelper dh;
         Puestos.Core.PuestosHelper puestoh;
-        Factores.Core.FactoresHelper fh;
-        //Historial.Core.HistorialHelper hh;
-        //Altas.Core.AltasHelper ah;
-        Estados.Core.EstadosHelper edoh;
-        int idDepto, idPuesto, idPeriodo;
-        //string registroPatronal;
-        DateTime periodoInicio, periodoFin;
+        int idPeriodo = 0, iddepto = 0, idpuesto = 0;
         #endregion
 
         public frmListaCargaEmpleados()
@@ -43,7 +39,7 @@ namespace Nominas
 
         private void toolCargar_Click(object sender, EventArgs e)
         {
-            string conStr, sheetName;
+            string conStr;
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Title = "Seleccionar Excel";
             ofd.RestoreDirectory = false;
@@ -58,66 +54,73 @@ namespace Nominas
 
                 try
                 {
+                    aExcel.Application xlApp = new aExcel.Application();
+                    aExcel.Workbook xlWorkbook = xlApp.Workbooks.Open(ruta);
+                    aExcel._Worksheet xlWorkSheet = xlWorkbook.Sheets[1];
+                    aExcel.Range xlRange = xlWorkSheet.UsedRange;
+                    String nombreHoja = xlWorkSheet.Name;
 
-                    using (OleDbConnection con = new OleDbConnection(conStr))
+                    if (nombreHoja.Equals("Trabajadores"))
                     {
-                        using (OleDbCommand cmd = new OleDbCommand())
+                        int rowCount = xlRange.Rows.Count;
+
+                        var ie = xlRange.Cells[1, 4].Value2;
+                        idEmpresa = int.Parse(ie.ToString());
+                        if (GLOBALES.IDEMPRESA != idEmpresa)
                         {
-                            cmd.Connection = con;
-                            con.Open();
-                            DataTable dtExcelSchema = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                            sheetName = dtExcelSchema.Rows[7]["TABLE_NAME"].ToString();
-                            con.Close();
+                            MessageBox.Show("Información:\r\n" +
+                                            "Los datos a ingresar pertenecen a otra empresa. Verifique. \r\n \r\n La ventana se cerrara.",
+                                            "Información",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Warning);
+                            this.Dispose();
                         }
-                    }
 
-                    using (OleDbConnection con = new OleDbConnection(conStr))
-                    {
-                        using (OleDbCommand cmd = new OleDbCommand())
+                        for (int i = 4; i < rowCount; i++)
                         {
-                            using (OleDbDataAdapter oda = new OleDbDataAdapter())
+                            if (xlRange.Cells[i, 1].Value != null)
                             {
-                                DataTable dt = new DataTable();
-                                cmd.CommandText = "SELECT * From [" + sheetName + "]";
-                                cmd.Connection = con;
-                                con.Open();
-                                oda.SelectCommand = cmd;
-                                oda.Fill(dt);
-                                con.Close();
-
-                                nombreEmpresa = dt.Columns[1].ColumnName;
-                                idEmpresa = int.Parse(dt.Columns[3].ColumnName.ToString());
-
-                                if (GLOBALES.IDEMPRESA != idEmpresa)
-                                {
-                                    MessageBox.Show("Los datos a ingresar pertenecen a otra empresa. Verifique. \r\n \r\n La ventana se cerrara.", "Error");
-                                    this.Dispose();
-                                }
-
-                                for (int i = 2; i < dt.Rows.Count; i++)
-                                {
-                                    if (dt.Rows[i][0].ToString() != "")
-                                        dgvCargaEmpleados.Rows.Add(
-                                            dt.Rows[i][0].ToString(), //NO EMPLEADO
-                                            dt.Rows[i][1].ToString().ToUpper(), //PATERNO
-                                            dt.Rows[i][2].ToString().ToUpper(), //MATERNO
-                                            dt.Rows[i][3].ToString().ToUpper(), //NOMBRE
-                                            dt.Rows[i][4].ToString(), //PERIODO
-                                            dt.Rows[i][5].ToString(), //DEPARTAMENTO
-                                            dt.Rows[i][6].ToString(), //PUESTO
-                                            dt.Rows[i][7].ToString(), //FECHA INGRESO
-                                            dt.Rows[i][8].ToString().ToUpper(), //CURP
-                                            dt.Rows[i][9].ToString(), //NSS
-                                            dt.Rows[i][10].ToString(), //DIGITO VERIFICADOR
-                                            dt.Rows[i][11].ToString()); //SUELDO INTEGRADO
-                                }
-
-                                for (int i = 0; i < dt.Columns.Count; i++)
-                                {
-                                    dgvCargaEmpleados.AutoResizeColumn(i);
-                                }
+                                dgvCargaEmpleados.Rows.Add(
+                                    xlRange.Cells[i, 1].Value, //no empleado
+                                    xlRange.Cells[i, 2].Value.ToString().ToUpper(), //nombres
+                                    xlRange.Cells[i, 3].Value.ToString().ToUpper(), //paterno
+                                    xlRange.Cells[i, 4].Value.ToString().ToUpper(), //materno
+                                    xlRange.Cells[i, 5].Value, //fecha ingreso
+                                    xlRange.Cells[i, 6].Value, //fecha nacimiento
+                                    xlRange.Cells[i, 7].Value.ToString().ToUpper(), //rfc
+                                    xlRange.Cells[i, 8].Value.ToString().ToUpper(), //curp
+                                    xlRange.Cells[i, 9].Value, //nss
+                                    xlRange.Cells[i, 10].Value, //periodo
+                                    xlRange.Cells[i, 11].Value, //sdi
+                                    xlRange.Cells[i, 12].Value, //cuenta
+                                    xlRange.Cells[i, 13].Value, //clabe
+                                    xlRange.Cells[i, 14].Value.ToString().ToUpper(), //depto
+                                    xlRange.Cells[i, 15].Value.ToString().ToUpper()); //puesto
                             }
                         }
+
+                        Marshal.ReleaseComObject(xlRange);
+                        Marshal.ReleaseComObject(xlWorkSheet);
+
+                        xlWorkbook.Close();
+                        Marshal.ReleaseComObject(xlWorkbook);
+
+                        xlApp.Quit();
+                        Marshal.ReleaseComObject(xlApp);
+
+                        for (int i = 0; i < dgvCargaEmpleados.Columns.Count; i++)
+                        {
+                            dgvCargaEmpleados.AutoResizeColumn(i);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Información:\r\n" +
+                                        "El layout elegido no corresponde al layout de trabajadores.\r\n" +
+                                        "Verifique por favor, la ventana se cerrará", "Información",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Exclamation);
+                        this.Dispose();
                     }
                 }
                 catch (Exception error)
@@ -139,27 +142,6 @@ namespace Nominas
             workerImporta.RunWorkerAsync();
         }
 
-        private DateTime ObtieneFecha(string curp)
-        {
-            int numero17 = 0;
-            string posicion17 = curp.Substring(16, 1);
-            string anio = curp.Substring(4, 2);
-            string mes = curp.Substring(6, 2);
-            string dia = curp.Substring(8, 2);
-            DateTime fechaNacimiento;
-
-            try
-            {
-                numero17 = int.Parse(posicion17);
-                fechaNacimiento = new DateTime(int.Parse("19" + anio), int.Parse(mes), int.Parse(dia));
-            }
-            catch
-            {
-                fechaNacimiento = new DateTime(int.Parse("20" + anio), int.Parse(mes), int.Parse(dia));
-            }
-            return fechaNacimiento;
-        }
-
         private int ObtieneEdad(DateTime fecha)
         {
             DateTime fechaNacimiento = fecha;
@@ -179,7 +161,7 @@ namespace Nominas
 
             ph = new Periodos.Core.PeriodosHelper();
             Periodos.Core.Periodos p = new Periodos.Core.Periodos();
-            
+
             fh = new Factores.Core.FactoresHelper();
             Factores.Core.Factores f = new Factores.Core.Factores();
 
@@ -219,9 +201,9 @@ namespace Nominas
             Periodos.Core.Periodos p = new Periodos.Core.Periodos();
 
             ph.Command = cmd;
-            
+
             p.idperiodo = idPeriodo;
-            
+
             try
             {
                 cnx.Open();
@@ -238,132 +220,7 @@ namespace Nominas
             return sueldo;
         }
 
-        private int ObtenerDiasProporcionales(DateTime fechaingreso)
-        {
-            cnx = new SqlConnection();
-            cnx.ConnectionString = cdn;
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            ph = new Periodos.Core.PeriodosHelper();
-            ph.Command = cmd;
-
-            Periodos.Core.Periodos p = new Periodos.Core.Periodos();
-            p.idperiodo = idPeriodo;
-            int diasPago = 0;
-            try { cnx.Open(); diasPago = (int)ph.DiasDePago(p); cnx.Close(); }
-            catch { MessageBox.Show("Error: Al obtener los dias de pago.", "Error"); }
-
-            DateTime dt = fechaingreso.Date;
-            
-            int diasProporcionales = 0;
-            if (diasPago == 7)
-            {
-                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
-                periodoInicio = dt;
-                periodoFin = dt.AddDays(6);
-                diasProporcionales = (int)(periodoFin.Date - fechaingreso.Date).TotalDays + 1;
-            }
-            else
-            {
-                if (dt.Day <= 15)
-                {
-                    periodoInicio = new DateTime(dt.Year, dt.Month, 1);
-                    periodoFin = new DateTime(dt.Year, dt.Month, 15);
-                    diasProporcionales = (int)(periodoFin.Date - fechaingreso.Date).TotalDays + 1;
-                }
-                else
-                {
-                    int diasMes = DateTime.DaysInMonth(dt.Year, dt.Month);
-                    int diasNoLaborados = 0;
-                    periodoInicio = new DateTime(dt.Year, dt.Month, 16);
-                    periodoFin = new DateTime(dt.Year, dt.Month, DateTime.DaysInMonth(dt.Year, dt.Month));
-                    diasNoLaborados = (int)(fechaingreso.Date - periodoInicio).TotalDays;
-                    diasProporcionales = 15 - diasNoLaborados;
-                }
-            }
-            return diasProporcionales;
-        }
-
-        private int ObtenerIdEstado(string estado)
-        {
-            int idEstado = 0;
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            edoh = new Estados.Core.EstadosHelper();
-            edoh.Command = cmd;
-
-            Estados.Core.Estados edo = new Estados.Core.Estados();
-            edo.nombre = estado;
-
-            try
-            {
-                cnx.Open();
-                idEstado = (int)edoh.obtenerIdEstado(edo);
-                cnx.Close();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Error: Al obtener el ID del estado.", "Error");
-                cnx.Dispose();
-                return 0;
-            }
-            return idEstado;
-        }
-
-        private string ObtenerRfc(string paterno, string materno, string nombre, DateTime fechanacimiento)
-        {
-            return "";
-        }
-
-        private string ObtenerEstado(string curp)
-        {
-            string estado = curp.Substring(11, 2);
-            switch (estado)
-            {
-                case "AS": estado = "AGUASCALIENTES"; break;
-                case "BC": estado = "BAJA CALIFORNIA"; break;
-                case "BS": estado = "BAJA CALIFORNIA SUR"; break;
-                case "CC": estado = "CAMPECHE"; break;
-                case "CL": estado = "COAHUILA"; break;
-                case "CM": estado = "COLIMA"; break;
-                case "CS": estado = "CHIAPAS"; break;
-                case "CH": estado = "CHIHUAHUA"; break;
-                case "DF": estado = "DISTRITO FEDERAL"; break;
-                case "DG": estado = "DURANGO"; break;
-                case "GT": estado = "GUANAJUATO"; break;
-                case "GR": estado = "GERRERO"; break;
-                case "HG": estado = "HIDALGO"; break;
-                case "JC": estado = "JALISCO"; break;
-                case "MC": estado = "MEXICO"; break;
-                case "MN": estado = "MICHOACAN"; break;
-                case "MS": estado = "MORELOS"; break;
-                case "NT": estado = "NAYARIT"; break;
-                case "NL": estado = "NUEVO LEON"; break;
-                case "OC": estado = "OAXACA"; break;
-                case "PL": estado = "PUEBLA"; break;
-                case "QT": estado = "QUERETARO"; break;
-                case "QR": estado = "QUINTANA ROO"; break;
-                case "SP": estado = "SAN LUIS POTOSI"; break;
-                case "SL": estado = "SINALOA"; break;
-                case "SR": estado = "SONORA"; break;
-                case "TC": estado = "TABASCO"; break;
-                case "TS": estado = "TAMAULIPAS"; break;
-                case "TL": estado = "TLAXCALA"; break;
-                case "VZ": estado = "VERACRUZ"; break;
-                case "YN": estado = "YUCATAN"; break;
-                case "ZS": estado = "ZACATECAS"; break;
-            }
-            return estado;
-        }
-
-        private string ObtenerSexo(string curp)
-        {
-            return curp.Substring(10, 1);
-        }
-
+               
         private void workerImporta_DoWork(object sender, DoWorkEventArgs e)
         {
             int contador = dgvCargaEmpleados.Rows.Count;
@@ -375,9 +232,12 @@ namespace Nominas
 
             foreach (DataGridViewRow fila in dgvCargaEmpleados.Rows)
             {
-                
+
                 workerImporta.ReportProgress((progreso * 100) / contador);
                 progreso++;
+
+                ph = new Periodos.Core.PeriodosHelper();
+                ph.Command = cmd;
 
                 dh = new Departamento.Core.DeptoHelper();
                 dh.Command = cmd;
@@ -385,24 +245,27 @@ namespace Nominas
                 puestoh = new Puestos.Core.PuestosHelper();
                 puestoh.Command = cmd;
 
-                ph = new Periodos.Core.PeriodosHelper();
-                ph.Command = cmd;
-
                 try
                 {
                     cnx.Open();
-                    idDepto = (int)dh.obtenerIdDepartamento(fila.Cells["departamento"].Value.ToString(), GLOBALES.IDEMPRESA);
-                    idPuesto = (int)puestoh.obtenerIdPuesto(fila.Cells["puesto"].Value.ToString(), GLOBALES.IDEMPRESA);
-                    idPeriodo = (int)ph.obtenerIdPeriodo(fila.Cells["periodo"].Value.ToString(), GLOBALES.IDEMPRESA);
+                    idPeriodo = int.Parse(ph.obtenerIdPeriodo(fila.Cells["periodo"].Value.ToString(), GLOBALES.IDEMPRESA).ToString());
+                    iddepto = int.Parse(dh.obtenerIdDepartamento(fila.Cells["departamento"].Value.ToString(), GLOBALES.IDEMPRESA).ToString());
+                    idpuesto = int.Parse(puestoh.obtenerIdPuesto(fila.Cells["puesto"].Value.ToString(), GLOBALES.IDEMPRESA).ToString());
                     cnx.Close();
                 }
-                catch
-                {
-                    MessageBox.Show("Error: Al obtener los datos del Departamento, Puesto y/o Periodo.", "Error");
+                catch {
+                    MessageBox.Show(String.Format("Error: Al obtener del Empleado: {0}. Periodo, Departamento yo/ Puesto.\r\nVerifique que el periodo, depto y/o puesto de la empresa existan.\r\n\r\nSe cerrará esta ventana.",
+                        fila.Cells["noempleado"].Value.ToString()), "Error", 
+                        MessageBoxButtons.OK, 
+                        MessageBoxIcon.Error);
                     cnx.Dispose();
-                    return;
+                    workerImporta.CancelAsync();
+                    if (workerImporta.CancellationPending == true) {
+                        e.Cancel = true;
+                        return;
+                    }
                 }
-
+                
                 Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
                 empleado.noempleado = fila.Cells["noempleado"].Value.ToString();
                 empleado.nombres = fila.Cells["nombre"].Value.ToString();
@@ -411,38 +274,30 @@ namespace Nominas
                 empleado.nombrecompleto = String.Format("{0} {1} {2}", empleado.paterno, empleado.materno, empleado.nombres);
                 empleado.idempresa = GLOBALES.IDEMPRESA;
                 empleado.idperiodo = idPeriodo;
-                empleado.idsalario = 1;
-                empleado.iddepartamento = idDepto;
-                empleado.idpuesto = idPuesto;
-                empleado.fechaingreso = DateTime.Parse(fila.Cells["fechaingreso"].Value.ToString());
+                empleado.idsalario = 0;
+                empleado.fechaingreso = DateTime.Parse(fila.Cells["fechaingreso"].Value.ToString()).Date;
                 empleado.antiguedad = 0;
-                empleado.fechaantiguedad = DateTime.Parse(fila.Cells["fechaingreso"].Value.ToString());
+                empleado.fechaantiguedad = DateTime.Parse(fila.Cells["fechaingreso"].Value.ToString()).Date;
                 empleado.antiguedadmod = 0;
-                empleado.fechanacimiento = ObtieneFecha(fila.Cells["curp"].Value.ToString());
+                empleado.fechanacimiento = DateTime.Parse(fila.Cells["fechanacimiento"].Value.ToString()).Date;
                 empleado.edad = ObtieneEdad(empleado.fechanacimiento);
-                empleado.rfc = ObtenerRfc(empleado.paterno, empleado.materno, empleado.nombres, empleado.fechanacimiento);
+                empleado.rfc = fila.Cells["rfc"].Value.ToString();
                 empleado.curp = fila.Cells["curp"].Value.ToString();
-                empleado.nss = fila.Cells["nss"].Value.ToString();
-                empleado.digitoverificador = int.Parse(fila.Cells["dv"].Value.ToString());
+                empleado.nss = fila.Cells["nss"].Value.ToString().Substring(0, 9);
+                empleado.digitoverificador = int.Parse(fila.Cells["nss"].Value.ToString().Substring(fila.Cells["nss"].Value.ToString().Length - 1, 1));
                 empleado.tiposalario = 19;
                 empleado.sdi = decimal.Parse(fila.Cells["sdi"].Value.ToString());
                 empleado.sd = ObtieneSD(decimal.Parse(fila.Cells["sdi"].Value.ToString()));
                 empleado.sueldo = ObtieneSueldo(empleado.sd);
-                empleado.estatus = 1;
+                empleado.estatus = GLOBALES.ACTIVO;
                 empleado.idusuario = GLOBALES.IDUSUARIO;
-                empleado.cuenta = "0000000000";
-                empleado.clabe = "000000000000000000";
+                empleado.cuenta = fila.Cells["cuenta"].Value.ToString(); ;
+                empleado.clabe = fila.Cells["clabe"].Value.ToString(); ;
                 empleado.idbancario = "0000";
                 empleado.metodopago = "TRANSFERENCIA";
                 empleado.tiporegimen = 60;
-
-                //Empleados.Core.EmpleadosEstatus ee = new Empleados.Core.EmpleadosEstatus();
-                //ee.estatus = GLOBALES.ACTIVO;
-                //ee.idempresa = GLOBALES.IDEMPRESA;
-
-                cnx = new SqlConnection(cdn);
-                cmd = new SqlCommand();
-                cmd.Connection = cnx;
+                empleado.iddepartamento = iddepto;
+                empleado.idpuesto = idpuesto;
 
                 emph = new Empleados.Core.EmpleadosHelper();
                 emph.Command = cmd;
@@ -450,6 +305,7 @@ namespace Nominas
                 Empleados.Core.Empleados nss = new Empleados.Core.Empleados();
                 nss.nss = empleado.nss;
                 nss.digitoverificador = empleado.digitoverificador;
+
                 int existeEmpleado = 0;
                 try
                 {
@@ -459,7 +315,7 @@ namespace Nominas
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Error: Al obtener la existencia del empleado.", "Error");
+                    MessageBox.Show("Error: Al obtener la existencia del empleado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     cnx.Dispose();
                     return;
                 }
@@ -470,8 +326,6 @@ namespace Nominas
                     {
                         cnx.Open();
                         emph.insertaEmpleado(empleado);
-                        //ee.idtrabajador = (int)emph.obtenerIdTrabajador(empleado);
-                        //emph.insertaEmpleadoEstatus(ee);
                         cnx.Close();
                     }
                     catch (Exception)
@@ -480,117 +334,6 @@ namespace Nominas
                         cnx.Dispose();
                         return;
                     }
-
-                    int idEmpleado = 0;
-                    try
-                    {
-                        cnx.Open();
-                        idEmpleado = (int)emph.obtenerIdTrabajador(fila.Cells["noempleado"].Value.ToString(), GLOBALES.IDEMPRESA);
-                        cnx.Close();
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Error: Al obtener el ID del empleado. No. empleado: " + fila.Cells["noempleado"].Value.ToString(), "Error");
-                        cnx.Dispose();
-                        return;
-                    }
-
-                    //cnx = new SqlConnection(cdn);
-                    //cmd = new SqlCommand();
-                    //cmd.Connection = cnx;
-
-                    //hh = new Historial.Core.HistorialHelper();
-                    //hh.Command = cmd;
-
-                    //Historial.Core.Historial historial = new Historial.Core.Historial();
-                    //historial.idtrabajador = idEmpleado;
-                    //historial.tipomovimiento = GLOBALES.mALTA;
-                    //historial.valor = empleado.sdi;
-                    //historial.fecha_imss = DateTime.Parse(fila.Cells["fechaingreso"].Value.ToString());
-                    //historial.fecha_sistema = DateTime.Now.Date;
-                    //historial.idempresa = GLOBALES.IDEMPRESA;
-                    //historial.motivobaja = 0;
-
-                    //try
-                    //{
-                    //    cnx.Open();
-                    //    hh.insertarHistorial(historial);
-                    //    cnx.Close();
-                    //}
-                    //catch (Exception)
-                    //{
-                    //    MessageBox.Show("Error: Al ingresar historial del trabajador. No. empleado: " + fila.Cells["noempleado"].Value.ToString(), "Error");
-                    //    cnx.Dispose();
-                    //    return;
-                    //}
-
-                    //cnx = new SqlConnection(cdn);
-                    //cmd = new SqlCommand();
-                    //cmd.Connection = cnx;
-
-                    //eh = new Empresas.Core.EmpresasHelper();
-                    //eh.Command = cmd;
-
-                    //Empresas.Core.Empresas empresa = new Empresas.Core.Empresas();
-                    //empresa.idempresa = GLOBALES.IDEMPRESA;
-
-                    //try
-                    //{
-                    //    cnx.Open();
-                    //    registroPatronal = eh.obtenerRegistroPatronal(empresa).ToString();
-                    //    cnx.Close();
-                    //}
-                    //catch (Exception)
-                    //{
-                    //    MessageBox.Show("Error: Al obtener el registro patronal. NoEmpleado: " + fila.Cells["noempleado"].Value.ToString() + ".", "Error");
-                    //    cnx.Dispose();
-                    //    return;
-                    //}
-
-                    //Altas.Core.Altas alta = new Altas.Core.Altas();
-                    //alta.idtrabajador = idEmpleado;
-                    //alta.idempresa = GLOBALES.IDEMPRESA;
-                    //alta.registropatronal = registroPatronal;
-                    //alta.nss = empleado.nss + empleado.digitoverificador.ToString();
-                    //alta.rfc = empleado.rfc;
-                    //alta.curp = empleado.curp;
-                    //alta.paterno = empleado.paterno;
-                    //alta.materno = empleado.materno;
-                    //alta.nombre = empleado.nombres;
-                    //alta.contrato = 4;
-                    //alta.jornada = 12;
-                    //alta.fechaingreso = empleado.fechaingreso;
-                    //alta.diasproporcionales = ObtenerDiasProporcionales(empleado.fechaingreso);
-                    //alta.sdi = empleado.sdi;
-                    //alta.cp = "0";
-                    //alta.fechanacimiento = empleado.fechanacimiento;
-                    //alta.estado = ObtenerEstado(empleado.curp);
-                    //alta.noestado = ObtenerIdEstado(alta.estado);
-                    //alta.clinica = "0";
-                    //alta.sexo = ObtenerSexo(empleado.curp);
-                    //alta.periodoInicio = periodoInicio;
-                    //alta.periodoFin = periodoFin;
-
-
-                    //cnx = new SqlConnection(cdn);
-                    //cmd = new SqlCommand();
-                    //cmd.Connection = cnx;
-
-                    //ah = new Altas.Core.AltasHelper();
-                    //ah.Command = cmd;
-
-                    //try
-                    //{
-                    //    cnx.Open();
-                    //    ah.insertaAlta(alta);
-                    //    cnx.Close();
-                    //}
-                    //catch (Exception)
-                    //{
-                    //    MessageBox.Show("Error: Al ingresar alta del trabajador. No. empleado: " + fila.Cells["noempleado"].Value.ToString(), "Error");
-                    //    cnx.Dispose();
-                    //    return;
-                    //}
                 }
             }
             cnx.Dispose();
@@ -605,6 +348,7 @@ namespace Nominas
         {
             lblPorcentaje.Text = "Completada.";
             dgvCargaEmpleados.Rows.Clear();
+            this.Dispose();
         }
 
         private void toolLimpiar_Click(object sender, EventArgs e)

@@ -45,48 +45,42 @@
             this.groupBox1.Controls.Add(this.dtpDesde);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(16, 15);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox1.Size = new System.Drawing.Size(391, 127);
+            this.groupBox1.Size = new System.Drawing.Size(293, 103);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Fechas:";
             // 
             // dtpHasta
             // 
-            this.dtpHasta.Location = new System.Drawing.Point(92, 78);
-            this.dtpHasta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpHasta.Location = new System.Drawing.Point(69, 63);
             this.dtpHasta.Name = "dtpHasta";
-            this.dtpHasta.Size = new System.Drawing.Size(265, 22);
+            this.dtpHasta.Size = new System.Drawing.Size(200, 20);
             this.dtpHasta.TabIndex = 3;
             // 
             // dtpDesde
             // 
-            this.dtpDesde.Location = new System.Drawing.Point(92, 38);
-            this.dtpDesde.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpDesde.Location = new System.Drawing.Point(69, 31);
             this.dtpDesde.Name = "dtpDesde";
-            this.dtpDesde.Size = new System.Drawing.Size(265, 22);
+            this.dtpDesde.Size = new System.Drawing.Size(200, 20);
             this.dtpDesde.TabIndex = 2;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(25, 42);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(19, 34);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 17);
+            this.label2.Size = new System.Drawing.Size(41, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Desde:";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(25, 81);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(19, 66);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 17);
+            this.label1.Size = new System.Drawing.Size(38, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Hasta:";
             // 
@@ -94,10 +88,9 @@
             // 
             this.toolAceptar.Image = ((System.Drawing.Image)(resources.GetObject("toolAceptar.Image")));
             this.toolAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolAceptar.Location = new System.Drawing.Point(199, 158);
-            this.toolAceptar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.toolAceptar.Location = new System.Drawing.Point(149, 128);
             this.toolAceptar.Name = "toolAceptar";
-            this.toolAceptar.Size = new System.Drawing.Size(100, 41);
+            this.toolAceptar.Size = new System.Drawing.Size(75, 33);
             this.toolAceptar.TabIndex = 1;
             this.toolAceptar.Text = "Aceptar";
             this.toolAceptar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -108,10 +101,9 @@
             // 
             this.toolCancelar.Image = ((System.Drawing.Image)(resources.GetObject("toolCancelar.Image")));
             this.toolCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolCancelar.Location = new System.Drawing.Point(307, 158);
-            this.toolCancelar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.toolCancelar.Location = new System.Drawing.Point(230, 128);
             this.toolCancelar.Name = "toolCancelar";
-            this.toolCancelar.Size = new System.Drawing.Size(100, 41);
+            this.toolCancelar.Size = new System.Drawing.Size(75, 33);
             this.toolCancelar.TabIndex = 2;
             this.toolCancelar.Text = "Cancelar";
             this.toolCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -120,20 +112,20 @@
             // 
             // frmFiltro
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(427, 203);
+            this.ClientSize = new System.Drawing.Size(322, 171);
             this.Controls.Add(this.toolCancelar);
             this.Controls.Add(this.toolAceptar);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(445, 250);
+            this.MaximumSize = new System.Drawing.Size(338, 210);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(445, 250);
+            this.MinimumSize = new System.Drawing.Size(338, 210);
             this.Name = "frmFiltro";
             this.Text = "Range de fechas";
+            this.Load += new System.EventHandler(this.frmFiltro_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

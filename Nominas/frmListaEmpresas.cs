@@ -154,31 +154,39 @@ namespace Nominas
 
         private void toolBaja_Click(object sender, EventArgs e)
         {
-            DialogResult respuesta = MessageBox.Show("¿Quiere eliminar la empresa?", "Confirmación", MessageBoxButtons.YesNo);
-            if (respuesta == DialogResult.Yes)
+            if (dgvEmpresas.Rows.Count != 0)
             {
-                string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-                int fila = dgvEmpresas.CurrentCell.RowIndex;
-                int idempresa = int.Parse(dgvEmpresas.Rows[fila].Cells[0].Value.ToString());
-                cnx = new SqlConnection(cdn);
-                cmd = new SqlCommand();
-                cmd.Connection = cnx;
-                Empresas.Core.EmpresasHelper eh = new Empresas.Core.EmpresasHelper();
-                eh.Command = cmd;
-                Empresas.Core.Empresas em = new Empresas.Core.Empresas();
-                em.idempresa = idempresa;
-                try
+                DialogResult respuesta = MessageBox.Show("¿Quiere eliminar la empresa?", "Confirmación", MessageBoxButtons.YesNo);
+                if (respuesta == DialogResult.Yes)
                 {
-                    cnx.Open();
-                    eh.bajaEmpresa(em);
-                    cnx.Close();
-                    cnx.Dispose();
-                    ListaEmpresas();
+                    string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+                    int fila = dgvEmpresas.CurrentCell.RowIndex;
+                    int idempresa = int.Parse(dgvEmpresas.Rows[fila].Cells[0].Value.ToString());
+                    cnx = new SqlConnection(cdn);
+                    cmd = new SqlCommand();
+                    cmd.Connection = cnx;
+                    Empresas.Core.EmpresasHelper eh = new Empresas.Core.EmpresasHelper();
+                    eh.Command = cmd;
+                    Empresas.Core.Empresas em = new Empresas.Core.Empresas();
+                    em.idempresa = idempresa;
+                    try
+                    {
+                        cnx.Open();
+                        eh.bajaEmpresa(em);
+                        cnx.Close();
+                        cnx.Dispose();
+                        ListaEmpresas();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+                    }
                 }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
-                }
+            }
+            else
+            { 
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
         }
 
@@ -191,8 +199,17 @@ namespace Nominas
             e._lista = true;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {
-                fila = dgvEmpresas.CurrentCell.RowIndex;
-                e._idempresa = int.Parse(dgvEmpresas.Rows[fila].Cells[0].Value.ToString());
+                if (dgvEmpresas.Rows.Count != 0)
+                {
+                    fila = dgvEmpresas.CurrentCell.RowIndex;
+                    e._idempresa = int.Parse(dgvEmpresas.Rows[fila].Cells[0].Value.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+                
             }
             e._tipoOperacion = edicion;
             e.Show();

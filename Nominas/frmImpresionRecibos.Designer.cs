@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmImpresionRecibos));
             this.lstvPeriodos = new System.Windows.Forms.ListView();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -41,8 +40,6 @@
             this.btnAceptar = new System.Windows.Forms.Button();
             this.chkImprimirTodos = new System.Windows.Forms.CheckBox();
             this.chkTodos = new System.Windows.Forms.CheckBox();
-            this.pbxLoad = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pbxLoad)).BeginInit();
             this.SuspendLayout();
             // 
             // lstvPeriodos
@@ -164,23 +161,11 @@
             this.chkTodos.UseVisualStyleBackColor = true;
             this.chkTodos.CheckedChanged += new System.EventHandler(this.chkTodos_CheckedChanged);
             // 
-            // pbxLoad
-            // 
-            this.pbxLoad.Image = ((System.Drawing.Image)(resources.GetObject("pbxLoad.Image")));
-            this.pbxLoad.Location = new System.Drawing.Point(202, 186);
-            this.pbxLoad.Name = "pbxLoad";
-            this.pbxLoad.Size = new System.Drawing.Size(93, 74);
-            this.pbxLoad.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbxLoad.TabIndex = 17;
-            this.pbxLoad.TabStop = false;
-            this.pbxLoad.WaitOnLoad = true;
-            // 
             // frmImpresionRecibos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(492, 518);
-            this.Controls.Add(this.pbxLoad);
             this.Controls.Add(this.chkTodos);
             this.Controls.Add(this.chkImprimirTodos);
             this.Controls.Add(this.btnAceptar);
@@ -198,7 +183,6 @@
             this.Name = "frmImpresionRecibos";
             this.Text = "Impresión de recibos";
             this.Load += new System.EventHandler(this.frmImpresionRecibos_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pbxLoad)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -218,6 +202,5 @@
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.CheckBox chkImprimirTodos;
         private System.Windows.Forms.CheckBox chkTodos;
-        private System.Windows.Forms.PictureBox pbxLoad;
     }
 }

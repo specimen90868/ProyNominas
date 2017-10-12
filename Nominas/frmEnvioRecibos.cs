@@ -239,87 +239,12 @@ namespace Nominas
 
         private void workerEnvio_DoWork(object sender, DoWorkEventArgs e)
         {
-            #region CODIGO QR
-            int existeNullCodeQR = 0;
-
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
 
             CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
             nh.Command = cmd;
-
-            workerEnvio.ReportProgress(0, "Generando códigos QR.");
-
-            try
-            {
-                cnx.Open();
-                existeNullCodeQR = nh.existeNullQR(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date);
-                cnx.Close();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: Al obtener existencia de nulos Code QR." + error.Message, "Error");
-                cnx.Dispose();
-                return;
-            }
-
-            if (existeNullCodeQR != 0)
-            {
-                List<CalculoNomina.Core.CodigoBidimensional> lstQR = new List<CalculoNomina.Core.CodigoBidimensional>();
-                try
-                {
-                    cnx.Open();
-                    lstQR = nh.obtenerListaQr(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date, _periodo);
-                    cnx.Close();
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: Al obtener el listado de los XML." + error.Message, "Error");
-                    cnx.Dispose();
-                    return;
-                }
-
-                string codigoQR = "";
-                string[] valores = null;
-                string numero = "";
-                string vEntero = "";
-                string vDecimal = "";
-
-                for (int i = 0; i < lstQR.Count; i++)
-                {
-                    numero = lstQR[i].tt.ToString();
-                    valores = numero.Split('.');
-                    vEntero = valores[0];
-                    vDecimal = valores[1];
-                    codigoQR = string.Format("?re={0}&rr={1}&tt={2}.{3}&id={4}", lstQR[i].re, lstQR[i].rr,
-                        vEntero.PadLeft(10, '0'), vDecimal.PadRight(6, '0'), lstQR[i].uuid);
-                    var qrEncoder = new QrEncoder(ErrorCorrectionLevel.H);
-                    var qrCode = qrEncoder.Encode(codigoQR);
-                    var renderer = new GraphicsRenderer(new FixedModuleSize(2, QuietZoneModules.Two), Brushes.Black, Brushes.White);
-
-                    using (var stream = new FileStream(lstQR[i].uuid + ".png", FileMode.Create))
-                        renderer.WriteToStream(qrCode.Matrix, ImageFormat.Png, stream);
-
-                    Bitmap bmp = new Bitmap(lstQR[i].uuid + ".png");
-                    Byte[] qr = GLOBALES.IMAGEN_BYTES(bmp);
-                    bmp.Dispose();
-                    File.Delete(lstQR[i].uuid + ".png");
-                    try
-                    {
-                        cnx.Open();
-                        nh.actualizaXml(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date, lstQR[i].idtrabajador, qr);
-                        cnx.Close();
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Error: Al actualizar el código QR.", "Error");
-                        cnx.Dispose();
-                        return;
-                    }
-                }
-            }
-            #endregion
 
             int existeRecibo = 0;
             if (fecha != "")
@@ -489,78 +414,6 @@ namespace Nominas
                 fecha = lstvPeriodos.SelectedItems[i].Text;
                 fechafin = lstvPeriodos.SelectedItems[i].SubItems[1].Text;
             }
-
-            #region MOVER REGISTROS A CFDI MASTER
-            int recibosNoTimbrados = 0;
-
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
-            nh.Command = cmd;
-
-            try
-            {
-                cnx.Open();
-                recibosNoTimbrados = nh.recibosNoTimbrados(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date);
-                cnx.Close();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Error: Al obtener la cantidad de recibos en el periodo.", "Error");
-                cnx.Dispose();
-                this.Dispose();
-            }
-
-            if (!recibosNoTimbrados.Equals(0))
-            {
-                MessageBox.Show("ADVERTENCIA:\r\n\r\n" +
-                                "El periodo seleccionado aun tiene recibos pendientes de timbrar.\r\n" +
-                                "Se actualizaran los datos de los recibos.\r\n" +
-                                "NOTA: Se podrán generar solo aquellos que han sido timbrados.", "Información",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Exclamation);
-                cnx.Open();
-                nh.eliminarCfdiMasterDetalle(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date, _tiponomina);
-                cnx.Close();
-            }
-
-            List<CalculoNomina.Core.PagoNomina> lstFechas = new List<CalculoNomina.Core.PagoNomina>();
-            try
-            {
-
-                cnx.Open();
-                lstFechas = nh.existeFechaCabecera(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date, _periodo);
-                cnx.Close();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("ERROR:\r\n\r\n" +
-                            "Ocurrió una excepción al obtener el periodo la tabla Master del CFDi.\r\n" +
-                            "Por favor contacte a su administrador.", "Información",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (lstFechas.Count.Equals(0))
-            {
-                int resultadoExec = 0;
-                MessageBox.Show("INFORMACIÓN:\r\n\r\n" +
-                            "Por favor espere a que el proceso del CFDi termine.\r\n" +
-                            "Este proceso se ejecuta solo una vez.",
-                            "Información",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-                cnx.Open();
-                resultadoExec = nh.insertaCFDiMaster(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date);
-                cnx.Close();
-
-                cnx.Open();
-                nh.insertaCFDiDetalle(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date);
-                cnx.Close();
-            }         
-            
-            #endregion
 
             lstvDepartamentos.Items.Clear();
 

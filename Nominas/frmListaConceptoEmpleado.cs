@@ -92,13 +92,21 @@ namespace Nominas
 
         private void toolConsultar_Click(object sender, EventArgs e)
         {
-            int fila = 0;
-            frmConceptoEmpleado ce = new frmConceptoEmpleado();
-            fila = dgvEmpleados.CurrentCell.RowIndex;
-            ce._idEmpleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
-            ce._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[2].Value.ToString();
-            ce.StartPosition = FormStartPosition.CenterScreen;
-            ce.Show();
+            if (dgvEmpleados.Rows.Count != 0)
+            {
+                int fila = 0;
+                frmConceptoEmpleado ce = new frmConceptoEmpleado();
+                fila = dgvEmpleados.CurrentCell.RowIndex;
+                ce._idEmpleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+                ce._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[2].Value.ToString();
+                ce.StartPosition = FormStartPosition.CenterScreen;
+                ce.Show();
+            }
+            else {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            
         }
 
         private void txtBuscar_Click(object sender, EventArgs e)

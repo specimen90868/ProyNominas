@@ -20,6 +20,9 @@ namespace Conceptos.Core
         public string gruposat { get; set; }
         public bool visible { get; set; }
         public int periodo { get; set; }
+        public string catsat { get; set; }
+        public int idcatsat { get; set; }
+        public string valorcatsat { get; set; }
     }
 
     public class ConceptoTrabajador

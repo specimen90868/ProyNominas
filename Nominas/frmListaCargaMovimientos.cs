@@ -398,6 +398,9 @@ namespace Nominas
                             pne.fechafin = _finPeriodo;
                             pne.noconcepto = lstConcepto[0].noconcepto;
 
+                            if (lstConcepto[0].noconcepto == 17 && pn.cantidad == 0)
+                                pn.cantidad = (decimal)0.01;
+
                             try
                             {
                                 cnx.Open();

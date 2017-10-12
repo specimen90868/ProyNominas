@@ -35,8 +35,8 @@ namespace Empresas.Core
         public List<Empresas> obtenerEmpresa(int idempresa)
         {
             DataTable dtEmpresas = new DataTable();
-            Command.CommandText = @"select idempresa, nombre, rfc, registro, digitoverificador, representante, regimen, certificado, llave, password, nocertificado, vigenciacertificado, observacion, obracivil, 
-                                    idregimenfiscal, codigopostal from empresas where idempresa = @idempresa";
+            Command.CommandText = @"select idempresa, nombre, rfc, registro, digitoverificador, representante, observacion, obracivil, 
+                                    idregimenfiscal, codigopostal, archivokey, archivocer, passwordkey, usuariopac, passwordpac from empresas where idempresa = @idempresa";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idempresa);
             dtEmpresas = SelectData(Command);
@@ -50,16 +50,15 @@ namespace Empresas.Core
                 e.registro = dtEmpresas.Rows[i]["registro"].ToString();
                 e.digitoverificador = int.Parse(dtEmpresas.Rows[i]["digitoverificador"].ToString());
                 e.representante = dtEmpresas.Rows[i]["representante"].ToString();
-                e.regimen = dtEmpresas.Rows[i]["regimen"].ToString();
-                e.certificado = dtEmpresas.Rows[i]["certificado"].ToString();
-                e.llave = dtEmpresas.Rows[i]["llave"].ToString();
-                e.password = dtEmpresas.Rows[i]["password"].ToString();
-                e.nocertificado = dtEmpresas.Rows[i]["nocertificado"].ToString();
-                e.vigenciacertificado = DateTime.Parse(dtEmpresas.Rows[i]["vigenciacertificado"].ToString());
                 e.observacion = dtEmpresas.Rows[i]["observacion"].ToString();
                 e.obracivil = bool.Parse(dtEmpresas.Rows[i]["obracivil"].ToString());
                 e.idregimenfiscal = int.Parse(dtEmpresas.Rows[i]["idregimenfiscal"].ToString());
                 e.codigopostal = dtEmpresas.Rows[i]["codigopostal"].ToString();
+                e.archivokey = dtEmpresas.Rows[i]["archivokey"].ToString();
+                e.archivocer = dtEmpresas.Rows[i]["archivocer"].ToString();
+                e.passwordkey = dtEmpresas.Rows[i]["passwordkey"].ToString();
+                e.usuariopac = dtEmpresas.Rows[i]["usuariopac"].ToString();
+                e.passwordpac = dtEmpresas.Rows[i]["passwordpac"].ToString();
                 lstEmpresa.Add(e);
             }
             return lstEmpresa;
@@ -122,10 +121,29 @@ namespace Empresas.Core
             return (bool)dato;
         }
 
+        public List<Empresas> obtenerDatosCertPac(int idempresa)
+        {
+            List<Empresas> lst = new List<Empresas>();
+            Command.CommandText = "select rfc, archivocer, archivokey, passwordkey, usuariopac, passwordpac from Empresas where idempresa = @idempresa";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            DataTable dt = new DataTable();
+            dt = SelectData(Command);
+            Empresas empresa = new Empresas();
+            empresa.rfc = dt.Rows[0]["rfc"].ToString();
+            empresa.archivocer = dt.Rows[0]["archivocer"].ToString();
+            empresa.archivokey = dt.Rows[0]["archivokey"].ToString();
+            empresa.passwordkey = dt.Rows[0]["passwordkey"].ToString();
+            empresa.usuariopac = dt.Rows[0]["usuariopac"].ToString();
+            empresa.passwordpac = dt.Rows[0]["passwordpac"].ToString();
+            lst.Add(empresa);
+            return lst;
+        }
+
         public int insertaEmpresa(Empresas e)
         {
-            Command.CommandText = "insert into empresas (nombre, rfc, registro, digitoverificador, representante, estatus, certificado, llave, password, regimen, nocertificado, vigenciacertificado, observacion, obracivil, idregimenfiscal, codigopostal) " +
-                "values (@nombre, @rfc, @registro, @digitoverificador, @representante, @estatus, @certificado, @llave, @password, @regimen, @nocertificado, @vigenciacertificado, @observacion, @obracivil, @idregimenfiscal, @codigopostal)";
+            Command.CommandText = "insert into empresas (nombre, rfc, registro, digitoverificador, representante, estatus, certificado, nocertificado, observacion, obracivil, idregimenfiscal, codigopostal, archivokey, archivocer, passwordkey, usuariopac, passwordpac) " +
+                "values (@nombre, @rfc, @registro, @digitoverificador, @representante, @estatus, @certificado, @nocertificado, @observacion, @obracivil, @idregimenfiscal, @codigopostal, @archivokey, @archivocer, @passwordkey, @usuariopac, @passwordpac)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("nombre",e.nombre);
             Command.Parameters.AddWithValue("rfc", e.rfc);
@@ -134,23 +152,25 @@ namespace Empresas.Core
             Command.Parameters.AddWithValue("representante", e.representante);
             Command.Parameters.AddWithValue("estatus", e.estatus);
             Command.Parameters.AddWithValue("certificado", e.certificado);
-            Command.Parameters.AddWithValue("llave", e.llave);
-            Command.Parameters.AddWithValue("password", e.password);
-            Command.Parameters.AddWithValue("regimen", e.regimen);
             Command.Parameters.AddWithValue("nocertificado", e.certificado);
-            Command.Parameters.AddWithValue("vigenciacertificado", e.vigenciacertificado);
             Command.Parameters.AddWithValue("observacion", e.observacion);
             Command.Parameters.AddWithValue("obracivil", e.obracivil);
             Command.Parameters.AddWithValue("idregimenfiscal", e.idregimenfiscal);
             Command.Parameters.AddWithValue("codigopostal", e.codigopostal);
+            Command.Parameters.AddWithValue("archivokey", e.archivokey);
+            Command.Parameters.AddWithValue("archivocer", e.archivocer);
+            Command.Parameters.AddWithValue("passwordkey", e.passwordkey);
+            Command.Parameters.AddWithValue("usuariopac", e.usuariopac);
+            Command.Parameters.AddWithValue("passwordpac", e.passwordpac);
             return Command.ExecuteNonQuery();
         }
 
         public int actualizaEmpresa(Empresas e)
         {
             Command.CommandText = @"update empresas set nombre = @nombre, rfc = @rfc, registro = @registro, digitoverificador = @digitoverificador, representante = @representante, 
-                certificado = @certificado, llave = @llave, password = @password, regimen = @regimen, nocertificado = @nocertificado, vigenciacertificado = @vigencia, observacion = @observacion, 
-                obracivil = @obracivil, idregimenfiscal = @idregimenfiscal, codigopostal = @codigopostal where idempresa = @idempresa";
+                estatus = @estatus, certificado = @certificado, nocertificado = @nocertificado, observacion = @observacion, 
+                obracivil = @obracivil, idregimenfiscal = @idregimenfiscal, codigopostal = @codigopostal, archivokey = @archivokey, archivocer = @archivocer, passwordkey = @passwordkey,
+                usuariopac = @usuariopac, passwordpac = @passwordpac where idempresa = @idempresa";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", e.idempresa);
             Command.Parameters.AddWithValue("nombre", e.nombre);
@@ -158,16 +178,18 @@ namespace Empresas.Core
             Command.Parameters.AddWithValue("registro", e.registro);
             Command.Parameters.AddWithValue("digitoverificador", e.digitoverificador);
             Command.Parameters.AddWithValue("representante", e.representante);
+            Command.Parameters.AddWithValue("estatus", e.estatus);
             Command.Parameters.AddWithValue("certificado", e.certificado);
-            Command.Parameters.AddWithValue("llave", e.llave);
-            Command.Parameters.AddWithValue("password", e.password);
-            Command.Parameters.AddWithValue("regimen", e.regimen);
             Command.Parameters.AddWithValue("nocertificado", e.nocertificado);
-            Command.Parameters.AddWithValue("vigencia", e.vigenciacertificado);
             Command.Parameters.AddWithValue("observacion", e.observacion);
             Command.Parameters.AddWithValue("obracivil", e.obracivil);
             Command.Parameters.AddWithValue("idregimenfiscal", e.idregimenfiscal);
             Command.Parameters.AddWithValue("codigopostal", e.codigopostal);
+            Command.Parameters.AddWithValue("archivokey", e.archivokey);
+            Command.Parameters.AddWithValue("archivocer", e.archivocer);
+            Command.Parameters.AddWithValue("passwordkey", e.passwordkey);
+            Command.Parameters.AddWithValue("usuariopac", e.usuariopac);
+            Command.Parameters.AddWithValue("passwordpac", e.passwordpac);
             return Command.ExecuteNonQuery();
         }
 

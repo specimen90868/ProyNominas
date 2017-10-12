@@ -201,6 +201,8 @@ namespace Nominas
             object objObservaciones = null;
             string observaciones = null;
             string nuevaObservacion = null;
+            DateTime fechaIngreso;
+            int anios = 0;
 
             foreach (DataGridViewRow fila in dgvCargaVacaciones.Rows)
             {
@@ -247,136 +249,160 @@ namespace Nominas
                         this.Dispose();
                     }
 
-                    Vacaciones.Core.DiasDerecho dd = new Vacaciones.Core.DiasDerecho();
-                    //dd.anio = lstEmpleado[0].antiguedad;
-                    dd.anio = int.Parse(fila.Cells["aniversario"].Value.ToString());
+                    fechaIngreso = lstEmpleado[0].fechaingreso;
+                    anios = (DateTime.Now.Subtract(fechaIngreso).Days / 365);
 
-                    int dias = 0;
-                    try
-                    {
-                        cnx.Open();
-                        dias = (int)vh.diasDerecho(dd);
-                        cnx.Close();
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Error: Al obtener los dias por derecho del empleado.", "Error");
-                        cnx.Dispose();
-                        return;
-                    }
 
-                    Faltas.Core.FaltasHelper fh = new Faltas.Core.FaltasHelper();
-                    fh.Command = cmd;
+                    if (anios > 0)
+                    {
+                        Vacaciones.Core.DiasDerecho dd = new Vacaciones.Core.DiasDerecho();
+                        //dd.anio = lstEmpleado[0].antiguedad;
+                        dd.anio = int.Parse(fila.Cells["aniversario"].Value.ToString());
 
-                    Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
-                    falta.idempresa = GLOBALES.IDEMPRESA;
-                    falta.idtrabajador = idEmpleado;
-                    falta.fechainicio = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicio"].Value.ToString());
-                    falta.fechafin = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["fin"].Value.ToString());
-
-                    int existeFaltas = 0;
-                    try
-                    {
-                        cnx.Open();
-                        existeFaltas = (int)fh.existeFalta(falta);
-                        cnx.Close();
-                    }
-                    catch (Exception error)
-                    {
-                        MessageBox.Show("Error: Al obtener las faltas del trabajador. \r\n" + error.Message, "Error");
-                        cnx.Dispose();
-                        return;
-                    }
-
-                    int idperiodo = 0;
-                    try
-                    {
-                        cnx.Open();
-                        idperiodo = (int)emph.obtenerIdPeriodo(idEmpleado);
-                        cnx.Close();
-                    }
-                    catch (Exception error)
-                    {
-                        MessageBox.Show("Error: Al obtener el id del periodo. \r\n" + error.Message, "Error");
-                        cnx.Dispose();
-                        return;
-                    }
-                    Periodos.Core.Periodos p = new Periodos.Core.Periodos();
-                    p.idperiodo = idperiodo;
-
-                    int diasPeriodo = 0;
-                    try
-                    {
-                        cnx.Open();
-                        diasPeriodo = (int)ph.DiasDePago(p);
-                        cnx.Close();
-                    }
-                    catch (Exception error)
-                    {
-                        MessageBox.Show("Error: Al obtener los dias del periodo. \r\n" + error.Message, "Error");
-                        cnx.Dispose();
-                        return;
-                    }
-
-                    Vacaciones.Core.VacacionesPrima vp = new Vacaciones.Core.VacacionesPrima();
-                    vp.idtrabajador = idEmpleado;
-                    vp.idempresa = GLOBALES.IDEMPRESA;
-                    vp.periodoinicio = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicio"].Value.ToString());
-                    vp.periodofin = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["fin"].Value.ToString());
-                    vp.diasderecho = dias;
-                    vp.fechapago = DateTime.Now.Date;
-                    vp.vacacionesprima = fila.Cells["concepto"].Value.ToString() == "Prima Vacacional" ? "P" : "V";
-                    vp.aniversario = int.Parse(fila.Cells["aniversario"].Value.ToString());
-
-                    if (fila.Cells["concepto"].Value.ToString().Equals("Prima Vacacional"))
-                    {
-                        vp.diaspago = dias;
-                        vp.diaspendientes = 0;
-                        vp.fechainicio = DateTime.Now.Date;
-                        vp.fechafin = DateTime.Now.Date;
-
-                        cnx.Open();
-                        nuevaObservacion = observaciones + "\r\n" + "Pago de Prima Vacacional; " + (_periodo == 7 ? "Semana: " : "Quincena: ") +
-                            fila.Cells["noperiodo"].Value.ToString() + "-" + DateTime.Now.Year.ToString() + "; Aniversario: " + fila.Cells["aniversario"].Value.ToString() + "; " + 
-                            fila.Cells["observaciones"].Value.ToString();
-                        complemento.observaciones = nuevaObservacion;
-                        ch.actualizaObservacionesTrabajador(complemento);
-                        cnx.Close();
-                        
-                    }
-                    else
-                    {
-                        int diasPagoReales = int.Parse(fila.Cells["diaspago"].Value.ToString()) + existeFaltas;
-                        
-                        if (diasPagoReales > diasPeriodo)
+                        int dias = 0;
+                        try
                         {
-                            diasPagoReales = diasPeriodo - existeFaltas;
-                            MessageBox.Show("Existen faltas del trabajador, se ajustarán las vacaciones.", "Información");
+                            cnx.Open();
+                            dias = (int)vh.diasDerecho(dd);
+                            cnx.Close();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Error: Al obtener los dias por derecho del empleado.", "Error");
+                            cnx.Dispose();
+                            return;
+                        }
+
+                        Faltas.Core.FaltasHelper fh = new Faltas.Core.FaltasHelper();
+                        fh.Command = cmd;
+
+                        Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
+                        falta.idempresa = GLOBALES.IDEMPRESA;
+                        falta.idtrabajador = idEmpleado;
+                        falta.fechainicio = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicio"].Value.ToString());
+                        falta.fechafin = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["fin"].Value.ToString());
+
+                        int existeFaltas = 0;
+                        try
+                        {
+                            cnx.Open();
+                            existeFaltas = (int)fh.existeFalta(falta);
+                            cnx.Close();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Error: Al obtener las faltas del trabajador. \r\n" + error.Message, "Error");
+                            cnx.Dispose();
+                            return;
+                        }
+
+                        Incidencias.Core.IncidenciasHelper ih = new Incidencias.Core.IncidenciasHelper();
+                        ih.Command = cmd;
+
+                        int existeIncapacidad = 0;
+                        try
+                        {
+                            cnx.Open();
+                            existeIncapacidad = int.Parse(ih.diasIncidencia(idEmpleado, 
+                                DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicio"].Value.ToString()).Date,
+                                DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["fin"].Value.ToString()).Date).ToString());
+                            cnx.Close();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Error: Al obtener los dias de incidencia del trabajador. \r\n" + error.Message, "Error");
+                            cnx.Dispose();
+                            return;
+                        }
+
+
+                        int idperiodo = 0;
+                        try
+                        {
+                            cnx.Open();
+                            idperiodo = (int)emph.obtenerIdPeriodo(idEmpleado);
+                            cnx.Close();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Error: Al obtener el id del periodo. \r\n" + error.Message, "Error");
+                            cnx.Dispose();
+                            return;
+                        }
+                        Periodos.Core.Periodos p = new Periodos.Core.Periodos();
+                        p.idperiodo = idperiodo;
+
+                        int diasPeriodo = 0;
+                        try
+                        {
+                            cnx.Open();
+                            diasPeriodo = (int)ph.DiasDePago(p);
+                            cnx.Close();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Error: Al obtener los dias del periodo. \r\n" + error.Message, "Error");
+                            cnx.Dispose();
+                            return;
+                        }
+
+                        Vacaciones.Core.VacacionesPrima vp = new Vacaciones.Core.VacacionesPrima();
+                        vp.idtrabajador = idEmpleado;
+                        vp.idempresa = GLOBALES.IDEMPRESA;
+                        vp.periodoinicio = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicio"].Value.ToString());
+                        vp.periodofin = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["fin"].Value.ToString());
+                        vp.diasderecho = dias;
+                        vp.fechapago = DateTime.Now.Date;
+                        vp.vacacionesprima = fila.Cells["concepto"].Value.ToString() == "Prima Vacacional" ? "P" : "V";
+                        vp.aniversario = int.Parse(fila.Cells["aniversario"].Value.ToString());
+
+                        if (fila.Cells["concepto"].Value.ToString().Equals("Prima Vacacional"))
+                        {
+                            vp.diaspago = dias;
+                            vp.diaspendientes = 0;
+                            vp.fechainicio = DateTime.Now.Date;
+                            vp.fechafin = DateTime.Now.Date;
+
+                            cnx.Open();
+                            nuevaObservacion = observaciones + "\r\n" + "Pago de Prima Vacacional; " + (_periodo == 7 ? "Semana: " : "Quincena: ") +
+                                fila.Cells["noperiodo"].Value.ToString() + "-" + DateTime.Now.Year.ToString() + "; Aniversario: " + fila.Cells["aniversario"].Value.ToString() + "; " +
+                                fila.Cells["observaciones"].Value.ToString();
+                            complemento.observaciones = nuevaObservacion;
+                            ch.actualizaObservacionesTrabajador(complemento);
+                            cnx.Close();
+
                         }
                         else
                         {
-                            diasPagoReales = int.Parse(fila.Cells["diaspago"].Value.ToString());
+                            int diasPagoReales = int.Parse(fila.Cells["diaspago"].Value.ToString()) + existeFaltas + existeIncapacidad;
+
+                            if (diasPagoReales > diasPeriodo)
+                            {
+                                diasPagoReales = diasPeriodo - existeFaltas - existeIncapacidad;
+                                MessageBox.Show("Existen faltas del trabajador, se ajustaron las vacaciones a: " + diasPagoReales.ToString() + " dia(s).", "Información",
+                                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            }
+                            else
+                            {
+                                diasPagoReales = int.Parse(fila.Cells["diaspago"].Value.ToString());
+                            }
+
+                            vp.diaspago = diasPagoReales;
+                            vp.diaspendientes = dias - diasPagoReales;
+                            vp.fechainicio = DateTime.Parse(fila.Cells["fechaaplicacion"].Value.ToString());
+                            vp.fechafin = DateTime.Parse(fila.Cells["fechaaplicacion"].Value.ToString()).AddDays(diasPagoReales - 1);
+
+
+                            cnx.Open();
+                            nuevaObservacion = observaciones + "\r\n" + "Pago de Vacaciones; " + (_periodo == 7 ? "Semana: " : "Quincena: ") +
+                                fila.Cells["noperiodo"].Value.ToString() + "-" + DateTime.Now.Year.ToString() + "; Aniversario: " + fila.Cells["aniversario"].Value.ToString() + "; " +
+                                "Días disfrutados: " + diasPagoReales.ToString() + "; Días pendientes: " + (dias - diasPagoReales).ToString() + "; " + fila.Cells["observaciones"].Value.ToString();
+                            complemento.observaciones = nuevaObservacion;
+                            ch.actualizaObservacionesTrabajador(complemento);
+                            cnx.Close();
+                            lstMovimientos.Add(vp);
                         }
-
-                        vp.diaspago = diasPagoReales;
-                        vp.diaspendientes = dias - diasPagoReales;
-                        vp.fechainicio = DateTime.Parse(fila.Cells["fechaaplicacion"].Value.ToString());
-                        vp.fechafin = DateTime.Parse(fila.Cells["fechaaplicacion"].Value.ToString()).AddDays(diasPagoReales - 1);
-
-
-                        cnx.Open();
-                        nuevaObservacion = observaciones + "\r\n" + "Pago de Vacaciones; " + (_periodo == 7 ? "Semana: " : "Quincena: ") +
-                            fila.Cells["noperiodo"].Value.ToString() + "-" + DateTime.Now.Year.ToString() + "; Aniversario: " + fila.Cells["aniversario"].Value.ToString() + "; " +
-                            "Días disfrutados: " + diasPagoReales.ToString() + "; Días pendientes: " + (dias - diasPagoReales).ToString() + "; " + fila.Cells["observaciones"].Value.ToString();
-                        complemento.observaciones = nuevaObservacion;
-                        ch.actualizaObservacionesTrabajador(complemento);
-                        cnx.Close();
-                        
                     }
-
-                    
-
-                    lstMovimientos.Add(vp);
                 }
             }
 

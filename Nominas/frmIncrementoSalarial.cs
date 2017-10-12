@@ -255,6 +255,7 @@ namespace Nominas
             try {
                 cnx.Open();
                 eh.actualizaSueldo(empleado);
+                eh.insertaBitacora(GLOBALES.IDUSUARIO, empleado.idtrabajador,GLOBALES.IDEMPRESA,"Trabajadores","UPDATE",String.Format("SDI:{0}, SD:{1}, SUELDO:{2}", txtSDI.Text, txtSD,Text, txtSueldo.Text));
                 hh.insertarHistorial(historia);
                 mh.insertaModificacion(mod);
 

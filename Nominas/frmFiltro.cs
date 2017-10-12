@@ -40,5 +40,10 @@ namespace Nominas
             }
             this.Dispose();
         }
+
+        private void frmFiltro_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

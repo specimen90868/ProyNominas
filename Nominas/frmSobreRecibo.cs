@@ -832,7 +832,7 @@ namespace Nominas
                 if (_tipoNormalEspecial == GLOBALES.NORMAL)
                 {
                     cnx.Open();
-                    noPeriodo = int.Parse(nh.obtenerNoPeriodo(_periodo, _inicioPeriodo).ToString());
+                    noPeriodo = int.Parse(nh.obtenerNoPeriodo(_periodo, _finPeriodo).ToString());
                     nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, _inicioPeriodo.Date, _finPeriodo.Date, int.Parse(noPeriodo.ToString()));
                     cnx.Close();
                 }
@@ -942,7 +942,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                noPeriodo = int.Parse(nh.obtenerNoPeriodo(_periodo, _inicioPeriodo).ToString());
+                noPeriodo = int.Parse(nh.obtenerNoPeriodo(_periodo, _finPeriodo).ToString());
                 nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, _inicioPeriodo.Date, _finPeriodo.Date, noPeriodo);
                 cnx.Close();
                 cnx.Dispose();
@@ -1459,7 +1459,7 @@ namespace Nominas
             }
             else
             {
-                gravado = cantidad - exento;
+                gravado = cantidad - Math.Round(exento, 2);
             }
 
             CalculoNomina.Core.tmpPagoNomina hora = new CalculoNomina.Core.tmpPagoNomina();
@@ -1952,28 +1952,45 @@ namespace Nominas
 
         private void toolEliminarProgramacion_Click(object sender, EventArgs e)
         {
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            ProgramacionConcepto.Core.ProgramacionHelper pch = new ProgramacionConcepto.Core.ProgramacionHelper();
-            pch.Command = cmd;
-
-            int fila = dgvProgramacion.CurrentCell.RowIndex;
-            ProgramacionConcepto.Core.ProgramacionConcepto pc = new ProgramacionConcepto.Core.ProgramacionConcepto();
-            pc.idprogramacion = int.Parse(dgvProgramacion.Rows[fila].Cells["idpc"].Value.ToString());
-
-            try{
-                cnx.Open();
-                pch.eliminaProgramacion(pc);
-                cnx.Close();
-                cnx.Dispose();
-                muestraProgramacion();
-            }
-            catch
+            if (dgvProgramacion.Rows.Count != 0)
             {
-                MessageBox.Show("Error: Al eliminar el concepto.","Error");
-                cnx.Dispose();
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
+                cmd.Connection = cnx;
+
+                ProgramacionConcepto.Core.ProgramacionHelper pch = new ProgramacionConcepto.Core.ProgramacionHelper();
+                pch.Command = cmd;
+
+                Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+                eh.Command = cmd;
+
+                int fila = dgvProgramacion.CurrentCell.RowIndex;
+                ProgramacionConcepto.Core.ProgramacionConcepto pc = new ProgramacionConcepto.Core.ProgramacionConcepto();
+                pc.idprogramacion = int.Parse(dgvProgramacion.Rows[fila].Cells["idpc"].Value.ToString());
+
+                try
+                {
+                    cnx.Open();
+                    pch.eliminaProgramacion(pc);
+                    eh.insertaBitacora(GLOBALES.IDUSUARIO, idTrabajador, GLOBALES.IDEMPRESA, "ProgramacionConcepto", "DELETE",
+                                String.Format("CONCEPTO: {0}, CANTIDAD: {1}, FECHAFIN: {2}",
+                                dgvProgramacion.Rows[fila].Cells[5].Value.ToString(),
+                                dgvProgramacion.Rows[fila].Cells[6].Value.ToString(),
+                                dgvProgramacion.Rows[fila].Cells[7].Value.ToString()));
+                    cnx.Close();
+                    cnx.Dispose();
+                    muestraProgramacion();
+                }
+                catch
+                {
+                    MessageBox.Show("Error: Al eliminar el concepto.", "Error");
+                    cnx.Dispose();
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
         }
@@ -1995,29 +2012,43 @@ namespace Nominas
 
         private void toolEliminarMovimiento_Click(object sender, EventArgs e)
         {
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            Movimientos.Core.MovimientosHelper mh = new Movimientos.Core.MovimientosHelper();
-            mh.Command = cmd;
-
-            int fila = dgvMovimientos.CurrentCell.RowIndex;
-            Movimientos.Core.Movimientos m = new Movimientos.Core.Movimientos();
-            m.id = int.Parse(dgvMovimientos.Rows[fila].Cells[0].Value.ToString());
-
-            try
+            if (dgvMovimientos.Rows.Count != 0)
             {
-                cnx.Open();
-                mh.eliminaMovimiento(m);
-                cnx.Close();
-                cnx.Dispose();
-                muestraMovimientos();
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
+                cmd.Connection = cnx;
+
+                Movimientos.Core.MovimientosHelper mh = new Movimientos.Core.MovimientosHelper();
+                mh.Command = cmd;
+
+                int fila = dgvMovimientos.CurrentCell.RowIndex;
+                Movimientos.Core.Movimientos m = new Movimientos.Core.Movimientos();
+                m.id = int.Parse(dgvMovimientos.Rows[fila].Cells[0].Value.ToString());
+
+                Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+                eh.Command = cmd;
+
+                try
+                {
+                    cnx.Open();
+                    mh.eliminaMovimiento(m);
+                    eh.insertaBitacora(GLOBALES.IDUSUARIO, idTrabajador, GLOBALES.IDEMPRESA, "Movimientos", "INSERT",
+                                String.Format("CONCEPTO: {0}, CANTIDAD: {1}", dgvMovimientos.Rows[fila].Cells[4].Value.ToString(),
+                                dgvMovimientos.Rows[fila].Cells[5].Value.ToString()));
+                    cnx.Close();
+                    cnx.Dispose();
+                    muestraMovimientos();
+                }
+                catch
+                {
+                    MessageBox.Show("Error: Al eliminar el movimiento.", "Error");
+                    cnx.Dispose();
+                    return;
+                }
             }
-            catch
+            else
             {
-                MessageBox.Show("Error: Al eliminar el movimiento.", "Error");
-                cnx.Dispose();
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
         }
@@ -2259,7 +2290,8 @@ namespace Nominas
                 //VALIDACION DE EXISTENCIA DE PRIMA VACACIONAL Y VACACIONES
                 if (existePrima != 0 || existeVacacion != 0)
                 {
-                    MessageBox.Show("Error: Los datos a ingresar ya existen y/o existe la Prima Vacaciona o Vacaciones.", "Error");
+                    MessageBox.Show("Error: Los datos a ingresar ya existen y/o existe la Prima Vacaciona o Vacaciones.", "Información", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                     cnx.Dispose();
                     return;
                 }
@@ -2348,7 +2380,8 @@ namespace Nominas
                     if (diasPagoReales > _periodo)
                     {
                         diasPagoReales = _periodo - existeFaltas - existeIncapacidad;
-                        MessageBox.Show("Existen faltas del trabajador, se ajustaron las vacaciones a: " + diasPagoReales.ToString() + " dia(s).", "Información");
+                        MessageBox.Show("Existen faltas del trabajador, se ajustaron las vacaciones a: " + diasPagoReales.ToString() + " dia(s).", "Información",
+                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
                     else
                     {
@@ -2638,6 +2671,11 @@ namespace Nominas
 
         private void da_OnIsr(decimal cantidad) 
         {
+            if (cantidad == 0)
+            {
+                MessageBox.Show("IMPORTANTE!!!: \r\nPor disposición oficial del SAT el concepto de ISR no debe ser cero se ajustará a 0.01.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cantidad = (decimal)0.01;
+            }
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
@@ -2717,15 +2755,23 @@ namespace Nominas
 
         private void toolEditar_Click(object sender, EventArgs e)
         {
-            int fila = dgvProgramacion.CurrentCell.RowIndex;
-            frmProgramacionConcepto pc = new frmProgramacionConcepto();
-            pc.OnProgramacion += pc_OnProgramacion;
-            pc._idEmpleado = idTrabajador;
-            pc._nombreEmpleado = txtNombreCompleto.Text;
-            pc._tipoOperacion = GLOBALES.MODIFICAR;
-            pc._periodo = _periodo;
-            pc._idprogramacion = int.Parse(dgvProgramacion.Rows[fila].Cells[0].Value.ToString());
-            pc.Show();
+            if (dgvProgramacion.Rows.Count != 0)
+            {
+                int fila = dgvProgramacion.CurrentCell.RowIndex;
+                frmProgramacionConcepto pc = new frmProgramacionConcepto();
+                pc.OnProgramacion += pc_OnProgramacion;
+                pc._idEmpleado = idTrabajador;
+                pc._nombreEmpleado = txtNombreCompleto.Text;
+                pc._tipoOperacion = GLOBALES.MODIFICAR;
+                pc._periodo = _periodo;
+                pc._idprogramacion = int.Parse(dgvProgramacion.Rows[fila].Cells[0].Value.ToString());
+                pc.Show();
+            }
+            else
+            {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
         }
 
         private void toolDiagnostico_Click(object sender, EventArgs e)
@@ -2772,6 +2818,16 @@ namespace Nominas
                     cnx.Dispose();
                 }
             }
+        }
+
+        private void dtpFecha_ValueChanged(object sender, EventArgs e)
+        {
+            SendKeys.Send("{RIGHT}");
+        }
+
+        private void dtpFechaInicioVacaciones_ValueChanged(object sender, EventArgs e)
+        {
+            SendKeys.Send("{RIGHT}");
         }
 
     }

@@ -457,7 +457,8 @@ namespace Nominas
                         }
                     }
                 }
-                else {
+                else 
+                {
                     nh = new CalculoNomina.Core.NominaHelper();
                     nh.Command = cmd;
                     List<CalculoNomina.Core.tmpPagoNomina> lstNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
@@ -480,20 +481,24 @@ namespace Nominas
                             try
                             {
                                 Bajas.Core.Bajas bajaTrabajador = new Bajas.Core.Bajas();
-                                Empleados.Core.EmpleadosEstatus ee = new Empleados.Core.EmpleadosEstatus();
-                                ee.idtrabajador = _idempleado;
-                                ee.idempresa = GLOBALES.IDEMPRESA;
-                                ee.estatus = 0;
                                 bajaTrabajador.idtrabajador = _idempleado;
+
                                 cnx.Open();
+                                // Actualiza estatus del trabajador en la tabla Trabajadores
                                 bh.bajaEmpleado(bajaTrabajador);
+
+                                // Elimina calculo de nómina en tabla tmpPagoNomina
                                 nh.eliminaPreNomina(_idempleado, periodo);
-                                eh.bajaEmpleado(ee);
                                 cnx.Close();
-                                baja.fecha = lstNomina[0].fechafin;
-                                baja.diasproporcionales = 1;
-                                MessageBox.Show("La baja corresponde a un periodo cerrado. \r\n\r\n Se dará con la fecha de termino del periodo cerrado: " + 
-                                    lstNomina[0].fechafin.ToShortDateString(), "Información");
+
+                                //baja.fecha = lstNomina[0].fechafin;
+                                diasProporcionales = (int)(dtpFechaBaja.Value.Date - periodoInicio.Date).TotalDays + 1;
+                                if (diasProporcionales == 16)
+                                    baja.diasproporcionales = diasProporcionales - 1;
+                                else
+                                    baja.diasproporcionales = (int)(dtpFechaBaja.Value.Date - periodoInicio.Date).TotalDays + 1;
+
+                                //MessageBox.Show("La baja corresponde a un periodo cerrado.", "Información");
                             }
                             catch (Exception error)
                             {
@@ -504,13 +509,15 @@ namespace Nominas
                     }
                 }
 
-
                 try
-                {
+                {  
                     cnx.Open();
                     
                     baja.registropatronal = (string)ep.obtenerRegistroPatronal(empresa);
                     baja.nss = (string)eh.obtenerNss(emp);
+                    veh.insertaBitacora(GLOBALES.IDUSUARIO, emp.idtrabajador, GLOBALES.IDEMPRESA, "suaBajas", "INSERT", 
+                        String.Format("FECHA:{0},DIAS:{1},MOTIVO:{2},OBSERVACIONES:{3}", dtpFechaBaja.Value.Date.ToString(), diasProporcionales.ToString(), cmbMotivoBaja.Text, txtObservaciones.Text));
+                    // Inserta registro de baja en tabla suaBajas
                     bh.insertaBaja(baja);
 
                     //if (ausentismo)
@@ -523,7 +530,7 @@ namespace Nominas
                     cnx.Close();
                     cnx.Dispose();
 
-                    if(OnBajaEmpleado !=  null)
+                    if(OnBajaEmpleado != null)
                         OnBajaEmpleado(GLOBALES.ACTIVO);
                 }
                 catch (Exception error)

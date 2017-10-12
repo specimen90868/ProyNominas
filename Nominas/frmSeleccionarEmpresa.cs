@@ -171,6 +171,7 @@ namespace Nominas
         {
             frmEmpresas em = new frmEmpresas();
             em.OnNuevaEmpresa += em_OnNuevaEmpresa;
+            em._lista = true;
             em.ShowDialog();
         }
 

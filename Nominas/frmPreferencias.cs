@@ -46,6 +46,13 @@ namespace Nominas
                 chkSsl.Checked = Convert.ToBoolean(entero);
                 txtServidorEnvio.Text = ch.obtenerValorConfiguracion(5).ToString();
                 txtRuta.Text = ch.obtenerValorConfiguracion(6).ToString();
+                txtVsmdf.Text = ch.obtenerValorConfiguracion(7).ToString();
+                txtRutaKeys.Text = ch.obtenerValorConfiguracion(8).ToString();
+                txtRutaXslt.Text = ch.obtenerValorConfiguracion(9).ToString();
+                txtNombreArchivoXslt.Text = ch.obtenerValorConfiguracion(10).ToString();
+                txtDirectorioCancelados.Text = ch.obtenerValorConfiguracion(11).ToString();
+                txtDirectorioSsl.Text = ch.obtenerValorConfiguracion(12).ToString();
+                txtDirectorioPem.Text = ch.obtenerValorConfiguracion(13).ToString();
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -81,6 +88,13 @@ namespace Nominas
                 ch.actualizarValorConfiguracion(4, entero.ToString());
                 ch.actualizarValorConfiguracion(5, txtServidorEnvio.Text);
                 ch.actualizarValorConfiguracion(6, txtRuta.Text);
+                ch.actualizarValorConfiguracion(7, txtVsmdf.Text);
+                ch.actualizarValorConfiguracion(8, txtRutaKeys.Text);
+                ch.actualizarValorConfiguracion(9, txtRutaXslt.Text);
+                ch.actualizarValorConfiguracion(10, txtNombreArchivoXslt.Text);
+                ch.actualizarValorConfiguracion(11, txtDirectorioCancelados.Text);
+                ch.actualizarValorConfiguracion(12, txtDirectorioSsl.Text);
+                ch.actualizarValorConfiguracion(13, txtDirectorioPem.Text);
                 cnx.Close();
                 cnx.Dispose();
                 this.Dispose();
@@ -92,7 +106,29 @@ namespace Nominas
             }
         }
 
-        private void btnDirectorio_Click(object sender, EventArgs e)
+        private void btnDirectorioXslt_Click_1(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.Description = "Carpeta de xslt";
+            fbd.RootFolder = Environment.SpecialFolder.Desktop;
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                txtRutaXslt.Text = fbd.SelectedPath;
+            }
+        }
+
+        private void btnDirectorioKeys_Click_1(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.Description = "Carpeta de sellos";
+            fbd.RootFolder = Environment.SpecialFolder.Desktop;
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                txtRutaKeys.Text = fbd.SelectedPath;
+            }
+        }
+
+        private void btnDirectorio_Click_1(object sender, EventArgs e)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             fbd.Description = "Carpeta de envio";
@@ -100,6 +136,39 @@ namespace Nominas
             if (fbd.ShowDialog() == DialogResult.OK)
             {
                 txtRuta.Text = fbd.SelectedPath;
+            }
+        }
+
+        private void btnRutaCancelados_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.Description = "Carpeta de cancelados";
+            fbd.RootFolder = Environment.SpecialFolder.Desktop;
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                txtDirectorioCancelados.Text = fbd.SelectedPath;
+            }
+        }
+
+        private void btnRutaSSL_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.Description = "Carpeta de Ssl";
+            fbd.RootFolder = Environment.SpecialFolder.Desktop;
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                txtDirectorioSsl.Text = fbd.SelectedPath;
+            }
+        }
+
+        private void btnRutaPem_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.Description = "Carpeta de Pem";
+            fbd.RootFolder = Environment.SpecialFolder.Desktop;
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                txtDirectorioPem.Text = fbd.SelectedPath;
             }
         }
     }

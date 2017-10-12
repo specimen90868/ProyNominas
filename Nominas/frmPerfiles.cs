@@ -320,5 +320,10 @@ namespace Nominas
                 cnx.Dispose();
             }
         }
+
+        private void toolPerfil_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
     }
 }

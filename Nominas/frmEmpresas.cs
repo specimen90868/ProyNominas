@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Text.RegularExpressions;
+using System.Security.Cryptography.X509Certificates;
+using System.IO;
 
 namespace Nominas
 {
@@ -29,8 +31,9 @@ namespace Nominas
         Imagen.Core.ImagenesHelper ih;
         Bitmap bmp;
         DateTime inicioPeriodo, finPeriodo;
-        bool capturaFecha = false;
         bool ImagenAsignada = false;
+        bool FLAG_KEY = false;
+        bool FLAG_CERT = false;
         #endregion
         
         #region DELEGADOS
@@ -49,6 +52,8 @@ namespace Nominas
         private void guardar(int tipoGuardar)
         {
             int existe = 0;
+            string valorConfiguracion = String.Empty;
+
             //SE VALIDA SI TODOS LOS TEXTBOX HAN SIDO LLENADOS.
             string control = GLOBALES.VALIDAR(tabEmpresa, typeof(TextBox));
             if (!control.Equals(""))
@@ -78,13 +83,6 @@ namespace Nominas
                 return;
             }
 
-            control = GLOBALES.VALIDAR(tabTimbrado, typeof(TextBox));
-            if (!control.Equals(""))
-            {
-                MessageBox.Show("Falta el campo: " + control, "Información");
-                return;
-            }
-
             int idempresa;
 
             cnx = new SqlConnection();
@@ -94,6 +92,16 @@ namespace Nominas
             eh = new Empresas.Core.EmpresasHelper();
             eh.Command = cmd;
 
+            Configuracion.Core.ConfiguracionHelper ch = new Configuracion.Core.ConfiguracionHelper();
+            ch.Command = cmd;
+
+            cnx.Open();
+            valorConfiguracion = ch.obtenerValorConfiguracion(8).ToString();
+            cnx.Close();
+
+            if (!System.IO.Directory.Exists(valorConfiguracion))
+                System.IO.Directory.CreateDirectory(valorConfiguracion);
+
             Empresas.Core.Empresas em = new Empresas.Core.Empresas();
             em.nombre = txtNombre.Text;
             em.rfc = txtRfc.Text;
@@ -101,16 +109,53 @@ namespace Nominas
             em.digitoverificador = int.Parse(txtDigitoVerificador.Text);
             em.representante = txtRepresentante.Text;
             em.estatus = 1;
-            em.regimen = "";
-            em.certificado = txtCertificado.Text;
-            em.llave = txtLlave.Text;
-            em.password = txtPassword.Text;
-            em.nocertificado = txtNoCertificado.Text;
-            em.vigenciacertificado = dtpVigencia.Value.Date;
             em.observacion = txtObservacion.Text;
             em.obracivil = chkObraCivil.Checked;
             em.idregimenfiscal = int.Parse(cmbRegimenFiscal.SelectedValue.ToString());
             em.codigopostal = txtCP.Text;
+            em.usuariopac = txtUsuario.Text.Trim();
+            em.passwordpac = txtPasswordPac.Text.Trim();
+            em.passwordkey = txtPassword.Text;
+
+            if (FLAG_KEY)
+            {
+                System.IO.File.Copy(txtPathArchivo.Text, String.Format("{0}{1}", valorConfiguracion, System.IO.Path.GetFileName(txtPathArchivo.Text)), true);
+                em.archivokey = System.IO.Path.GetFileName(txtPathArchivo.Text);
+            }
+            else
+            {
+                em.archivokey = txtPathArchivo.Text;
+            }
+
+            if (FLAG_CERT)
+            {
+                System.IO.File.Copy(txtPathCert.Text, String.Format("{0}{1}", valorConfiguracion, System.IO.Path.GetFileName(txtPathCert.Text)), true);
+                em.archivocer = System.IO.Path.GetFileName(txtPathCert.Text);
+
+                X509Certificate cert = new X509Certificate(txtPathCert.Text);
+                string certificado = Convert.ToBase64String(cert.Export(X509ContentType.Cert), Base64FormattingOptions.InsertLineBreaks);
+                em.certificado = certificado.Replace("\r\n", "");
+
+                X509Certificate2 x509 = new X509Certificate2(txtPathCert.Text);
+                //byte[] rawData = ReadFile(txtPathCert.Text);
+                //x509.Import(rawData);
+                //string noCertificado = x509.SerialNumber;
+
+
+                string noCertificado = Encoding.Default.GetString(x509.GetSerialNumber());
+                char[] s = noCertificado.ToCharArray();
+                string b = String.Empty;
+                for (int i = 0; i < s.Length; i++)
+                {
+                    b += s[s.Length - (i + 1)].ToString();
+                }
+                em.nocertificado = b;
+            }
+            else
+            {
+                em.archivocer = txtPathCert.Text;
+            }
+            
 
             dh = new Direccion.Core.DireccionesHelper();
             dh.Command = cmd;
@@ -181,8 +226,10 @@ namespace Nominas
                 case 0:
                     try
                     {
+
                         cnx.Open();
                         eh.insertaEmpresa(em);
+
                         idempresa = (int)eh.obtenerIdEmpresa(em);
                         d.idpersona = idempresa;
                         dh.insertaDireccion(d);
@@ -236,9 +283,11 @@ namespace Nominas
             switch (tipoGuardar)
             {
                 case 0:
+                    MessageBox.Show(String.Format("Informacción: Empresa {0} creada y/o actualizada con exito.", txtNombre.Text), "Información", 
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                     GLOBALES.LIMPIAR(this, typeof(TextBox));
                     GLOBALES.LIMPIAR(this, typeof(MaskedTextBox));
-                    //limpiar(this, typeof(TextBox));
+                    
                     if (OnNuevaEmpresa != null)
                         OnNuevaEmpresa(_tipoOperacion);
                     break;
@@ -256,6 +305,7 @@ namespace Nominas
         private void frmEmpresas_Load(object sender, EventArgs e)
         {
             CargaComboBox();
+
             if (!_lista)
                 toolGuardarNuevo.Visible = false;
             /// _tipoOperacion CONSULTA = 1, EDICION = 2
@@ -296,13 +346,13 @@ namespace Nominas
                         txtRegistroPatronal.Text = lstEmpresa[i].registro;
                         txtObservacion.Text = lstEmpresa[i].observacion;
                         txtDigitoVerificador.Text = lstEmpresa[i].digitoverificador.ToString();
-                        txtCertificado.Text = lstEmpresa[i].certificado;
-                        txtLlave.Text = lstEmpresa[i].llave;
-                        txtPassword.Text = lstEmpresa[i].password;
-                        txtNoCertificado.Text = lstEmpresa[i].nocertificado;
-                        dtpVigencia.Value = lstEmpresa[i].vigenciacertificado;
                         chkObraCivil.Checked = lstEmpresa[i].obracivil;
                         cmbRegimenFiscal.SelectedValue = lstEmpresa[i].idregimenfiscal;
+                        txtPathArchivo.Text = lstEmpresa[i].archivokey;
+                        txtPathCert.Text = lstEmpresa[i].archivocer;
+                        txtPassword.Text = lstEmpresa[i].passwordkey;
+                        txtUsuario.Text = lstEmpresa[i].usuariopac;
+                        txtPasswordPac.Text = lstEmpresa[i].passwordpac;
                     }
 
                     for (int i = 0; i < lstDireccion.Count; i++)
@@ -329,7 +379,6 @@ namespace Nominas
                     ((Control)this.tabEmpresa).Enabled = false;
                     ((Control)this.tabPeriodo).Enabled = false;
                     ((Control)this.tabDomicilio).Enabled = false;
-                    ((Control)this.tabTimbrado).Enabled = false;
                     btnAsignar.Enabled = false;
                     toolGuardarNuevo.Enabled = false;
                     
@@ -360,82 +409,6 @@ namespace Nominas
             i._idpersona = _idempresa;
             i._tipopersona = GLOBALES.pEMPRESA;
             i.Show();
-        }
-
-        private void btnExaminarCertificado_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog pfd = new OpenFileDialog();
-            pfd.Title = "Seleccionar Certificado Digital";
-            pfd.InitialDirectory = @"C:\";
-            pfd.Filter = "Certificado Digital|*.cer";
-            pfd.RestoreDirectory = true;
-            if (DialogResult.OK == pfd.ShowDialog())
-            {
-                txtCertificado.Text = pfd.FileName;
-            }
-        }
-
-        private void btnExaminarLlave_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog pfd = new OpenFileDialog();
-            pfd.Title = "Seleccionar Llave Digital";
-            pfd.InitialDirectory = @"C:\";
-            pfd.Filter = "Llave Digital|*.key";
-            pfd.RestoreDirectory = true;
-            if (DialogResult.OK == pfd.ShowDialog())
-            {
-                txtLlave.Text = pfd.FileName;
-            }
-        }
-
-        private void toolGuardarCerrar_Click(object sender, EventArgs e)
-        {
-            if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
-            {
-                guardar(1);
-            }
-            else
-            {
-                guardar(1);
-                //frmInicioPeriodo ip = new frmInicioPeriodo();
-                //ip._periodo = int.Parse(txtDias.Text);
-                //ip.OnNuevoPeriodo += ip_OnNuevoPeriodo;
-                //ip.ShowDialog();
-                //if (capturaFecha)
-                //    guardar(1);
-                //else
-                //    return;
-            }
-
-        }
-
-        void ip_OnNuevoPeriodo(DateTime inicio, DateTime fin)
-        {
-            if (inicio.Date != new DateTime(1900, 1, 1).Date)
-            {
-                if (int.Parse(txtDias.Text) == 7)
-                {
-                    inicioPeriodo = inicio.AddDays(-7);
-                    finPeriodo = inicio.AddDays(-1);
-                }
-                else
-                {
-                    if (inicio.Day <= 15)
-                    {
-                        inicioPeriodo = inicio.AddDays(DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month) - 15);
-                        finPeriodo = inicio.AddDays(-1);
-                    }
-                    else
-                    {
-                        inicioPeriodo = inicio.AddDays(-15);
-                        finPeriodo = inicio.AddDays(-1);
-                    }
-                }
-
-                capturaFecha = true;
-            }
-            else
-                capturaFecha = false;
         }
 
         private void toolGuardarNuevo_Click(object sender, EventArgs e)
@@ -487,6 +460,58 @@ namespace Nominas
             cmbRegimenFiscal.DataSource = lstRegimenFiscal.ToList();
             cmbRegimenFiscal.DisplayMember = "descripcion";
             cmbRegimenFiscal.ValueMember = "id";
+        }
+
+        private void btnExaminar_Click(object sender, EventArgs e)
+        {       
+
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Seleccionar archivo key";
+            ofd.Filter = "Archivo key (*.key)|*.key";
+            ofd.RestoreDirectory = false;
+
+            DialogResult respuesta = ofd.ShowDialog();
+
+            if (DialogResult.OK == respuesta)
+            {
+                FLAG_KEY = true;
+                txtPathArchivo.Text = ofd.FileName;
+                //System.IO.File.Copy(txtPathArchivo.Text, valorConfiguracion, true);
+            }
+            else if (DialogResult.Cancel == respuesta)
+            {
+                FLAG_KEY = false;
+            }
+        }
+
+        private void btnExaminarCer_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Seleccionar archivo cer";
+            ofd.Filter = "Archivo cer (*.cer)|*.cer";
+            ofd.RestoreDirectory = false;
+
+            DialogResult respuesta = ofd.ShowDialog();
+
+            if (DialogResult.OK == respuesta)
+            {
+                FLAG_CERT = true;
+                txtPathCert.Text = ofd.FileName;
+            }
+            else if (DialogResult.Cancel == respuesta)
+            {
+                FLAG_CERT = false;
+            }
+        }
+
+        internal static byte[] ReadFile(string fileName)
+        {
+            FileStream f = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+            int size = (int)f.Length;
+            byte[] data = new byte[size];
+            size = f.Read(data, 0, size);
+            f.Close();
+            return data;
         }
        
     }

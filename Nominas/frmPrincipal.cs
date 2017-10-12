@@ -198,6 +198,12 @@ namespace Nominas
                     case "Periodo extraordinario":
                         toolReporteExtraordinario.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
+                    case "Vacaciones":
+                        toolVacaciones.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Bitácora":
+                        toolBitacora.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
                     case "Departamentos":
                         mnuDepartamentos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
@@ -844,6 +850,121 @@ namespace Nominas
                 workSheet.SaveAs(sfd.FileName);
                 excel.Visible = true;
             }
+        }
+
+        private void toolBitacora_Click(object sender, EventArgs e)
+        {
+            if (GLOBALES.FORMISOPEN("frmListaBitacora"))
+                return;
+            frmListaBitacora lb = new frmListaBitacora();
+            lb.Show();
+        }
+
+        private void toolVisorRecibosNomina_Click(object sender, EventArgs e)
+        {
+            if (GLOBALES.FORMISOPEN("frmSeleccionPeriodo"))
+                return;
+            frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
+            sp._Ventana = 4; //CFDI
+            sp.MdiParent = this;
+            sp.StartPosition = FormStartPosition.CenterScreen;
+            sp.Show();
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            string curp = "";
+            string rfc = "";
+            string nombre = "";
+            string numempleado = "";
+
+            List<Xml.Core.XmlCabecera> xmls = new List<Xml.Core.XmlCabecera>();
+            Xml.Core.XmlCabeceraHelper xh = new Xml.Core.XmlCabeceraHelper();
+            xh.Command = cmd;
+
+            cnx.Open();
+            xmls = xh.obtenerXml(GLOBALES.IDEMPRESA, new DateTime(2016, 1, 1).Date, new DateTime(2017, 1, 1).Date);
+            cnx.Close();
+            cnx.Dispose();
+
+            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
+            excel.Workbooks.Add();
+
+            for (int i = 0; i < xmls.Count; i++)
+            {
+                using (StreamWriter sw = new StreamWriter(String.Format(@"C:\Temp\xmls_nomina\{0}_{1}.xml", xmls[i].idtrabajador,i), false, Encoding.UTF8))
+                {
+                    sw.WriteLine(xmls[i].xml);
+                    sw.Flush();
+                    sw.Close();
+                }
+
+                System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+                String xml = File.ReadAllText(String.Format(@"C:\Temp\xmls_nomina\{0}_{1}.xml", xmls[i].idtrabajador, i), Encoding.UTF8);
+                doc.LoadXml(xml);
+
+                System.Xml.XmlNodeList Comprobante = doc.GetElementsByTagName("cfdi:Receptor");
+                foreach (System.Xml.XmlElement nodo in Comprobante)
+                {
+                    rfc = nodo.GetAttribute("rfc");
+                    nombre = nodo.GetAttribute("nombre");
+                }
+
+                System.Xml.XmlNodeList empleado = doc.GetElementsByTagName("nomina:Nomina");
+                foreach (System.Xml.XmlElement nodo in empleado)
+                {
+                    numempleado = nodo.GetAttribute("NumEmpleado");
+                    curp = nodo.GetAttribute("CURP");
+
+                }
+
+                excel.Cells[i + 1, 1] = numempleado;
+                excel.Cells[i + 1, 2] = nombre;
+                excel.Cells[i + 1, 3] = rfc;
+                excel.Cells[i + 1, 4] = curp;
+            }
+            excel.Visible = true;
+            
+        }
+
+        private void mnuGeneracionQR_Click(object sender, EventArgs e)
+        {
+            if (GLOBALES.FORMISOPEN("frmGeneracionQR"))
+                return;
+            frmGeneracionQR gqr = new frmGeneracionQR();
+            gqr.Show();
+        }
+
+        private void toolCancelacionRecibos_Click(object sender, EventArgs e)
+        {
+            if (GLOBALES.FORMISOPEN("frmSeleccionPeriodo"))
+                return;
+            frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
+            sp._Ventana = 5; //CFDI CANCELACION
+            sp.MdiParent = this;
+            sp.StartPosition = FormStartPosition.CenterScreen;
+            sp.Show();
+        }
+
+        private void mnuGenerarRecibo_Click(object sender, EventArgs e)
+        {
+            if (GLOBALES.FORMISOPEN("frmGenerarRecibos"))
+                return;
+            frmGenerarRecibos gr = new frmGenerarRecibos();
+            gr.Show();
+        }
+
+        private void toolVisorRecibosCancelados_Click(object sender, EventArgs e)
+        {
+            if (GLOBALES.FORMISOPEN("frmVisorRecibosCancelados"))
+                return;
+            frmVisorRecibosCancelados vrc = new frmVisorRecibosCancelados();
+            vrc.StartPosition = FormStartPosition.CenterScreen;
+            vrc.Show();
         }
     }
 }

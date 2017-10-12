@@ -26,6 +26,7 @@ namespace Nominas
         Conceptos.Core.ConceptosHelper ch;
         string TipoConcepto;
         string concepto;
+        int idcatsat = 0;
         #endregion
 
         #region VARIABLES PUBLICAS
@@ -65,8 +66,16 @@ namespace Nominas
             concepto.gravado = chkGrava.Checked;
             concepto.exento = chkExenta.Checked;
             concepto.visible = chkVisible.Checked;
-            concepto.gruposat = txtGrupoSat.Text;
+            concepto.gruposat = "000";
             concepto.periodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
+            concepto.valorcatsat = "000";
+
+            switch (cmbTIpoCatalogo.Text) {
+                case "TIPO PERCEPCION": concepto.catsat = "P"; concepto.idcatsat = int.Parse(cmbClaveSAT.SelectedValue.ToString()); break;
+                case "TIPO DEDUCCION": concepto.catsat = "D"; concepto.idcatsat = int.Parse(cmbClaveSAT.SelectedValue.ToString()); break;
+                case "TIPO OTRO PAGO": concepto.catsat = "O"; concepto.idcatsat = int.Parse(cmbClaveSAT.SelectedValue.ToString()); break;
+                case "NO APLICA": concepto.catsat = "N"; concepto.idcatsat = 0; break;
+            }
 
             Conceptos.Core.ConceptosEmpresa cempresa = new Conceptos.Core.ConceptosEmpresa();
             cempresa.idempresa = GLOBALES.IDEMPRESA;
@@ -202,9 +211,24 @@ namespace Nominas
                         txtFormula.Text = lstConcepto[i].formula;
                         txtExento.Text = lstConcepto[i].formulaexento;
                         chkVisible.Checked = lstConcepto[i].visible;
-                        txtGrupoSat.Text = lstConcepto[i].gruposat;
                         chkGrava.Checked = lstConcepto[i].gravado;
                         chkExenta.Checked = lstConcepto[i].exento;
+                        idcatsat = lstConcepto[i].idcatsat;
+
+                        switch (lstConcepto[i].catsat) { 
+                            case "P":
+                                cmbTIpoCatalogo.SelectedIndex = 0;
+                                break;
+                            case "D":
+                                cmbTIpoCatalogo.SelectedIndex = 1;
+                                break;
+                            case "O":
+                                cmbTIpoCatalogo.SelectedIndex = 2;
+                                break;
+                            case "N": 
+                                cmbTIpoCatalogo.SelectedIndex = 3;
+                                break;
+                        }
                     }
                 }
                 catch (Exception error)
@@ -244,24 +268,6 @@ namespace Nominas
             ef.OnFormula += ef_OnFormula;
             ef._tipo = 1;
             ef.ShowDialog();
-        }
-
-        private void btnGrupoSat_Click(object sender, EventArgs e)
-        {
-            if (concepto != null)
-            {
-                frmGrupoSat gs = new frmGrupoSat();
-                gs.OnSeleccion += gs_OnSeleccion;
-                gs._percepcionDeduccion = TipoConcepto;
-                gs.Show();
-            }
-            else
-                MessageBox.Show("No ha seleccionado el tipo de concepto.", "Información");
-        }
-
-        void gs_OnSeleccion(string grupo)
-        {
-            txtGrupoSat.Text = grupo;
         }
 
         private void txtNoConcepto_Leave(object sender, EventArgs e)
@@ -306,6 +312,83 @@ namespace Nominas
             {
                 toolGuardarNuevo.Enabled = true;
             }
+        }
+
+        private void cmbTIpoCatalogo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            SatCatalogos.Core.satCatalogosHelper ch = new SatCatalogos.Core.satCatalogosHelper();
+            ch.Command = cmd;
+            
+
+            switch (cmbTIpoCatalogo.Text)
+            {
+                case "TIPO PERCEPCION":
+                    cmbClaveSAT.Enabled = true;
+                    List<SatCatalogos.Core.satTipoPercepcion> lstTipoPercepcion = new List<SatCatalogos.Core.satTipoPercepcion>();
+                    try
+                    {
+                        cnx.Open();
+                        lstTipoPercepcion = ch.obtenerTipoPercepcion();
+                        cnx.Close();
+                        cmbClaveSAT.DataSource = lstTipoPercepcion.ToList();
+                        cmbClaveSAT.DisplayMember = "descripcion";
+                        cmbClaveSAT.ValueMember = "id";
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Error: \r\n No se pudo obtener el listado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        cnx.Dispose();
+                        this.Dispose();
+                    }
+                    break;
+                case "TIPO DEDUCCION":
+                    cmbClaveSAT.Enabled = true;
+                    List<SatCatalogos.Core.satTipoDeduccion> lstTipoDeduccion = new List<SatCatalogos.Core.satTipoDeduccion>();
+                    try
+                    {
+                        cnx.Open();
+                        lstTipoDeduccion = ch.obtenerTipoDeduccion();
+                        cnx.Close();
+                        cmbClaveSAT.DataSource = lstTipoDeduccion.ToList();
+                        cmbClaveSAT.DisplayMember = "descripcion";
+                        cmbClaveSAT.ValueMember = "id";
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Error: \r\n No se pudo obtener el listado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        cnx.Dispose();
+                        this.Dispose();
+                    }
+                    break;
+                case "TIPO OTRO PAGO":
+                    cmbClaveSAT.Enabled = true;
+                    List<SatCatalogos.Core.satTipoOtroPago> lstTipoOtroPago = new List<SatCatalogos.Core.satTipoOtroPago>();
+                    try
+                    {
+                        cnx.Open();
+                        lstTipoOtroPago = ch.obtenerTipoOtroPago();
+                        cnx.Close();
+                        cmbClaveSAT.DataSource = lstTipoOtroPago.ToList();
+                        cmbClaveSAT.DisplayMember = "descripcion";
+                        cmbClaveSAT.ValueMember = "id";
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Error: \r\n No se pudo obtener el listado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        cnx.Dispose();
+                        this.Dispose();
+                    }
+                    break;   
+                case "NO APLICA":
+                    cmbClaveSAT.Enabled = false;
+                    break;
+            }
+            if (idcatsat != 0)
+                cmbClaveSAT.SelectedValue = idcatsat;
         }
     }
 }

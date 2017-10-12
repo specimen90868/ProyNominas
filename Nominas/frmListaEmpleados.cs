@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Configuration;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 
 namespace Nominas
 {
@@ -134,9 +132,17 @@ namespace Nominas
             empleado.OnNuevoEmpleado += e_OnNuevoEmpleado;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {
-                int fila = 0;
-                fila = dgvEmpleados.CurrentCell.RowIndex;
-                empleado._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
+                if (dgvEmpleados.Rows.Count != 0)
+                {
+                    int fila = 0;
+                    fila = dgvEmpleados.CurrentCell.RowIndex;
+                    empleado._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
             }
             empleado._tipoOperacion = edicion;
             empleado.StartPosition = FormStartPosition.CenterScreen;
@@ -172,16 +178,24 @@ namespace Nominas
 
         private void toolIncrementoSalario_Click(object sender, EventArgs e)
         {
-            if (GLOBALES.FORMISOPEN("frmIncrementoSalarial"))
-                return;
+            if (dgvEmpleados.Rows.Count != 0)
+            {
+                if (GLOBALES.FORMISOPEN("frmIncrementoSalarial"))
+                    return;
 
-            int fila = dgvEmpleados.CurrentCell.RowIndex;
-            frmIncrementoSalarial isal = new frmIncrementoSalarial();
-            isal.OnIncrementoSalarial += isal_OnIncrementoSalarial;
-            isal.StartPosition = FormStartPosition.CenterScreen;
-            isal._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[3].Value.ToString();
-            isal._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
-            isal.Show();
+                int fila = dgvEmpleados.CurrentCell.RowIndex;
+                frmIncrementoSalarial isal = new frmIncrementoSalarial();
+                isal.OnIncrementoSalarial += isal_OnIncrementoSalarial;
+                isal.StartPosition = FormStartPosition.CenterScreen;
+                isal._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[3].Value.ToString();
+                isal._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
+                isal.Show();
+            }
+            else
+            {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
         }
 
         void isal_OnIncrementoSalarial()
@@ -191,66 +205,86 @@ namespace Nominas
 
         private void toolHistorial_Click(object sender, EventArgs e)
         {
-           if (GLOBALES.FORMISOPEN("frmListaHistorial"))
-               return;
+            if (dgvEmpleados.Rows.Count != 0)
+            {
+                if (GLOBALES.FORMISOPEN("frmListaHistorial"))
+                    return;
 
-           int fila = dgvEmpleados.CurrentCell.RowIndex;
-           frmListaHistorial lh = new frmListaHistorial();
-           //lh.MdiParent = this.MdiParent;
-           lh.StartPosition = FormStartPosition.CenterScreen;
-           lh._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
-           lh.Show();            
+                int fila = dgvEmpleados.CurrentCell.RowIndex;
+                frmListaHistorial lh = new frmListaHistorial();
+                //lh.MdiParent = this.MdiParent;
+                lh.StartPosition = FormStartPosition.CenterScreen;
+                lh._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
+                lh.Show();
+            }
+            else
+            {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
         }
 
         private void toolEliminar_Click(object sender, EventArgs e)
         {
-            //int estatus = 0;
-            string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-            int fila = dgvEmpleados.CurrentCell.RowIndex;
-            int idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
-
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
-            eh.Command = cmd;
-
-            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
-            empleado.idtrabajador = idempleado;
-
-            //try
-            //{
-            //    cnx.Open();
-            //    estatus = (int)eh.obtenerEstatus(empleado);
-            //    cnx.Close();
-            //    cnx.Dispose();
-            //}
-            //catch (Exception error)
-            //{
-            //    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
-            //}
-
-            //if (estatus.Equals(1)) {}
-            //else { MessageBox.Show("El empleado no puede ser eliminado. Ya tiene movimientos registrados.", "Confirmación"); }
-
-            DialogResult respuesta = MessageBox.Show("¿Quiere eliminar la trabajador?. \r\n \r\n CUIDADO. Esta acción eliminará permanentemente el Empleado.", "Confirmación", MessageBoxButtons.YesNo);
-            if (respuesta == DialogResult.Yes)
+            if (dgvEmpleados.Rows.Count != 0)
             {
-                try
+                //int estatus = 0;
+                string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+                int fila = dgvEmpleados.CurrentCell.RowIndex;
+                int idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
+
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
+                cmd.Connection = cnx;
+
+                Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+                eh.Command = cmd;
+
+                Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
+                empleado.idtrabajador = idempleado;
+                empleado.idempresa = GLOBALES.IDEMPRESA;
+                empleado.idusuario = GLOBALES.IDUSUARIO;
+                empleado.noempleado = dgvEmpleados.Rows[fila].Cells[2].Value.ToString();
+                empleado.nombrecompleto = dgvEmpleados.Rows[fila].Cells[3].Value.ToString();
+
+                //try
+                //{
+                //    cnx.Open();
+                //    estatus = (int)eh.obtenerEstatus(empleado);
+                //    cnx.Close();
+                //    cnx.Dispose();
+                //}
+                //catch (Exception error)
+                //{
+                //    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+                //}
+
+                //if (estatus.Equals(1)) {}
+                //else { MessageBox.Show("El empleado no puede ser eliminado. Ya tiene movimientos registrados.", "Confirmación"); }
+
+                DialogResult respuesta = MessageBox.Show("¿Quiere eliminar la trabajador?. \r\n \r\n CUIDADO. Esta acción eliminará permanentemente el Empleado.", "Confirmación", MessageBoxButtons.YesNo);
+                if (respuesta == DialogResult.Yes)
                 {
-                    cnx.Open();
-                    eh.eliminarEmpleado(empleado);
-                    cnx.Close();
-                    cnx.Dispose();
-                    ListaEmpleados("", 0, "T", "", "", "");
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+                    try
+                    {
+                        cnx.Open();
+                        eh.insertaBitacora(GLOBALES.IDUSUARIO, idempleado, GLOBALES.IDEMPRESA, "Trabajadores", "DELETE", String.Format("IDEMPLEADO: {0}", idempleado));
+                        eh.eliminarEmpleado(empleado);
+                        cnx.Close();
+                        cnx.Dispose();
+                        ListaEmpleados("", 0, "T", "", "", "");
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+                    }
                 }
             }
-
+            else
+            {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
             
         }
 
@@ -301,39 +335,63 @@ namespace Nominas
 
         private void toolDepartamento_Click(object sender, EventArgs e)
         {
-            if (GLOBALES.FORMISOPEN("frmDeptoPuesto"))
-                return;
+            if (dgvEmpleados.Rows.Count != 0)
+            {
+                if (GLOBALES.FORMISOPEN("frmDeptoPuesto"))
+                    return;
 
-            int fila = dgvEmpleados.CurrentCell.RowIndex;
-            frmDeptoPuesto dp = new frmDeptoPuesto();
-            dp._deptopuesto = 0;
-            dp.StartPosition = FormStartPosition.CenterScreen;
-            dp._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
-            dp.Show();
+                int fila = dgvEmpleados.CurrentCell.RowIndex;
+                frmDeptoPuesto dp = new frmDeptoPuesto();
+                dp._deptopuesto = 0;
+                dp.StartPosition = FormStartPosition.CenterScreen;
+                dp._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
+                dp.Show();
+            }
+            else
+            {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
         }
 
         private void toolPuesto_Click(object sender, EventArgs e)
         {
-            if (GLOBALES.FORMISOPEN("frmDeptoPuesto"))
-                return;
+            if (dgvEmpleados.Rows.Count != 0)
+            {
+                if (GLOBALES.FORMISOPEN("frmDeptoPuesto"))
+                    return;
 
-            int fila = dgvEmpleados.CurrentCell.RowIndex;
-            frmDeptoPuesto dp = new frmDeptoPuesto();
-            dp._deptopuesto = 1;
-            dp.StartPosition = FormStartPosition.CenterScreen;
-            dp._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
-            dp.Show();
+                int fila = dgvEmpleados.CurrentCell.RowIndex;
+                frmDeptoPuesto dp = new frmDeptoPuesto();
+                dp._deptopuesto = 1;
+                dp.StartPosition = FormStartPosition.CenterScreen;
+                dp._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
+                dp.Show();
+            }
+            else
+            {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
         }
 
         private void toolCambioPeriodo_Click(object sender, EventArgs e)
         {
-            if (GLOBALES.FORMISOPEN("frmPeriodoTrabajador"))
+            if (dgvEmpleados.Rows.Count != 0) 
+            {
+                if (GLOBALES.FORMISOPEN("frmPeriodoTrabajador"))
+                    return;
+                int fila = dgvEmpleados.CurrentCell.RowIndex;
+                frmPeriodoTrabajador pt = new frmPeriodoTrabajador();
+                pt.StartPosition = FormStartPosition.CenterScreen;
+                pt._idEmpleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
+                pt.Show();
+            }
+            else
+            {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
-            int fila = dgvEmpleados.CurrentCell.RowIndex;
-            frmPeriodoTrabajador pt = new frmPeriodoTrabajador();
-            pt.StartPosition = FormStartPosition.CenterScreen;
-            pt._idEmpleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
-            pt.Show();
+            }
         }
 
         private void toolBusqueda_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -343,11 +401,19 @@ namespace Nominas
 
         private void toolNominaDigital_Click(object sender, EventArgs e)
         {
-            int fila = dgvEmpleados.CurrentCell.RowIndex;
-            frmTrabajadorNominaDigital tnd = new frmTrabajadorNominaDigital();
-            tnd.StartPosition = FormStartPosition.CenterScreen;
-            tnd._idEmpleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
-            tnd.Show();
+            if (dgvEmpleados.Rows.Count != 0)
+            {
+                int fila = dgvEmpleados.CurrentCell.RowIndex;
+                frmTrabajadorNominaDigital tnd = new frmTrabajadorNominaDigital();
+                tnd.StartPosition = FormStartPosition.CenterScreen;
+                tnd._idEmpleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
+                tnd.Show();
+            }
+            else
+            {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
         }
 
         private void toolNuevo_Click(object sender, EventArgs e)
@@ -367,50 +433,59 @@ namespace Nominas
 
         private void toolBaja_Click(object sender, EventArgs e)
         {
-            if (GLOBALES.FORMISOPEN("frmBaja"))
-                return;
-
-            int fila = dgvEmpleados.CurrentCell.RowIndex;
-
-            string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-            Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
-            eh.Command = cmd;
-
-            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
-            empleado.idtrabajador = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
-
-            int estatus = 0;
-            try
+            if (dgvEmpleados.Rows.Count != 0)
             {
-                cnx.Open();
-                estatus = (int)eh.obtenerEstatus(empleado);
-                cnx.Close();
-                cnx.Dispose();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Error: Al obtener el estatus de trabajador.", "Error");
-                cnx.Dispose();
-                return;
-            }
+                if (GLOBALES.FORMISOPEN("frmBaja"))
+                    return;
 
-            if (estatus == 1 || estatus == 2)
-            {
-                frmBaja b = new frmBaja();
-                b.OnBajaEmpleado += b_OnBajaEmpleado;
-                //b.MdiParent = this.MdiParent;
-                b.StartPosition = FormStartPosition.CenterScreen;
-                b._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
-                b._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[3].Value.ToString();
-                b.Show();
+                int fila = dgvEmpleados.CurrentCell.RowIndex;
+
+                string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
+                cmd.Connection = cnx;
+                Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+                eh.Command = cmd;
+
+                Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
+                empleado.idtrabajador = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
+
+                int estatus = 0;
+                try
+                {
+                    cnx.Open();
+                    estatus = (int)eh.obtenerEstatus(empleado);
+                    cnx.Close();
+                    cnx.Dispose();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error: Al obtener el estatus de trabajador.", "Error");
+                    cnx.Dispose();
+                    return;
+                }
+
+                if (estatus == 1 || estatus == 2)
+                {
+                    frmBaja b = new frmBaja();
+                    b.OnBajaEmpleado += b_OnBajaEmpleado;
+                    //b.MdiParent = this.MdiParent;
+                    b.StartPosition = FormStartPosition.CenterScreen;
+                    b._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
+                    b._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[3].Value.ToString();
+                    b.Show();
+                }
+                else
+                {
+                    MessageBox.Show("El trabajador actualmente en baja.", "Información");
+                }
             }
             else
             {
-                MessageBox.Show("El trabajador actualmente en baja.", "Información");
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
+            
         }
 
         private void toolReingreso_Click(object sender, EventArgs e)

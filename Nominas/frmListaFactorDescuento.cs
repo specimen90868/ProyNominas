@@ -94,8 +94,16 @@ namespace Nominas
             int fila = 0;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {
-                fila = dgvFactores.CurrentCell.RowIndex;
-                fd._idfactor = int.Parse(dgvFactores.Rows[fila].Cells[0].Value.ToString());
+                if (dgvFactores.Rows.Count != 0)
+                {
+                    fila = dgvFactores.CurrentCell.RowIndex;
+                    fd._idfactor = int.Parse(dgvFactores.Rows[fila].Cells[0].Value.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
             }
             fd._tipoOperacion = edicion;
             fd.Show();
@@ -124,32 +132,40 @@ namespace Nominas
 
         private void toolBaja_Click(object sender, EventArgs e)
         {
-            DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el factor?", "Confirmación", MessageBoxButtons.YesNo);
-            if (respuesta == DialogResult.Yes)
+            if (dgvFactores.Rows.Count != 0)
             {
-                string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-                int fila = dgvFactores.CurrentCell.RowIndex;
-                int id = int.Parse(dgvFactores.Rows[fila].Cells[0].Value.ToString());
-                cnx = new SqlConnection(cdn);
-                cmd = new SqlCommand();
-                cmd.Connection = cnx;
-                FactorDescuento.Core.FactorDescuentoHelper fdh = new FactorDescuento.Core.FactorDescuentoHelper();
-                fdh.Command = cmd;
-                FactorDescuento.Core.FactorDescuento factor = new FactorDescuento.Core.FactorDescuento();
-                factor.idfactor = id;
+                DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el factor?", "Confirmación", MessageBoxButtons.YesNo);
+                if (respuesta == DialogResult.Yes)
+                {
+                    string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+                    int fila = dgvFactores.CurrentCell.RowIndex;
+                    int id = int.Parse(dgvFactores.Rows[fila].Cells[0].Value.ToString());
+                    cnx = new SqlConnection(cdn);
+                    cmd = new SqlCommand();
+                    cmd.Connection = cnx;
+                    FactorDescuento.Core.FactorDescuentoHelper fdh = new FactorDescuento.Core.FactorDescuentoHelper();
+                    fdh.Command = cmd;
+                    FactorDescuento.Core.FactorDescuento factor = new FactorDescuento.Core.FactorDescuento();
+                    factor.idfactor = id;
 
-                try
-                {
-                    cnx.Open();
-                    fdh.borrarFactor(factor);
-                    cnx.Close();
-                    cnx.Dispose();
-                    ListaFactores();
+                    try
+                    {
+                        cnx.Open();
+                        fdh.borrarFactor(factor);
+                        cnx.Close();
+                        cnx.Dispose();
+                        ListaFactores();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+                    }
                 }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
-                }
+            }
+            else
+            {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
         }
     }

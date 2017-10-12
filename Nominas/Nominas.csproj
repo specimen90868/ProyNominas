@@ -66,13 +66,14 @@
     </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
-    <Reference Include="Selenium.WebDriverBackedSelenium">
-      <HintPath>..\Dlls\Selenium.WebDriverBackedSelenium.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
@@ -83,15 +84,6 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
-    <Reference Include="ThoughtWorks.Selenium.Core">
-      <HintPath>..\Dlls\ThoughtWorks.Selenium.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="WebDriver">
-      <HintPath>..\Dlls\WebDriver.dll</HintPath>
-    </Reference>
-    <Reference Include="WebDriver.Support">
-      <HintPath>..\Dlls\WebDriver.Support.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculo.cs" />
@@ -99,6 +91,7 @@
     <Compile Include="Calendario.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="cfdv33.cs" />
     <Compile Include="dsReportes.cs">
       <DependentUpon>dsReportes.xsd</DependentUpon>
       <SubType>Component</SubType>
@@ -137,6 +130,12 @@
     </Compile>
     <Compile Include="frmCambioPeriodo.Designer.cs">
       <DependentUpon>frmCambioPeriodo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCancelacionRecibosNomina.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCancelacionRecibosNomina.Designer.cs">
+      <DependentUpon>frmCancelacionRecibosNomina.cs</DependentUpon>
     </Compile>
     <Compile Include="frmComplementos.cs">
       <SubType>Form</SubType>
@@ -240,6 +239,18 @@
     <Compile Include="frmFiltroNomina.Designer.cs">
       <DependentUpon>frmFiltroNomina.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmGeneracionQR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGeneracionQR.Designer.cs">
+      <DependentUpon>frmGeneracionQR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmGenerarRecibos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGenerarRecibos.Designer.cs">
+      <DependentUpon>frmGenerarRecibos.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmGrupoSat.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -311,6 +322,12 @@
     </Compile>
     <Compile Include="frmListaBajasSua.Designer.cs">
       <DependentUpon>frmListaBajasSua.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaBitacora.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaBitacora.Designer.cs">
+      <DependentUpon>frmListaBitacora.cs</DependentUpon>
     </Compile>
     <Compile Include="frmListaCalculoNomina.cs">
       <SubType>Form</SubType>
@@ -600,6 +617,18 @@
     <Compile Include="frmUsuarios.Designer.cs">
       <DependentUpon>frmUsuarios.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmVisorReciboNomina.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmVisorReciboNomina.Designer.cs">
+      <DependentUpon>frmVisorReciboNomina.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmVisorRecibosCancelados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmVisorRecibosCancelados.Designer.cs">
+      <DependentUpon>frmVisorRecibosCancelados.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmVisorReportes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -608,8 +637,30 @@
     </Compile>
     <Compile Include="GlobalVar.cs" />
     <Compile Include="MathParser.cs" />
+    <Compile Include="nomina12.cs" />
+    <Compile Include="opensslkey.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web References\finkokDemoCancelacion\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\finkokDemo\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\finkokProdCancelacion\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\finkokProd\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="frmBaja.resx">
       <DependentUpon>frmBaja.cs</DependentUpon>
     </EmbeddedResource>
@@ -624,6 +675,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmCambioPeriodo.resx">
       <DependentUpon>frmCambioPeriodo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCancelacionRecibosNomina.resx">
+      <DependentUpon>frmCancelacionRecibosNomina.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmComplementos.resx">
       <DependentUpon>frmComplementos.cs</DependentUpon>
@@ -676,6 +730,12 @@
     <EmbeddedResource Include="frmFiltroNomina.resx">
       <DependentUpon>frmFiltroNomina.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmGeneracionQR.resx">
+      <DependentUpon>frmGeneracionQR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGenerarRecibos.resx">
+      <DependentUpon>frmGenerarRecibos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmGrupoSat.resx">
       <DependentUpon>frmGrupoSat.cs</DependentUpon>
     </EmbeddedResource>
@@ -711,6 +771,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaBajasSua.resx">
       <DependentUpon>frmListaBajasSua.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaBitacora.resx">
+      <DependentUpon>frmListaBitacora.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaCalculoNomina.resx">
       <DependentUpon>frmListaCalculoNomina.cs</DependentUpon>
@@ -856,6 +919,12 @@
     <EmbeddedResource Include="frmUsuarios.resx">
       <DependentUpon>frmUsuarios.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmVisorReciboNomina.resx">
+      <DependentUpon>frmVisorReciboNomina.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmVisorRecibosCancelados.resx">
+      <DependentUpon>frmVisorRecibosCancelados.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmVisorReportes.resx">
       <DependentUpon>frmVisorReportes.cs</DependentUpon>
     </EmbeddedResource>
@@ -896,6 +965,92 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Web References\finkokDemoCancelacion\Application.wsdl" />
+    <None Include="Web References\finkokDemoCancelacion\cancelResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokDemoCancelacion\cancel_signatureResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokDemoCancelacion\get_receiptResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokDemoCancelacion\out_cancelResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokDemoCancelacion\query_pending_cancellationResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokDemoCancelacion\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\finkokDemoCancelacion\sign_cancelResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokDemo\Application.wsdl" />
+    <None Include="Web References\finkokDemo\query_pendingResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokDemo\quick_stampResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokDemo\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\finkokDemo\sign_stampResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokDemo\stampedResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokDemo\stampResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokProdCancelacion\Application.wsdl" />
+    <None Include="Web References\finkokProdCancelacion\cancelResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokProdCancelacion\cancel_signatureResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokProdCancelacion\get_receiptResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokProdCancelacion\out_cancelResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokProdCancelacion\query_pending_cancellationResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokProdCancelacion\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\finkokProdCancelacion\sign_cancelResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokProd\Application.wsdl" />
+    <None Include="Web References\finkokProd\query_pendingResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokProd\quick_stampResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokProd\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\finkokProd\sign_stampResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokProd\stampedResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\finkokProd\stampResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -922,6 +1077,10 @@
     <ProjectReference Include="..\Bajas\Bajas.Core.csproj">
       <Project>{4b47e72f-bc89-41e5-982c-75d21331e070}</Project>
       <Name>Bajas.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bitacora.Core\Bitacora.Core.csproj">
+      <Project>{89f34688-a683-4390-a863-e06b8242979e}</Project>
+      <Name>Bitacora.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\CalculoNomina.Core\CalculoNomina.Core.csproj">
       <Project>{83af98b0-39b8-413b-8f85-a5fadf574c51}</Project>
@@ -1071,6 +1230,10 @@
       <Project>{c07d9805-4692-400d-aa2b-4a7d8f69f569}</Project>
       <Name>Vacaciones.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Xml.Core\Xml.Core.csproj">
+      <Project>{03a74fe1-1704-4fca-88b8-419536a6f51e}</Project>
+      <Name>Xml.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">
@@ -1102,13 +1265,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\baja.ico" />
-    <None Include="Resources\alta.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\personas.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
@@ -1124,6 +1280,68 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.ReportViewer.11.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft Report Viewer 2012 Runtime</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.SqlServer.SQLSysClrTypes.11.0.x64">
+      <Visible>False</Visible>
+      <ProductName>Microsoft® System CLR Types for SQL Server® 2012 %28x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="https://demo-facturacion.finkok.com/servicios/soap/cancel.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\finkokDemoCancelacion\</RelPath>
+      <UpdateFromURL>https://demo-facturacion.finkok.com/servicios/soap/cancel.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nominas_finkokDemoCancelacion_CancelSOAP</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\finkokDemo\</RelPath>
+      <UpdateFromURL>https://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nominas_finkokDemo_StampSOAP</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://facturacion.finkok.com/servicios/soap/cancel.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\finkokProdCancelacion\</RelPath>
+      <UpdateFromURL>https://facturacion.finkok.com/servicios/soap/cancel.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nominas_finkokProdCancelacion_CancelSOAP</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://facturacion.finkok.com/servicios/soap/stamp.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\finkokProd\</RelPath>
+      <UpdateFromURL>https://facturacion.finkok.com/servicios/soap/stamp.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Nominas_finkokProd_StampSOAP</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

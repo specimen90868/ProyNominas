@@ -124,6 +124,26 @@ namespace Nominas
                 r.Show();
                 this.Dispose();
             }
+            else if (_Ventana == 4)
+            {
+                if (GLOBALES.FORMISOPEN("frmVisorReciboNomina"))
+                    return;
+                frmVisorReciboNomina vrn = new frmVisorReciboNomina();
+                vrn._periodo = periodoSeleccionado;
+                vrn.StartPosition = FormStartPosition.CenterScreen;
+                vrn.Show();
+                this.Dispose();
+            }
+            else if (_Ventana == 5)
+            {
+                if (GLOBALES.FORMISOPEN("frmCancelacionRecibosNomina"))
+                    return;
+                frmCancelacionRecibosNomina crn = new frmCancelacionRecibosNomina();
+                crn._periodo = periodoSeleccionado;
+                crn.StartPosition = FormStartPosition.CenterScreen;
+                crn.Show();
+                this.Dispose();
+            }
         }
 
         private void cmbPeriodo_SelectedIndexChanged(object sender, EventArgs e)

@@ -72,9 +72,18 @@
             this.toolPeriodoExtraOrdinario = new System.Windows.Forms.ToolStripMenuItem();
             this.toolEnvioCorreoOrdinario = new System.Windows.Forms.ToolStripMenuItem();
             this.toolEnvioCorreoExtraordinario = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolVisorRecibosNomina = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolCancelacionRecibos = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolVisorRecibosCancelados = new System.Windows.Forms.ToolStripMenuItem();
             this.toolReportes = new System.Windows.Forms.ToolStripMenuItem();
             this.toolReporteOrdinario = new System.Windows.Forms.ToolStripMenuItem();
             this.toolReporteExtraordinario = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolVacaciones = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolBitacora = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCatalogos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDepartamentos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPuestos = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,11 +106,14 @@
             this.toolImss = new System.Windows.Forms.ToolStripMenuItem();
             this.toolFactorDescuento = new System.Windows.Forms.ToolStripMenuItem();
             this.toolEmpresas = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuUtilerias = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuGeneracionQR = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuGenerarRecibo = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.stsPrincipal = new System.Windows.Forms.StatusStrip();
             this.toolEstatusPerfil = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolPorcentaje = new System.Windows.Forms.ToolStripStatusLabel();
             this.workAntiguedad = new System.ComponentModel.BackgroundWorker();
-            this.toolVacaciones = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPrincipal.SuspendLayout();
             this.stsPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -115,7 +127,8 @@
             this.mnuSeguroSocial,
             this.mnuNominas,
             this.mnuCatalogos,
-            this.mnuConfiguracion});
+            this.mnuConfiguracion,
+            this.toolStripMenuItem1});
             this.mnuPrincipal.Location = new System.Drawing.Point(0, 0);
             this.mnuPrincipal.Name = "mnuPrincipal";
             this.mnuPrincipal.Size = new System.Drawing.Size(842, 24);
@@ -417,7 +430,12 @@
             this.toolPeriodoOrdinario,
             this.toolPeriodoExtraOrdinario,
             this.toolEnvioCorreoOrdinario,
-            this.toolEnvioCorreoExtraordinario});
+            this.toolEnvioCorreoExtraordinario,
+            this.toolStripSeparator10,
+            this.toolVisorRecibosNomina,
+            this.toolStripSeparator11,
+            this.toolCancelacionRecibos,
+            this.toolVisorRecibosCancelados});
             this.toolRecibosNomina.Name = "toolRecibosNomina";
             this.toolRecibosNomina.Size = new System.Drawing.Size(175, 22);
             this.toolRecibosNomina.Text = "Recibos de nómina";
@@ -425,37 +443,71 @@
             // toolPeriodoOrdinario
             // 
             this.toolPeriodoOrdinario.Name = "toolPeriodoOrdinario";
-            this.toolPeriodoOrdinario.Size = new System.Drawing.Size(245, 22);
+            this.toolPeriodoOrdinario.Size = new System.Drawing.Size(256, 22);
             this.toolPeriodoOrdinario.Text = "Impresión p. ordinario";
             this.toolPeriodoOrdinario.Click += new System.EventHandler(this.toolPeriodoOrdinario_Click);
             // 
             // toolPeriodoExtraOrdinario
             // 
             this.toolPeriodoExtraOrdinario.Name = "toolPeriodoExtraOrdinario";
-            this.toolPeriodoExtraOrdinario.Size = new System.Drawing.Size(245, 22);
+            this.toolPeriodoExtraOrdinario.Size = new System.Drawing.Size(256, 22);
             this.toolPeriodoExtraOrdinario.Text = "Impresión p. extraordinario";
             this.toolPeriodoExtraOrdinario.Click += new System.EventHandler(this.toolPeriodoExtraOrdinario_Click);
             // 
             // toolEnvioCorreoOrdinario
             // 
             this.toolEnvioCorreoOrdinario.Name = "toolEnvioCorreoOrdinario";
-            this.toolEnvioCorreoOrdinario.Size = new System.Drawing.Size(245, 22);
+            this.toolEnvioCorreoOrdinario.Size = new System.Drawing.Size(256, 22);
             this.toolEnvioCorreoOrdinario.Text = "Envio por E-mail (Ordinario)";
             this.toolEnvioCorreoOrdinario.Click += new System.EventHandler(this.toolEnvioCorreo_Click);
             // 
             // toolEnvioCorreoExtraordinario
             // 
             this.toolEnvioCorreoExtraordinario.Name = "toolEnvioCorreoExtraordinario";
-            this.toolEnvioCorreoExtraordinario.Size = new System.Drawing.Size(245, 22);
+            this.toolEnvioCorreoExtraordinario.Size = new System.Drawing.Size(256, 22);
             this.toolEnvioCorreoExtraordinario.Text = "Envio por E-mail (Extraordinario)";
             this.toolEnvioCorreoExtraordinario.Click += new System.EventHandler(this.toolEnvioCorreoExtraordinario_Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(253, 6);
+            // 
+            // toolVisorRecibosNomina
+            // 
+            this.toolVisorRecibosNomina.Name = "toolVisorRecibosNomina";
+            this.toolVisorRecibosNomina.Size = new System.Drawing.Size(256, 22);
+            this.toolVisorRecibosNomina.Text = "Visor de recibos de nómina";
+            this.toolVisorRecibosNomina.Click += new System.EventHandler(this.toolVisorRecibosNomina_Click);
+            // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(253, 6);
+            // 
+            // toolCancelacionRecibos
+            // 
+            this.toolCancelacionRecibos.Name = "toolCancelacionRecibos";
+            this.toolCancelacionRecibos.Size = new System.Drawing.Size(256, 22);
+            this.toolCancelacionRecibos.Text = "Cancelación de recibos de nómina";
+            this.toolCancelacionRecibos.Click += new System.EventHandler(this.toolCancelacionRecibos_Click);
+            // 
+            // toolVisorRecibosCancelados
+            // 
+            this.toolVisorRecibosCancelados.Name = "toolVisorRecibosCancelados";
+            this.toolVisorRecibosCancelados.Size = new System.Drawing.Size(256, 22);
+            this.toolVisorRecibosCancelados.Text = "Visor de recibos cancelados";
+            this.toolVisorRecibosCancelados.Click += new System.EventHandler(this.toolVisorRecibosCancelados_Click);
             // 
             // toolReportes
             // 
             this.toolReportes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolReporteOrdinario,
             this.toolReporteExtraordinario,
-            this.toolVacaciones});
+            this.toolStripSeparator5,
+            this.toolVacaciones,
+            this.toolStripSeparator8,
+            this.toolBitacora});
             this.toolReportes.Name = "toolReportes";
             this.toolReportes.Size = new System.Drawing.Size(175, 22);
             this.toolReportes.Text = "Reportes";
@@ -474,6 +526,30 @@
             this.toolReporteExtraordinario.Size = new System.Drawing.Size(191, 22);
             this.toolReporteExtraordinario.Text = "Periodo extraordinario";
             this.toolReporteExtraordinario.Click += new System.EventHandler(this.toolReporteExtraordinario_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(188, 6);
+            // 
+            // toolVacaciones
+            // 
+            this.toolVacaciones.Name = "toolVacaciones";
+            this.toolVacaciones.Size = new System.Drawing.Size(191, 22);
+            this.toolVacaciones.Text = "Vacaciones";
+            this.toolVacaciones.Click += new System.EventHandler(this.toolVacaciones_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(188, 6);
+            // 
+            // toolBitacora
+            // 
+            this.toolBitacora.Name = "toolBitacora";
+            this.toolBitacora.Size = new System.Drawing.Size(191, 22);
+            this.toolBitacora.Text = "Bitácora";
+            this.toolBitacora.Click += new System.EventHandler(this.toolBitacora_Click);
             // 
             // mnuCatalogos
             // 
@@ -532,7 +608,8 @@
             this.toolStripSeparator2,
             this.mnuPreferencias,
             this.toolStripSeparator6,
-            this.mnuTablas});
+            this.mnuTablas,
+            this.mnuUtilerias});
             this.mnuConfiguracion.Name = "mnuConfiguracion";
             this.mnuConfiguracion.Size = new System.Drawing.Size(95, 20);
             this.mnuConfiguracion.Text = "Configuración";
@@ -645,6 +722,37 @@
             this.toolEmpresas.Text = "Empresas";
             this.toolEmpresas.Click += new System.EventHandler(this.toolEmpresas_Click);
             // 
+            // mnuUtilerias
+            // 
+            this.mnuUtilerias.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuGeneracionQR,
+            this.mnuGenerarRecibo});
+            this.mnuUtilerias.Name = "mnuUtilerias";
+            this.mnuUtilerias.Size = new System.Drawing.Size(180, 22);
+            this.mnuUtilerias.Text = "Utilerias";
+            // 
+            // mnuGeneracionQR
+            // 
+            this.mnuGeneracionQR.Name = "mnuGeneracionQR";
+            this.mnuGeneracionQR.Size = new System.Drawing.Size(216, 22);
+            this.mnuGeneracionQR.Text = "Generar codigo QR";
+            this.mnuGeneracionQR.Click += new System.EventHandler(this.mnuGeneracionQR_Click);
+            // 
+            // mnuGenerarRecibo
+            // 
+            this.mnuGenerarRecibo.Name = "mnuGenerarRecibo";
+            this.mnuGenerarRecibo.Size = new System.Drawing.Size(216, 22);
+            this.mnuGenerarRecibo.Text = "Generar Recibo de Nómina";
+            this.mnuGenerarRecibo.Click += new System.EventHandler(this.mnuGenerarRecibo_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(125, 20);
+            this.toolStripMenuItem1.Text = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Visible = false;
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
             // stsPrincipal
             // 
             this.stsPrincipal.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -675,13 +783,6 @@
             this.workAntiguedad.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workAntiguedad_DoWork);
             this.workAntiguedad.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workAntiguedad_ProgressChanged);
             this.workAntiguedad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workAntiguedad_RunWorkerCompleted);
-            // 
-            // toolVacaciones
-            // 
-            this.toolVacaciones.Name = "toolVacaciones";
-            this.toolVacaciones.Size = new System.Drawing.Size(191, 22);
-            this.toolVacaciones.Text = "Vacaciones";
-            this.toolVacaciones.Click += new System.EventHandler(this.toolVacaciones_Click);
             // 
             // frmPrincipal
             // 
@@ -782,6 +883,18 @@
         private System.Windows.Forms.ToolStripMenuItem toolReporteOrdinario;
         private System.Windows.Forms.ToolStripMenuItem toolReporteExtraordinario;
         private System.Windows.Forms.ToolStripMenuItem toolVacaciones;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem toolBitacora;
+        private System.Windows.Forms.ToolStripMenuItem toolVisorRecibosNomina;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem mnuUtilerias;
+        private System.Windows.Forms.ToolStripMenuItem mnuGeneracionQR;
+        private System.Windows.Forms.ToolStripMenuItem mnuGenerarRecibo;
+        private System.Windows.Forms.ToolStripMenuItem toolCancelacionRecibos;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
+        private System.Windows.Forms.ToolStripMenuItem toolVisorRecibosCancelados;
     }
 }
 

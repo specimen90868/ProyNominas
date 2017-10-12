@@ -309,6 +309,8 @@ namespace Nominas
             {
                 cnxReingreso.Open();
                 rh.insertaReingreso(reingreso);
+                empleadoh.insertaBitacora(GLOBALES.IDUSUARIO, _idempleado, GLOBALES.IDEMPRESA, "suaReingresos", "INSERT",
+                    String.Format("FECHA:{0},SDI:{1},DIAS:{2}", dtpFechaReingreso.Value.Date.ToString(), txtSDI.Text, reingreso.diasproporcionales.ToString()));
                 cnxReingreso.Close();
             }
             catch (Exception error)
@@ -384,6 +386,10 @@ namespace Nominas
             {
                 cnxReingreso.Open();
                 empleadoh.reingreso(empleado);
+                empleadoh.insertaBitacora(GLOBALES.IDUSUARIO, _idempleado, GLOBALES.IDEMPRESA, "Trabajadores", "UPDATE",
+                    String.Format("FECHAINGRESO:{0},DEPTO:{1},PUESTO:{2},SDI:{3},SD:{4},SUELDO:{5},ESTATUS:{6},CUENTA:{7},CLABE:{8}", 
+                    empleado.fechaingreso.ToString(), empleado.iddepartamento, empleado.idpuesto, empleado.sdi, empleado.sd, empleado.sueldo,
+                    empleado.estatus, empleado.cuenta, empleado.clabe));
                 cnxReingreso.Close();
             }
             catch (Exception)

@@ -104,6 +104,7 @@ namespace Nominas
             switch (tipoGuardar)
             {
                 case 0:
+                    MessageBox.Show(String.Format("Puesto: {0} Ingresado con éxito.", txtDescripcion.Text), "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     GLOBALES.LIMPIAR(this, typeof(TextBox));
                     //limpiar(this, typeof(TextBox));
                     if (OnNuevoPuesto != null)

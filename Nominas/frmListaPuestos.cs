@@ -95,8 +95,15 @@ namespace Nominas
             int fila = 0;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {
-                fila = dgvPuestos.CurrentCell.RowIndex;
-                p._idPuesto = int.Parse(dgvPuestos.Rows[fila].Cells[0].Value.ToString());
+                if (dgvPuestos.Rows.Count != 0)
+                {
+                    fila = dgvPuestos.CurrentCell.RowIndex;
+                    p._idPuesto = int.Parse(dgvPuestos.Rows[fila].Cells[0].Value.ToString());
+                }
+                else {
+                    MessageBox.Show("Información: No hay registro que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
             }
             p._tipoOperacion = edicion;
             p.Show();
@@ -130,33 +137,42 @@ namespace Nominas
 
         private void toolBaja_Click(object sender, EventArgs e)
         {
-            DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el puesto?", "Confirmación", MessageBoxButtons.YesNo);
-            if (respuesta == DialogResult.Yes)
+            if (dgvPuestos.Rows.Count != 0)
             {
-                string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-                int fila = dgvPuestos.CurrentCell.RowIndex;
-                int id = int.Parse(dgvPuestos.Rows[fila].Cells[0].Value.ToString());
-                cnx = new SqlConnection(cdn);
-                cmd = new SqlCommand();
-                cmd.Connection = cnx;
-                Puestos.Core.PuestosHelper ph = new Puestos.Core.PuestosHelper();
-                ph.Command = cmd;
-                Puestos.Core.Puestos puesto = new Puestos.Core.Puestos();
-                puesto.idpuesto = id;
-                
-                try
+                DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el puesto?", "Confirmación", MessageBoxButtons.YesNo);
+                if (respuesta == DialogResult.Yes)
                 {
-                    cnx.Open();
-                    ph.bajaPuesto(puesto);
-                    cnx.Close();
-                    cnx.Dispose();
-                    ListaPuestos();
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+                    string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+                    int fila = dgvPuestos.CurrentCell.RowIndex;
+                    int id = int.Parse(dgvPuestos.Rows[fila].Cells[0].Value.ToString());
+                    cnx = new SqlConnection(cdn);
+                    cmd = new SqlCommand();
+                    cmd.Connection = cnx;
+                    Puestos.Core.PuestosHelper ph = new Puestos.Core.PuestosHelper();
+                    ph.Command = cmd;
+                    Puestos.Core.Puestos puesto = new Puestos.Core.Puestos();
+                    puesto.idpuesto = id;
+
+                    try
+                    {
+                        cnx.Open();
+                        ph.bajaPuesto(puesto);
+                        cnx.Close();
+                        cnx.Dispose();
+                        ListaPuestos();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+                    }
                 }
             }
+            else
+            {
+                MessageBox.Show("Información: No hay registro que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            
         }
 
         private void txtBuscar_Click(object sender, EventArgs e)

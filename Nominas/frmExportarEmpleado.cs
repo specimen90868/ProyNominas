@@ -173,6 +173,8 @@ namespace Nominas
 
                 #endregion
 
+                toolExportar.Enabled = false;
+
                 workerExportar.RunWorkerAsync();
             }
         }
@@ -305,6 +307,7 @@ namespace Nominas
         private void workerExportar_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             toolPorcentaje.Text = "Completado.";
+            toolExportar.Enabled = false;
         }
 
         private string direccion(bool status)

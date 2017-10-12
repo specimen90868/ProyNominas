@@ -529,6 +529,7 @@
             this.dtpFecha.Name = "dtpFecha";
             this.dtpFecha.Size = new System.Drawing.Size(94, 20);
             this.dtpFecha.TabIndex = 3;
+            this.dtpFecha.ValueChanged += new System.EventHandler(this.dtpFecha_ValueChanged);
             // 
             // txtFalta
             // 
@@ -1205,6 +1206,7 @@
             this.dtpFechaInicioVacaciones.Name = "dtpFechaInicioVacaciones";
             this.dtpFechaInicioVacaciones.Size = new System.Drawing.Size(131, 20);
             this.dtpFechaInicioVacaciones.TabIndex = 6;
+            this.dtpFechaInicioVacaciones.ValueChanged += new System.EventHandler(this.dtpFechaInicioVacaciones_ValueChanged);
             // 
             // label22
             // 

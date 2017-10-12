@@ -96,8 +96,15 @@ namespace Nominas
             int fila = 0;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {
-                fila = dgvPeriodos.CurrentCell.RowIndex;
-                p._idperiodo = int.Parse(dgvPeriodos.Rows[fila].Cells[0].Value.ToString());
+                if (dgvPeriodos.Rows.Count != 0)
+                {
+                    fila = dgvPeriodos.CurrentCell.RowIndex;
+                    p._idperiodo = int.Parse(dgvPeriodos.Rows[fila].Cells[0].Value.ToString());
+                }
+                else {
+                    MessageBox.Show("Información: No hay registro que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
             }
             p._tipoOperacion = edicion;
             p.Show();
@@ -131,33 +138,42 @@ namespace Nominas
 
         private void toolBaja_Click(object sender, EventArgs e)
         {
-            DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el periodo?", "Confirmación", MessageBoxButtons.YesNo);
-            if (respuesta == DialogResult.Yes)
+            if (dgvPeriodos.Rows.Count != 0)
             {
-                string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-                int fila = dgvPeriodos.CurrentCell.RowIndex;
-                int id = int.Parse(dgvPeriodos.Rows[fila].Cells[0].Value.ToString());
-                cnx = new SqlConnection(cdn);
-                cmd = new SqlCommand();
-                cmd.Connection = cnx;
-                Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
-                ph.Command = cmd;
-                Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
-                periodo.idperiodo = id;
-                
-                try
+                DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el periodo?", "Confirmación", MessageBoxButtons.YesNo);
+                if (respuesta == DialogResult.Yes)
                 {
-                    cnx.Open();
-                    ph.bajaPeriodo(periodo);
-                    cnx.Close();
-                    cnx.Dispose();
-                    ListaPeriodos();
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+                    string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+                    int fila = dgvPeriodos.CurrentCell.RowIndex;
+                    int id = int.Parse(dgvPeriodos.Rows[fila].Cells[0].Value.ToString());
+                    cnx = new SqlConnection(cdn);
+                    cmd = new SqlCommand();
+                    cmd.Connection = cnx;
+                    Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
+                    ph.Command = cmd;
+                    Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
+                    periodo.idperiodo = id;
+
+                    try
+                    {
+                        cnx.Open();
+                        ph.bajaPeriodo(periodo);
+                        cnx.Close();
+                        cnx.Dispose();
+                        ListaPeriodos();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+                    }
                 }
             }
+            else
+            {
+                MessageBox.Show("Información: No hay registro que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            
         }
 
         private void txtBuscar_Click(object sender, EventArgs e)

@@ -107,8 +107,16 @@ namespace Nominas
             int fila = 0;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {
-                fila = dgvIsr.CurrentCell.RowIndex;
-                i._idIsr = int.Parse(dgvIsr.Rows[fila].Cells[0].Value.ToString());
+                if (dgvIsr.Rows.Count != 0)
+                {
+                    fila = dgvIsr.CurrentCell.RowIndex;
+                    i._idIsr = int.Parse(dgvIsr.Rows[fila].Cells[0].Value.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
             }
             i._tipoOperacion = edicion;
             i.Show();
@@ -137,32 +145,40 @@ namespace Nominas
 
         private void toolBaja_Click(object sender, EventArgs e)
         {
-            DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el registro ISR?", "Confirmación", MessageBoxButtons.YesNo);
-            if (respuesta == DialogResult.Yes)
+            if (dgvIsr.Rows.Count != 0)
             {
-                string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-                int fila = dgvIsr.CurrentCell.RowIndex;
-                int id = int.Parse(dgvIsr.Rows[fila].Cells[0].Value.ToString());
-                cnx = new SqlConnection(cdn);
-                cmd = new SqlCommand();
-                cmd.Connection = cnx;
-                ih = new TablaIsr.Core.IsrHelper();
-                ih.Command = cmd;
-                TablaIsr.Core.TablaIsr isr = new TablaIsr.Core.TablaIsr();
-                isr.id = id;
+                DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el registro ISR?", "Confirmación", MessageBoxButtons.YesNo);
+                if (respuesta == DialogResult.Yes)
+                {
+                    string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+                    int fila = dgvIsr.CurrentCell.RowIndex;
+                    int id = int.Parse(dgvIsr.Rows[fila].Cells[0].Value.ToString());
+                    cnx = new SqlConnection(cdn);
+                    cmd = new SqlCommand();
+                    cmd.Connection = cnx;
+                    ih = new TablaIsr.Core.IsrHelper();
+                    ih.Command = cmd;
+                    TablaIsr.Core.TablaIsr isr = new TablaIsr.Core.TablaIsr();
+                    isr.id = id;
 
-                try
-                {
-                    cnx.Open();
-                    ih.eliminaIsr(isr);
-                    cnx.Close();
-                    cnx.Dispose();
-                    ListaIsr();
+                    try
+                    {
+                        cnx.Open();
+                        ih.eliminaIsr(isr);
+                        cnx.Close();
+                        cnx.Dispose();
+                        ListaIsr();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+                    }
                 }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
-                }
+            }
+            else
+            {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
         }
 

@@ -2153,7 +2153,7 @@ namespace Nominas
             excel.Cells[2, 2] = lstEmpresa[0].rfc;
             excel.Cells[3, 2] = lstEmpresa[0].registro + lstEmpresa[0].digitoverificador.ToString();
 
-            excel.Cells[2, 6] = periodoInicio.ToShortDateString();
+            excel.Cells[2, 6] = periodoInicio.Day + "/" + periodoInicio.Month + "/" + periodoInicio.Year;
             excel.Cells[2, 7] = periodoFin.ToShortDateString();
 
             //COLOCACION DE COLUMNAS

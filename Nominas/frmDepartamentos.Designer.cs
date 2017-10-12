@@ -45,7 +45,7 @@
             this.toolCerrar});
             this.toolDepartamento.Location = new System.Drawing.Point(0, 0);
             this.toolDepartamento.Name = "toolDepartamento";
-            this.toolDepartamento.Size = new System.Drawing.Size(517, 27);
+            this.toolDepartamento.Size = new System.Drawing.Size(389, 27);
             this.toolDepartamento.TabIndex = 3;
             this.toolDepartamento.Text = "toolEmpresa";
             // 
@@ -54,7 +54,7 @@
             this.toolGuardarNuevo.Image = ((System.Drawing.Image)(resources.GetObject("toolGuardarNuevo.Image")));
             this.toolGuardarNuevo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolGuardarNuevo.Name = "toolGuardarNuevo";
-            this.toolGuardarNuevo.Size = new System.Drawing.Size(86, 24);
+            this.toolGuardarNuevo.Size = new System.Drawing.Size(73, 24);
             this.toolGuardarNuevo.Text = "Guardar";
             this.toolGuardarNuevo.Click += new System.EventHandler(this.toolGuardarNuevo_Click);
             // 
@@ -63,41 +63,39 @@
             this.toolCerrar.Image = ((System.Drawing.Image)(resources.GetObject("toolCerrar.Image")));
             this.toolCerrar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolCerrar.Name = "toolCerrar";
-            this.toolCerrar.Size = new System.Drawing.Size(73, 24);
+            this.toolCerrar.Size = new System.Drawing.Size(63, 24);
             this.toolCerrar.Text = "Cerrar";
             this.toolCerrar.Click += new System.EventHandler(this.toolCerrar_Click);
             // 
             // txtDescripcion
             // 
-            this.txtDescripcion.Location = new System.Drawing.Point(121, 31);
-            this.txtDescripcion.Margin = new System.Windows.Forms.Padding(4);
+            this.txtDescripcion.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtDescripcion.Location = new System.Drawing.Point(91, 32);
             this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.Size = new System.Drawing.Size(384, 22);
+            this.txtDescripcion.Size = new System.Drawing.Size(289, 20);
             this.txtDescripcion.TabIndex = 96;
             // 
             // lblDeptoPuesto
             // 
             this.lblDeptoPuesto.AutoSize = true;
-            this.lblDeptoPuesto.Location = new System.Drawing.Point(11, 31);
-            this.lblDeptoPuesto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDeptoPuesto.Location = new System.Drawing.Point(8, 35);
             this.lblDeptoPuesto.Name = "lblDeptoPuesto";
-            this.lblDeptoPuesto.Size = new System.Drawing.Size(102, 17);
+            this.lblDeptoPuesto.Size = new System.Drawing.Size(77, 13);
             this.lblDeptoPuesto.TabIndex = 95;
             this.lblDeptoPuesto.Text = "Departamento:";
             // 
             // frmDepartamentos
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(517, 74);
+            this.ClientSize = new System.Drawing.Size(389, 67);
             this.Controls.Add(this.txtDescripcion);
             this.Controls.Add(this.lblDeptoPuesto);
             this.Controls.Add(this.toolDepartamento);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(535, 121);
+            this.MaximumSize = new System.Drawing.Size(405, 106);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(535, 121);
+            this.MinimumSize = new System.Drawing.Size(405, 106);
             this.Name = "frmDepartamentos";
             this.Text = "Departamento de la empresa";
             this.Load += new System.EventHandler(this.frmDepartamentos_Load);

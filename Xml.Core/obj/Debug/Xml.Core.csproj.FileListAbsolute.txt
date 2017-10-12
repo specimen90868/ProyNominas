@@ -1,0 +1,7 @@
+C:\Git\ProyNominas\Xml.Core\bin\Debug\Xml.Core.dll
+C:\Git\ProyNominas\Xml.Core\bin\Debug\Xml.Core.pdb
+C:\Git\ProyNominas\Xml.Core\bin\Debug\Data.Obj.dll
+C:\Git\ProyNominas\Xml.Core\bin\Debug\Data.Obj.pdb
+C:\Git\ProyNominas\Xml.Core\obj\Debug\Xml.Core.csprojResolveAssemblyReference.cache
+C:\Git\ProyNominas\Xml.Core\obj\Debug\Xml.Core.dll
+C:\Git\ProyNominas\Xml.Core\obj\Debug\Xml.Core.pdb

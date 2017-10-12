@@ -56,10 +56,15 @@ namespace Nominas
             mov.fechainicio = dtpFechaInicio.Value.Date;
             mov.fechafin = dtpFechaFin.Value.Date;
 
+            Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+            eh.Command = cmd;
+
             try
             {
                 cnx.Open();
                 mh.insertaMovimiento(mov);
+                eh.insertaBitacora(GLOBALES.IDUSUARIO, _idEmpleado, GLOBALES.IDEMPRESA, "Movimientos", "INSERT",
+                            String.Format("IDCONCEPTO: {0}, CANTIDAD: {1}", mov.idconcepto, mov.cantidad));
                 cnx.Close();
                 cnx.Dispose();
             }

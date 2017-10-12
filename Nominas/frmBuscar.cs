@@ -71,6 +71,8 @@ namespace Nominas
             cmd = new SqlCommand();
             cnx.ConnectionString = cdn;
             cmd.Connection = cnx;
+
+            bool esNoEmpleado = false;
             
             if (e.KeyChar == (char)Keys.Enter)
             {
@@ -79,18 +81,30 @@ namespace Nominas
 
                 Empleados.Core.Empleados em = new Empleados.Core.Empleados();
                 em.idempresa = GLOBALES.IDEMPRESA;
-                em.noempleado = txtBuscar.Text.Trim();
+                
 
                 if (_tipoNomina == GLOBALES.NORMAL)
                     em.estatus = GLOBALES.ACTIVO;
 
                 try
                 {
+                    int.Parse(txtBuscar.Text);
+                    esNoEmpleado = true;
+                    em.noempleado = txtBuscar.Text.Trim();
+                }
+                catch
+                {
+                    esNoEmpleado = false;
+                    em.nombrecompleto = txtBuscar.Text.Trim();
+                }
+
+                try
+                {
                     cnx.Open();
                     if(_busqueda == GLOBALES.NOMINA)
-                        lstEmpleados = eh.buscarEmpleado(em, _periodo);
+                        lstEmpleados = eh.buscarEmpleado(em, esNoEmpleado, _periodo);
                     if (_busqueda == GLOBALES.FORMULARIOS)
-                        lstEmpleados = eh.buscarEmpleado(em);
+                        lstEmpleados = eh.buscarEmpleado(em, esNoEmpleado);
                     cnx.Close();
                     cnx.Dispose();
 

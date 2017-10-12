@@ -115,7 +115,8 @@ namespace Conceptos.Core
                 concepto.exento = bool.Parse(dtConceptos.Rows[i]["exento"].ToString());
                 concepto.gruposat = dtConceptos.Rows[i]["gruposat"].ToString();
                 concepto.visible = bool.Parse(dtConceptos.Rows[i]["visible"].ToString());
-                concepto.periodo = int.Parse(dtConceptos.Rows[i]["periodo"].ToString());
+                concepto.catsat = dtConceptos.Rows[i]["catsat"].ToString();
+                concepto.idcatsat = int.Parse(dtConceptos.Rows[i]["idcatsat"].ToString());
                 lstConcepto.Add(concepto);
             }
             return lstConcepto;
@@ -217,8 +218,8 @@ namespace Conceptos.Core
 
         public int insertaConcepto(Conceptos c)
         {
-            Command.CommandText = "insert into conceptos (idempresa, noconcepto, concepto, tipoconcepto, formula, formulaexento, gravado, exento, gruposat, visible, periodo) " +
-                "values (@idempresa, @noconcepto, @concepto, @tipoconcepto, @formula, @formulaexento, @gravado, @exento, @gruposat, @visible, @periodo)";
+            Command.CommandText = "insert into conceptos (idempresa, noconcepto, concepto, tipoconcepto, formula, formulaexento, gravado, exento, gruposat, visible, periodo, catsat, idcatsat, valorcatsat) " +
+                "values (@idempresa, @noconcepto, @concepto, @tipoconcepto, @formula, @formulaexento, @gravado, @exento, @gruposat, @visible, @periodo, @catsat, @idcatsat, @valorcatsat)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa",c.idempresa);
             Command.Parameters.AddWithValue("noconcepto", c.noconcepto);
@@ -231,13 +232,16 @@ namespace Conceptos.Core
             Command.Parameters.AddWithValue("gruposat", c.gruposat);
             Command.Parameters.AddWithValue("visible", c.visible);
             Command.Parameters.AddWithValue("periodo", c.periodo);
+            Command.Parameters.AddWithValue("catsat", c.catsat);
+            Command.Parameters.AddWithValue("idcatsat", c.idcatsat);
+            Command.Parameters.AddWithValue("valorcatsat", c.valorcatsat);
             return Command.ExecuteNonQuery();
         }
 
         public int actualizaConcepto(Conceptos c)
         {
             Command.CommandText = "update conceptos set noconcepto = @noconcepto, concepto = @concepto, tipoconcepto = @tipoconcepto, formula = @formula, formulaexento = @formulaexento, gravado = @gravado, " + 
-                "exento = @exento, gruposat = @gruposat, visible = @visible, periodo = @periodo where id = @id";
+                "exento = @exento, gruposat = @gruposat, visible = @visible, periodo = @periodo, catsat = @catsat, idcatsat = @idcatsat, valorcatsat = @valorcatsat where id = @id";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("id", c.id);
             Command.Parameters.AddWithValue("noconcepto", c.noconcepto);
@@ -250,6 +254,9 @@ namespace Conceptos.Core
             Command.Parameters.AddWithValue("gruposat", c.gruposat);
             Command.Parameters.AddWithValue("visible", c.visible);
             Command.Parameters.AddWithValue("periodo", c.periodo);
+            Command.Parameters.AddWithValue("catsat", c.catsat);
+            Command.Parameters.AddWithValue("idcatsat", c.idcatsat);
+            Command.Parameters.AddWithValue("valorcatsat", c.valorcatsat);
             return Command.ExecuteNonQuery();
         }
 

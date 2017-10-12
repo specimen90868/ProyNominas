@@ -207,33 +207,46 @@ namespace Nominas
 
         private void toolEliminar_Click(object sender, EventArgs e)
         {
-            int fila = 0;
-
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            ih = new Incidencias.Core.IncidenciasHelper();
-            ih.Command = cmd;
-
-            fila = dgvIncapacidad.CurrentCell.RowIndex;
-            Incidencias.Core.Incidencias incidencia = new Incidencias.Core.Incidencias();
-            incidencia.idtrabajador = int.Parse(dgvIncapacidad.Rows[fila].Cells[0].Value.ToString());
-            incidencia.certificado = dgvIncapacidad.Rows[fila].Cells[3].Value.ToString();
-
-            try
+            if (dgvIncapacidad.Rows.Count != 0)
             {
-                cnx.Open();
-                ih.eliminaIncidencia(incidencia);
-                cnx.Close();
-                cnx.Dispose();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-            }
+                int fila = 0;
 
-            ListaIncapacidad();
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
+                cmd.Connection = cnx;
+
+                ih = new Incidencias.Core.IncidenciasHelper();
+                ih.Command = cmd;
+
+                eh = new Empleados.Core.EmpleadosHelper();
+                eh.Command = cmd;
+
+                fila = dgvIncapacidad.CurrentCell.RowIndex;
+                Incidencias.Core.Incidencias incidencia = new Incidencias.Core.Incidencias();
+                incidencia.idtrabajador = int.Parse(dgvIncapacidad.Rows[fila].Cells[0].Value.ToString());
+                incidencia.certificado = dgvIncapacidad.Rows[fila].Cells[3].Value.ToString();
+
+                try
+                {
+                    cnx.Open();
+                    ih.eliminaIncidencia(incidencia);
+                    eh.insertaBitacora(GLOBALES.IDUSUARIO, incidencia.idtrabajador, GLOBALES.IDEMPRESA, "Incidencias", "DELETE",
+                        String.Format("IDTRABAJADOR: {0}, CERTIFICADO: {1}", incidencia.idtrabajador, incidencia.certificado));
+                    cnx.Close();
+                    cnx.Dispose();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                }
+
+                ListaIncapacidad();
+            }
+            else
+            {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
         }
     }
 }

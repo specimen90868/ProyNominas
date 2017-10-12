@@ -21,5 +21,7 @@ namespace Incidencias.Core
         public DateTime periodofin { get; set; }
         public int idcontrol { get; set; }
         public int idincapacidad { get; set; }
+        public int idcatsat { get; set; }
+        public string valorcatsat { get; set; }
     }
 }

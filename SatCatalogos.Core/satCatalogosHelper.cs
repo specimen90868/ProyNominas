@@ -147,5 +147,41 @@ namespace SatCatalogos.Core
             }
             return lstTipoPercepcion;
         }
+
+        public List<satTipoOtroPago> obtenerTipoOtroPago()
+        {
+            DataTable dt = new DataTable();
+            List<satTipoOtroPago> lstTipoOtroPago = new List<satTipoOtroPago>();
+            Command.CommandText = "select * from satTipoOtroPago";
+            Command.Parameters.Clear();
+            dt = SelectData(Command);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                satTipoOtroPago top = new satTipoOtroPago();
+                top.id = int.Parse(dt.Rows[i]["id"].ToString());
+                top.tipopago = dt.Rows[i]["tipopago"].ToString();
+                top.descripcion = dt.Rows[i]["descripcion"].ToString();
+                lstTipoOtroPago.Add(top);
+            }
+            return lstTipoOtroPago;
+        }
+
+        public List<satTipoIncapacidad> obtenerTipoIncapacidad()
+        {
+            DataTable dt = new DataTable();
+            List<satTipoIncapacidad> lstTipoIncapacidad = new List<satTipoIncapacidad>();
+            Command.CommandText = "select * from satTipoOtroPago";
+            Command.Parameters.Clear();
+            dt = SelectData(Command);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                satTipoIncapacidad ti = new satTipoIncapacidad();
+                ti.id = int.Parse(dt.Rows[i]["id"].ToString());
+                ti.tipoincapacidad = dt.Rows[i]["tipoincapacidad"].ToString();
+                ti.descripcion = dt.Rows[i]["descripcion"].ToString();
+                lstTipoIncapacidad.Add(ti);
+            }
+            return lstTipoIncapacidad;
+        }
     }
 }

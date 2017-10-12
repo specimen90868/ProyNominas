@@ -103,8 +103,16 @@ namespace Nominas
             int fila = 0;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {
-                fila = dgvConceptos.CurrentCell.RowIndex;
-                c._idConcepto = int.Parse(dgvConceptos.Rows[fila].Cells[0].Value.ToString());
+                if (dgvConceptos.Rows.Count != 0)
+                {
+                    fila = dgvConceptos.CurrentCell.RowIndex;
+                    c._idConcepto = int.Parse(dgvConceptos.Rows[fila].Cells[0].Value.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
             }
             c._tipoOperacion = edicion;
             c.Show();

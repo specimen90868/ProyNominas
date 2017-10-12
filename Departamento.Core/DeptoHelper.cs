@@ -75,7 +75,7 @@ namespace Departamento.Core
 
         public object obtenerIdDepartamento(string descripcion, int idEmpresa)
         {
-            Command.CommandText = "select id from departamentos where idempresa = @idempresa and descripcion = @descripcion";
+            Command.CommandText = "select id from departamentos where idempresa = @idempresa and descripcion + ' ' like + '%' + @descripcion + '%' and estatus = 1";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             Command.Parameters.AddWithValue("descripcion", descripcion);

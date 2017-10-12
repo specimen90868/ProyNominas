@@ -16,15 +16,16 @@ namespace Empresas.Core
         public string representante { get; set; }
         public int estatus { get; set; }
         public string certificado { get; set; }
-        public string llave { get; set; }
-        public string password { get; set; }
-        public string regimen { get; set; }
         public string nocertificado { get; set; }
-        public DateTime vigenciacertificado { get; set; }
         public string observacion { get; set; }
         public bool obracivil { get; set; }
         public int idregimenfiscal { get; set; }
         public string codigopostal { get; set; }
+        public string archivokey { get; set; }
+        public string archivocer { get; set; }
+        public string passwordkey { get; set; }
+        public string usuariopac { get; set; }
+        public string passwordpac { get; set; }
     }
 
 

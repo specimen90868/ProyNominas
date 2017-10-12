@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,7 @@ namespace Nominas
 
             #region CALCULO
             lstValoresNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
+            decimal a = 0, d = 0;
             for (int i = 0; i < lstConceptosPercepciones.Count; i++)
             {
                 CalculoNomina.Core.tmpPagoNomina vn = new CalculoNomina.Core.tmpPagoNomina();
@@ -83,6 +85,7 @@ namespace Nominas
                 if (grava && !exenta)
                 {
                     vn.gravado = vn.cantidad;
+                    vn.exento = 0;
                 }
                 
                 if (grava && exenta)
@@ -94,7 +97,13 @@ namespace Nominas
                     }
                     else
                     {
-                        vn.gravado = vn.cantidad - vn.exento;
+                        vn.gravado = vn.cantidad - Math.Round(vn.exento,2);
+                        a = vn.gravado + vn.exento;
+                        if (vn.cantidad > a)
+                        {
+                            d = vn.cantidad - a;
+                            vn.gravado = vn.gravado + d;
+                        }
                     }
                 }
 
@@ -245,68 +254,144 @@ namespace Nominas
 
                     #region CONCEPTO IMSS
                     case 99:
-                        int vsmdf; //idsalario;
-                        decimal porcentajeImss, excedenteVsmdf, sm, sdiTrabajador;
-                        
-                        Configuracion.Core.ConfiguracionHelper ch = new Configuracion.Core.ConfiguracionHelper();
-                        ch.Command = cmd;
 
-                        Imss.Core.ImssHelper ih = new Imss.Core.ImssHelper();
-                        ih.Command = cmd;
-
-                        Imss.Core.Imss imss = new Imss.Core.Imss();
-                        imss.calculo = true;
-
-                        Empleados.Core.EmpleadosHelper empleadosHelper = new Empleados.Core.EmpleadosHelper();
-                        empleadosHelper.Command = cmd;
-                        Empleados.Core.Empleados empleadoImss = new Empleados.Core.Empleados();
-                        empleadoImss.idtrabajador = lstConceptosDeducciones[i].idtrabajador;
-
-                        Salario.Core.SalariosHelper sh = new Salario.Core.SalariosHelper();
-                        sh.Command = cmd;
-                        
-                        cnx.Open();
-                        vsmdf = int.Parse(ch.obtenerValorConfiguracion("VSMDF").ToString());
-                        porcentajeImss = ih.CuotaObreroPatronal(imss);
-                        excedenteVsmdf = ih.ExcedenteVSM(5);
-                        
-                        sm = decimal.Parse(sh.obtenerSalarioValor().ToString());
-                        sdiTrabajador = decimal.Parse(empleadosHelper.obtenerSalarioDiarioIntegrado(empleadoImss).ToString());
-                        cnx.Close();
-
-                        string formulaDiasAPagar = "[DiasLaborados]-[Faltas]-[DiasIncapacidad]";
-                        CalculoFormula cfImss = new CalculoFormula(lstConceptosDeducciones[i].idtrabajador, inicio, fin, formulaDiasAPagar);
-                        int diasAPagar = int.Parse(cfImss.calcularFormula().ToString());
-
-                        decimal tresVSMG = vsmdf * sm;
-                        decimal excedenteImss = 0;
-                        decimal valorImss = (sdiTrabajador * (porcentajeImss / 100)) * diasAPagar;
-                        decimal totalImss = 0;
-                        if (sdiTrabajador > tresVSMG)
+                        if(percepciones != 0)
                         {
-                            excedenteImss = (sdiTrabajador - tresVSMG) * (excedenteVsmdf / 100) * diasAPagar;
-                            totalImss = valorImss + excedenteImss;
+                            int vsmdf; //idsalario;
+                            int periodo = 0;
+                            decimal porcentajeGM, porcentajePD, porcentajeIV, porcentajeCV;
+                            decimal gm = 0, pd = 0, iv = 0, cv = 0;
+                            decimal valorImss = 0, excedenteVsmdf, sm, sdiTrabajador;
+
+                            Configuracion.Core.ConfiguracionHelper ch = new Configuracion.Core.ConfiguracionHelper();
+                            ch.Command = cmd;
+
+                            Imss.Core.ImssHelper ih = new Imss.Core.ImssHelper();
+                            ih.Command = cmd;
+
+                            Imss.Core.Imss imss = new Imss.Core.Imss();
+                            imss.calculo = true;
+
+                            Empleados.Core.EmpleadosHelper empleadosHelper = new Empleados.Core.EmpleadosHelper();
+                            empleadosHelper.Command = cmd;
+                            Empleados.Core.Empleados empleadoImss = new Empleados.Core.Empleados();
+                            empleadoImss.idtrabajador = lstConceptosDeducciones[i].idtrabajador;
+
+                            Salario.Core.SalariosHelper sh = new Salario.Core.SalariosHelper();
+                            sh.Command = cmd;
+
+                            cnx.Open();
+                            porcentajeGM = ih.ExcedenteVSM(1);
+                            porcentajePD = ih.ExcedenteVSM(2);
+                            porcentajeIV = ih.ExcedenteVSM(3);
+                            porcentajeCV = ih.ExcedenteVSM(6);
+
+                            vsmdf = int.Parse(ch.obtenerValorConfiguracion("VSMDF").ToString());
+                            //porcentajeImss = ih.CuotaObreroPatronal(imss);
+                            excedenteVsmdf = ih.ExcedenteVSM(5);
+
+                            sm = decimal.Parse(sh.obtenerSalarioValor().ToString());
+                            sdiTrabajador = decimal.Parse(empleadosHelper.obtenerSalarioDiarioIntegrado(empleadoImss).ToString());
+                            periodo = int.Parse(empleadosHelper.obtenerDiasPeriodo(lstConceptosDeducciones[i].idtrabajador).ToString());
+                            cnx.Close();
+
+
+                            string formulaDiasAPagar = "[DiasLaborados]-[Faltas]-[DiasIncapacidad]";
+                            CalculoFormula cfImss = new CalculoFormula(lstConceptosDeducciones[i].idtrabajador, inicio, fin, formulaDiasAPagar);
+                            int diasAPagar = int.Parse(cfImss.calcularFormula().ToString());
+
+                            if (periodo == 15)
+                            {
+                                if (inicio.Day <= 15)
+                                {
+                                    gm = ((sdiTrabajador * DateTime.DaysInMonth(inicio.Year, inicio.Month) * porcentajeGM) / 100) / DateTime.DaysInMonth(inicio.Year, inicio.Month) * diasAPagar;
+                                    pd = ((sdiTrabajador * DateTime.DaysInMonth(inicio.Year, inicio.Month) * porcentajePD) / 100) / DateTime.DaysInMonth(inicio.Year, inicio.Month) * diasAPagar;
+                                    iv = ((sdiTrabajador * DateTime.DaysInMonth(inicio.Year, inicio.Month) * porcentajeIV) / 100) / DateTime.DaysInMonth(inicio.Year, inicio.Month) * diasAPagar;
+                                    if ((inicio.Month % 2) == 0)
+                                    {
+                                        cv = ((sdiTrabajador * DateTime.DaysInMonth(inicio.Year, inicio.Month) * (porcentajeCV * 2)) / 100) / DateTime.DaysInMonth(inicio.Year, inicio.Month) * diasAPagar;
+                                    }
+                                    else
+                                    {
+                                        cv = 0;
+                                    }
+                                }
+                                else
+                                {
+                                    if (DateTime.DaysInMonth(inicio.Year, inicio.Month) >= 28)
+                                    {
+                                        gm = ((sdiTrabajador * DateTime.DaysInMonth(inicio.Year, inicio.Month) * porcentajeGM) / 100) / DateTime.DaysInMonth(inicio.Year, inicio.Month) * (diasAPagar + 1);
+                                        pd = ((sdiTrabajador * DateTime.DaysInMonth(inicio.Year, inicio.Month) * porcentajePD) / 100) / DateTime.DaysInMonth(inicio.Year, inicio.Month) * (diasAPagar + 1);
+                                        iv = ((sdiTrabajador * DateTime.DaysInMonth(inicio.Year, inicio.Month) * porcentajeIV) / 100) / DateTime.DaysInMonth(inicio.Year, inicio.Month) * (diasAPagar + 1);
+                                        if ((inicio.Month % 2) == 0)
+                                        {
+                                            cv = ((sdiTrabajador * DateTime.DaysInMonth(inicio.Year, inicio.Month) * (porcentajeCV * 2)) / 100) / DateTime.DaysInMonth(inicio.Year, inicio.Month) * (diasAPagar + 1);
+                                        }
+                                        else
+                                        {
+                                            cv = 0;
+                                        }
+                                    }
+                                }
+                                valorImss = gm + pd + iv + cv;
+                            }
+                            else
+                            {
+                                DateTime fechaCiclo;
+                                DayOfWeek dia;
+                                int cantidadLunes = 0;
+                                for (int m = 1; m <= DateTime.DaysInMonth(inicio.Year, inicio.Month); m++)
+                                {
+                                    fechaCiclo = new DateTime(inicio.Year, inicio.Month, m);
+                                    dia = fechaCiclo.DayOfWeek;
+                                    if (dia.Equals(DayOfWeek.Monday))
+                                        cantidadLunes++;
+                                }
+
+                                gm = ((sdiTrabajador * DateTime.DaysInMonth(inicio.Year, inicio.Month) * porcentajeGM) / 100) / cantidadLunes;
+                                pd = ((sdiTrabajador * DateTime.DaysInMonth(inicio.Year, inicio.Month) * porcentajePD) / 100) / cantidadLunes;
+                                iv = ((sdiTrabajador * DateTime.DaysInMonth(inicio.Year, inicio.Month) * porcentajeIV) / 100) / cantidadLunes;
+                                if ((inicio.Month % 2) == 0)
+                                {
+                                    cv = ((sdiTrabajador * DateTime.DaysInMonth(inicio.Year, inicio.Month) * (porcentajeCV * 2)) / 100) / cantidadLunes;
+                                }
+                                else
+                                {
+                                    cv = 0;
+                                }
+                                valorImss = gm + pd + iv + cv;
+                            }
+
+                            decimal tresVSMG = vsmdf * sm;
+                            decimal excedenteImss = 0;
+                            decimal totalImss = 0;
+                            if (sdiTrabajador > tresVSMG)
+                            {
+                                excedenteImss = (sdiTrabajador - tresVSMG) * (excedenteVsmdf / 100) * diasAPagar;
+                                totalImss = valorImss + excedenteImss;
+                            }
+                            else
+                                totalImss = valorImss;
+
+                            CalculoNomina.Core.tmpPagoNomina imssNomina = new CalculoNomina.Core.tmpPagoNomina();
+                            imssNomina.idtrabajador = lstConceptosDeducciones[i].idtrabajador;
+                            imssNomina.idempresa = GLOBALES.IDEMPRESA;
+                            imssNomina.idconcepto = lstConceptosDeducciones[i].id;
+                            imssNomina.noconcepto = lstConceptosDeducciones[i].noconcepto;
+                            imssNomina.tipoconcepto = lstConceptosDeducciones[i].tipoconcepto;
+                            imssNomina.fechainicio = inicio.Date;
+                            imssNomina.fechafin = fin.Date;
+                            imssNomina.exento = 0;
+                            imssNomina.gravado = 0;
+                            imssNomina.cantidad = totalImss;
+                            imssNomina.diaslaborados = 0;
+                            imssNomina.guardada = false;
+                            imssNomina.tiponomina = tipoNomina;
+                            imssNomina.modificado = false;
+
+                            lstValoresNomina.Add(imssNomina);
                         }
-                        else
-                            totalImss = valorImss;
-
-                        CalculoNomina.Core.tmpPagoNomina imssNomina = new CalculoNomina.Core.tmpPagoNomina();
-                        imssNomina.idtrabajador = lstConceptosDeducciones[i].idtrabajador;
-                        imssNomina.idempresa = GLOBALES.IDEMPRESA;
-                        imssNomina.idconcepto = lstConceptosDeducciones[i].id;
-                        imssNomina.noconcepto = lstConceptosDeducciones[i].noconcepto;
-                        imssNomina.tipoconcepto = lstConceptosDeducciones[i].tipoconcepto;
-                        imssNomina.fechainicio = inicio.Date;
-                        imssNomina.fechafin = fin.Date;
-                        imssNomina.exento = 0;
-                        imssNomina.gravado = 0;
-                        imssNomina.cantidad = totalImss;
-                        imssNomina.diaslaborados = 0;
-                        imssNomina.guardada = false;
-                        imssNomina.tiponomina = tipoNomina;
-                        imssNomina.modificado = false;
-
-                        lstValoresNomina.Add(imssNomina);
+                        
                         break;
                     #endregion
 

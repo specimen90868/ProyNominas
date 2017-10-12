@@ -87,8 +87,16 @@ namespace Nominas
             int fila = 0;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {
-                fila = dgvSalario.CurrentCell.RowIndex;
-                s._idsalario = int.Parse(dgvSalario.Rows[fila].Cells[0].Value.ToString());
+                if (dgvSalario.Rows.Count != 0)
+                {
+                    fila = dgvSalario.CurrentCell.RowIndex;
+                    s._idsalario = int.Parse(dgvSalario.Rows[fila].Cells[0].Value.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
             }
             s._tipoOperacion = edicion;
             s.Show();
@@ -124,32 +132,39 @@ namespace Nominas
 
         private void toolBaja_Click(object sender, EventArgs e)
         {
-            DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el salario mínimo?", "Confirmación", MessageBoxButtons.YesNo);
-            if (respuesta == DialogResult.Yes)
+            if (dgvSalario.Rows.Count != 0)
             {
-                string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-                int fila = dgvSalario.CurrentCell.RowIndex;
-                int id = int.Parse(dgvSalario.Rows[fila].Cells[0].Value.ToString());
-                cnx = new SqlConnection(cdn);
-                cmd = new SqlCommand();
-                cmd.Connection = cnx;
-                Salario.Core.SalariosHelper sh = new Salario.Core.SalariosHelper();
-                sh.Command = cmd;
-                Salario.Core.Salarios salario = new Salario.Core.Salarios();
-                salario.idsalario = id;
-                
-                try
+                DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el salario mínimo?", "Confirmación", MessageBoxButtons.YesNo);
+                if (respuesta == DialogResult.Yes)
                 {
-                    cnx.Open();
-                    sh.bajaSalario(salario);
-                    cnx.Close();
-                    cnx.Dispose();
-                    ListaSalario();
+                    string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+                    int fila = dgvSalario.CurrentCell.RowIndex;
+                    int id = int.Parse(dgvSalario.Rows[fila].Cells[0].Value.ToString());
+                    cnx = new SqlConnection(cdn);
+                    cmd = new SqlCommand();
+                    cmd.Connection = cnx;
+                    Salario.Core.SalariosHelper sh = new Salario.Core.SalariosHelper();
+                    sh.Command = cmd;
+                    Salario.Core.Salarios salario = new Salario.Core.Salarios();
+                    salario.idsalario = id;
+
+                    try
+                    {
+                        cnx.Open();
+                        sh.bajaSalario(salario);
+                        cnx.Close();
+                        cnx.Dispose();
+                        ListaSalario();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+                    }
                 }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
-                }
+            }
+            else {
+                MessageBox.Show("No hay registros que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
         }
     }

@@ -722,8 +722,8 @@ namespace CalculoNomina.Core
         {
             DataTable dtPeriodos = new DataTable();
             List<tmpPagoNomina> lstPeriodos = new List<tmpPagoNomina>();
-            Command.CommandText = @"select distinct fechainicio, fechafin from PagoNomina where idempresa = @idempresa and tiponomina = @tiponomina and periodo = @periodo
-                order by fechainicio";
+            Command.CommandText = @"select distinct fechainicio, fechafin from pagonomina where idempresa = @idempresa and tiponomina = @tiponomina and periodo = @periodo
+                order by fechainicio asc";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             Command.Parameters.AddWithValue("tiponomina", tipoNomina);
@@ -827,72 +827,6 @@ namespace CalculoNomina.Core
                 lstPeriodos.Add(pn);
             }
             return lstPeriodos;
-        }
-
-        public int recibosNoTimbrados(int idempresa, DateTime inicio, DateTime fin)
-        {
-            Command.CommandText = @"select count(*) from xmlCabecera where idempresa = @idempresa and periodoinicio = @periodoinicio and periodofin = @periodofin
-                                    and uuid is null";
-            Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("periodoinicio", inicio);
-            Command.Parameters.AddWithValue("periodofin", fin);
-            Command.Parameters.AddWithValue("idempresa", idempresa);
-            int dato = (int)Select(Command);
-            return dato;
-        }
-
-        public List<PagoNomina> existeFechaCabecera(int idempresa, DateTime inicio, DateTime fin, int periodo)
-        {
-            Command.CommandText = @"select distinct periodoinicio, periodofin from cfdimaster where idempresa = @idempresa and periodoinicio = @inicio and periodofin = @fin and periodo = @periodo";
-            Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("idempresa", idempresa);
-            Command.Parameters.AddWithValue("inicio", inicio);
-            Command.Parameters.AddWithValue("fin", fin);
-            Command.Parameters.AddWithValue("periodo", periodo);
-            DataTable dt = SelectData(Command);
-            List<PagoNomina> lstFechas = new List<PagoNomina>();
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                PagoNomina pn = new PagoNomina();
-                pn.fechainicio = DateTime.Parse(dt.Rows[i]["periodoinicio"].ToString());
-                pn.fechafin = DateTime.Parse(dt.Rows[i]["periodofin"].ToString());
-                lstFechas.Add(pn);
-            }
-            return lstFechas;
-        }
-
-        public int eliminarCfdiMasterDetalle(int idempresa, DateTime inicio, DateTime fin, int tiponomina)
-        {
-            Command.CommandText = @"delete from cfdiMaster where idempresa = @idempresa and periodoinicio = @periodoinicio and periodofin = @periodofin
-                                    and tiponomina = @tiponomina";
-            Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("periodoinicio", inicio);
-            Command.Parameters.AddWithValue("periodofin", fin);
-            Command.Parameters.AddWithValue("idempresa", idempresa);
-            Command.Parameters.AddWithValue("tiponomina", tiponomina);
-            return Command.ExecuteNonQuery();
-        }
-
-        public int insertaCFDiMaster(int idempresa, DateTime inicio, DateTime fin)
-        {
-            Command.CommandText = @"exec stp_CfdiMaster @idempresa, @fechainicio, @fechafin";
-            Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("idempresa", idempresa);
-            Command.Parameters.AddWithValue("fechainicio", inicio);
-            Command.Parameters.AddWithValue("fechafin", fin);
-            Command.CommandTimeout = 300;
-            return Command.ExecuteNonQuery();
-        }
-
-        public int insertaCFDiDetalle(int idempresa, DateTime inicio, DateTime fin)
-        {
-            Command.CommandText = @"exec stp_CfdiDetalle @idempresa, @fechainicio, @fechafin";
-            Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("idempresa", idempresa);
-            Command.Parameters.AddWithValue("fechainicio", inicio);
-            Command.Parameters.AddWithValue("fechafin", fin);
-            Command.CommandTimeout = 300;
-            return Command.ExecuteNonQuery();
         }
 
         #region DATOS NOMINA POR TRABAJADOR
@@ -1055,59 +989,6 @@ namespace CalculoNomina.Core
             Command.Parameters.AddWithValue("noconcepto", pn.noconcepto);
             Command.Parameters.AddWithValue("guardada", pn.guardada);
             object dato = Select(Command);
-            return dato;
-        }
-        #endregion
-
-        #region DATOS PARA QRCODE
-        public List<CodigoBidimensional> obtenerListaQr(int idempresa, DateTime inicio, DateTime fin, int periodo)
-        {
-            DataTable dt = new DataTable();
-            List<CodigoBidimensional> lstDatos = new List<CodigoBidimensional>();
-            Command.CommandText = @"select cfdi.rfc as Empresa, cfdi.idtrabajador, cfdi.rfc as Trabajador, cfdi.total, cfdi.uuid from 
-                                    cfdimaster cfdi where cfdi.idempresa = @idempresa and 
-                                    cfdi.periodoinicio = @fechainicio and cfdi.periodofin = @fechafin and qr is null";
-            Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("idempresa", idempresa);
-            Command.Parameters.AddWithValue("fechainicio", inicio);
-            Command.Parameters.AddWithValue("fechafin", fin);
-            Command.Parameters.AddWithValue("periodo", periodo);
-            dt = SelectData(Command);
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                CodigoBidimensional qr = new CodigoBidimensional();
-                qr.re = dt.Rows[i]["Empresa"].ToString();
-                qr.idtrabajador = int.Parse(dt.Rows[i]["idtrabajador"].ToString());
-                qr.rr = dt.Rows[i]["Trabajador"].ToString();
-                qr.tt = decimal.Parse(dt.Rows[i]["total"].ToString());
-                qr.uuid = dt.Rows[i]["uuid"].ToString();
-                lstDatos.Add(qr);
-            }
-            return lstDatos;
-        }
-
-        public int actualizaXml(int idempresa, DateTime inicio, DateTime fin, int idtrabajador, Byte[] qr)
-        {
-            Command.CommandText = @"update cfdimaster set qr = @codeqr where idempresa = @idempresa
-                and idtrabajador = @idtrabajador and periodoinicio = @inicio and periodofin = @fin";
-            Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("codeqr", qr);
-            Command.Parameters.AddWithValue("idempresa", idempresa);
-            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
-            Command.Parameters.AddWithValue("inicio", inicio);
-            Command.Parameters.AddWithValue("fin", fin);
-            return Command.ExecuteNonQuery();
-        }
-
-        public int existeNullQR(int idempresa, DateTime inicio, DateTime fin)
-        {
-            Command.CommandText = @"select count(*) from cfdimaster where idempresa = @idempresa and periodoinicio = @inicio
-                and periodofin = @fin and qr is null";
-            Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("inicio", inicio);
-            Command.Parameters.AddWithValue("fin", fin);
-            Command.Parameters.AddWithValue("idempresa", idempresa);
-            int dato = (int)Select(Command);
             return dato;
         }
         #endregion

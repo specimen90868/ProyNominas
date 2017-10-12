@@ -94,9 +94,16 @@ namespace Nominas
             int fila = 0;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {
-                fila = dgvDepartamentos.CurrentCell.RowIndex;
-                d._iddepartamento = int.Parse(dgvDepartamentos.Rows[fila].Cells[0].Value.ToString());
-            }
+                if (dgvDepartamentos.Rows.Count != 0)
+                {
+                    fila = dgvDepartamentos.CurrentCell.RowIndex;
+                    d._iddepartamento = int.Parse(dgvDepartamentos.Rows[fila].Cells[0].Value.ToString());
+                }
+                else {
+                    MessageBox.Show("Información: No hay registro que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+             }
             d._tipoOperacion = edicion;
             d.Show();
         }
@@ -124,32 +131,40 @@ namespace Nominas
 
         private void toolBaja_Click(object sender, EventArgs e)
         {
-            DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el departamento?", "Confirmación", MessageBoxButtons.YesNo);
-            if (respuesta == DialogResult.Yes)
+            if (dgvDepartamentos.Rows.Count != 0)
             {
-                string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-                int fila = dgvDepartamentos.CurrentCell.RowIndex;
-                int id = int.Parse(dgvDepartamentos.Rows[fila].Cells[0].Value.ToString());
-                cnx = new SqlConnection(cdn);
-                cmd = new SqlCommand();
-                cmd.Connection = cnx;
-                Departamento.Core.DeptoHelper dh = new Departamento.Core.DeptoHelper();
-                dh.Command = cmd;
-                Departamento.Core.Depto depto = new Departamento.Core.Depto();
-                depto.id = id;
-                
-                try
+                DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el departamento?", "Confirmación", MessageBoxButtons.YesNo);
+                if (respuesta == DialogResult.Yes)
                 {
-                    cnx.Open();
-                    dh.bajaDepartamento(depto);
-                    cnx.Close();
-                    cnx.Dispose();
-                    ListaDepartamentos();
+                    string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+                    int fila = dgvDepartamentos.CurrentCell.RowIndex;
+                    int id = int.Parse(dgvDepartamentos.Rows[fila].Cells[0].Value.ToString());
+                    cnx = new SqlConnection(cdn);
+                    cmd = new SqlCommand();
+                    cmd.Connection = cnx;
+                    Departamento.Core.DeptoHelper dh = new Departamento.Core.DeptoHelper();
+                    dh.Command = cmd;
+                    Departamento.Core.Depto depto = new Departamento.Core.Depto();
+                    depto.id = id;
+
+                    try
+                    {
+                        cnx.Open();
+                        dh.bajaDepartamento(depto);
+                        cnx.Close();
+                        cnx.Dispose();
+                        ListaDepartamentos();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+                    }
                 }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
-                }
+            }
+            else
+            {
+                MessageBox.Show("Información: No hay registro que operar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
         }
 

@@ -160,6 +160,9 @@ namespace Nominas
             programacion.cantidad = decimal.Parse(txtCantidad.Text);
             programacion.fechafin = dtpFecha.Value;
 
+            Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+            eh.Command = cmd;
+
             switch (_tipoOperacion)
             {
                 case 0:
@@ -173,6 +176,8 @@ namespace Nominas
                         programacion.idempresa = GLOBALES.IDEMPRESA;
                         cnx.Open();
                         pch.insertaProgramacion(programacion);
+                        eh.insertaBitacora(GLOBALES.IDUSUARIO, _idEmpleado, GLOBALES.IDEMPRESA, "ProgramacionConcepto", "INSERT", 
+                            String.Format("IDCONCEPTO: {0}, CANTIDAD: {1}, FECHAFIN: {2}", programacion.idconcepto, programacion.cantidad, programacion.fechafin));
                         cnx.Close();
                         cnx.Dispose();
                     }
@@ -186,6 +191,8 @@ namespace Nominas
                     {
                         cnx.Open();
                         pch.actualizaProgramacion(programacion);
+                        eh.insertaBitacora(GLOBALES.IDUSUARIO, _idEmpleado, GLOBALES.IDEMPRESA, "ProgramacionConcepto", "UPDATE",
+                            String.Format("IDCONCEPTO: {0}, CANTIDAD: {1}, FECHAFIN: {2}", programacion.idconcepto, programacion.cantidad, programacion.fechafin));
                         cnx.Close();
                         cnx.Dispose();
                     }
