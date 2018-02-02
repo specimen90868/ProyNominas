@@ -273,7 +273,7 @@ namespace Infonavit.Core
 
         public int actualizaEstatusInfonavit(int id, DateTime registro, int idUsuario)
         {
-            Command.CommandText = "update infonavit set activo = 0, estatus = 129, registro = @registro, idusuario = @idusuario where idinfonavit = @idinfonavit";
+            Command.CommandText = "update infonavit set activo = 0, registro = @registro, idusuario = @idusuario where idinfonavit = @idinfonavit";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idinfonavit", id);
             Command.Parameters.AddWithValue("registro", registro);

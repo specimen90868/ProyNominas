@@ -42,6 +42,7 @@ TablaIsr.Core/bin/*
 TablaSubsidio.Core/bin/*
 Usuarios.Core/bin/*
 Vacaciones.Core/bin/*
+Xml.Core/bin/*
 Altas.Core/obj/*
 Aplicaciones.Core/obj/*
 Ausentismo.Core/obj/*
@@ -86,3 +87,4 @@ TablaIsr.Core/obj/*
 TablaSubsidio.Core/obj/*
 Usuarios.Core/obj/*
 Vacaciones.Core/obj/*
+Xml.Core/obj/*

@@ -877,58 +877,82 @@ namespace Nominas
             cmd = new SqlCommand();
             cmd.Connection = cnx;
 
-            string curp = "";
-            string rfc = "";
-            string nombre = "";
-            string numempleado = "";
+            //string curp = "";
+            //string rfc = "";
+            //string nombre = "";
+            //string numempleado = "";
+
+            string sello = "";
+            string noCertificado = "";
 
             List<Xml.Core.XmlCabecera> xmls = new List<Xml.Core.XmlCabecera>();
             Xml.Core.XmlCabeceraHelper xh = new Xml.Core.XmlCabeceraHelper();
             xh.Command = cmd;
 
             cnx.Open();
-            xmls = xh.obtenerXml(GLOBALES.IDEMPRESA, new DateTime(2016, 1, 1).Date, new DateTime(2017, 1, 1).Date);
+            xmls = xh.obtenerXml(GLOBALES.IDEMPRESA, 0, 7, new DateTime(2017, 10, 23).Date, new DateTime(2017, 10, 29).Date);
             cnx.Close();
-            cnx.Dispose();
+            //cnx.Dispose();
 
-            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
-            excel.Workbooks.Add();
+            //Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
+            //excel.Workbooks.Add();
 
             for (int i = 0; i < xmls.Count; i++)
             {
-                using (StreamWriter sw = new StreamWriter(String.Format(@"C:\Temp\xmls_nomina\{0}_{1}.xml", xmls[i].idtrabajador,i), false, Encoding.UTF8))
-                {
-                    sw.WriteLine(xmls[i].xml);
-                    sw.Flush();
-                    sw.Close();
-                }
+                //using (StreamWriter sw = new StreamWriter(String.Format(@"C:\Temp\xmls_nomina\{0}_{1}.xml", xmls[i].idtrabajador,i), false, Encoding.UTF8))
+                //{
+                //    sw.WriteLine(xmls[i].xml);
+                //    sw.Flush();
+                //    sw.Close();
+                //}
 
                 System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
-                String xml = File.ReadAllText(String.Format(@"C:\Temp\xmls_nomina\{0}_{1}.xml", xmls[i].idtrabajador, i), Encoding.UTF8);
-                doc.LoadXml(xml);
+                doc.LoadXml(xmls[i].xml);
+                //String xml = File.ReadAllText(String.Format(@"C:\Temp\xmls_nomina\{0}_{1}.xml", xmls[i].idtrabajador, i), Encoding.UTF8);
+                //doc.LoadXml(xml);
 
-                System.Xml.XmlNodeList Comprobante = doc.GetElementsByTagName("cfdi:Receptor");
+                System.Xml.XmlNodeList Comprobante = doc.GetElementsByTagName("cfdi:Comprobante");
                 foreach (System.Xml.XmlElement nodo in Comprobante)
                 {
-                    rfc = nodo.GetAttribute("rfc");
-                    nombre = nodo.GetAttribute("nombre");
+                    noCertificado = nodo.GetAttribute("NoCertificado");
+                    sello = nodo.GetAttribute("Sello");
                 }
 
-                System.Xml.XmlNodeList empleado = doc.GetElementsByTagName("nomina:Nomina");
-                foreach (System.Xml.XmlElement nodo in empleado)
+                if (noCertificado == String.Empty && sello == String.Empty)
                 {
-                    numempleado = nodo.GetAttribute("NumEmpleado");
-                    curp = nodo.GetAttribute("CURP");
-
+                    foreach (System.Xml.XmlElement nodo in Comprobante)
+                    {
+                        noCertificado = nodo.GetAttribute("noCertificado");
+                        sello = nodo.GetAttribute("sello");
+                    }
                 }
 
-                excel.Cells[i + 1, 1] = numempleado;
-                excel.Cells[i + 1, 2] = nombre;
-                excel.Cells[i + 1, 3] = rfc;
-                excel.Cells[i + 1, 4] = curp;
+                cnx.Open();
+                xh.actualizaXmlCertificado(xmls[i].folio, noCertificado, sello);
+                cnx.Close();
+
+                //System.Xml.XmlNodeList Receptor = doc.GetElementsByTagName("cfdi:Receptor");
+                //foreach (System.Xml.XmlElement nodo in Receptor)
+                //{
+                //    rfc = nodo.GetAttribute("rfc");
+                //    nombre = nodo.GetAttribute("nombre");
+                //}
+
+                //System.Xml.XmlNodeList empleado = doc.GetElementsByTagName("nomina:Nomina");
+                //foreach (System.Xml.XmlElement nodo in empleado)
+                //{
+                //    numempleado = nodo.GetAttribute("NumEmpleado");
+                //    curp = nodo.GetAttribute("CURP");
+
+                //}
+
+                //excel.Cells[i + 1, 1] = numempleado;
+                //excel.Cells[i + 1, 2] = nombre;
+                //excel.Cells[i + 1, 3] = rfc;
+                //excel.Cells[i + 1, 4] = curp;
             }
-            excel.Visible = true;
-            
+            //excel.Visible = true;
+            cnx.Dispose();
         }
 
         private void mnuGeneracionQR_Click(object sender, EventArgs e)

@@ -1347,10 +1347,11 @@ namespace Nominas
                     cnx.Close();
 
                     decimal sumaPercepciones =  lstNetos.Where(n => n.tipoconcepto == "P").Sum(n => n.cantidad);
+                    decimal sumaOtrosPagos = lstNetos.Where(n => n.tipoconcepto == "S").Sum(n => n.cantidad);
                     decimal sumaDeducciones = lstNetos.Where(n => n.tipoconcepto == "D").Sum(n => n.cantidad);
-                    decimal subsidio = lstNetos.Where(d => d.noconcepto == 16).Sum(d => d.cantidad);
+                    //decimal subsidio = lstNetos.Where(d => d.noconcepto == 16).Sum(d => d.cantidad);
                     decimal netoPagar = 0;
-                    sumaPercepciones = sumaPercepciones + subsidio;
+                    sumaPercepciones = sumaPercepciones + sumaOtrosPagos;
                     netoPagar = sumaPercepciones - sumaDeducciones;
                     noEmpleado = fila.Cells["noempleado"].Value.ToString();
                     nombreCompleto = fila.Cells["nombres"].Value.ToString() + " " + fila.Cells["paterno"].Value.ToString() + " " + fila.Cells["materno"].Value.ToString();

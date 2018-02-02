@@ -131,7 +131,7 @@
             this.toolStripMenuItem1});
             this.mnuPrincipal.Location = new System.Drawing.Point(0, 0);
             this.mnuPrincipal.Name = "mnuPrincipal";
-            this.mnuPrincipal.Size = new System.Drawing.Size(842, 24);
+            this.mnuPrincipal.Size = new System.Drawing.Size(913, 24);
             this.mnuPrincipal.TabIndex = 1;
             this.mnuPrincipal.Text = "menuStrip1";
             // 
@@ -759,9 +759,9 @@
             this.stsPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolEstatusPerfil,
             this.toolPorcentaje});
-            this.stsPrincipal.Location = new System.Drawing.Point(0, 448);
+            this.stsPrincipal.Location = new System.Drawing.Point(0, 504);
             this.stsPrincipal.Name = "stsPrincipal";
-            this.stsPrincipal.Size = new System.Drawing.Size(842, 22);
+            this.stsPrincipal.Size = new System.Drawing.Size(913, 22);
             this.stsPrincipal.TabIndex = 3;
             this.stsPrincipal.Text = "statusStrip1";
             // 
@@ -788,7 +788,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(842, 470);
+            this.ClientSize = new System.Drawing.Size(913, 526);
             this.Controls.Add(this.stsPrincipal);
             this.Controls.Add(this.mnuPrincipal);
             this.IsMdiContainer = true;

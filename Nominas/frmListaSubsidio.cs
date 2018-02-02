@@ -49,7 +49,7 @@ namespace Nominas
                               Id = s.id,
                               Desde = s.desde,
                               Cantidad = s.cantidad,
-                              Periodo = (s.periodo == 7) ? "SEMANAL" : "QUINCENAL",
+                              Periodo = "MENSUAL",
                               Anio = s.anio
                           };
 
@@ -182,18 +182,6 @@ namespace Nominas
             }
         }
 
-        private void cmbPeriodo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (cmbPeriodo.Text)
-            {
-                case "SEMANAL":
-                    filtrado("7");
-                    break;
-                case "QUINCENAL":
-                    filtrado("15");
-                    break;
-            }
-        }
 
         private void filtrado(string periodo)
         {
@@ -204,7 +192,7 @@ namespace Nominas
                                Id = b.id,
                                Desde = b.desde,
                                Cantidad = b.cantidad,
-                               Periodo = (b.periodo == 7) ? "SEMANAL" : "QUINCENAL",
+                               Periodo = "MENSUAL",
                                Anio = b.anio
                            };
             dgvSubsidio.DataSource = busqueda.ToList();

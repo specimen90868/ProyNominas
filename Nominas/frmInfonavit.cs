@@ -122,7 +122,6 @@ namespace Nominas
                             chkInactivo.Checked = true;
                         txtDescripcion.Text = lstInfonavit[j].descripcion;
                         dtpFechaAplicacion.Value = lstInfonavit[j].fecha;
-                        cmbEstatusInfonavit.SelectedValue = lstInfonavit[j].estatus;
                         //dtpInicioPeriodo.Value = lstInfonavit[j].inicio.AddDays(1);
                         //dtpFinPeriodo.Value = lstInfonavit[j].fin;
                         
@@ -201,9 +200,6 @@ namespace Nominas
                 MessageBox.Show("Error: Al obtener el catalogo.", "Error");
                 cnx.Dispose();
             }
-            cmbEstatusInfonavit.DataSource = lstCatalogo;
-            cmbEstatusInfonavit.DisplayMember = "descripcion";
-            cmbEstatusInfonavit.ValueMember = "id";
         }
 
         private void toolGuardar_Click(object sender, EventArgs e)
@@ -258,7 +254,7 @@ namespace Nominas
             i.fin = periodoFin.Date;
             i.registro = DateTime.Now;
             i.idusuario = GLOBALES.IDUSUARIO;
-            i.estatus = int.Parse(cmbEstatusInfonavit.SelectedValue.ToString());
+            i.estatus = 1;
 
             if (rbtnPesos.Checked)
                 if (Periodo == 7)

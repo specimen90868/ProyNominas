@@ -70,9 +70,9 @@ namespace Nominas
                     if (nombreHoja.Equals("Movimientos"))
                     {
                         int rowCount = xlRange.Rows.Count;
-                        int colCount = 12;
+                        int colCount = 13;
 
-                        var ie = xlRange.Cells[1,4].Value2;
+                        var ie = xlRange.Cells[1, 4].Value2;
                         idEmpresa = int.Parse(ie.ToString());
                         if (GLOBALES.IDEMPRESA != idEmpresa)
                         {

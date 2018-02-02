@@ -255,7 +255,7 @@ namespace Nominas
                     #region CONCEPTO IMSS
                     case 99:
 
-                        if(percepciones != 0)
+                        if (percepciones != 0)
                         {
                             int vsmdf; //idsalario;
                             int periodo = 0;
@@ -391,6 +391,25 @@ namespace Nominas
 
                             lstValoresNomina.Add(imssNomina);
                         }
+                        else
+                        {
+                            CalculoNomina.Core.tmpPagoNomina imss = new CalculoNomina.Core.tmpPagoNomina();
+                            imss.idtrabajador = lstConceptosDeducciones[i].idtrabajador;
+                            imss.idempresa = GLOBALES.IDEMPRESA;
+                            imss.idconcepto = lstConceptosDeducciones[i].id;
+                            imss.noconcepto = lstConceptosDeducciones[i].noconcepto;
+                            imss.tipoconcepto = lstConceptosDeducciones[i].tipoconcepto;
+                            imss.fechainicio = inicio.Date;
+                            imss.fechafin = fin.Date;
+                            imss.exento = 0;
+                            imss.gravado = 0;
+                            imss.cantidad = 0;
+                            imss.diaslaborados = 0;
+                            imss.guardada = false;
+                            imss.tiponomina = tipoNomina;
+                            imss.modificado = false;
+                            lstValoresNomina.Add(imss);
+                        }
                         
                         break;
                     #endregion
@@ -438,6 +457,7 @@ namespace Nominas
 
                             TablaIsr.Core.TablaIsr _isr = new TablaIsr.Core.TablaIsr();
                             _isr.inferior = (baseGravableIsr / dias) * decimal.Parse((30.4).ToString());
+                            _isr.anio = DateTime.Now.Year;
 
                             cnx.Open();
                             lstIsr = isrh.isrCorrespondiente(_isr);
@@ -720,7 +740,7 @@ namespace Nominas
 
                             if (subsidioAntes > isrAntes)
                             {
-                                isrDefinitivo.cantidad = 0;
+                                isrDefinitivo.cantidad = (decimal)0.01;
                             }
                             else
                             {

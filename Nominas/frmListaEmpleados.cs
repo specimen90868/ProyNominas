@@ -525,7 +525,7 @@ namespace Nominas
                 r.OnReingreso += r_OnReingreso;
                 r.StartPosition = FormStartPosition.CenterScreen;
                 r._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
-                r._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[2].Value.ToString();
+                r._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[3].Value.ToString();
                 r.Show();
             }
             else

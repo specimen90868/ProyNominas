@@ -254,6 +254,15 @@ namespace Xml.Core
             return Command.ExecuteNonQuery();
         }
 
+        public int actualizaEmitido(int folio, string error)
+        {
+            Command.CommandText = "update XmlCabecera set emitido = 'S', error = @error where folio = @folio";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("folio", folio);
+            Command.Parameters.AddWithValue("error", error);
+            return Command.ExecuteNonQuery();
+        }
+
         public int insertaCfdiMaster(int idempresa, int idtrabajador, DateTime inicio, DateTime fin)
         {
             Command.CommandText = @"exec stp_CfdiMaster @idempresa, @idtrabajador, @inicio, @fin";
@@ -346,9 +355,10 @@ namespace Xml.Core
         /// <param name="inicio"></param>
         /// <param name="fin"></param>
         /// <returns></returns>
-        public List<XmlCabecera> obtenerXml(int idempresa, DateTime inicio, DateTime fin)
+        public List<XmlCabecera> obtenerXml(int idempresa, int tipoNomina, int periodo, DateTime inicio, DateTime fin)
         {
-            string consulta = "select idtrabajador, xml from xmlcabecera where idempresa = @idempresa and periodoinicio >= @inicio and periodoinicio < @fin and emitido = 'S'";
+            string consulta = @"select folio, idtrabajador, xml from xmlcabecera where idempresa = @idempresa and tiponomina = @tiponomina 
+                                and periodoinicio >= @inicio and periodoinicio <= @fin and emitido = 'S' and periodo = @periodo and xml is not null";
             List<XmlCabecera> lst = new List<XmlCabecera>();
             DataTable dt = new DataTable();
             Command.CommandText = consulta;
@@ -356,17 +366,29 @@ namespace Xml.Core
             Command.Parameters.AddWithValue("idempresa", idempresa);
             Command.Parameters.AddWithValue("inicio", inicio);
             Command.Parameters.AddWithValue("fin", fin);
+            Command.Parameters.AddWithValue("tiponomina", tipoNomina);
+            Command.Parameters.AddWithValue("periodo", periodo);
             dt = SelectData(Command);
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 XmlCabecera xml = new XmlCabecera();
+                xml.folio = int.Parse(dt.Rows[i]["folio"].ToString());
                 xml.idtrabajador = int.Parse(dt.Rows[i]["idtrabajador"].ToString());
                 xml.xml = dt.Rows[i]["xml"].ToString();
                 lst.Add(xml);
             }
 
             return lst;
+        }
+
+        public int actualizaXmlCertificado(int folio, string certificado, string sello) {
+            Command.CommandText = "update xmlCabecera set nocertificado = @certificado, sellocfd = @sello where folio = @folio";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("certificado", certificado);
+            Command.Parameters.AddWithValue("sello", sello);
+            Command.Parameters.AddWithValue("folio", folio);
+            return Command.ExecuteNonQuery();
         }
 
     }

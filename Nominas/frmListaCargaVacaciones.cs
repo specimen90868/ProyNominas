@@ -208,6 +208,8 @@ namespace Nominas
             {
                 if (!fila.Cells["noempleado"].Value.ToString().Equals(""))
                 {
+
+                    /*Se obtiene el ID del Empleado*/
                     try
                     {
                         cnx.Open();
@@ -225,6 +227,7 @@ namespace Nominas
                         cnx.Dispose();
                         this.Dispose();
                     }
+                    /*Se obtiene el ID del Empleado*/
 
                     Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
                     empleado.idtrabajador = idEmpleado;
@@ -268,7 +271,7 @@ namespace Nominas
                         }
                         catch
                         {
-                            MessageBox.Show("Error: Al obtener los dias por derecho del empleado.", "Error");
+                            MessageBox.Show("Error: Al obtener los dias por derecho del empleado: " + lstEmpleado[0].noempleado.ToString() + ".", "Error");
                             cnx.Dispose();
                             return;
                         }
@@ -282,11 +285,11 @@ namespace Nominas
                         falta.fechainicio = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicio"].Value.ToString());
                         falta.fechafin = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["fin"].Value.ToString());
 
-                        int existeFaltas = 0;
+                        int diasFaltas = 0;
                         try
                         {
                             cnx.Open();
-                            existeFaltas = (int)fh.existeFalta(falta);
+                            diasFaltas = (int)fh.existeFalta(falta);
                             cnx.Close();
                         }
                         catch (Exception error)
@@ -298,19 +301,23 @@ namespace Nominas
 
                         Incidencias.Core.IncidenciasHelper ih = new Incidencias.Core.IncidenciasHelper();
                         ih.Command = cmd;
+                        Incidencias.Core.Incidencias incidencia = new Incidencias.Core.Incidencias();
+                        incidencia.idtrabajador = idEmpleado;
+                        incidencia.fechainicio = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicio"].Value.ToString()).Date;
+                        incidencia.fechafin = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["fin"].Value.ToString()).Date;
 
-                        int existeIncapacidad = 0;
+                        int diasIncapacidad = 0;
                         try
                         {
                             cnx.Open();
-                            existeIncapacidad = int.Parse(ih.diasIncidencia(idEmpleado, 
+                            diasIncapacidad = int.Parse(ih.diasIncidencia(idEmpleado,
                                 DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicio"].Value.ToString()).Date,
                                 DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["fin"].Value.ToString()).Date).ToString());
                             cnx.Close();
                         }
                         catch (Exception error)
                         {
-                            MessageBox.Show("Error: Al obtener los dias de incidencia del trabajador. \r\n" + error.Message, "Error");
+                            MessageBox.Show("Error: Al obtener los dias de incidencia del empleado" + lstEmpleado[0].noempleado.ToString() + ". \r\n" + error.Message, "Error");
                             cnx.Dispose();
                             return;
                         }
@@ -329,6 +336,7 @@ namespace Nominas
                             cnx.Dispose();
                             return;
                         }
+
                         Periodos.Core.Periodos p = new Periodos.Core.Periodos();
                         p.idperiodo = idperiodo;
 
@@ -374,12 +382,12 @@ namespace Nominas
                         }
                         else
                         {
-                            int diasPagoReales = int.Parse(fila.Cells["diaspago"].Value.ToString()) + existeFaltas + existeIncapacidad;
+                            int diasPagoReales = int.Parse(fila.Cells["diaspago"].Value.ToString()) + diasFaltas + diasIncapacidad;
 
                             if (diasPagoReales > diasPeriodo)
                             {
-                                diasPagoReales = diasPeriodo - existeFaltas - existeIncapacidad;
-                                MessageBox.Show("Existen faltas del trabajador, se ajustaron las vacaciones a: " + diasPagoReales.ToString() + " dia(s).", "Información",
+                                diasPagoReales = diasPeriodo - diasFaltas - diasIncapacidad;
+                                MessageBox.Show("Existen faltas y/o incapacidades del trabajador: " + fila.Cells["noempleado"].Value.ToString() + ", se ajustaron las vacaciones a: " + diasPagoReales.ToString() + " dia(s).", "Información",
                                                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             }
                             else

@@ -330,19 +330,19 @@ namespace Nominas
 
             if (txtNSS.Text.Length != 11)
             {
-                MessageBox.Show("El campo NSS es mayor o meno a 11 dígitos.", "Error");
+                MessageBox.Show("El campo NSS es mayor o menor a 11 dígitos.", "Error");
                 return;
             }
 
             if (txtRFC.Text.Length != 13)
             {
-                MessageBox.Show("El campo RFC es mayor o meno a 13 dígitos.", "Error");
+                MessageBox.Show("El campo RFC es mayor o menor a 13 dígitos.", "Error");
                 return;
             }
 
             if (txtCURP.Text.Length != 18)
             {
-                MessageBox.Show("El campo CURP es mayor o meno a 18 dígitos.", "Error");
+                MessageBox.Show("El campo CURP es mayor o menor a 18 dígitos.", "Error");
                 return;
             }
 

@@ -56,7 +56,7 @@ namespace Nominas
                               Inferior = i.inferior,
                               Cuota = i.cuota,
                               Porcentaje = i.porcentaje,
-                              Periodo = (i.periodo == 7) ? "SEMANAL" : "QUINCENAL",
+                              Periodo = "MENSUAL",
                               Anio = i.anio
                           };
 
@@ -182,19 +182,6 @@ namespace Nominas
             }
         }
 
-        private void cmbPeriodo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (cmbPeriodo.Text)
-            {
-                case "SEMANAL":
-                    filtrado("7");
-                    break;
-                case "QUINCENAL":
-                    filtrado("15");
-                    break;
-            }
-        }
-
         private void filtrado(string periodo)
         {
             var busqueda = from b in lstIsr
@@ -205,7 +192,7 @@ namespace Nominas
                                Inferior = b.inferior,
                                Cuota = b.cuota,
                                Porcentaje = b.porcentaje,
-                               Periodo = (b.periodo == 7) ? "SEMANAL" : "QUINCENAL",
+                               Periodo = "MENSUAL",
                                Anio = b.anio
                            };
             dgvIsr.DataSource = busqueda.ToList();

@@ -65,7 +65,6 @@ namespace Nominas
                         txtInferior.Text = lstIsr[i].inferior.ToString();
                         txtCuota.Text = lstIsr[i].cuota.ToString();
                         txtPorcentaje.Text = lstIsr[i].porcentaje.ToString();
-                        txtDias.Text = lstIsr[i].periodo.ToString();
                         txtAnio.Text = lstIsr[i].anio.ToString();
                     }
                 }
@@ -103,7 +102,7 @@ namespace Nominas
             isr.inferior = decimal.Parse(txtInferior.Text.Trim());
             isr.cuota = decimal.Parse(txtCuota.Text.Trim());
             isr.porcentaje = decimal.Parse(txtPorcentaje.Text.Trim());
-            isr.periodo = int.Parse(txtDias.Text.Trim());
+            isr.periodo = 30;
             isr.anio = int.Parse(txtAnio.Text.Trim());
 
             switch (_tipoOperacion)

@@ -299,9 +299,33 @@ namespace Nominas
             }
 
             NominaReceptor receptorNomina = new NominaReceptor();
+            receptorNomina.FechaInicioRelLaboral = fechaIngresoReal;
+            receptorNomina.NumSeguridadSocial = datosNomina.Rows[0]["nss"].ToString();
+            receptorNomina.RiesgoPuesto = int.Parse(catalogo.Rows[0]["riesgopuesto"].ToString());
+            receptorNomina.SalarioDiarioIntegrado = decimal.Parse(datosNomina.Rows[0]["sdi"].ToString());
+
+            if (emisorNomina.RegistroPatronalSpecified)
+            {
+                receptorNomina.FechaInicioRelLaboralSpecified = true;
+                receptorNomina.NumSeguridadSocialSpecified = true;
+                receptorNomina.RiesgoPuestoSpecified = true;
+                receptorNomina.SalarioDiarioIntegradoSpecified = true;
+                receptorNomina.AntiguedadSpecified = true;
+                receptorNomina.TipoRegimen = catalogo.Rows[0]["tiporegimen"].ToString();
+            }
+            else
+            {
+                receptorNomina.FechaInicioRelLaboralSpecified = false;
+                receptorNomina.NumSeguridadSocialSpecified = false;
+                receptorNomina.RiesgoPuestoSpecified = false;
+                receptorNomina.SalarioDiarioIntegradoSpecified = false;
+                receptorNomina.AntiguedadSpecified = false;
+                receptorNomina.TipoRegimen = "99";
+            }
+
             receptorNomina.Curp = datosNomina.Rows[0]["curp"].ToString();
             receptorNomina.TipoContrato = catalogo.Rows[0]["tipocontrato"].ToString();
-            receptorNomina.TipoRegimen = catalogo.Rows[0]["tiporegimen"].ToString();
+            //receptorNomina.TipoRegimen = catalogo.Rows[0]["tiporegimen"].ToString();
             receptorNomina.NumEmpleado = datosNomina.Rows[0]["noempleado"].ToString();
 
             if (datosNomina.Rows[0]["tiponomina"].ToString() == "O")
@@ -310,21 +334,13 @@ namespace Nominas
                 receptorNomina.PeriodicidadPago = "99";
 
             receptorNomina.ClaveEntFed = catalogo.Rows[0]["estado"].ToString();
-            receptorNomina.FechaInicioRelLaboral = fechaIngresoReal;
-            receptorNomina.FechaInicioRelLaboralSpecified = true;
-            receptorNomina.NumSeguridadSocial = datosNomina.Rows[0]["nss"].ToString();
-            receptorNomina.NumSeguridadSocialSpecified = true;
-            receptorNomina.RiesgoPuesto = int.Parse(catalogo.Rows[0]["riesgopuesto"].ToString());
-            receptorNomina.RiesgoPuestoSpecified = true;
-            receptorNomina.SalarioDiarioIntegrado = decimal.Parse(datosNomina.Rows[0]["sdi"].ToString());
-            receptorNomina.SalarioDiarioIntegradoSpecified = true;
 
             //DateTime fechaIngreso = DateTime.Parse(datosNomina.Rows[0]["fechaingreso"].ToString());
             DateTime fechaActual = DateTime.Parse(datosNomina.Rows[0]["fechafin"].ToString());
             TimeSpan ts = fechaActual - fechaIngresoReal;
             int antiguedad = (ts.Days + 1) / 7;
             receptorNomina.Antiguedad = String.Format("P{0}W", antiguedad);
-            receptorNomina.AntiguedadSpecified = true;
+            
 
             for (int t = 0; t < datosNomina.Rows.Count; t++)
             {
@@ -426,7 +442,6 @@ namespace Nominas
 
                 }
             }
-
 
             nomina.TipoNomina = datosNomina.Rows[0]["tiponomina"].ToString();
             nomina.FechaPago = DateTime.Parse(datosNomina.Rows[0]["fechapago"].ToString());
@@ -613,6 +628,9 @@ namespace Nominas
             Historial.Core.HistorialHelper hh = new Historial.Core.HistorialHelper();
             hh.Command = cmd;
 
+            Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+            eh.Command = cmd;
+
             DataTable dtComponenteNomina = new DataTable();
             DataTable dtNominaCatalogo = new DataTable();
 
@@ -631,9 +649,16 @@ namespace Nominas
                                                                     DateTime.Parse(dgvVisorRecibos.Rows[i].Cells[7].Value.ToString()).Date,
                                                                     _periodo);
                     dtNominaCatalogo = xh.obtenerCatalogoNomina(int.Parse(dgvVisorRecibos.Rows[i].Cells[0].Value.ToString()));
-                    fechaIngreso = DateTime.Parse(hh.obtenerFechaImss(int.Parse(dgvVisorRecibos.Rows[i].Cells[0].Value.ToString()), 
+                    try
+                    {
+                        fechaIngreso = DateTime.Parse(hh.obtenerFechaImss(int.Parse(dgvVisorRecibos.Rows[i].Cells[0].Value.ToString()),
                         DateTime.Parse(dgvVisorRecibos.Rows[i].Cells[7].Value.ToString()).Date).ToString()).Date;
-                        
+                    }
+                    catch (Exception)
+                    {
+                        fechaIngreso = DateTime.Parse(eh.obtenerFechaIngreso(int.Parse(dgvVisorRecibos.Rows[i].Cells[0].Value.ToString())).ToString());
+                    }
+                                           
                     cnx.Close();
 
 
@@ -644,285 +669,15 @@ namespace Nominas
                     {
                         sellado(dtComponenteNomina, dtNominaCatalogo, int.Parse(dgvVisorRecibos.Rows[i].Cells[0].Value.ToString()),
                             dgvVisorRecibos.Rows[i].Cells[2].Value.ToString(),
-                            dgvVisorRecibos.Rows[i].Cells[8].Value.ToString(), 
+                            dgvVisorRecibos.Rows[i].Cells[8].Value.ToString(),
                             fechaIngreso);
 
-                        #region COMPLEMENTO NOMINA
-
-                        //MemoryStream stream = new MemoryStream();
-                        //XmlSerializerNamespaces xmlNameSpaceNomina = new XmlSerializerNamespaces();
-                        //xmlNameSpaceNomina.Add("nomina12", "http://www.sat.gob.mx/nomina12");
-
-                        //Nomina nomina = new Nomina();
-
-                        //NominaEmisor emisorNomina = new NominaEmisor();
-                        //emisorNomina.RegistroPatronal = dtComponenteNomina.Rows[0]["registropatronal"].ToString();
-                        //if (dtNominaCatalogo.Rows[0]["tipocontrato"].ToString() == "09" ||
-                        //    dtNominaCatalogo.Rows[0]["tipocontrato"].ToString() == "10" ||
-                        //    dtNominaCatalogo.Rows[0]["tipocontrato"].ToString() == "99")
-                        //{
-                        //    emisorNomina.RegistroPatronalSpecified = false;
-                        //}
-                        //else {
-                        //    emisorNomina.RegistroPatronalSpecified = true;
-                        //}
-
-                        //NominaReceptor receptorNomina = new NominaReceptor();
-                        //receptorNomina.Curp = dtComponenteNomina.Rows[0]["curp"].ToString();
-                        //receptorNomina.TipoContrato = dtNominaCatalogo.Rows[0]["tipocontrato"].ToString();
-                        //receptorNomina.TipoRegimen = dtNominaCatalogo.Rows[0]["tiporegimen"].ToString();
-                        //receptorNomina.NumEmpleado = dtComponenteNomina.Rows[0]["noempleado"].ToString();
-                        //receptorNomina.PeriodicidadPago = dtComponenteNomina.Rows[0]["periodicidad"].ToString();
-                        //receptorNomina.ClaveEntFed = dtNominaCatalogo.Rows[0]["estado"].ToString();
-                        //receptorNomina.FechaInicioRelLaboral = DateTime.Parse(dtComponenteNomina.Rows[0]["fechaingreso"].ToString());
-                        //receptorNomina.FechaInicioRelLaboralSpecified = true;
-                        //receptorNomina.NumSeguridadSocial = dtComponenteNomina.Rows[0]["nss"].ToString();
-                        //receptorNomina.NumSeguridadSocialSpecified = true;
-                        //receptorNomina.RiesgoPuesto = int.Parse(dtNominaCatalogo.Rows[0]["riesgopuesto"].ToString());
-                        //receptorNomina.RiesgoPuestoSpecified = true;
-                        //receptorNomina.SalarioDiarioIntegrado = decimal.Parse(dtComponenteNomina.Rows[0]["sdi"].ToString());
-                        //receptorNomina.SalarioDiarioIntegradoSpecified = true;
-
-                        //DateTime fechaIngreso = DateTime.Parse(dtComponenteNomina.Rows[0]["fechaingreso"].ToString());
-                        //DateTime fechaActual = DateTime.Parse(dtComponenteNomina.Rows[0]["fechapago"].ToString());
-                        //TimeSpan ts = fechaActual - fechaIngreso;
-                        //int antiguedad = ts.Days / 7;
-                        //receptorNomina.Antiguedad = String.Format("P{0}W", antiguedad);
-                        //receptorNomina.AntiguedadSpecified = true;
-
-                        //for (int t = 0; t < dtComponenteNomina.Rows.Count; t++)
-                        //{
-                        //    totalGravado += decimal.Parse(dtComponenteNomina.Rows[t]["gravado"].ToString());
-                        //    totalExento += decimal.Parse(dtComponenteNomina.Rows[t]["exento"].ToString());
-
-                        //    if (dtComponenteNomina.Rows[t]["tipoconcepto"].ToString().Equals("P"))
-                        //    {
-                        //        cantidadPercepciones++;
-                        //    }
-
-                        //    if (dtComponenteNomina.Rows[t]["tipoconcepto"].ToString().Equals("D"))
-                        //    {
-                        //        totalDeducciones += decimal.Parse(dtComponenteNomina.Rows[t]["cantidad"].ToString());
-                        //        cantidadDeducciones++;
-                        //    }
-
-                        //    if (dtComponenteNomina.Rows[t]["tipoconcepto"].ToString().Equals("S"))
-                        //    {
-                        //        totalOtrosPagos += decimal.Parse(dtComponenteNomina.Rows[t]["cantidad"].ToString());
-                        //    }
-
-                        //}
-
-                        //Percepciones percepciones = new Percepciones();
-                        //percepciones.TotalGravado = totalGravado;
-                        //percepciones.TotalExento = totalExento;
-                        //percepciones.TotalSueldosSpecified = true;
-                        //percepciones.TotalSueldos = totalGravado + totalExento;
-                        //percepciones.Percepcion = new Percepcion[cantidadPercepciones];
-
-
-                        //Deducciones deducciones = new Deducciones();
-                        //deducciones.Deduccion = new Deduccion[cantidadDeducciones];
-                        //deducciones.TotalOtrasDeduccionesSpecified = true;
-                        //deducciones.TotalOtrasDeducciones = totalDeducciones;
-                        //deducciones.TotalImpuestosRetenidosSpecified = false;
-
-                        //int posicionP = 0, posicionD = 0;
-                        //for (int m = 0; m < dtComponenteNomina.Rows.Count; m++)
-                        //{
-                        //    if (dtComponenteNomina.Rows[m]["tipoconcepto"].ToString().Equals("P"))
-                        //    {
-                        //        Percepcion percepcion = new Percepcion();
-                        //        percepcion.TipoPercepcion = dtComponenteNomina.Rows[m]["valorcatsat"].ToString();
-                        //        percepcion.Clave = dtComponenteNomina.Rows[m]["noconcepto"].ToString();
-                        //        percepcion.ImporteGravado = decimal.Parse(dtComponenteNomina.Rows[m]["gravado"].ToString());
-                        //        percepcion.ImporteExento = decimal.Parse(dtComponenteNomina.Rows[m]["exento"].ToString());
-                        //        percepcion.Concepto = dtComponenteNomina.Rows[m]["concepto"].ToString();
-
-                        //        if (dtComponenteNomina.Rows[m]["noconcepto"].ToString().Equals("002"))
-                        //        {
-                        //            NominaHorasExtra he = new NominaHorasExtra();
-                        //            he.Dias = 6;
-                        //            he.TipoHoras = "01";
-                        //            he.HorasExtra = 18;
-                        //            he.ImportePagado = decimal.Parse(dtComponenteNomina.Rows[m]["cantidad"].ToString());
-                        //            percepcion.HorasExtraSpecified = true;
-                        //            percepcion.HorasExtra = he;
-                        //        }
-
-                        //        percepciones.Percepcion[posicionP] = percepcion;
-                        //        posicionP++;
-                        //    }
-                        //    else if (dtComponenteNomina.Rows[m]["tipoconcepto"].ToString().Equals("D"))
-                        //    {
-                        //        Deduccion deduccion = new Deduccion();
-                        //        deduccion.TipoDeduccion = dtComponenteNomina.Rows[m]["valorcatsat"].ToString();
-                        //        deduccion.Clave = dtComponenteNomina.Rows[m]["noconcepto"].ToString();
-                        //        deduccion.Importe = decimal.Parse(dtComponenteNomina.Rows[m]["cantidad"].ToString());
-                        //        deduccion.Concepto = dtComponenteNomina.Rows[m]["concepto"].ToString();
-                        //        deducciones.Deduccion[posicionD] = deduccion;
-                        //        posicionD++;
-                        //    }
-                        //    else if (dtComponenteNomina.Rows[m]["tipoconcepto"].ToString().Equals("S"))
-                        //    {
-                        //        SubsidioAlEmpleo subsidioAlEmpleo = new SubsidioAlEmpleo();
-                        //        subsidioAlEmpleo.SubsidioCausado = decimal.Parse(dtComponenteNomina.Rows[m]["cantidad"].ToString());
-
-                        //        OtroPago otropago = new OtroPago();
-                        //        otropago.TipoOtroPago = dtComponenteNomina.Rows[m]["valorcatsat"].ToString();
-                        //        otropago.Clave = dtComponenteNomina.Rows[m]["noconcepto"].ToString();
-                        //        otropago.Importe = decimal.Parse(dtComponenteNomina.Rows[m]["cantidad"].ToString());
-                        //        otropago.Concepto = dtComponenteNomina.Rows[m]["concepto"].ToString();
-                        //        otropago.SubsidioAlEmpleo = subsidioAlEmpleo;
-                        //        otropago.SubsidioAlEmpleoSpecified = true;
-
-                        //        OtrosPagos otrosPagos = new OtrosPagos();
-                        //        otrosPagos.OtroPago = otropago;
-                        //        nomina.OtrosPagos = otrosPagos;
-                        //        nomina.OtrosPagosSpecified = true;
-                        //        nomina.TotalOtrosPagos = totalOtrosPagos;
-                        //        nomina.TotalOtrosPagosSpecified = true;
-
-                        //    }
-                        //}
-
-
-                        //nomina.TipoNomina = dtComponenteNomina.Rows[0]["tiponomina"].ToString();
-                        //nomina.FechaPago = DateTime.Parse(dtComponenteNomina.Rows[0]["fechapago"].ToString());
-                        //nomina.FechaInicialPago = DateTime.Parse(dtComponenteNomina.Rows[0]["fechainicio"].ToString());
-                        //nomina.FechaFinalPago = DateTime.Parse(dtComponenteNomina.Rows[0]["fechafin"].ToString());
-                        //nomina.NumDiasPagados = decimal.Parse(dtComponenteNomina.Rows[0]["diaslaborados"].ToString());
-                        //nomina.TotalPercepcionesSpecified = true;
-                        //nomina.TotalPercepciones = totalGravado + totalExento;
-                        //nomina.TotalDeduccionesSpecified = true;
-                        //nomina.TotalDeducciones = totalDeducciones;
-
-                        //nomina.Emisor = emisorNomina;
-                        //nomina.Receptor = receptorNomina;
-                        //nomina.Percepciones = percepciones;
-                        //nomina.Deducciones = deducciones;
-
-                        //XmlDocument docNomina = new XmlDocument();
-                        //XmlSerializer xmlSerializeNomina = new XmlSerializer(typeof(Nomina));
-
-                        //using (var writer = new XmlTextWriter(stream, Encoding.UTF8))
-                        //{
-                        //    writer.Formatting = Formatting.Indented;
-
-                        //    xmlSerializeNomina.Serialize(writer, nomina, xmlNameSpaceNomina);
-
-                        //    stream.Seek(0, SeekOrigin.Begin);
-
-                        //    docNomina.Load(stream);
-                        //}
-
-                        #endregion
-
-                        #region COMPROBANTE FISCAL
-
-                        //XmlSerializerNamespaces xmlNameSpace = new XmlSerializerNamespaces();
-                        //xmlNameSpace.Add("cfdi", "http://www.sat.gob.mx/cfd/3");
-                        //xmlNameSpace.Add("nomina12", "http://www.sat.gob.mx/nomina12");
-                        ////xmlNameSpace.Add("xsi", "http://www.w3.org/2001/XMLSchema-instance");
-                        ////xmlNameSpace.Add("schemaLocation", "http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd http://www.sat.gob.mx/nomina12 http://www.sat.gob.mx/sitio_internet/cfd/nomina/nomina12.xsd");
-
-
-                        //XmlSerializer xmlSerialize = new XmlSerializer(typeof(Comprobante));
-
-                        //Emisor emisor = new Emisor();
-                        //emisor.Rfc = dtComponenteNomina.Rows[0]["rfcempresa"].ToString();
-                        //emisor.Nombre = dtComponenteNomina.Rows[0]["empresa"].ToString();
-                        //emisor.RegimenFiscal = dtComponenteNomina.Rows[0]["regimenfiscal"].ToString();
-
-                        //Receptor receptor = new Receptor();
-                        //receptor.Rfc = dtComponenteNomina.Rows[0]["rfc"].ToString();
-                        //receptor.Nombre = dtComponenteNomina.Rows[0]["nombrecompleto"].ToString();
-                        //receptor.UsoCFDI = "P01";
-
-                        //ComplementoConcepto concepto = new ComplementoConcepto();
-                        //concepto.ValorUnitario = totalExento + totalGravado + totalOtrosPagos;
-                        //concepto.Importe = totalExento + totalGravado + totalOtrosPagos;
-                        //concepto.Descuento = totalDeducciones;
-
-                        //ComplementoConceptos conceptos = new ComplementoConceptos();
-                        //conceptos.Concepto = concepto;
-
-                        //Complemento complemento = new Complemento();
-                        //complemento.Any = new XmlElement[] { docNomina.ImportNode(docNomina.DocumentElement, true) as XmlElement };
-
-                        //Comprobante comprobante = new Comprobante();
-                        //comprobante.Fecha = String.Format("{0:s}", DateTime.Now);
-                        //comprobante.NoCertificado = dtComponenteNomina.Rows[0]["nocertificado"].ToString();
-                        //comprobante.Certificado = dtComponenteNomina.Rows[0]["certificado"].ToString();
-                        //comprobante.SubTotal = totalExento + totalGravado + totalOtrosPagos;
-                        //comprobante.Descuento = totalDeducciones;
-                        //comprobante.Total = (totalExento + totalGravado + totalOtrosPagos) - totalDeducciones;
-                        //comprobante.LugarExpedicion = dtComponenteNomina.Rows[0]["codigopostal"].ToString();
-                        //comprobante.Emisor = emisor;
-                        //comprobante.Receptor = receptor;
-                        //comprobante.Conceptos = conceptos;
-                        //comprobante.Complemento = complemento;
-
-                        //XmlTextWriter xmlTextWriter = new XmlTextWriter(String.Format(@"{0}{1}_{2}.xml", directorioEmpresa,
-                        //                                                dgvVisorRecibos.Rows[i].Cells[8].Value.ToString(),
-                        //                                                dgvVisorRecibos.Rows[i].Cells[2].Value.ToString()),
-                        //                                                Encoding.UTF8);
-                        //xmlTextWriter.Formatting = Formatting.Indented;
-                        //xmlSerialize.Serialize(xmlTextWriter, comprobante, xmlNameSpace);
-
-                        //xmlTextWriter.Close();
-
-                        #endregion
-
-                        #region SELLADO
-
-                        //string pathXsltCadenaOriginal = rutaArchivoXslt;
-                        //string pathXml = String.Format(@"{0}{1}_{2}.xml", directorioEmpresa,
-                        //                                                dgvVisorRecibos.Rows[i].Cells[8].Value.ToString(),
-                        //                                                dgvVisorRecibos.Rows[i].Cells[2].Value.ToString());
-
-                        //string pathTxt = String.Format(@"{0}{1}_{2}.txt", directorioEmpresa,
-                        //                                                dgvVisorRecibos.Rows[i].Cells[8].Value.ToString(),
-                        //                                                dgvVisorRecibos.Rows[i].Cells[2].Value.ToString());
-
-
-                        //XslCompiledTransform xslt = new XslCompiledTransform();
-                        //xslt.Load(pathXsltCadenaOriginal); //Path del archivo cadenaoriginal_3_3.xslt
-                        //xslt.Transform(pathXml, pathTxt);
-
-                        //strCadenaOriginal = File.ReadAllText(pathTxt);
-
-                        ////Lectura del Archivo .KEY
-                        //System.Security.SecureString passwordSeguro = new System.Security.SecureString();
-                        //passwordSeguro.Clear();
-                        //foreach (char c in lstEmpresas[0].passwordkey.ToCharArray())
-                        //    passwordSeguro.AppendChar(c);
-                        //byte[] llavePrivadaBytes = System.IO.File.ReadAllBytes(rutaArchivoKey);
-                        //RSACryptoServiceProvider rsa = opensslkey.DecodeEncryptedPrivateKeyInfo(llavePrivadaBytes, passwordSeguro);
-                        //SHA256CryptoServiceProvider hasher = new SHA256CryptoServiceProvider();
-                        //byte[] bytesFirmados = rsa.SignData(System.Text.Encoding.UTF8.GetBytes(strCadenaOriginal), hasher);
-                        //strSello = Convert.ToBase64String(bytesFirmados);  // Y aquí está el sello
-                        ////Lectura del Archivo .KEY
-
-                        //StreamReader leer = new StreamReader(pathXml);
-                        //XmlSerializer serializer = new XmlSerializer(typeof(Comprobante));
-                        //Comprobante xmlComprobante = (Comprobante)serializer.Deserialize(leer);
-                        //leer.Close();
-
-                        //xmlComprobante.Sello = strSello;
-
-                        //XmlTextWriter xmlTextWriterSello = new XmlTextWriter(String.Format(@"{0}{1}_{2}.xml", directorioEmpresa,
-                        //                                                dgvVisorRecibos.Rows[i].Cells[8].Value.ToString(),
-                        //                                                dgvVisorRecibos.Rows[i].Cells[2].Value.ToString()),
-                        //                                                Encoding.UTF8);
-                        //xmlTextWriter.Formatting = Formatting.Indented;
-                        //xmlSerialize.Serialize(xmlTextWriterSello, xmlComprobante, xmlNameSpace);
-
-                        //xmlTextWriter.Close();
-                        //xmlTextWriter.Dispose();
-
-                        #endregion
-
+                    }
+                    else
+                    {
+                        cnx.Open();
+                        xh.actualizaEmitido(int.Parse(dgvVisorRecibos.Rows[i].Cells[8].Value.ToString()), "Recibo en 0.");
+                        cnx.Close();
                     }
                 }
 
@@ -1079,8 +834,6 @@ namespace Nominas
                             }
 
                             cabecera.emitido = "S";
-                            cabecera.nocertificado = "";
-                            cabecera.versiontimbrefiscal = "1.2";
                             cabecera.uuid = selloRespose.quick_stampResult.UUID;
                             cabecera.fechatimbrado = selloRespose.quick_stampResult.Fecha;
                             cabecera.nocertificadosat = selloRespose.quick_stampResult.NoCertificadoSAT;
@@ -1223,6 +976,10 @@ namespace Nominas
                 }
                 else
                 {
+                    
+                    cnx.Open();
+                    xh.actualizaEmitido(int.Parse(dgvVisorRecibos.Rows[fila].Cells[8].Value.ToString()), "Recibo en 0.");
+                    cnx.Close();
                     MessageBox.Show("Información: El empleado no puede ser timbrado, recibo en 0.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
@@ -1440,10 +1197,6 @@ namespace Nominas
             
         }
 
-
-
-
-
         private void dgvVisorRecibos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -1453,8 +1206,6 @@ namespace Nominas
                             "Descripción: \r\n" +
                             dgvVisorRecibos.Rows[e.RowIndex].Cells[9].Value.ToString(), "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
-
 
 
         private Byte[] codigoQr(string re, string rr, string uuid, string tt) 

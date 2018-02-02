@@ -79,7 +79,6 @@ namespace Nominas
                     {
                         txtDesde.Text = lstSubsidio[i].desde.ToString();
                         txtCantidad.Text = lstSubsidio[i].cantidad.ToString();
-                        txtDias.Text = lstSubsidio[i].periodo.ToString();
                         txtAnio.Text = lstSubsidio[i].anio.ToString();
                     }
                 }
@@ -117,7 +116,7 @@ namespace Nominas
             TablaSubsidio.Core.TablaSubsidio subsidio = new TablaSubsidio.Core.TablaSubsidio();
             subsidio.desde = decimal.Parse(txtDesde.Text.Trim());
             subsidio.cantidad = decimal.Parse(txtCantidad.Text.Trim());
-            subsidio.periodo = int.Parse(txtDias.Text.Trim());
+            subsidio.periodo = 30;
             subsidio.anio = int.Parse(txtAnio.Text.Trim());
 
             switch (_tipoOperacion)
