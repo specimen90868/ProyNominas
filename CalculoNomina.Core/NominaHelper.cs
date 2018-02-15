@@ -718,20 +718,24 @@ namespace CalculoNomina.Core
             return Command.ExecuteNonQuery();
         }
 
-        public List<tmpPagoNomina> obtenerPeriodosNomina(int idEmpresa, int tipoNomina, int periodo)
+        public List<PagoNomina> obtenerPeriodosNomina(int idEmpresa, int anio, int mes, int tipoNomina, int periodo = 7)
         {
             DataTable dtPeriodos = new DataTable();
-            List<tmpPagoNomina> lstPeriodos = new List<tmpPagoNomina>();
-            Command.CommandText = @"select distinct fechainicio, fechafin from pagonomina where idempresa = @idempresa and tiponomina = @tiponomina and periodo = @periodo
-                order by fechainicio asc";
+            List<PagoNomina> lstPeriodos = new List<PagoNomina>();
+//            Command.CommandText = @"select distinct fechainicio, fechafin from pagonomina where idempresa = @idempresa and tiponomina = @tiponomina and periodo = @periodo
+//                order by fechainicio asc";
+            Command.CommandText = @"select distinct fechainicio, fechafin from PagoNomina where idempresa = @idempresa and tiponomina = @tiponomina
+                  and anio = @anio and MONTH(fechainicio) = @mes order by fechainicio asc";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("anio", anio);
+            Command.Parameters.AddWithValue("mes", mes);
             Command.Parameters.AddWithValue("tiponomina", tipoNomina);
-            Command.Parameters.AddWithValue("periodo", periodo);
+            //Command.Parameters.AddWithValue("periodo", periodo);
             dtPeriodos = SelectData(Command);
             for (int i = 0; i < dtPeriodos.Rows.Count; i++)
             {
-                tmpPagoNomina pn = new tmpPagoNomina();
+                PagoNomina pn = new PagoNomina();
                 pn.fechainicio = DateTime.Parse(dtPeriodos.Rows[i]["fechainicio"].ToString());
                 pn.fechafin = DateTime.Parse(dtPeriodos.Rows[i]["fechafin"].ToString());
                 lstPeriodos.Add(pn);

@@ -11,6 +11,8 @@ using System.Drawing.Imaging;
 
 using System.IO;
 using System.Management;
+using Gma.QrCodeNet.Encoding;
+using Gma.QrCodeNet.Encoding.Windows.Render;
 
 namespace Nominas
 {
@@ -379,6 +381,95 @@ namespace Nominas
                     break;
             }
             return columna;
+        }
+
+        public static void GENERA_QR(int idEmpresa, int tipoNomina, int idTrabajador, DateTime fechaInicio, DateTime fechaFin) {
+
+            string codigoQR = "";
+            string[] valores = null;
+            string numero = "";
+            string vEntero = "";
+            string vDecimal = "";
+            string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+            bool existeQR = false;
+
+            List<Xml.Core.CodigoBidimensional> lstXmlQr = new List<Xml.Core.CodigoBidimensional>();
+            SqlConnection cnx = new SqlConnection(cdn);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            Xml.Core.XmlCabeceraHelper xh = new Xml.Core.XmlCabeceraHelper();
+            xh.Command = cmd;
+
+            cnx.Open();
+            existeQR = xh.existeQR(idEmpresa, idTrabajador, fechaInicio, fechaFin);
+            cnx.Close();
+
+            if (!existeQR) {
+
+                cnx.Open();
+                lstXmlQr = xh.obtenerDatosCodigoQr(idEmpresa, idTrabajador, tipoNomina, fechaInicio, fechaFin);
+                cnx.Close();
+
+                numero = lstXmlQr[0].tt.ToString();
+                valores = numero.Split('.');
+                vEntero = valores[0];
+                vDecimal = valores[1];
+                codigoQR = string.Format("?re={0}&rr={1}&tt={2}.{3}&id={4}", lstXmlQr[0].re, lstXmlQr[0].rr,
+                    vEntero.PadLeft(10, '0'), vDecimal.PadRight(6, '0'), lstXmlQr[0].uuid);
+                var qrEncoder = new QrEncoder(ErrorCorrectionLevel.H);
+                var qrCode = qrEncoder.Encode(codigoQR);
+                var renderer = new GraphicsRenderer(new FixedModuleSize(2, QuietZoneModules.Two), Brushes.Black, Brushes.White);
+
+                using (var stream = new FileStream(lstXmlQr[0].uuid + ".png", FileMode.Create))
+                    renderer.WriteToStream(qrCode.Matrix, ImageFormat.Png, stream);
+
+                Bitmap bmp = new Bitmap(lstXmlQr[0].uuid + ".png");
+                Byte[] qr = IMAGEN_BYTES(bmp);
+                bmp.Dispose();
+                File.Delete(lstXmlQr[0].uuid + ".png");
+                Xml.Core.XmlCabecera xml = new Xml.Core.XmlCabecera();
+                xml.folio = lstXmlQr[0].folio;
+                xml.codeqr = qr;
+
+                try
+                {
+                    cnx.Open();
+                    xh.actualizaXmlCodeQr(xml);
+                    cnx.Close();
+                    cnx.Dispose();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error: Al actualizar el código QR.", "Error");
+                    cnx.Dispose();
+                }
+            }
+        }
+
+        public static void GENERA_CFDI(int idEmpresa, int tipoNomina, int idTrabajador, DateTime fechaInicio, DateTime fechaFin, int periodo)
+        {
+            bool existeCFDi = false;
+
+            string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+            SqlConnection cnx = new SqlConnection(cdn);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            Xml.Core.XmlCabeceraHelper xh = new Xml.Core.XmlCabeceraHelper();
+            xh.Command = cmd;
+
+            cnx.Open();
+            existeCFDi = xh.existeCFDiMaster(idEmpresa, idTrabajador, fechaInicio, fechaFin);
+            cnx.Close();
+
+            if (!existeCFDi) {
+                cnx.Open();
+                xh.eliminaCfdiMaster(idEmpresa, idTrabajador, fechaInicio, fechaFin, tipoNomina, periodo);
+                xh.insertaCfdiMaster(idEmpresa, idTrabajador, fechaInicio, fechaFin);
+                xh.insertaCfdiDetalle(idEmpresa, idTrabajador, fechaInicio, fechaFin);
+                cnx.Close();
+            }
         }
 
         //public static Boolean IDENTIFICADOR(string wmiClass, string wmiProperty, string serialHD)

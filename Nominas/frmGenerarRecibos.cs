@@ -67,7 +67,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                lstPeriodos = nh.obtenerPeriodosNomina(GLOBALES.IDEMPRESA, tipoNomina, int.Parse(cmbPeriodo.SelectedValue.ToString()));
+                //lstPeriodos = nh.obtenerPeriodosNomina(GLOBALES.IDEMPRESA, tipoNomina, int.Parse(cmbPeriodo.SelectedValue.ToString()));
                 cnx.Close();
                 cnx.Dispose();
             }

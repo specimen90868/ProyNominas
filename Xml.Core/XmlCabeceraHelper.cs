@@ -139,6 +139,32 @@ namespace Xml.Core
             return lstQR;
         }
 
+        public List<CodigoBidimensional> obtenerDatosCodigoQr(int idEmpresa, int idTrabajador, int tipoNomina, DateTime inicio, DateTime fin)
+        {
+            Command.CommandText = "exec stp_GeneraCodigoQrTrabajador @idempresa, @idtrabajador, @tiponomina, @inicio, @fin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("idtrabajador", idTrabajador);
+            Command.Parameters.AddWithValue("tiponomina", tipoNomina);
+            Command.Parameters.AddWithValue("inicio", inicio);
+            Command.Parameters.AddWithValue("fin", fin);
+            List<CodigoBidimensional> lstQR = new List<CodigoBidimensional>();
+            DataTable dt = new DataTable();
+            dt = SelectData(Command);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                CodigoBidimensional qr = new CodigoBidimensional();
+                qr.folio = int.Parse(dt.Rows[i]["folio"].ToString());
+                qr.idtrabajador = int.Parse(dt.Rows[i]["idtrabajador"].ToString());
+                qr.re = dt.Rows[i]["re"].ToString();
+                qr.rr = dt.Rows[i]["rr"].ToString();
+                qr.tt = decimal.Parse(dt.Rows[i]["tt"].ToString());
+                qr.uuid = dt.Rows[i]["uuid"].ToString();
+                lstQR.Add(qr);
+            }
+            return lstQR;
+        }
+
         public List<XmlCancelados> obtenerCancelados(int idempresa, DateTime inicio, DateTime fin)
         {
             Command.CommandText = "select uuid, fecha, respuesta, acuse, folio from xmlcancelados where idempresa = @idempresa and fecha >= @inicio and fecha <= @fin";
@@ -201,6 +227,34 @@ namespace Xml.Core
             Command.Parameters.AddWithValue("uuid", uuid);
             string dato = Select(Command).ToString();
             return dato;
+        }
+
+        public bool existeQR(int idEmpresa, int idTrabajador, DateTime inicio, DateTime fin)
+        {
+            Command.CommandText = "select codeqr from xmlcabecera where idempresa = @idempresa and idtrabajador = @idtrabajador and periodoinicio = @inicio and periodofin = @fin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("idtrabajador", idTrabajador);
+            Command.Parameters.AddWithValue("inicio", inicio);
+            Command.Parameters.AddWithValue("fin", fin);
+            object dato = Select(Command);
+            if (dato != null)
+                return true;
+            else return false;
+        }
+
+        public bool existeCFDiMaster(int idEmpresa, int idTrabajador, DateTime inicio, DateTime fin)
+        {
+            Command.CommandText = "select idtrabajador from CfdiMaster where idempresa = @idempresa and idtrabajador = @idtrabajador and periodoinicio = @inicio and periodofin = @fin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("idtrabajador", idTrabajador);
+            Command.Parameters.AddWithValue("inicio", inicio);
+            Command.Parameters.AddWithValue("fin", fin);
+            object dato = Select(Command);
+            if (dato != null)
+                return true;
+            else return false;
         }
 
         public int actualizaXmlCabecera(XmlCabecera xc)
@@ -344,6 +398,20 @@ namespace Xml.Core
             Command.Parameters.AddWithValue("idempresa", idempresa);
             Command.Parameters.AddWithValue("tiponomina", tiponomina);
             Command.Parameters.AddWithValue("periodo", periodo);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int eliminaCfdiMaster(int idempresa, int idtrabajador, DateTime inicio, DateTime fin, int tiponomina, int periodo)
+        {
+            Command.CommandText = @"delete from cfdiMaster where idempresa = @idempresa and periodoinicio = @periodoinicio and periodofin = @periodofin
+                                    and tiponomina = @tiponomina and periodo = @periodo and idtrabajador = @idtrabajador";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("periodoinicio", inicio);
+            Command.Parameters.AddWithValue("periodofin", fin);
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            Command.Parameters.AddWithValue("tiponomina", tiponomina);
+            Command.Parameters.AddWithValue("periodo", periodo);
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
             return Command.ExecuteNonQuery();
         }
 

@@ -183,10 +183,10 @@ namespace Nominas
                     case "Impresión p. extraordinario":
                         toolPeriodoExtraOrdinario.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
-                    case "Envio por E-mail (Ordinario)":
+                    case "Emisión de recibos (Ordinario)":
                         toolEnvioCorreoOrdinario.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
-                    case "Envio por E-mail (Extraordiario)":
+                    case "Emisión de recibos (Extraordiario)":
                         toolEnvioCorreoExtraordinario.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Reportes":

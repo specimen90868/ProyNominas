@@ -48,6 +48,9 @@ namespace Nominas
             else
                 this.Text = "Impresión de recibos - Extraordinaria";
 
+            nudAnio.Value = DateTime.Now.Year;
+            nudMes.Value = DateTime.Now.Month;
+
             lstvPeriodos.View = View.Details;
             lstvPeriodos.CheckBoxes = false;
             lstvPeriodos.GridLines = false;
@@ -63,43 +66,14 @@ namespace Nominas
             lstvEmpleados.View = View.Details;
             lstvEmpleados.CheckBoxes = true;
             lstvEmpleados.GridLines = false;
-            lstvEmpleados.Columns.Add("Id", 60, HorizontalAlignment.Left);
-            lstvEmpleados.Columns.Add("No. Empleado", 70, HorizontalAlignment.Left);
+            lstvEmpleados.Columns.Add("", 20, HorizontalAlignment.Left);
+            lstvEmpleados.Columns.Add("No. Empleado", 75, HorizontalAlignment.Left);
             lstvEmpleados.Columns.Add("Nombre", 250, HorizontalAlignment.Left);
-
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
-            nh.Command = cmd;
-
-            List<CalculoNomina.Core.tmpPagoNomina> lstPeriodos = new List<CalculoNomina.Core.tmpPagoNomina>();
-
-            try
-            {
-                cnx.Open();
-                lstPeriodos = nh.obtenerPeriodosNomina(GLOBALES.IDEMPRESA, _tiponomina, _periodo);
-                cnx.Close();
-                cnx.Dispose();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Error: Al obtener los periodos de la empresa.", "Error");
-                cnx.Dispose();
-                return;
-            }
-
-            for (int i = 0; i < lstPeriodos.Count; i++)
-            {
-                ListViewItem Lista;
-                Lista = lstvPeriodos.Items.Add(lstPeriodos[i].fechainicio.ToShortDateString());
-                Lista.SubItems.Add(lstPeriodos[i].fechafin.ToShortDateString());
-            }
+            
         }
 
         private void lstvDepartamentos_ItemChecked(object sender, ItemCheckedEventArgs e)
-        {
+        {   
             idDepartamentos = "";
             for (int i = 0; i < lstvDepartamentos.Items.Count; i++)
             {
@@ -129,7 +103,7 @@ namespace Nominas
                     try
                     {
                         cnx.Open();
-                        lstEmp = eh.obtenerEmpleadoPorDepto(GLOBALES.IDEMPRESA, idDepartamentos, DateTime.Parse(fecha).Date, _tiponomina, true);
+                        lstEmp = eh.obtenerEmpleadoPorDepto(GLOBALES.IDEMPRESA, idDepartamentos, DateTime.Parse(fecha).Date, _tiponomina, false);
                         cnx.Close();
                     }
                     catch
@@ -221,14 +195,36 @@ namespace Nominas
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            if (todos) 
+
+            for (int i = 0; i < lstvPeriodos.SelectedItems.Count; i++)
             {
-                for (int i = 0; i < lstvPeriodos.SelectedItems.Count; i++)
+                fecha = lstvPeriodos.SelectedItems[i].Text;
+                fechafin = lstvPeriodos.SelectedItems[i].SubItems[1].Text;
+            }
+
+            for (int i = 0; i < lstvEmpleados.Items.Count; i++)
+            {
+                if (todos)
                 {
-                    fecha = lstvPeriodos.SelectedItems[i].Text;
-                    fechafin = lstvPeriodos.SelectedItems[i].SubItems[1].Text; 
+                    GLOBALES.GENERA_QR(GLOBALES.IDEMPRESA, _tiponomina, int.Parse(lstvEmpleados.Items[i].Text),
+                            DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date);
+                    GLOBALES.GENERA_CFDI(GLOBALES.IDEMPRESA, _tiponomina, int.Parse(lstvEmpleados.Items[i].Text),
+                        DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date, _periodo);
                 }
-                    
+                else {
+                    if (lstvEmpleados.Items[i].Checked)
+                    {
+                        GLOBALES.GENERA_QR(GLOBALES.IDEMPRESA, _tiponomina, int.Parse(lstvEmpleados.Items[i].Text),
+                            DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date);
+                        GLOBALES.GENERA_CFDI(GLOBALES.IDEMPRESA, _tiponomina, int.Parse(lstvEmpleados.Items[i].Text),
+                            DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date, _periodo);
+
+                    }
+                }
+            }
+
+            if (todos)
+            {
                 idEmpleados = "";
                 frmVisorReportes vr = new frmVisorReportes();
                 vr._tipoNomina = _tiponomina;
@@ -242,7 +238,8 @@ namespace Nominas
                 vr.WindowState = FormWindowState.Maximized;
                 vr.Show();
             }
-            else {
+            else
+            {
                 idEmpleados = "";
                 for (int i = 0; i < lstvEmpleados.Items.Count; i++)
                 {
@@ -250,15 +247,8 @@ namespace Nominas
                         idEmpleados += lstvEmpleados.Items[i].Text + ",";
                 }
 
-                fecha = "";
                 if (idEmpleados != "")
                 {
-                    for (int i = 0; i < lstvPeriodos.SelectedItems.Count; i++)
-                    {
-                        fecha = lstvPeriodos.SelectedItems[i].Text;
-                        fechafin = lstvPeriodos.SelectedItems[i].SubItems[1].Text; 
-                    }
-                    
                     idEmpleados = idEmpleados.Substring(0, idEmpleados.Length - 1);
                     frmVisorReportes vr = new frmVisorReportes();
                     vr._tipoNomina = _tiponomina;
@@ -295,7 +285,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                lstDeptos = dh.obtenerDepartamentos(GLOBALES.IDEMPRESA, DateTime.Parse(fecha), _tiponomina, true);
+                lstDeptos = dh.obtenerDepartamentos(GLOBALES.IDEMPRESA, DateTime.Parse(fecha), _tiponomina, false);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -341,6 +331,41 @@ namespace Nominas
                 lstvDepartamentos.Enabled = true;
                 lstvEmpleados.Enabled = true;
                 todos = false;
+            }
+        }
+
+        private void btnPeriodos_Click(object sender, EventArgs e)
+        {
+            lstvPeriodos.Items.Clear();
+
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+
+            List<CalculoNomina.Core.PagoNomina> lstPeriodos = new List<CalculoNomina.Core.PagoNomina>();
+
+            try
+            {
+                cnx.Open();
+                lstPeriodos = nh.obtenerPeriodosNomina(GLOBALES.IDEMPRESA, int.Parse(nudAnio.Value.ToString()), int.Parse(nudMes.Value.ToString()), _tiponomina);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al obtener los periodos de la empresa.", "Error");
+                cnx.Dispose();
+                return;
+            }
+
+            for (int i = 0; i < lstPeriodos.Count; i++)
+            {
+                ListViewItem Lista;
+                Lista = lstvPeriodos.Items.Add(lstPeriodos[i].fechainicio.ToShortDateString());
+                Lista.SubItems.Add(lstPeriodos[i].fechafin.ToShortDateString());
             }
         }
 

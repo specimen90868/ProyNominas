@@ -33,3 +33,10 @@ D:\Git\ProyNominas\Xml.Core\bin\Debug\Data.Obj.pdb
 D:\Git\ProyNominas\Xml.Core\obj\Debug\Xml.Core.csprojResolveAssemblyReference.cache
 D:\Git\ProyNominas\Xml.Core\obj\Debug\Xml.Core.dll
 D:\Git\ProyNominas\Xml.Core\obj\Debug\Xml.Core.pdb
+F:\Git\ProyNominas\Xml.Core\bin\Debug\Xml.Core.dll
+F:\Git\ProyNominas\Xml.Core\bin\Debug\Xml.Core.pdb
+F:\Git\ProyNominas\Xml.Core\bin\Debug\Data.Obj.dll
+F:\Git\ProyNominas\Xml.Core\bin\Debug\Data.Obj.pdb
+F:\Git\ProyNominas\Xml.Core\obj\Debug\Xml.Core.csprojResolveAssemblyReference.cache
+F:\Git\ProyNominas\Xml.Core\obj\Debug\Xml.Core.dll
+F:\Git\ProyNominas\Xml.Core\obj\Debug\Xml.Core.pdb
