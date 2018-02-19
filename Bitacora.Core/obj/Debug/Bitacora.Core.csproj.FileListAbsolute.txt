@@ -35,6 +35,5 @@ F:\Git\ProyNominas\Bitacora.Core\bin\Debug\Bitacora.Core.dll
 F:\Git\ProyNominas\Bitacora.Core\bin\Debug\Bitacora.Core.pdb
 F:\Git\ProyNominas\Bitacora.Core\bin\Debug\Data.Obj.dll
 F:\Git\ProyNominas\Bitacora.Core\bin\Debug\Data.Obj.pdb
-F:\Git\ProyNominas\Bitacora.Core\obj\Debug\Bitacora.Core.csprojResolveAssemblyReference.cache
 F:\Git\ProyNominas\Bitacora.Core\obj\Debug\Bitacora.Core.dll
 F:\Git\ProyNominas\Bitacora.Core\obj\Debug\Bitacora.Core.pdb

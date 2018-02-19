@@ -79,12 +79,12 @@ namespace Nominas
             CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
             nh.Command = cmd;
 
-            List<CalculoNomina.Core.PagoNomina> lstPeriodos = new List<CalculoNomina.Core.PagoNomina>();
+            List<CalculoNomina.Core.tmpPagoNomina> lstPeriodos = new List<CalculoNomina.Core.tmpPagoNomina>();
 
             try
             {
                 cnx.Open();
-                lstPeriodos = nh.obtenerPeriodosNomina(GLOBALES.IDEMPRESA, int.Parse(nudAnio.Value.ToString()), int.Parse(nudMes.Value.ToString()), tipoNomina, int.Parse(cmbPeriodo.SelectedValue.ToString()));
+                //lstPeriodos = nh.obtenerPeriodosNomina(GLOBALES.IDEMPRESA, tipoNomina, int.Parse(cmbPeriodo.SelectedValue.ToString()));
                 cnx.Close();
                 cnx.Dispose();
             }

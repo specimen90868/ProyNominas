@@ -35,8 +35,6 @@ namespace Nominas
         List<Empleados.Core.Empleados> lstEmp;
         #endregion
 
-       
-
         #region VARIABLES PUBLICA
         public DateTime _inicio;
         public DateTime _fin;
@@ -1053,7 +1051,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                //lstDeptos = dh.obtenerDepartamentos(GLOBALES.IDEMPRESA, dtpInicioPeriodo.Value.Date, _tipoNomina, false);
+                lstDeptos = dh.obtenerDepartamentos(GLOBALES.IDEMPRESA, dtpInicioPeriodo.Value.Date, _tipoNomina, false);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -1102,7 +1100,7 @@ namespace Nominas
                         try
                         {
                             cnx.Open();
-                            //lstEmp = eh.obtenerEmpleadoPorDepto(GLOBALES.IDEMPRESA, idDepartamentos, dtpInicioPeriodo.Value.Date, _tipoNomina, false);
+                            lstEmp = eh.obtenerEmpleadoPorDepto(GLOBALES.IDEMPRESA, idDepartamentos, dtpInicioPeriodo.Value.Date, _tipoNomina, false);
                             cnx.Close();
                         }
                         catch
