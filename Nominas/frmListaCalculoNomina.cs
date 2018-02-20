@@ -176,6 +176,7 @@ namespace Nominas
                 CargaPerfil("Cálculo de nómina");
             if (_tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
                 CargaPerfil("Cálculo de nómina");
+
             obtenerPeriodoCalculo();
 
             #region DISEÑO EXTRA DEL GRID EMPLEADOS
@@ -215,6 +216,7 @@ namespace Nominas
 
             List<CalculoNomina.Core.tmpPagoNomina> lstUltimaNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
 
+            /* Periodo Ordinario */
             if (_tipoNomina != GLOBALES.EXTRAORDINARIO_NORMAL)
             {
                 try

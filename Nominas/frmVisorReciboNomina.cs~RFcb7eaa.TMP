@@ -197,7 +197,7 @@ namespace Nominas
                 btnSellarTodo.Enabled = true;
                 btnSellar.Enabled = true;
 
-                btnTimbrarTodo.Enabled = true;
+                btnTimbrarTodo.Enabled = false;
                 btnTimbrar.Enabled = false;
 
                 btnErrores.Enabled = true;
@@ -847,12 +847,12 @@ namespace Nominas
                             {
                                 cnx.Open();
                                 xh.actualizaXmlCabecera(cabecera);
-                                //xh.insertaCfdiMaster(GLOBALES.IDEMPRESA, int.Parse(dgvVisorRecibos.Rows[i].Cells[0].Value.ToString()),
-                                                    //DateTime.Parse(dgvVisorRecibos.Rows[i].Cells[6].Value.ToString()).Date,
-                                                    //DateTime.Parse(dgvVisorRecibos.Rows[i].Cells[7].Value.ToString()).Date);
-                                //xh.insertaCfdiDetalle(GLOBALES.IDEMPRESA, int.Parse(dgvVisorRecibos.Rows[i].Cells[0].Value.ToString()),
-                                                    //DateTime.Parse(dgvVisorRecibos.Rows[i].Cells[6].Value.ToString()).Date,
-                                                    //DateTime.Parse(dgvVisorRecibos.Rows[i].Cells[7].Value.ToString()).Date);
+                                xh.insertaCfdiMaster(GLOBALES.IDEMPRESA, int.Parse(dgvVisorRecibos.Rows[i].Cells[0].Value.ToString()),
+                                                    DateTime.Parse(dgvVisorRecibos.Rows[i].Cells[6].Value.ToString()).Date,
+                                                    DateTime.Parse(dgvVisorRecibos.Rows[i].Cells[7].Value.ToString()).Date);
+                                xh.insertaCfdiDetalle(GLOBALES.IDEMPRESA, int.Parse(dgvVisorRecibos.Rows[i].Cells[0].Value.ToString()),
+                                                    DateTime.Parse(dgvVisorRecibos.Rows[i].Cells[6].Value.ToString()).Date,
+                                                    DateTime.Parse(dgvVisorRecibos.Rows[i].Cells[7].Value.ToString()).Date);
                                 cnx.Close();
                             }
                             catch
