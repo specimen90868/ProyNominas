@@ -9,12 +9,13 @@ namespace PeriodosNominales.Core
 {
     public class PeriodosNominalesHelper : Data.Obj.DataObj
     {
-        public List<PeriodosNominales> obtenerUltimaNomina(int idempresa)
+        public List<PeriodosNominales> obtenerUltimaNomina(int idempresa, int tiponomina)
         {
             Command.CommandText = @"select fechainicio, fechafin from PeriodosNominales where 
-            id = (select top 1 idperiodonom from PagoNomina where idempresa = @idempresa order by idperiodonom desc)";
+            id = (select top 1 idperiodonom from PagoNomina where idempresa = @idempresa and tiponomina = @tiponomina order by idperiodonom desc)";
             Command.Parameters.Clear();
             Command.Parameters.Add("idempresa", idempresa);
+            Command.Parameters.Add("tiponomina", tiponomina);
             DataTable dt = new DataTable();
             dt = SelectData(Command);
             List<PeriodosNominales> lstPeriodos = new List<PeriodosNominales>();

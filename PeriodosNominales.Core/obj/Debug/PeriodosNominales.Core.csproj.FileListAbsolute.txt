@@ -1,0 +1,6 @@
+F:\Git\ProyNominas\PeriodosNominales.Core\bin\Debug\PeriodosNominales.Core.dll
+F:\Git\ProyNominas\PeriodosNominales.Core\bin\Debug\PeriodosNominales.Core.pdb
+F:\Git\ProyNominas\PeriodosNominales.Core\bin\Debug\Data.Obj.dll
+F:\Git\ProyNominas\PeriodosNominales.Core\bin\Debug\Data.Obj.pdb
+F:\Git\ProyNominas\PeriodosNominales.Core\obj\Debug\PeriodosNominales.Core.dll
+F:\Git\ProyNominas\PeriodosNominales.Core\obj\Debug\PeriodosNominales.Core.pdb
