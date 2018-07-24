@@ -524,7 +524,7 @@ namespace Nominas
                         break;
                     #endregion
 
-                    #region SUBSIDIO
+                    #region SUBSIDIO AL EMPLEDO ACREDITABLE
                     case 15:
                         //double sueldoSubsidio = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador && e.noconcepto == 1).Sum(e => e.cantidad);
 
@@ -626,7 +626,7 @@ namespace Nominas
                         break;
                     #endregion
 
-                    #region SUBSIDIO DEFINITIVO
+                    #region SUBSIDIO AL EMPLEADO
                     case 16:
                         CalculoNomina.Core.tmpPagoNomina subsidioDefinitivo = new CalculoNomina.Core.tmpPagoNomina();
                         subsidioDefinitivo.idtrabajador = lstConceptosDeducciones[i].idtrabajador;

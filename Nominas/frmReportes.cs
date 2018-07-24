@@ -1100,7 +1100,7 @@ namespace Nominas
                         try
                         {
                             cnx.Open();
-                            lstEmp = eh.obtenerEmpleadoPorDepto(GLOBALES.IDEMPRESA, idDepartamentos, dtpInicioPeriodo.Value.Date, _tipoNomina, false);
+                            lstEmp = eh.obtenerEmpleadoPorDepto(GLOBALES.IDEMPRESA, idDepartamentos, dtpInicioPeriodo.Value.Date, _tipoNomina, false, _periodo);
                             cnx.Close();
                         }
                         catch

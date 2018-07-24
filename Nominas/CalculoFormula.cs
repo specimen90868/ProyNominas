@@ -17,6 +17,9 @@ namespace Nominas
         private string formula2;
         private List<CalculoNomina.Core.tmpPagoNomina> lstPercepciones;
 
+        public CalculoFormula()
+        { }
+
         public CalculoFormula(int _idTrabajador, DateTime _inicio, DateTime _fin, string _formula, List<CalculoNomina.Core.tmpPagoNomina> _lstPercepciones = null)
         {
             idTrabajador = _idTrabajador;
@@ -1488,6 +1491,14 @@ namespace Nominas
                 err = "IdTrabajador: " + idTrabajador.ToString() + " " + error.Message.ToString();
                 return err;
             }
+        }
+
+        public object calcularFormula(string formula)
+        {
+            object resultado;
+            MathParserTK.MathParser parser = new MathParserTK.MathParser();
+            resultado = parser.Parse(formula.ToString());
+            return resultado;
         }
     }
 }

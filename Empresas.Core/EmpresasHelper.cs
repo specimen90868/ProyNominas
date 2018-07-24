@@ -36,7 +36,7 @@ namespace Empresas.Core
         {
             DataTable dtEmpresas = new DataTable();
             Command.CommandText = @"select idempresa, nombre, rfc, registro, digitoverificador, representante, observacion, obracivil, 
-                                    idregimenfiscal, codigopostal, archivokey, archivocer, passwordkey, usuariopac, passwordpac from empresas where idempresa = @idempresa";
+                                    idregimenfiscal, codigopostal, archivokey, archivocer, passwordkey, usuariopac, passwordpac, nocertificado from empresas where idempresa = @idempresa";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idempresa);
             dtEmpresas = SelectData(Command);
@@ -59,6 +59,7 @@ namespace Empresas.Core
                 e.passwordkey = dtEmpresas.Rows[i]["passwordkey"].ToString();
                 e.usuariopac = dtEmpresas.Rows[i]["usuariopac"].ToString();
                 e.passwordpac = dtEmpresas.Rows[i]["passwordpac"].ToString();
+                e.nocertificado = dtEmpresas.Rows[i]["nocertificado"].ToString();
                 lstEmpresa.Add(e);
             }
             return lstEmpresa;
@@ -152,7 +153,7 @@ namespace Empresas.Core
             Command.Parameters.AddWithValue("representante", e.representante);
             Command.Parameters.AddWithValue("estatus", e.estatus);
             Command.Parameters.AddWithValue("certificado", e.certificado);
-            Command.Parameters.AddWithValue("nocertificado", e.certificado);
+            Command.Parameters.AddWithValue("nocertificado", e.nocertificado);
             Command.Parameters.AddWithValue("observacion", e.observacion);
             Command.Parameters.AddWithValue("obracivil", e.obracivil);
             Command.Parameters.AddWithValue("idregimenfiscal", e.idregimenfiscal);
@@ -198,6 +199,15 @@ namespace Empresas.Core
             Command.CommandText = "update empresas set estatus = 0 where idempresa = @idempresa";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", e.idempresa);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int actualizaCertificado(int idEmpresa, string certificado)
+        {
+            Command.CommandText = @"update empresas set certificado = @certificado where idempresa = @idempresa";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("certificado", certificado);
             return Command.ExecuteNonQuery();
         }
     }

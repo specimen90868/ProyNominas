@@ -134,7 +134,7 @@ namespace Nominas
                     try
                     {
                         cnx.Open();
-                        lstEmp = eh.obtenerEmpleadoPorDepto(GLOBALES.IDEMPRESA, idDepartamentos, DateTime.Parse(fecha).Date, _tiponomina, false);
+                        lstEmp = eh.obtenerEmpleadoPorDepto(GLOBALES.IDEMPRESA, idDepartamentos, DateTime.Parse(fecha).Date, _tiponomina, false, _periodo);
                         cnx.Close();
                     }
                     catch

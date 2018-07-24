@@ -14,8 +14,8 @@ namespace PeriodosNominales.Core
             Command.CommandText = @"select fechainicio, fechafin from PeriodosNominales where 
             id = (select top 1 idperiodonom from PagoNomina where idempresa = @idempresa and tiponomina = @tiponomina order by idperiodonom desc)";
             Command.Parameters.Clear();
-            Command.Parameters.Add("idempresa", idempresa);
-            Command.Parameters.Add("tiponomina", tiponomina);
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            Command.Parameters.AddWithValue("tiponomina", tiponomina);
             DataTable dt = new DataTable();
             dt = SelectData(Command);
             List<PeriodosNominales> lstPeriodos = new List<PeriodosNominales>();

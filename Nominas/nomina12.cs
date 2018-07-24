@@ -208,7 +208,6 @@ namespace Nominas
             }
         }
     }
-
     
     public class NominaReceptor
     {
@@ -378,7 +377,7 @@ namespace Nominas
         #region OPCIONALES
 
         private decimal TotalSueldosField;
-
+ 
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public decimal TotalSueldos
         {
@@ -394,6 +393,43 @@ namespace Nominas
             get { return TotalSueldosFieldSpecified; }
             set { TotalSueldosFieldSpecified = value; }
         }
+
+        private decimal TotalSeparacionIndemnizacionField;
+
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public decimal TotalSeparacionIndemnizacion
+        {
+            get { return TotalSeparacionIndemnizacionField;  }
+            set { TotalSeparacionIndemnizacionField = value; }
+        }
+
+        private bool TotalSeparacionIndemnizacionFieldSpecified;
+
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool TotalSeparacionIndemnizacionSpecified
+        {
+            get { return TotalSeparacionIndemnizacionFieldSpecified; }
+            set { TotalSeparacionIndemnizacionFieldSpecified = value; }
+        }
+
+        private SeparacionIndemnizacion SeparacionIndemnizacionField;
+
+        [System.Xml.Serialization.XmlElementAttribute()]
+        public SeparacionIndemnizacion SeparacionIndemnizacion
+        {
+            get { return SeparacionIndemnizacionField; }
+            set { SeparacionIndemnizacionField = value; }
+        }
+
+        private bool SeparacionIndemnizacionFieldSpecified;
+
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool SeparacionIndemnizacionSpecified
+        {
+            get { return SeparacionIndemnizacionFieldSpecified; }
+            set { SeparacionIndemnizacionFieldSpecified = value; }
+        }
+
         #endregion
     }
 
@@ -441,7 +477,6 @@ namespace Nominas
 
     }
 
-    
     public class NominaHorasExtra
     {
         [System.Xml.Serialization.XmlAttributeAttribute()]
@@ -583,6 +618,28 @@ namespace Nominas
     {
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public decimal SubsidioCausado { get; set; }
+    }
+
+    public class SeparacionIndemnizacion
+    {
+        #region REQUERIDOS
+
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public decimal TotalPagado { get; set; }
+
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int NumAñosServicio { get; set; }
+
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public decimal UltimoSueldoMensOrd { get; set; }
+
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public decimal IngresoAcumulable { get; set; }
+
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public decimal IngresoNoAcumulable { get; set; }
+
+        #endregion
     }
 
 

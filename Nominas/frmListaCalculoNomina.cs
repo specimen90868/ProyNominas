@@ -1435,6 +1435,59 @@ namespace Nominas
             }
         }
 
+        private void calculoNoPeriodoIso()
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+            nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+            object noPeriodo = 0;
+            int anio = 0;
+            List<CalculoNomina.Core.PagoNomina> lstPagoNomina = new List<CalculoNomina.Core.PagoNomina>();
+            try
+            {
+                if (_tipoNomina == GLOBALES.NORMAL)
+                {
+                    cnx.Open();
+                    noPeriodo = nh.obtenerNoPeriodoIso(_periodo, periodoInicio).ToString();
+                    switch ((int)noPeriodo)
+                    {
+                        case 1: anio = periodoFin.Year;
+                            break;
+                        case 52: anio = periodoInicio.Year;
+                            break;
+                        case 53: anio = periodoInicio.Year;
+                            break;
+                        default: anio = periodoFin.Year;
+                            break;
+                    }
+
+                    nh.actualizarNoPeriodoIso(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, int.Parse(noPeriodo.ToString()));
+                    cnx.Close();
+                }
+                else if (_tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
+                {
+                    cnx.Open();
+                    lstPagoNomina = nh.obtenerNoPeriodoExtraordinario(GLOBALES.IDEMPRESA, _tipoNomina, _periodo);
+                    if (lstPagoNomina.Count == 0)
+                        noPeriodo = 1;
+                    else
+                    {
+                        noPeriodo = lstPagoNomina[0].noperiodo + 1;
+                    }
+                    nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, int.Parse(noPeriodo.ToString()));
+                    cnx.Close();
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al actualizar el No. de Periodo", "Error");
+                cnx.Dispose();
+                return;
+            }
+        }
+
         #endregion
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
         private void CargaPreNomina(DateTime inicio, DateTime fin)

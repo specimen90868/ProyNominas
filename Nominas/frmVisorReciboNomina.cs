@@ -197,7 +197,7 @@ namespace Nominas
                 btnSellarTodo.Enabled = true;
                 btnSellar.Enabled = true;
 
-                btnTimbrarTodo.Enabled = true;
+                btnTimbrarTodo.Enabled = false;
                 btnTimbrar.Enabled = false;
 
                 btnErrores.Enabled = true;
@@ -274,8 +274,9 @@ namespace Nominas
         private string sellado(DataTable datosNomina, DataTable catalogo, int idTrabajador, string noEmpleado, string folio, DateTime fechaIngresoReal)
         {
             decimal totalGravado = 0, totalExento = 0;
-            decimal totalDeducciones = 0, totalOtrosPagos = 0;
+            decimal totalDeducciones = 0, totalDeduccionesIsr = 0, totalOtrosPagos = 0;
             int cantidadPercepciones = 0, cantidadDeducciones = 0;
+            decimal indenmizacionGravado = 0, indenmizacionExento = 0, cantidadSeparacionIndenmizacion = 0;
 
             #region COMPLEMENTO NOMINA
 
@@ -344,18 +345,32 @@ namespace Nominas
 
             for (int t = 0; t < datosNomina.Rows.Count; t++)
             {
-                totalGravado += decimal.Parse(datosNomina.Rows[t]["gravado"].ToString());
-                totalExento += decimal.Parse(datosNomina.Rows[t]["exento"].ToString());
-
                 if (datosNomina.Rows[t]["tipoconcepto"].ToString().Equals("P"))
                 {
+                    totalGravado += decimal.Parse(datosNomina.Rows[t]["gravado"].ToString());
+                    totalExento += decimal.Parse(datosNomina.Rows[t]["exento"].ToString());
+
+                    if (datosNomina.Rows[t]["valorcatsat"].ToString().Equals("025"))
+                    {
+                        cantidadSeparacionIndenmizacion = decimal.Parse(datosNomina.Rows[t]["cantidad"].ToString());
+                        indenmizacionExento = decimal.Parse(datosNomina.Rows[t]["exento"].ToString());
+                        indenmizacionGravado = decimal.Parse(datosNomina.Rows[t]["gravado"].ToString());
+                    }
                     cantidadPercepciones++;
                 }
 
                 if (datosNomina.Rows[t]["tipoconcepto"].ToString().Equals("D"))
                 {
-                    totalDeducciones += decimal.Parse(datosNomina.Rows[t]["cantidad"].ToString());
-                    cantidadDeducciones++;
+                    if (datosNomina.Rows[t]["valorcatsat"].ToString().Equals("002"))
+                    {
+                        totalDeduccionesIsr = decimal.Parse(datosNomina.Rows[t]["cantidad"].ToString());
+                        cantidadDeducciones++;
+                    }
+                    else
+                    {
+                        totalDeducciones += decimal.Parse(datosNomina.Rows[t]["cantidad"].ToString());
+                        cantidadDeducciones++;
+                    }  
                 }
 
                 if (datosNomina.Rows[t]["tipoconcepto"].ToString().Equals("S"))
@@ -369,20 +384,63 @@ namespace Nominas
             percepciones.TotalGravado = totalGravado;
             percepciones.TotalExento = totalExento;
             percepciones.TotalSueldosSpecified = true;
-            percepciones.TotalSueldos = totalGravado + totalExento;
+            percepciones.TotalSueldos = totalGravado + totalExento - cantidadSeparacionIndenmizacion;
             percepciones.Percepcion = new Percepcion[cantidadPercepciones];
+
+            if (!cantidadSeparacionIndenmizacion.Equals(0))
+            {
+                decimal ultimoSueldo = 0;
+                percepciones.TotalSeparacionIndemnizacionSpecified = true;
+                percepciones.SeparacionIndemnizacionSpecified = true;
+                percepciones.TotalSeparacionIndemnizacion = cantidadSeparacionIndenmizacion;
+
+                SeparacionIndemnizacion si = new SeparacionIndemnizacion();
+                si.TotalPagado = cantidadSeparacionIndenmizacion;
+
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
+                cmd.Connection = cnx;
+                CalculoNomina.Core.NominaHelper nhsi = new CalculoNomina.Core.NominaHelper();
+                nhsi.Command = cmd;
+                cnx.Open();
+                ultimoSueldo = decimal.Parse(nhsi.ultimoSueldoOrdinario(idTrabajador, _periodo, DateTime.Parse(datosNomina.Rows[0]["fechainicio"].ToString()),
+                    DateTime.Parse(datosNomina.Rows[0]["fechafin"].ToString())).ToString());
+                cnx.Close();
+
+                si.UltimoSueldoMensOrd = ultimoSueldo;
+                si.NumAñosServicio = int.Parse(datosNomina.Rows[0]["antiguedad"].ToString());
+                si.IngresoAcumulable = indenmizacionGravado;
+                si.IngresoNoAcumulable = indenmizacionExento;
+
+                percepciones.SeparacionIndemnizacion = si;
+            }
+            else
+            {
+                percepciones.SeparacionIndemnizacionSpecified = false;
+            }
 
 
             Deducciones deducciones = new Deducciones();
             deducciones.Deduccion = new Deduccion[cantidadDeducciones];
-            deducciones.TotalOtrasDeduccionesSpecified = true;
 
-            if (totalDeducciones != 0)
+
+            if (totalDeducciones != (decimal)0.00)
+            {
+                deducciones.TotalOtrasDeduccionesSpecified = true;
                 deducciones.TotalOtrasDeducciones = totalDeducciones;
+            }
             else
+            {
+                deducciones.TotalOtrasDeduccionesSpecified = false;
                 deducciones.TotalOtrasDeducciones = (decimal)0.01;
+            }
 
-            deducciones.TotalImpuestosRetenidosSpecified = false;
+            if (totalDeduccionesIsr != (decimal)0.00)
+            {
+                deducciones.TotalImpuestosRetenidosSpecified = true;
+                deducciones.TotalImpuestosRetenidos = totalDeduccionesIsr;
+            }
+            
 
             int posicionP = 0, posicionD = 0;
             for (int m = 0; m < datosNomina.Rows.Count; m++)
@@ -439,7 +497,6 @@ namespace Nominas
                     nomina.OtrosPagosSpecified = true;
                     nomina.TotalOtrosPagos = totalOtrosPagos;
                     nomina.TotalOtrosPagosSpecified = true;
-
                 }
             }
 
@@ -457,8 +514,8 @@ namespace Nominas
             nomina.TotalPercepciones = totalGravado + totalExento;
             nomina.TotalDeduccionesSpecified = true;
 
-            if(totalDeducciones != 0)
-                nomina.TotalDeducciones = totalDeducciones;
+            if((totalDeducciones + totalDeduccionesIsr) != (decimal)0.00)
+                nomina.TotalDeducciones = totalDeducciones + totalDeduccionesIsr;
             else
                 nomina.TotalDeducciones = (decimal)0.01;
 
@@ -507,8 +564,8 @@ namespace Nominas
             ComplementoConcepto concepto = new ComplementoConcepto();
             concepto.ValorUnitario = totalExento + totalGravado + totalOtrosPagos;
             concepto.Importe = totalExento + totalGravado + totalOtrosPagos;
-            if(totalDeducciones != 0)
-                concepto.Descuento = totalDeducciones;
+            if(totalDeducciones != 0 || totalDeduccionesIsr != 0)
+                concepto.Descuento = totalDeducciones + totalDeduccionesIsr;
             else
                 concepto.Descuento = (decimal)0.01;
 
@@ -524,10 +581,10 @@ namespace Nominas
             comprobante.Certificado = datosNomina.Rows[0]["certificado"].ToString();
             comprobante.SubTotal = totalExento + totalGravado + totalOtrosPagos;
 
-            if (totalDeducciones != 0)
+            if ((totalDeducciones + totalDeduccionesIsr) != (decimal)0.00)
             {
-                comprobante.Descuento = totalDeducciones;
-                comprobante.Total = (totalExento + totalGravado + totalOtrosPagos) - totalDeducciones;
+                comprobante.Descuento = totalDeducciones + totalDeduccionesIsr;
+                comprobante.Total = (totalExento + totalGravado + totalOtrosPagos) - (totalDeducciones + totalDeduccionesIsr);
             }
             else
             {
@@ -571,16 +628,32 @@ namespace Nominas
             strCadenaOriginal = File.ReadAllText(pathTxt);
 
             //Lectura del Archivo .KEY
-            System.Security.SecureString passwordSeguro = new System.Security.SecureString();
-            passwordSeguro.Clear();
-            foreach (char c in lstEmpresas[0].passwordkey.ToCharArray())
-                passwordSeguro.AppendChar(c);
-            byte[] llavePrivadaBytes = System.IO.File.ReadAllBytes(rutaArchivoKey);
-            RSACryptoServiceProvider rsa = opensslkey.DecodeEncryptedPrivateKeyInfo(llavePrivadaBytes, passwordSeguro);
-            SHA256CryptoServiceProvider hasher = new SHA256CryptoServiceProvider();
-            byte[] bytesFirmados = rsa.SignData(System.Text.Encoding.UTF8.GetBytes(strCadenaOriginal), hasher);
-            strSello = Convert.ToBase64String(bytesFirmados);  // Y aquí está el sello
+            //System.Security.SecureString passwordSeguro = new System.Security.SecureString();
+            //passwordSeguro.Clear();
+
+            //foreach (char c in lstEmpresas[0].passwordkey.ToCharArray())
+            //    passwordSeguro.AppendChar(c);
+
+            //byte[] llavePrivadaBytes = System.IO.File.ReadAllBytes(rutaArchivoKey);
+            //RSACryptoServiceProvider rsa = opensslkey.DecodeEncryptedPrivateKeyInfo(llavePrivadaBytes, passwordSeguro);
+            //SHA256CryptoServiceProvider provider = new SHA256CryptoServiceProvider();
+            //byte[] bytesFirmados = rsa.SignData(Encoding.UTF8.GetBytes(strCadenaOriginal), provider);
+
+            //strSello = Convert.ToBase64String(bytesFirmados);  // Y aquí está el sello
             //Lectura del Archivo .KEY
+            
+            
+            //Generación del sello de la Cadena Original - DLL BouncyCastle
+            byte[] llave = File.ReadAllBytes(rutaArchivoKey);
+            Org.BouncyCastle.Crypto.AsymmetricKeyParameter asp = Org.BouncyCastle.Security.PrivateKeyFactory.DecryptKey(lstEmpresas[0].passwordkey.ToCharArray(),
+                llave);
+            Org.BouncyCastle.Crypto.Parameters.RsaKeyParameters key = (Org.BouncyCastle.Crypto.Parameters.RsaKeyParameters)asp;
+            Org.BouncyCastle.Crypto.ISigner sig = Org.BouncyCastle.Security.SignerUtilities.GetSigner("SHA-256withRSA");
+            sig.Init(true, key);
+            byte[] bytes = Encoding.UTF8.GetBytes(strCadenaOriginal);
+            sig.BlockUpdate(bytes, 0, bytes.Length);
+            byte[] bytesFirmados = sig.GenerateSignature();
+            strSello = Convert.ToBase64String(bytesFirmados);
 
             StreamReader leer = new StreamReader(pathXml);
             XmlSerializer serializer = new XmlSerializer(typeof(Comprobante));
@@ -792,9 +865,9 @@ namespace Nominas
                                 xh.actualizaXmlCabeceraError(cabecera);
                                 cnx.Close();
                             }
-                            catch
+                            catch (Exception error)
                             {
-                                MessageBox.Show("Error: No fue posible actualizar el timbre. La operación se detendrá.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Error: No fue posible actualizar el timbre (CodEstatus = null). La operación se detendrá.\r\nMensaje: " + error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 cnx.Dispose();
                                 return;
                             }
@@ -848,16 +921,16 @@ namespace Nominas
                                 cnx.Open();
                                 xh.actualizaXmlCabecera(cabecera);
                                 //xh.insertaCfdiMaster(GLOBALES.IDEMPRESA, int.Parse(dgvVisorRecibos.Rows[i].Cells[0].Value.ToString()),
-                                                    //DateTime.Parse(dgvVisorRecibos.Rows[i].Cells[6].Value.ToString()).Date,
-                                                    //DateTime.Parse(dgvVisorRecibos.Rows[i].Cells[7].Value.ToString()).Date);
+                                //                    DateTime.Parse(dgvVisorRecibos.Rows[i].Cells[6].Value.ToString()).Date,
+                                //                    DateTime.Parse(dgvVisorRecibos.Rows[i].Cells[7].Value.ToString()).Date);
                                 //xh.insertaCfdiDetalle(GLOBALES.IDEMPRESA, int.Parse(dgvVisorRecibos.Rows[i].Cells[0].Value.ToString()),
-                                                    //DateTime.Parse(dgvVisorRecibos.Rows[i].Cells[6].Value.ToString()).Date,
-                                                    //DateTime.Parse(dgvVisorRecibos.Rows[i].Cells[7].Value.ToString()).Date);
+                                //                    DateTime.Parse(dgvVisorRecibos.Rows[i].Cells[6].Value.ToString()).Date,
+                                //                    DateTime.Parse(dgvVisorRecibos.Rows[i].Cells[7].Value.ToString()).Date);
                                 cnx.Close();
                             }
-                            catch
+                            catch (Exception error)
                             {
-                                MessageBox.Show("Error: No fue posible actualizar el timbre. La operación se detendrá.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Error: No fue posible actualizar el timbre. La operación se detendrá.\r\nMensaje: " + error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 cnx.Dispose();
                                 return;
                             }
@@ -1086,9 +1159,9 @@ namespace Nominas
                     xh.actualizaXmlCabeceraError(cabecera);
                     cnxTimbrado.Close();
                 }
-                catch 
+                catch (Exception error)
                 {
-                    MessageBox.Show("Error: No fue posible actualizar el timbre. La operación se detendrá.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Error: No fue posible actualizar el timbre. La operación se detendrá.\r\nMensaje:" + error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     cnx.Dispose();
                     return;
                 }
@@ -1144,18 +1217,18 @@ namespace Nominas
                 {
                     cnxTimbrado.Open();
                     xh.actualizaXmlCabecera(cabecera);
-                    xh.insertaCfdiMaster(GLOBALES.IDEMPRESA, int.Parse(dgvVisorRecibos.Rows[fila].Cells[0].Value.ToString()),
-                                                        DateTime.Parse(dgvVisorRecibos.Rows[fila].Cells[6].Value.ToString()).Date,
-                                                        DateTime.Parse(dgvVisorRecibos.Rows[fila].Cells[7].Value.ToString()).Date);
+                    //xh.insertaCfdiMaster(GLOBALES.IDEMPRESA, int.Parse(dgvVisorRecibos.Rows[fila].Cells[0].Value.ToString()),
+                    //                                    DateTime.Parse(dgvVisorRecibos.Rows[fila].Cells[6].Value.ToString()).Date,
+                    //                                    DateTime.Parse(dgvVisorRecibos.Rows[fila].Cells[7].Value.ToString()).Date);
 
-                    xh.insertaCfdiDetalle(GLOBALES.IDEMPRESA, int.Parse(dgvVisorRecibos.Rows[fila].Cells[0].Value.ToString()),
-                                        DateTime.Parse(dgvVisorRecibos.Rows[fila].Cells[6].Value.ToString()).Date,
-                                        DateTime.Parse(dgvVisorRecibos.Rows[fila].Cells[7].Value.ToString()).Date);
+                    //xh.insertaCfdiDetalle(GLOBALES.IDEMPRESA, int.Parse(dgvVisorRecibos.Rows[fila].Cells[0].Value.ToString()),
+                    //                    DateTime.Parse(dgvVisorRecibos.Rows[fila].Cells[6].Value.ToString()).Date,
+                    //                    DateTime.Parse(dgvVisorRecibos.Rows[fila].Cells[7].Value.ToString()).Date);
                     cnxTimbrado.Close();
                 }
-                catch (Exception)
+                catch (Exception error)
                 {
-                    MessageBox.Show("Error: No fue posible actualizar el timbre. La operación se detendrá.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Error: No fue posible actualizar el timbre. La operación se detendrá.\r\nMensaje:" + error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     cnx.Dispose();
                     return;
                 }

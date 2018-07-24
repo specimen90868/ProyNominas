@@ -605,11 +605,11 @@
             // mtxtNoEmpleado
             // 
             this.mtxtNoEmpleado.Location = new System.Drawing.Point(126, 160);
-            this.mtxtNoEmpleado.Mask = "9999";
+            this.mtxtNoEmpleado.Mask = "99999";
             this.mtxtNoEmpleado.Name = "mtxtNoEmpleado";
             this.mtxtNoEmpleado.Size = new System.Drawing.Size(152, 20);
             this.mtxtNoEmpleado.TabIndex = 4;
-            this.mtxtNoEmpleado.Text = "0000";
+            this.mtxtNoEmpleado.Text = "00000";
             this.mtxtNoEmpleado.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.mtxtNoEmpleado.Leave += new System.EventHandler(this.mtxtNoEmpleado_Leave);
             // 

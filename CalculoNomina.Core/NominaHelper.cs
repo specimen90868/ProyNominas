@@ -685,6 +685,16 @@ namespace CalculoNomina.Core
             return _periodo;
         }
 
+        public object obtenerNoPeriodoIso(int periodo, DateTime fecha)
+        {
+            Command.CommandText = "exec stp_NumeroPeriodoIso @periodo, @fecha";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("periodo", periodo);
+            Command.Parameters.AddWithValue("fecha", fecha);
+            object _periodo = Select(Command);
+            return _periodo;
+        }
+
         public List<PagoNomina> obtenerNoPeriodoExtraordinario(int idempresa, int tiponomina, int periodo)
         {
             Command.CommandText = @"select top 1 noperiodo, anio from PagoNomina where idempresa = @idempresa and tiponomina = @tiponomina and periodo = @periodo
@@ -710,6 +720,17 @@ namespace CalculoNomina.Core
         public int actualizarNoPeriodo(int idEmpresa, DateTime inicio, DateTime fin, int noPeriodo)
         {
             Command.CommandText = "update tmpPagoNomina set noperiodo = @noperiodo where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("fechainicio", inicio);
+            Command.Parameters.AddWithValue("fechafin", fin);
+            Command.Parameters.AddWithValue("noperiodo", noPeriodo);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int actualizarNoPeriodoIso(int idEmpresa, DateTime inicio, DateTime fin, int noPeriodo)
+        {
+            Command.CommandText = "update tmpPagoNomina set iso_noperiodo = @noperiodo where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             Command.Parameters.AddWithValue("fechainicio", inicio);
@@ -992,6 +1013,18 @@ namespace CalculoNomina.Core
             Command.Parameters.AddWithValue("fin", pn.fechafin);
             Command.Parameters.AddWithValue("noconcepto", pn.noconcepto);
             Command.Parameters.AddWithValue("guardada", pn.guardada);
+            object dato = Select(Command);
+            return dato;
+        }
+
+        public object ultimoSueldoOrdinario(int idTrabajador, int periodo, DateTime inicio, DateTime fin)
+        {
+            Command.CommandText = @"select top 1 total from cfdimaster nolock
+            where idtrabajador = @idtrabajador and tiponomina = 0 and periodo = @periodo
+            order by periodoinicio desc";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", idTrabajador);
+            Command.Parameters.AddWithValue("periodo", periodo);
             object dato = Select(Command);
             return dato;
         }

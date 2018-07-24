@@ -34,6 +34,8 @@ namespace Nominas
         bool ImagenAsignada = false;
         bool FLAG_KEY = false;
         bool FLAG_CERT = false;
+        bool ERROR = false;
+        string noCertificado = String.Empty;
         #endregion
         
         #region DELEGADOS
@@ -53,6 +55,7 @@ namespace Nominas
         {
             int existe = 0;
             string valorConfiguracion = String.Empty;
+            string certificado = String.Empty;
 
             //SE VALIDA SI TODOS LOS TEXTBOX HAN SIDO LLENADOS.
             string control = GLOBALES.VALIDAR(tabEmpresa, typeof(TextBox));
@@ -116,6 +119,7 @@ namespace Nominas
             em.usuariopac = txtUsuario.Text.Trim();
             em.passwordpac = txtPasswordPac.Text.Trim();
             em.passwordkey = txtPassword.Text;
+            em.certificado = "";
 
             if (FLAG_KEY)
             {
@@ -133,14 +137,13 @@ namespace Nominas
                 em.archivocer = System.IO.Path.GetFileName(txtPathCert.Text);
 
                 X509Certificate cert = new X509Certificate(txtPathCert.Text);
-                string certificado = Convert.ToBase64String(cert.Export(X509ContentType.Cert), Base64FormattingOptions.InsertLineBreaks);
+                certificado = Convert.ToBase64String(cert.Export(X509ContentType.Cert), Base64FormattingOptions.InsertLineBreaks);
                 em.certificado = certificado.Replace("\r\n", "");
-
+                
                 X509Certificate2 x509 = new X509Certificate2(txtPathCert.Text);
                 //byte[] rawData = ReadFile(txtPathCert.Text);
                 //x509.Import(rawData);
                 //string noCertificado = x509.SerialNumber;
-
 
                 string noCertificado = Encoding.Default.GetString(x509.GetSerialNumber());
                 char[] s = noCertificado.ToCharArray();
@@ -154,6 +157,7 @@ namespace Nominas
             else
             {
                 em.archivocer = txtPathCert.Text;
+                em.nocertificado = noCertificado;
             }
             
 
@@ -185,27 +189,6 @@ namespace Nominas
             periodo.estatus = GLOBALES.ACTIVO;
             periodo.pago = cmbPago.Text;
 
-            //CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
-            //nh.Command = cmd;
-
-            //CalculoNomina.Core.PagoNomina pn = new CalculoNomina.Core.PagoNomina();
-            //pn.idtrabajador = 0;
-            //pn.idconcepto = 0;
-            //pn.noconcepto = 0;
-            //pn.tipoconcepto = "P";
-            //pn.exento = 0;
-            //pn.gravado = 0;
-            //pn.cantidad = 0;
-            //pn.fechainicio = inicioPeriodo;
-            //pn.fechafin = finPeriodo;
-            //pn.noperiodo = 0;
-            //pn.diaslaborados = 0;
-            //pn.idusuario = 0;
-            //pn.tiponomina = 0;
-            //pn.fechapago = finPeriodo;
-            //pn.iddepartamento = 0;
-            //pn.idpuesto = 0;            
-
             try
             {
                 if (ImagenAsignada == true)
@@ -226,7 +209,6 @@ namespace Nominas
                 case 0:
                     try
                     {
-
                         cnx.Open();
                         eh.insertaEmpresa(em);
 
@@ -240,14 +222,16 @@ namespace Nominas
                         }
                         periodo.idempresa = idempresa;
                         ph.insertaPeriodo(periodo);
-                        //pn.idempresa = idempresa;
-                        //nh.insertaPrimerPeriodoNomina(pn);
+
+                        eh.actualizaCertificado(idempresa, certificado);
+                        
                         cnx.Close();
                         cnx.Dispose();
                     }
                     catch (Exception error)
                     {
                         MessageBox.Show("Error al ingresar la empresa. \r\n \r\n Error: " + error.Message);
+                        ERROR = true;
                     }
                     break;
                 case 2:
@@ -276,6 +260,7 @@ namespace Nominas
                     catch (Exception error)
                     {
                         MessageBox.Show("Error al actualizar la empresa. \r\n \r\n Error: " + error.Message);
+                        ERROR = true;
                     }
                     break;
             }
@@ -283,13 +268,21 @@ namespace Nominas
             switch (tipoGuardar)
             {
                 case 0:
-                    MessageBox.Show(String.Format("Informacción: Empresa {0} creada y/o actualizada con exito.", txtNombre.Text), "Información", 
+                    if (!ERROR)
+                    {
+                        MessageBox.Show(String.Format("Información: Empresa {0} creada y/o actualizada con exito.", txtNombre.Text), "Información",
                                     MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    GLOBALES.LIMPIAR(this, typeof(TextBox));
-                    GLOBALES.LIMPIAR(this, typeof(MaskedTextBox));
-                    
-                    if (OnNuevaEmpresa != null)
-                        OnNuevaEmpresa(_tipoOperacion);
+                        GLOBALES.LIMPIAR(this, typeof(TextBox));
+                        GLOBALES.LIMPIAR(this, typeof(MaskedTextBox));
+
+                        if (OnNuevaEmpresa != null)
+                            OnNuevaEmpresa(_tipoOperacion);
+                    }
+                    else 
+                    {
+                        MessageBox.Show(String.Format("Error: Empresa {0} no pudo ser creada y/o actualizada. \r\n\r\n Por favor verifique los datos.", txtNombre.Text), "Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                     break;
             }
         }
@@ -353,6 +346,7 @@ namespace Nominas
                         txtPassword.Text = lstEmpresa[i].passwordkey;
                         txtUsuario.Text = lstEmpresa[i].usuariopac;
                         txtPasswordPac.Text = lstEmpresa[i].passwordpac;
+                        noCertificado = lstEmpresa[i].nocertificado;
                     }
 
                     for (int i = 0; i < lstDireccion.Count; i++)

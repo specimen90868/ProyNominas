@@ -790,19 +790,19 @@ namespace Empleados.Core
             return dato;
         }
 
-        public List<Empleados> obtenerEmpleadoPorDepto(int idEmpresa, string idDepartamentos, DateTime fecha, int tiponomina, bool timbrado)
+        public List<Empleados> obtenerEmpleadoPorDepto(int idEmpresa, string idDepartamentos, DateTime fecha, int tiponomina, bool timbrado, int periodo)
         {
             DataTable dtEmpleados = new DataTable();
             List<Empleados> lstEmpleados = new List<Empleados>();
             if (timbrado)
                 Command.CommandText = @"select cm.idtrabajador, cm.noempleado, cm.nombre as nombrecompleto from cfdimaster cm 
                                     where cm.iddepartamento in (select * from fnListaCadenaATabla(@deptos)) and cm.periodoinicio = @fecha and
-                                    cm.idempresa = @idempresa and cm.tiponomina = @tiponomina
+                                    cm.idempresa = @idempresa and cm.tiponomina = @tiponomina and cm.periodo = @periodo
                                     group by cm.idtrabajador, cm.noempleado, cm.nombre";
             else
                 Command.CommandText = @"select pn.idtrabajador, t.noempleado, t.nombrecompleto from pagonomina pn inner join trabajadores t on pn.idtrabajador = t.idtrabajador
                                     where pn.iddepartamento in (select * from fnListaCadenaATabla(@deptos)) and pn.fechainicio = @fecha and
-                                    pn.idempresa = @idempresa and pn.tiponomina = @tiponomina
+                                    pn.idempresa = @idempresa and pn.tiponomina = @tiponomina and pn.periodo = @periodo
                                     group by pn.idtrabajador, t.noempleado, t.nombrecompleto";
             
             Command.Parameters.Clear();
@@ -810,6 +810,7 @@ namespace Empleados.Core
             Command.Parameters.AddWithValue("deptos", idDepartamentos);
             Command.Parameters.AddWithValue("fecha", fecha);
             Command.Parameters.AddWithValue("tiponomina", tiponomina);
+            Command.Parameters.AddWithValue("periodo", periodo);
             dtEmpleados = SelectData(Command);
             for (int i = 0; i < dtEmpleados.Rows.Count; i++)
             {
