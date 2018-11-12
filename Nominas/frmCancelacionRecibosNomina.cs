@@ -319,8 +319,6 @@ namespace Nominas
         }
 
  
-
-
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             int fila = dgvVisorRecibos.CurrentCell.RowIndex;

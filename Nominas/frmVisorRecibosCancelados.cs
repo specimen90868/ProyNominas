@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nominas.finkokProdCancelacion;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -26,6 +27,13 @@ namespace Nominas
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         string rutaCancelados = String.Empty;
         string directorioEmpresa = String.Empty;
+        List<Empresas.Core.Empresas> lstEmpresas;
+        string rutaArchivosAcuse = String.Empty;
+        string carpetaArchivoKeys = String.Empty;
+        string rutaArchivoKey = String.Empty;
+        string rutaArchivoCer = String.Empty;
+        string rutaOpenSsl = String.Empty;
+        string rutaArchivosPem = String.Empty;
         #endregion
 
         private void frmVisorRecibosCancelados_Load(object sender, EventArgs e)
@@ -47,10 +55,16 @@ namespace Nominas
             Configuracion.Core.ConfiguracionHelper ch = new Configuracion.Core.ConfiguracionHelper();
             ch.Command = cmd;
 
+            Empresas.Core.EmpresasHelper eh = new Empresas.Core.EmpresasHelper();
+            eh.Command = cmd;
+
+            lstEmpresas = new List<Empresas.Core.Empresas>();
+
             try
             {
                 cnx.Open();
                 rutaCancelados = ch.obtenerValorConfiguracion(11).ToString();
+                lstEmpresas = eh.obtenerDatosCertPac(GLOBALES.IDEMPRESA);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -170,7 +184,7 @@ namespace Nominas
 
             Xml.Core.XmlCabeceraHelper xh = new Xml.Core.XmlCabeceraHelper();
             xh.Command = cmd;
-            
+           
             try
             {
                 cnx.Open();
@@ -180,11 +194,10 @@ namespace Nominas
             }
             catch (Exception)
             {
-                MessageBox.Show("Error: No fue posible obtener generar el acuse de cancelación.\r\n\r\nEsta ventana se cerrará.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error: No fue posible obtener el acuse de cancelación.\r\n\r\nEsta ventana se cerrará.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 cnx.Dispose();
                 this.Dispose();
             }
-            
 
             using (StreamWriter sw = new StreamWriter(String.Format(@"{0}\{1}.xml", directorioEmpresa, uuid), false, Encoding.UTF8))
             {
@@ -192,6 +205,7 @@ namespace Nominas
             }
 
             MessageBox.Show("Información:\r\nEl acuse fue creado en: " + directorioEmpresa, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            
         }
     }
 }

@@ -77,9 +77,10 @@
             // rbtnExtraordinario
             // 
             this.rbtnExtraordinario.AutoSize = true;
-            this.rbtnExtraordinario.Location = new System.Drawing.Point(19, 36);
+            this.rbtnExtraordinario.Location = new System.Drawing.Point(25, 44);
+            this.rbtnExtraordinario.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rbtnExtraordinario.Name = "rbtnExtraordinario";
-            this.rbtnExtraordinario.Size = new System.Drawing.Size(127, 17);
+            this.rbtnExtraordinario.Size = new System.Drawing.Size(169, 21);
             this.rbtnExtraordinario.TabIndex = 6;
             this.rbtnExtraordinario.Text = "Periodo extraordinario";
             this.rbtnExtraordinario.UseVisualStyleBackColor = true;
@@ -87,40 +88,43 @@
             // 
             // tool
             // 
+            this.tool.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.tool.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolLabelProgreso,
             this.toolLabelAvance,
             this.toolLabelEtapa});
-            this.tool.Location = new System.Drawing.Point(0, 528);
+            this.tool.Location = new System.Drawing.Point(0, 645);
             this.tool.Name = "tool";
-            this.tool.Size = new System.Drawing.Size(1180, 22);
+            this.tool.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+            this.tool.Size = new System.Drawing.Size(1572, 25);
             this.tool.TabIndex = 1;
             this.tool.Text = "statusStrip1";
             // 
             // toolLabelProgreso
             // 
             this.toolLabelProgreso.Name = "toolLabelProgreso";
-            this.toolLabelProgreso.Size = new System.Drawing.Size(57, 17);
+            this.toolLabelProgreso.Size = new System.Drawing.Size(71, 20);
             this.toolLabelProgreso.Text = "Progreso:";
             // 
             // toolLabelAvance
             // 
             this.toolLabelAvance.Name = "toolLabelAvance";
-            this.toolLabelAvance.Size = new System.Drawing.Size(23, 17);
+            this.toolLabelAvance.Size = new System.Drawing.Size(29, 20);
             this.toolLabelAvance.Text = "0%";
             // 
             // toolLabelEtapa
             // 
             this.toolLabelEtapa.Name = "toolLabelEtapa";
-            this.toolLabelEtapa.Size = new System.Drawing.Size(0, 17);
+            this.toolLabelEtapa.Size = new System.Drawing.Size(0, 20);
             // 
             // rbtnOrdinaria
             // 
             this.rbtnOrdinaria.AutoSize = true;
             this.rbtnOrdinaria.Checked = true;
-            this.rbtnOrdinaria.Location = new System.Drawing.Point(19, 15);
+            this.rbtnOrdinaria.Location = new System.Drawing.Point(25, 18);
+            this.rbtnOrdinaria.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rbtnOrdinaria.Name = "rbtnOrdinaria";
-            this.rbtnOrdinaria.Size = new System.Drawing.Size(104, 17);
+            this.rbtnOrdinaria.Size = new System.Drawing.Size(138, 21);
             this.rbtnOrdinaria.TabIndex = 5;
             this.rbtnOrdinaria.TabStop = true;
             this.rbtnOrdinaria.Text = "Periodo ordinario";
@@ -131,9 +135,10 @@
             // 
             this.btnErrores.Image = ((System.Drawing.Image)(resources.GetObject("btnErrores.Image")));
             this.btnErrores.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnErrores.Location = new System.Drawing.Point(1099, 12);
+            this.btnErrores.Location = new System.Drawing.Point(1463, 15);
+            this.btnErrores.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnErrores.Name = "btnErrores";
-            this.btnErrores.Size = new System.Drawing.Size(82, 52);
+            this.btnErrores.Size = new System.Drawing.Size(109, 64);
             this.btnErrores.TabIndex = 26;
             this.btnErrores.Text = "Errores";
             this.btnErrores.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -164,9 +169,10 @@
             // 
             this.btnCancelarTodo.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelarTodo.Image")));
             this.btnCancelarTodo.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnCancelarTodo.Location = new System.Drawing.Point(923, 12);
+            this.btnCancelarTodo.Location = new System.Drawing.Point(1229, 15);
+            this.btnCancelarTodo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCancelarTodo.Name = "btnCancelarTodo";
-            this.btnCancelarTodo.Size = new System.Drawing.Size(82, 52);
+            this.btnCancelarTodo.Size = new System.Drawing.Size(109, 64);
             this.btnCancelarTodo.TabIndex = 22;
             this.btnCancelarTodo.Text = "Cancelar todo";
             this.btnCancelarTodo.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -184,9 +190,10 @@
             this.btnVer.BackColor = System.Drawing.SystemColors.Control;
             this.btnVer.Image = ((System.Drawing.Image)(resources.GetObject("btnVer.Image")));
             this.btnVer.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnVer.Location = new System.Drawing.Point(358, 11);
+            this.btnVer.Location = new System.Drawing.Point(477, 14);
+            this.btnVer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnVer.Name = "btnVer";
-            this.btnVer.Size = new System.Drawing.Size(77, 52);
+            this.btnVer.Size = new System.Drawing.Size(103, 64);
             this.btnVer.TabIndex = 10;
             this.btnVer.Text = "Ver recibos";
             this.btnVer.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -241,10 +248,11 @@
             this.error});
             this.dgvVisorRecibos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvVisorRecibos.Location = new System.Drawing.Point(0, 0);
+            this.dgvVisorRecibos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvVisorRecibos.Name = "dgvVisorRecibos";
             this.dgvVisorRecibos.ReadOnly = true;
             this.dgvVisorRecibos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvVisorRecibos.Size = new System.Drawing.Size(1180, 528);
+            this.dgvVisorRecibos.Size = new System.Drawing.Size(1572, 645);
             this.dgvVisorRecibos.TabIndex = 0;
             // 
             // idtrabajador
@@ -317,6 +325,7 @@
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -335,17 +344,19 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dgvVisorRecibos);
             this.splitContainer1.Panel2.Controls.Add(this.tool);
-            this.splitContainer1.Size = new System.Drawing.Size(1184, 635);
-            this.splitContainer1.SplitterDistance = 77;
+            this.splitContainer1.Size = new System.Drawing.Size(1576, 772);
+            this.splitContainer1.SplitterDistance = 93;
+            this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 2;
             // 
             // btnCancelar
             // 
             this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
             this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnCancelar.Location = new System.Drawing.Point(1011, 12);
+            this.btnCancelar.Location = new System.Drawing.Point(1346, 15);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(82, 52);
+            this.btnCancelar.Size = new System.Drawing.Size(109, 64);
             this.btnCancelar.TabIndex = 27;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -355,9 +366,11 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.cmbPeriodos);
-            this.groupBox2.Location = new System.Drawing.Point(180, 4);
+            this.groupBox2.Location = new System.Drawing.Point(240, 5);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(172, 60);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Size = new System.Drawing.Size(229, 74);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Fechas";
@@ -365,18 +378,21 @@
             // cmbPeriodos
             // 
             this.cmbPeriodos.FormattingEnabled = true;
-            this.cmbPeriodos.Location = new System.Drawing.Point(6, 23);
+            this.cmbPeriodos.Location = new System.Drawing.Point(8, 28);
+            this.cmbPeriodos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbPeriodos.Name = "cmbPeriodos";
-            this.cmbPeriodos.Size = new System.Drawing.Size(160, 21);
+            this.cmbPeriodos.Size = new System.Drawing.Size(212, 24);
             this.cmbPeriodos.TabIndex = 27;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.rbtnExtraordinario);
             this.groupBox1.Controls.Add(this.rbtnOrdinaria);
-            this.groupBox1.Location = new System.Drawing.Point(10, 4);
+            this.groupBox1.Location = new System.Drawing.Point(13, 5);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(164, 60);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(219, 74);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Periodo";
@@ -390,14 +406,15 @@
             // 
             // frmCancelacionRecibosNomina
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1184, 635);
+            this.ClientSize = new System.Drawing.Size(1576, 772);
             this.Controls.Add(this.splitContainer1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(1200, 674);
+            this.MaximumSize = new System.Drawing.Size(1594, 819);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(1200, 674);
+            this.MinimumSize = new System.Drawing.Size(1594, 819);
             this.Name = "frmCancelacionRecibosNomina";
             this.Text = "Cancelacion de recibos de nómina";
             this.Load += new System.EventHandler(this.frmCancelacionRecibosNomina_Load);

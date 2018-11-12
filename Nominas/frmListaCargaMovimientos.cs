@@ -148,6 +148,7 @@ namespace Nominas
         private void workMovimientos_DoWork(object sender, DoWorkEventArgs e)
         {
             string formulaexento = "";
+            string formulagravado = "";
             int tamNoEmpleado = 0;
             string noEmpleadoExcel = "";
             int idConcepto = 0, idEmpleado = 0;
@@ -267,11 +268,13 @@ namespace Nominas
                         Conceptos.Core.Conceptos _concepto = new Conceptos.Core.Conceptos();
                         concepto.noconcepto = lstConcepto[0].noconcepto;
                         concepto.idempresa = GLOBALES.IDEMPRESA;
+                        concepto.periodo = _periodo;
 
                         try
                         {
                             cnx.Open();
                             formulaexento = ch.obtenerFormulaExento(concepto).ToString();
+                            formulagravado = ch.obtenerFormula(concepto).ToString();
                             cnx.Close();
                         }
                         catch 
@@ -282,31 +285,65 @@ namespace Nominas
                             this.Dispose();
                         }
 
-                        if (formulaexento == "0")
+                        if (formulaexento == "0" && formulagravado == "0")
                         {
                             pn.cantidad = decimal.Parse(fila.Cells["cantidad"].Value.ToString());
                             pn.exento = 0;
                             pn.gravado = decimal.Parse(fila.Cells["cantidad"].Value.ToString());
                         }
-                        else {
+                        else if (formulaexento != "0" && formulagravado == "0")
+                        {
                             CalculoFormula cf = new CalculoFormula(idEmpleado,
                                 _inicioPeriodo,
                                 _finPeriodo,
-                                formulaexento);
+                                formulaexento,
+                                null,
+                                decimal.Parse(fila.Cells["cantidad"].Value.ToString()));
 
                             decimal exento = decimal.Parse(cf.calcularFormula().ToString());
                             decimal cantidad = decimal.Parse(fila.Cells["cantidad"].Value.ToString());
-                            decimal gravado = 0;
 
-                            if (cantidad <= exento)
-                            {
-                                exento = cantidad;
-                                gravado = 0;
-                            }
-                            else
-                            {
-                                gravado = cantidad - exento;
-                            }
+                            pn.cantidad = cantidad;
+                            pn.exento = exento;
+                            pn.gravado = cantidad - exento;
+                        }
+                        else if (formulaexento == "0" && formulagravado != "0")
+                        {
+                            CalculoFormula cf = new CalculoFormula(idEmpleado,
+                                _inicioPeriodo,
+                                _finPeriodo,
+                                formulagravado,
+                                null,
+                                decimal.Parse(fila.Cells["cantidad"].Value.ToString()));
+
+                            decimal gravado = decimal.Parse(cf.calcularFormula().ToString());
+                            decimal cantidad = decimal.Parse(fila.Cells["cantidad"].Value.ToString());
+
+                            pn.cantidad = cantidad;
+                            pn.exento = cantidad - gravado;
+                            pn.gravado = gravado;
+                        }
+                        else if (formulaexento != "0" && formulagravado != "0")
+                        {
+                            CalculoFormula cf = new CalculoFormula(idEmpleado,
+                                _inicioPeriodo,
+                                _finPeriodo,
+                                formulaexento,
+                                null,
+                                decimal.Parse(fila.Cells["cantidad"].Value.ToString()));
+
+                            decimal exento = decimal.Parse(cf.calcularFormula().ToString());
+
+                            cf = new CalculoFormula(idEmpleado,
+                                _inicioPeriodo,
+                                _finPeriodo,
+                                formulagravado,
+                                null,
+                                decimal.Parse(fila.Cells["cantidad"].Value.ToString()));
+
+                            decimal gravado = decimal.Parse(cf.calcularFormula().ToString());
+
+                            decimal cantidad = decimal.Parse(fila.Cells["cantidad"].Value.ToString());
 
                             pn.cantidad = cantidad;
                             pn.exento = exento;

@@ -1671,7 +1671,7 @@ namespace Nominas
                         return;
                     }
 
-                    string formulaDiasAPagar = "[DiasLaborados]-[Faltas]-[DiasIncapacidad]";
+                    string formulaDiasAPagar = "[DiasLaborados]-[Faltas]-[DiasIncapacidad]-[DiasVacaciones]";
 
                     for (int i = 0; i < lstTrabajadores.Count; i++)
                     {

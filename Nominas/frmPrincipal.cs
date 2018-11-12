@@ -879,23 +879,27 @@ namespace Nominas
 
             //string curp = "";
             //string rfc = "";
-            //string nombre = "";
-            //string numempleado = "";
-
-            string sello = "";
-            string noCertificado = "";
+            string nombre = "";
+            string numempleado = "";
+            string fechainicio = "";
+            string fechafin = "";
+            string ImporteExento = "", ImporteGravado = "", Concepto = "", Clave = "", TipoPercepcion = "", TipoDeduccion = "",
+                OtroPago = "", Importe = "";
+            //string sello = "";
+            //string noCertificado = "";
+            int fila = 1;
 
             List<Xml.Core.XmlCabecera> xmls = new List<Xml.Core.XmlCabecera>();
             Xml.Core.XmlCabeceraHelper xh = new Xml.Core.XmlCabeceraHelper();
             xh.Command = cmd;
 
             cnx.Open();
-            xmls = xh.obtenerXml(GLOBALES.IDEMPRESA, 0, 7, new DateTime(2017, 10, 23).Date, new DateTime(2017, 10, 29).Date);
+            xmls = xh.obtenerXml(GLOBALES.IDEMPRESA, 2, 15, new DateTime(2017, 05, 01).Date, new DateTime(2017, 05, 31).Date);
             cnx.Close();
             //cnx.Dispose();
 
-            //Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
-            //excel.Workbooks.Add();
+            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
+            excel.Workbooks.Add();
 
             for (int i = 0; i < xmls.Count; i++)
             {
@@ -905,53 +909,137 @@ namespace Nominas
                 //    sw.Flush();
                 //    sw.Close();
                 //}
-
-                System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
-                doc.LoadXml(xmls[i].xml);
-                //String xml = File.ReadAllText(String.Format(@"C:\Temp\xmls_nomina\{0}_{1}.xml", xmls[i].idtrabajador, i), Encoding.UTF8);
-                //doc.LoadXml(xml);
-
-                System.Xml.XmlNodeList Comprobante = doc.GetElementsByTagName("cfdi:Comprobante");
-                foreach (System.Xml.XmlElement nodo in Comprobante)
+                if (xmls[i].xml != "")
                 {
-                    noCertificado = nodo.GetAttribute("NoCertificado");
-                    sello = nodo.GetAttribute("Sello");
-                }
+                    System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+                    doc.LoadXml(xmls[i].xml);
+                    //String xml = File.ReadAllText(String.Format(@"C:\Temp\xmls_nomina\{0}_{1}.xml", xmls[i].idtrabajador, i), Encoding.UTF8);
+                    //doc.LoadXml(xml);
 
-                if (noCertificado == String.Empty && sello == String.Empty)
-                {
-                    foreach (System.Xml.XmlElement nodo in Comprobante)
+                    //System.Xml.XmlNodeList Comprobante = doc.GetElementsByTagName("cfdi:Comprobante");
+                    //foreach (System.Xml.XmlElement nodo in Comprobante)
+                    //{
+                    //    noCertificado = nodo.GetAttribute("NoCertificado");
+                    //    sello = nodo.GetAttribute("Sello");
+                    //}
+
+                    //if (noCertificado == String.Empty && sello == String.Empty)
+                    //{
+                    //    foreach (System.Xml.XmlElement nodo in Comprobante)
+                    //    {
+                    //        noCertificado = nodo.GetAttribute("noCertificado");
+                    //        sello = nodo.GetAttribute("sello");
+                    //    }
+                    //}
+
+                    //cnx.Open();
+                    //xh.actualizaXmlCertificado(xmls[i].folio, noCertificado, sello);
+                    //cnx.Close();
+
+                    System.Xml.XmlNodeList fechas = doc.GetElementsByTagName("nomina12:Nomina");
+                    foreach (System.Xml.XmlElement fecha in fechas)
                     {
-                        noCertificado = nodo.GetAttribute("noCertificado");
-                        sello = nodo.GetAttribute("sello");
+                        fechainicio = fecha.GetAttribute("FechaInicialPago");
+                        fechafin = fecha.GetAttribute("FechaFinalPago");
+                    }
+
+                    System.Xml.XmlNodeList Receptor = doc.GetElementsByTagName("cfdi:Receptor");
+                    foreach (System.Xml.XmlElement nodo in Receptor)
+                    {
+                    //    rfc = nodo.GetAttribute("rfc");
+                        nombre = nodo.GetAttribute("nombre");
+                    }
+
+                    System.Xml.XmlNodeList empleado = doc.GetElementsByTagName("nomina12:Receptor");
+                    foreach (System.Xml.XmlElement nodo in empleado)
+                    {
+                        numempleado = nodo.GetAttribute("NumEmpleado");
+                        //curp = nodo.GetAttribute("CURP");
+
+                    }
+
+                    //excel.Cells[fila, 1] = numempleado;
+                    //excel.Cells[fila, 2] = nombre;
+                    //excel.Cells[fila, 3] = rfc;
+
+                    System.Xml.XmlNodeList percepciones = doc.GetElementsByTagName("nomina12:Percepciones");
+                    foreach (System.Xml.XmlElement nodo in percepciones)
+                    {
+                        System.Xml.XmlNodeList percepcion = nodo.GetElementsByTagName("nomina12:Percepcion");
+                        foreach (System.Xml.XmlElement xe in percepcion)
+                        {
+                            ImporteExento = xe.GetAttribute("ImporteExento");
+                            ImporteGravado = xe.GetAttribute("ImporteGravado");
+                            Concepto = xe.GetAttribute("Concepto");
+                            Clave = xe.GetAttribute("Clave");
+                            TipoPercepcion = xe.GetAttribute("TipoPercepcion");
+
+                            excel.Cells[fila, 1] = (decimal.Parse(ImporteExento) + decimal.Parse(ImporteGravado)).ToString();
+                            excel.Cells[fila, 2] = Concepto;
+                            excel.Cells[fila, 3] = Clave;
+                            excel.Cells[fila, 4] = TipoPercepcion;
+                            excel.Cells[fila, 5] = "Percepcion";
+                            excel.Cells[fila, 6] = numempleado;
+                            excel.Cells[fila, 7] = nombre;
+                            excel.Cells[fila, 8] = fechainicio;
+                            excel.Cells[fila, 9] = fechafin;
+                            fila++;
+                        }
+                        //curp = nodo.GetAttribute("CURP");
+                    }
+
+                    System.Xml.XmlNodeList deducciones = doc.GetElementsByTagName("nomina12:Deducciones");
+                    foreach (System.Xml.XmlElement nodo in deducciones)
+                    {
+                        System.Xml.XmlNodeList deduccion = nodo.GetElementsByTagName("nomina12:Deduccion");
+                        foreach (System.Xml.XmlElement xe in deduccion)
+                        {
+                            Importe = xe.GetAttribute("Importe");
+                            Concepto = xe.GetAttribute("Concepto");
+                            Clave = xe.GetAttribute("Clave");
+                            TipoDeduccion = xe.GetAttribute("TipoDeduccion");
+
+                            excel.Cells[fila, 1] = Importe;
+                            excel.Cells[fila, 2] = Concepto;
+                            excel.Cells[fila, 3] = Clave;
+                            excel.Cells[fila, 4] = TipoDeduccion;
+                            excel.Cells[fila, 5] = "Deduccion";
+                            excel.Cells[fila, 6] = numempleado;
+                            excel.Cells[fila, 7] = nombre;
+                            excel.Cells[fila, 8] = fechainicio;
+                            excel.Cells[fila, 9] = fechafin;
+                            fila++;
+                        }
+                        //curp = nodo.GetAttribute("CURP");
+                    }
+
+                    System.Xml.XmlNodeList otrospagos = doc.GetElementsByTagName("nomina12:OtrosPagos");
+                    foreach (System.Xml.XmlElement nodo in otrospagos)
+                    {
+                        System.Xml.XmlNodeList otropago = nodo.GetElementsByTagName("nomina12:OtroPago");
+                        foreach (System.Xml.XmlElement xe in otropago)
+                        {
+                            Importe = xe.GetAttribute("Importe");
+                            Concepto = xe.GetAttribute("Concepto");
+                            Clave = xe.GetAttribute("Clave");
+                            OtroPago = xe.GetAttribute("TipoOtroPago");
+
+                            excel.Cells[fila, 1] = Importe;
+                            excel.Cells[fila, 2] = Concepto;
+                            excel.Cells[fila, 3] = Clave;
+                            excel.Cells[fila, 4] = OtroPago;
+                            excel.Cells[fila, 5] = "OtroPago";
+                            excel.Cells[fila, 6] = numempleado;
+                            excel.Cells[fila, 7] = nombre;
+                            excel.Cells[fila, 8] = fechainicio;
+                            excel.Cells[fila, 9] = fechafin;
+                            fila++;
+                        }
+                        //curp = nodo.GetAttribute("CURP");
                     }
                 }
-
-                cnx.Open();
-                xh.actualizaXmlCertificado(xmls[i].folio, noCertificado, sello);
-                cnx.Close();
-
-                //System.Xml.XmlNodeList Receptor = doc.GetElementsByTagName("cfdi:Receptor");
-                //foreach (System.Xml.XmlElement nodo in Receptor)
-                //{
-                //    rfc = nodo.GetAttribute("rfc");
-                //    nombre = nodo.GetAttribute("nombre");
-                //}
-
-                //System.Xml.XmlNodeList empleado = doc.GetElementsByTagName("nomina:Nomina");
-                //foreach (System.Xml.XmlElement nodo in empleado)
-                //{
-                //    numempleado = nodo.GetAttribute("NumEmpleado");
-                //    curp = nodo.GetAttribute("CURP");
-
-                //}
-
-                //excel.Cells[i + 1, 1] = numempleado;
-                //excel.Cells[i + 1, 2] = nombre;
-                //excel.Cells[i + 1, 3] = rfc;
-                //excel.Cells[i + 1, 4] = curp;
             }
-            //excel.Visible = true;
+            excel.Visible = true;
             cnx.Dispose();
         }
 

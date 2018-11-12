@@ -97,7 +97,8 @@ namespace Xml.Core
         public List<XmlCabecera> obtenerPeriodosTimbrados(int idempresa, int tiponomina, int periodo)
         {
             Command.CommandText = @"select distinct cast(periodoinicio as varchar(10)) + '/' + cast(periodofin as varchar(10)) as xml 
-                                    from xmlCabecera where idempresa = @idempresa and tiponomina = @tiponomina and emitido = 'S' and periodo = @periodo";
+                                    from xmlCabecera where idempresa = @idempresa and tiponomina = @tiponomina and emitido = 'S' and periodo = @periodo
+                                    order by cast(periodoinicio as varchar(10)) + '/' + cast(periodofin as varchar(10)) asc";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idempresa);
             Command.Parameters.AddWithValue("tiponomina", tiponomina);
@@ -426,7 +427,7 @@ namespace Xml.Core
         public List<XmlCabecera> obtenerXml(int idempresa, int tipoNomina, int periodo, DateTime inicio, DateTime fin)
         {
             string consulta = @"select folio, idtrabajador, xml from xmlcabecera where idempresa = @idempresa and tiponomina = @tiponomina 
-                                and periodoinicio >= @inicio and periodoinicio <= @fin and emitido = 'S' and periodo = @periodo and xml is not null";
+                                and periodoinicio >= @inicio and periodoinicio <= @fin and emitido = 'S' and periodo = @periodo";
             List<XmlCabecera> lst = new List<XmlCabecera>();
             DataTable dt = new DataTable();
             Command.CommandText = consulta;

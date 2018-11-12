@@ -16,17 +16,18 @@ namespace Nominas
         private string formula;
         private string formula2;
         private List<CalculoNomina.Core.tmpPagoNomina> lstPercepciones;
+        private decimal montoCantidad;
 
         public CalculoFormula()
         { }
 
-        public CalculoFormula(int _idTrabajador, DateTime _inicio, DateTime _fin, string _formula, List<CalculoNomina.Core.tmpPagoNomina> _lstPercepciones = null)
+        public CalculoFormula(int _idTrabajador, DateTime _inicio, DateTime _fin, string _formula, List<CalculoNomina.Core.tmpPagoNomina> _lstPercepciones = null, decimal _montoCantidad = 0)
         {
             idTrabajador = _idTrabajador;
             inicioPeriodo = _inicio;
             finPeriodo = _fin;
             formula = _formula;
-            lstPercepciones = _lstPercepciones;
+            montoCantidad = _montoCantidad;
         }
 
         public object calcularFormula() 
@@ -1475,6 +1476,9 @@ namespace Nominas
                         porcentajeCV = icvh.ExcedenteVSM(6);
                         cnx.Close();
                         formula = formula.Replace("[" + variables[i] + "]", porcentajeCV.ToString());
+                        break;
+                    case "MontoConcepto":
+                        formula = formula.Replace("[" + variables[i] + "]", montoCantidad.ToString());
                         break;
                 }
             }

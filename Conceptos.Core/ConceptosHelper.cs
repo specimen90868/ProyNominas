@@ -197,10 +197,11 @@ namespace Conceptos.Core
 
         public object obtenerFormulaExento(Conceptos c)
         {
-            Command.CommandText = "select formulaexento from conceptos where noconcepto = @noconcepto and idempresa = @idempresa";
+            Command.CommandText = "select formulaexento from conceptos where noconcepto = @noconcepto and idempresa = @idempresa and periodo = @periodo";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("noconcepto", c.noconcepto);
             Command.Parameters.AddWithValue("idempresa", c.idempresa);
+            Command.Parameters.AddWithValue("periodo", c.periodo);
             object dato = Select(Command);
             return dato;
         }

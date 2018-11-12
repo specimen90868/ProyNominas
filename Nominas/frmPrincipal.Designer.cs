@@ -795,7 +795,7 @@
             this.Controls.Add(this.mnuPrincipal);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.mnuPrincipal;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmPrincipal";
             this.Text = "Sistema de Nomina";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
