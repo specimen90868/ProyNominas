@@ -177,7 +177,7 @@ namespace Nominas
             {
                 //Empleados.Core.EmpleadosHelper empleadosHelper = new Empleados.Core.EmpleadosHelper();
                 //empleadosHelper.Command = cmd;
-
+                noEmpleadoExcel = null;
                 noEmpleadoExcel = fila.Cells["noempleado"].Value.ToString().Trim();
                 tamNoEmpleado = fila.Cells["noempleado"].Value.ToString().Trim().Length;
                 switch (tamNoEmpleado) { 

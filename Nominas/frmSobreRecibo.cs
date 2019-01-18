@@ -1443,6 +1443,7 @@ namespace Nominas
             Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
             concepto.noconcepto = 2; //HORAS EXTRAS DOBLES
             concepto.idempresa = GLOBALES.IDEMPRESA;
+            concepto.periodo = _periodo;
 
             cnx.Open();
             string formulaexento = ch.obtenerFormulaExento(concepto).ToString();
